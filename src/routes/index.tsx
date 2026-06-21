@@ -25,6 +25,16 @@ const WA_LINK =
   "https://wa.me/628812107859?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
 const PHONE = "0881-2107-859";
 
+const SITE_URL = "https://sewalaptopjakarta.lovable.app";
+
+const faqData = [
+  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan." },
+  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman." },
+  { q: "Apakah laptop sudah siap pakai?", a: "Ya, semua unit sudah dicek dan siap digunakan." },
+  { q: "Bisa untuk Zoom dan meeting?", a: "Ya, seluruh unit cocok untuk Zoom, Google Meet, presentasi, dan pekerjaan kantor." },
+  { q: "Bingung pilih laptop?", a: "Admin siap membantu merekomendasikan unit sesuai kebutuhan dan budget." },
+];
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -39,7 +49,40 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Laptop siap pakai untuk mahasiswa, freelancer, dan event. Harian, mingguan, bulanan.",
       },
+      { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:type", content: "website" },
+      { name: "twitter:title", content: "Techpora.id — Sewa Laptop Jakarta" },
+      { name: "twitter:description", content: "Laptop siap pakai untuk mahasiswa, freelancer, dan event. Harian, mingguan, bulanan." },
+    ],
+    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Techpora.id",
+          description:
+            "Layanan sewa laptop harian, mingguan, dan bulanan untuk mahasiswa, freelancer, event, dan kebutuhan kerja.",
+          url: SITE_URL,
+          telephone: "+62881-2107-859",
+          areaServed: "Jakarta",
+          priceRange: "Rp",
+          sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          mainEntity: faqData.map((f) => ({
+            "@type": "Question",
+            name: f.q,
+            acceptedAnswer: { "@type": "Answer", text: f.a },
+          })),
+        }),
+      },
     ],
   }),
   component: Index,
@@ -118,19 +161,7 @@ const steps = [
   { n: "05", title: "Unit Dikirim", desc: "Laptop sampai, siap pakai." },
 ];
 
-const faqs = [
-  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan." },
-  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman." },
-  { q: "Apakah laptop sudah siap pakai?", a: "Ya, semua unit sudah dicek dan siap digunakan." },
-  {
-    q: "Bisa untuk Zoom dan meeting?",
-    a: "Ya, seluruh unit cocok untuk Zoom, Google Meet, presentasi, dan pekerjaan kantor.",
-  },
-  {
-    q: "Bingung pilih laptop?",
-    a: "Admin siap membantu merekomendasikan unit sesuai kebutuhan dan budget.",
-  },
-];
+const faqs = faqData;
 
 const terms = [
   "Booking unit terlebih dahulu.",
@@ -208,6 +239,7 @@ function Index() {
         )}
       </header>
 
+      <main>
       {/* HERO */}
       <section id="beranda" className="relative overflow-hidden">
         <div className="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl" />
@@ -554,6 +586,7 @@ function Index() {
           </div>
         </div>
       </section>
+      </main>
 
       {/* FOOTER */}
       <footer className="border-t border-border bg-background">
