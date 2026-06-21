@@ -21,16 +21,6 @@ import {
 } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import heroLaptop from "@/assets/hero-laptop.jpg";
-import imgThinkpad from "@/assets/laptop-thinkpad.jpg";
-import imgVivobook from "@/assets/laptop-vivobook.jpg";
-import imgRedmibook from "@/assets/laptop-redmibook.jpg";
-import imgAspire from "@/assets/laptop-aspire.jpg";
-import imgMacbook from "@/assets/laptop-macbook.jpg";
-import imgEpsonL3210 from "@/assets/printer-epson-l3210.jpg";
-import imgHpSmartTank from "@/assets/printer-hp-smarttank.jpg";
-import imgViewSonic from "@/assets/projector-viewsonic.jpg";
-import imgEpsonE600 from "@/assets/projector-epson-e600.jpg";
-import imgEpsonX600 from "@/assets/projector-epson-x600.jpg";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
