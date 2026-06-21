@@ -77,18 +77,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Techpora.id offers easy, fast, and trusted laptop rentals for various needs." },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Techpora.id offers easy, fast, and trusted laptop rentals for various needs." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
-      { name: "twitter:title", content: "Lovable App" },
-      { name: "twitter:description", content: "Techpora.id offers easy, fast, and trusted laptop rentals for various needs." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f5795503-93cb-47c4-97bc-dc8c0bd6f989/id-preview-bdc90893--2bebac86-cf36-4732-95ac-85953bb17632.lovable.app-1780583162799.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/f5795503-93cb-47c4-97bc-dc8c0bd6f989/id-preview-bdc90893--2bebac86-cf36-4732-95ac-85953bb17632.lovable.app-1780583162799.png" },
+      { property: "og:site_name", content: "Techpora.id" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {
