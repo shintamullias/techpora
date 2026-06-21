@@ -2,7 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Calendar, Clock, MessageCircle } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
-import { posts, ctaText } from "@/data/blog";
+import { posts, ctaText, type BlogPost, type BlogSection } from "@/data/blog";
 
 const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const WA_LINK =
@@ -69,7 +69,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPostPage() {
-  const post = Route.useLoaderData();
+  const post = Route.useLoaderData() as BlogPost;
   const related = posts
     .filter((p) => p.slug !== post.slug && p.category === post.category)
     .slice(0, 3);
@@ -114,7 +114,7 @@ function BlogPostPage() {
           <p className="mt-8 text-lg leading-relaxed text-foreground">{post.intro}</p>
 
           <div className="mt-8 space-y-8">
-            {post.sections.map((s) => (
+            {post.sections.map((s: BlogSection) => (
               <section key={s.h}>
                 <h2 className="text-xl font-semibold text-foreground">{s.h}</h2>
                 <p className="mt-2 leading-relaxed text-muted-foreground">{s.p}</p>
