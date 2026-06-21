@@ -161,19 +161,7 @@ const steps = [
   { n: "05", title: "Unit Dikirim", desc: "Laptop sampai, siap pakai." },
 ];
 
-const faqs = [
-  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan." },
-  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman." },
-  { q: "Apakah laptop sudah siap pakai?", a: "Ya, semua unit sudah dicek dan siap digunakan." },
-  {
-    q: "Bisa untuk Zoom dan meeting?",
-    a: "Ya, seluruh unit cocok untuk Zoom, Google Meet, presentasi, dan pekerjaan kantor.",
-  },
-  {
-    q: "Bingung pilih laptop?",
-    a: "Admin siap membantu merekomendasikan unit sesuai kebutuhan dan budget.",
-  },
-];
+const faqs = faqData;
 
 const terms = [
   "Booking unit terlebih dahulu.",
