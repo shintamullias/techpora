@@ -65,7 +65,7 @@ export const Route = createFileRoute("/")({
           description:
             "Layanan sewa laptop harian, mingguan, dan bulanan untuk mahasiswa, freelancer, event, dan kebutuhan kerja.",
           url: SITE_URL,
-          telephone: "+62881-2107-859",
+          telephone: "+62821-7798-4041",
           areaServed: "Jakarta",
           priceRange: "Rp",
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
