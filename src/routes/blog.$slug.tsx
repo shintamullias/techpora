@@ -97,6 +97,8 @@ function BlogPostPage() {
   const related = posts
     .filter((p) => p.slug !== post.slug && p.category === post.category)
     .slice(0, 3);
+  const cover = coverFor(post.category);
+  const midIndex = Math.floor(post.sections.length / 2);
 
   return (
     <div className="min-h-screen bg-background">
@@ -135,25 +137,54 @@ function BlogPostPage() {
             </span>
           </div>
 
+          <img
+            src={cover}
+            alt={post.title}
+            loading="eager"
+            className="mt-8 aspect-[16/9] w-full rounded-2xl border border-border object-cover"
+          />
+
           <p className="mt-8 text-lg leading-relaxed text-foreground">{post.intro}</p>
 
           <div className="mt-8 space-y-8">
-            {post.sections.map((s: BlogSection) => (
+            {post.sections.map((s: BlogSection, i: number) => (
               <section key={s.h}>
                 <h2 className="text-xl font-semibold text-foreground">{s.h}</h2>
                 <p className="mt-2 leading-relaxed text-muted-foreground">{s.p}</p>
+                {i === midIndex && (
+                  <img
+                    src={SECTION_IMAGES[i % SECTION_IMAGES.length]}
+                    alt={`Ilustrasi ${post.category.toLowerCase()} sewa laptop`}
+                    loading="lazy"
+                    className="mt-6 aspect-[16/9] w-full rounded-xl border border-border object-cover"
+                  />
+                )}
               </section>
             ))}
           </div>
 
-          <div className="mt-12 rounded-2xl border border-border bg-secondary/40 p-6">
-            <h3 className="text-lg font-semibold">Siap sewa laptop?</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{ctaText}</p>
-            <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block">
-              <Button className="gap-2 rounded-full bg-primary hover:bg-primary/90">
-                <MessageCircle className="h-4 w-4" /> Chat Admin WhatsApp
-              </Button>
-            </a>
+          <div className="mt-12 grid gap-4 sm:grid-cols-2">
+            <div className="rounded-2xl border border-border bg-secondary/40 p-6">
+              <h3 className="text-lg font-semibold">Siap sewa laptop?</h3>
+              <p className="mt-2 text-sm text-muted-foreground">{ctaText}</p>
+              <a href={WA_LINK} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block">
+                <Button className="gap-2 rounded-full bg-primary hover:bg-primary/90">
+                  <MessageCircle className="h-4 w-4" /> Chat Admin WhatsApp
+                </Button>
+              </a>
+            </div>
+            <div className="rounded-2xl border border-border bg-card p-6">
+              <h3 className="text-lg font-semibold">Lihat unit & harga</h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Cek daftar unit laptop tersedia lengkap dengan harga harian, mingguan,
+                dan bulanan di halaman utama Techpora.id.
+              </p>
+              <Link to="/" className="mt-4 inline-block">
+                <Button variant="outline" className="gap-2 rounded-full">
+                  Ke Beranda <ArrowRight className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </article>
 
