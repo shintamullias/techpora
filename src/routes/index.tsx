@@ -355,7 +355,7 @@ function Index() {
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {units.map((u) => {
-              const waUnit = `https://wa.me/628812107859?text=${encodeURIComponent(
+              const waUnit = `https://wa.me/6282177984041?text=${encodeURIComponent(
                 `Halo Techpora, saya ingin menyewa ${u.name}.`,
               )}`;
               return (
