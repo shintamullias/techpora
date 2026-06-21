@@ -393,15 +393,14 @@ function Index() {
                         u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"
                       }`}
                     >
-                      <div className="aspect-[4/3] overflow-hidden bg-secondary">
-                        <img
-                          src={u.image}
-                          alt={`Sewa ${u.name} ${u.category.toLowerCase()} Jakarta — ${u.specs ?? ""}`}
-                          width={1024}
-                          height={768}
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
+                      <div className="flex items-center gap-4 bg-secondary/60 p-6">
+                        <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <cat.icon className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-lg font-bold leading-snug text-foreground">{u.name}</h3>
+                          {u.specs && <p className="mt-0.5 text-xs text-muted-foreground">{u.specs}</p>}
+                        </div>
                       </div>
                       <div className="flex flex-1 flex-col p-6">
                         <div className="flex items-start justify-between">
