@@ -93,6 +93,7 @@ const navLinks = [
   { href: "#unit", label: "Unit Laptop" },
   { href: "#cara", label: "Cara Sewa" },
   { href: "#syarat", label: "Syarat Sewa" },
+  { href: "/blog", label: "Blog" },
   { href: "#faq", label: "FAQ" },
   { href: "#kontak", label: "Kontak" },
 ];
