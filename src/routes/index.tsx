@@ -22,8 +22,8 @@ import heroLaptop from "@/assets/hero-laptop.jpg";
 import { Button } from "@/components/ui/button";
 
 const WA_LINK =
-  "https://wa.me/628812107859?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
-const PHONE = "0881-2107-859";
+  "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
+const PHONE = "0821-7798-4041";
 
 const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 
@@ -65,7 +65,7 @@ export const Route = createFileRoute("/")({
           description:
             "Layanan sewa laptop harian, mingguan, dan bulanan untuk mahasiswa, freelancer, event, dan kebutuhan kerja.",
           url: SITE_URL,
-          telephone: "+62881-2107-859",
+          telephone: "+62821-7798-4041",
           areaServed: "Jakarta",
           priceRange: "Rp",
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
@@ -355,7 +355,7 @@ function Index() {
           </div>
           <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {units.map((u) => {
-              const waUnit = `https://wa.me/628812107859?text=${encodeURIComponent(
+              const waUnit = `https://wa.me/6282177984041?text=${encodeURIComponent(
                 `Halo Techpora, saya ingin menyewa ${u.name}.`,
               )}`;
               return (
