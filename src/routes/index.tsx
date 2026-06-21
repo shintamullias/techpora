@@ -21,16 +21,6 @@ import {
 } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import heroLaptop from "@/assets/hero-laptop.jpg";
-import imgThinkpad from "@/assets/laptop-thinkpad.jpg";
-import imgVivobook from "@/assets/laptop-vivobook.jpg";
-import imgRedmibook from "@/assets/laptop-redmibook.jpg";
-import imgAspire from "@/assets/laptop-aspire.jpg";
-import imgMacbook from "@/assets/laptop-macbook.jpg";
-import imgEpsonL3210 from "@/assets/printer-epson-l3210.jpg";
-import imgHpSmartTank from "@/assets/printer-hp-smarttank.jpg";
-import imgViewSonic from "@/assets/projector-viewsonic.jpg";
-import imgEpsonE600 from "@/assets/projector-epson-e600.jpg";
-import imgEpsonX600 from "@/assets/projector-epson-x600.jpg";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -59,7 +49,6 @@ type Category = "Laptop" | "Printer" | "Proyektor";
 type Product = {
   name: string;
   category: Category;
-  image: string;
   specs?: string;
   daily: string;
   weekly: string;
@@ -68,16 +57,16 @@ type Product = {
 };
 
 const products: Product[] = [
-  { name: "Lenovo ThinkPad", category: "Laptop", image: imgThinkpad, specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
-  { name: "ASUS VivoBook", category: "Laptop", image: imgVivobook, specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
-  { name: "RedmiBook 15", category: "Laptop", image: imgRedmibook, specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
-  { name: "Acer Aspire 5", category: "Laptop", image: imgAspire, specs: "i5 · 8GB · SSD 256GB", daily: "Rp175.000", weekly: "Rp1.100.000", monthly: "Rp3.000.000" },
-  { name: "MacBook Air M1", category: "Laptop", image: imgMacbook, specs: "M1 · 8GB · SSD 256GB", daily: "Rp250.000", weekly: "Rp1.500.000", monthly: "Rp4.500.000", featured: true },
-  { name: "Epson L3210", category: "Printer", image: imgEpsonL3210, specs: "Print · Scan · Copy", daily: "Rp100.000", weekly: "Rp500.000", monthly: "Rp1.500.000" },
-  { name: "HP Smart Tank 215", category: "Printer", image: imgHpSmartTank, specs: "Print · Scan · Copy", daily: "Rp125.000", weekly: "Rp650.000", monthly: "Rp2.000.000" },
-  { name: "ViewSonic SP3", category: "Proyektor", image: imgViewSonic, specs: "Portable · HD", daily: "Rp150.000", weekly: "Rp850.000", monthly: "Rp2.500.000" },
-  { name: "Epson EB-E600", category: "Proyektor", image: imgEpsonE600, specs: "3LCD · 3500 Lumens", daily: "Rp200.000", weekly: "Rp1.200.000", monthly: "Rp3.500.000" },
-  { name: "Epson EB-X600", category: "Proyektor", image: imgEpsonX600, specs: "3LCD · XGA · 3700 Lumens", daily: "Rp225.000", weekly: "Rp1.350.000", monthly: "Rp4.000.000", featured: true },
+  { name: "Lenovo ThinkPad", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
+  { name: "ASUS VivoBook", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
+  { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
+  { name: "Acer Aspire 5", category: "Laptop", specs: "i5 · 8GB · SSD 256GB", daily: "Rp175.000", weekly: "Rp1.100.000", monthly: "Rp3.000.000" },
+  { name: "MacBook Air M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: "Rp250.000", weekly: "Rp1.500.000", monthly: "Rp4.500.000", featured: true },
+  { name: "Epson L3210", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp100.000", weekly: "Rp500.000", monthly: "Rp1.500.000" },
+  { name: "HP Smart Tank 215", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp125.000", weekly: "Rp650.000", monthly: "Rp2.000.000" },
+  { name: "ViewSonic SP3", category: "Proyektor", specs: "Portable · HD", daily: "Rp150.000", weekly: "Rp850.000", monthly: "Rp2.500.000" },
+  { name: "Epson EB-E600", category: "Proyektor", specs: "3LCD · 3500 Lumens", daily: "Rp200.000", weekly: "Rp1.200.000", monthly: "Rp3.500.000" },
+  { name: "Epson EB-X600", category: "Proyektor", specs: "3LCD · XGA · 3700 Lumens", daily: "Rp225.000", weekly: "Rp1.350.000", monthly: "Rp4.000.000", featured: true },
 ];
 
 const reviews = [
@@ -404,15 +393,14 @@ function Index() {
                         u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"
                       }`}
                     >
-                      <div className="aspect-[4/3] overflow-hidden bg-secondary">
-                        <img
-                          src={u.image}
-                          alt={`Sewa ${u.name} ${u.category.toLowerCase()} Jakarta — ${u.specs ?? ""}`}
-                          width={1024}
-                          height={768}
-                          loading="lazy"
-                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-                        />
+                      <div className="flex items-center gap-4 bg-secondary/60 p-6">
+                        <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                          <cat.icon className="h-6 w-6" />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-lg font-bold leading-snug text-foreground">{u.name}</h3>
+                          {u.specs && <p className="mt-0.5 text-xs text-muted-foreground">{u.specs}</p>}
+                        </div>
                       </div>
                       <div className="flex flex-1 flex-col p-6">
                         <div className="flex items-start justify-between">
