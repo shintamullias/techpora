@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowLeft, Calendar, Clock, MessageCircle } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock, MessageCircle } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { posts, ctaText, type BlogPost, type BlogSection } from "@/data/blog";
@@ -8,16 +8,38 @@ const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const WA_LINK =
   "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
 
+const CATEGORY_IMAGES: Record<string, string> = {
+  Tips: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=1200&q=70",
+  Perbandingan: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=70",
+  Event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=70",
+  Mahasiswa: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=70",
+  Bisnis: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=70",
+  Spesifikasi: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=1200&q=70",
+};
+const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=70";
+
+const SECTION_IMAGES = [
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=70",
+  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=70",
+  "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=70",
+];
+
+function coverFor(category: string) {
+  return CATEGORY_IMAGES[category] ?? DEFAULT_IMAGE;
+}
+
 export const Route = createFileRoute("/blog/$slug")({
   loader: ({ params }) => {
     const post = posts.find((p) => p.slug === params.slug);
     if (!post) throw notFound();
     return post;
   },
-  head: ({ loaderData }) => {
+      head: ({ loaderData }) => {
     const post = loaderData;
     if (!post) return { meta: [{ title: "Artikel tidak ditemukan" }] };
     const url = `${SITE_URL}/blog/${post.slug}`;
+    const cover = coverFor(post.category);
     return {
       meta: [
         { title: `${post.title} — Techpora.id` },
@@ -26,8 +48,10 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:description", content: post.description },
         { property: "og:url", content: url },
         { property: "og:type", content: "article" },
+        { property: "og:image", content: cover },
         { name: "twitter:title", content: post.title },
         { name: "twitter:description", content: post.description },
+        { name: "twitter:image", content: cover },
       ],
       links: [{ rel: "canonical", href: url }],
       scripts: [
