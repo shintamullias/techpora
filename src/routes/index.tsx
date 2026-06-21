@@ -22,8 +22,8 @@ import heroLaptop from "@/assets/hero-laptop.jpg";
 import { Button } from "@/components/ui/button";
 
 const WA_LINK =
-  "https://wa.me/628812107859?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
-const PHONE = "0881-2107-859";
+  "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
+const PHONE = "0821-7798-4041";
 
 const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 
