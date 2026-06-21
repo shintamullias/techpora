@@ -5,7 +5,7 @@ import { posts } from "@/data/blog";
 
 const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const WA_LINK =
-  "https://wa.me/628812107859?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
+  "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
 
 export const Route = createFileRoute("/blog/")({
   head: () => ({
