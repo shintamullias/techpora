@@ -7,6 +7,17 @@ const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const WA_LINK =
   "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
 
+const CATEGORY_IMAGES: Record<string, string> = {
+  Tips: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=800&q=70",
+  Perbandingan: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=70",
+  Event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=70",
+  Mahasiswa: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=70",
+  Bisnis: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=70",
+  Spesifikasi: "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89?auto=format&fit=crop&w=800&q=70",
+};
+const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=70";
+
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
@@ -83,30 +94,38 @@ function BlogIndex() {
               key={post.slug}
               to="/blog/$slug"
               params={{ slug: post.slug }}
-              className="group flex flex-col rounded-2xl border border-border bg-card p-6 transition-shadow hover:shadow-lg"
+              className="group flex flex-col overflow-hidden rounded-2xl border border-border bg-card transition-shadow hover:shadow-lg"
             >
-              <span className="inline-flex w-fit rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
-                {post.category}
-              </span>
-              <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground group-hover:text-primary">
-                {post.title}
-              </h2>
-              <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
-                {post.description}
-              </p>
-              <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Calendar className="h-3.5 w-3.5" />
-                  {new Date(post.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
+              <img
+                src={CATEGORY_IMAGES[post.category] ?? DEFAULT_IMAGE}
+                alt={post.title}
+                loading="lazy"
+                className="aspect-[16/9] w-full object-cover"
+              />
+              <div className="flex flex-1 flex-col p-6">
+                <span className="inline-flex w-fit rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-semibold text-primary">
+                  {post.category}
                 </span>
-                <span className="inline-flex items-center gap-1">
-                  <Clock className="h-3.5 w-3.5" />
-                  {post.readMinutes} mnt
+                <h2 className="mt-3 text-lg font-semibold leading-snug text-foreground group-hover:text-primary">
+                  {post.title}
+                </h2>
+                <p className="mt-2 line-clamp-3 text-sm text-muted-foreground">
+                  {post.description}
+                </p>
+                <div className="mt-4 flex items-center gap-4 text-xs text-muted-foreground">
+                  <span className="inline-flex items-center gap-1">
+                    <Calendar className="h-3.5 w-3.5" />
+                    {new Date(post.date).toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}
+                  </span>
+                  <span className="inline-flex items-center gap-1">
+                    <Clock className="h-3.5 w-3.5" />
+                    {post.readMinutes} mnt
+                  </span>
+                </div>
+                <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
+                  Baca artikel <ArrowRight className="h-4 w-4" />
                 </span>
               </div>
-              <span className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary">
-                Baca artikel <ArrowRight className="h-4 w-4" />
-              </span>
             </Link>
           ))}
         </div>
