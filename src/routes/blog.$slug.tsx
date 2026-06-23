@@ -4,7 +4,7 @@ import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { posts, ctaText, type BlogPost, type BlogSection } from "@/data/blog";
 
-const SITE_URL = "https://sewalaptopjakarta.lovable.app";
+const SITE_URL = "https://techpora.id";
 const WA_LINK =
   "https://wa.me/6282177984041?text=Halo%20Techpora%2C%20saya%20ingin%20menyewa%20laptop.";
 
