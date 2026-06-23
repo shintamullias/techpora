@@ -37,7 +37,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const WA_NUMBER = "6282177984041";
 const PHONE = "0821-7798-4041";
-const SITE_URL = "https://sewalaptopjakarta.lovable.app";
+const SITE_URL = "https://techpora.id";
 const MAPS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
 const MAPS_EMBED =
   "https://www.google.com/maps?q=SEWA+LAPTOP+JAKARTA+Jl.+R.Mangun+Muka+Raya+Rawamangun+Jakarta+Timur&output=embed";
