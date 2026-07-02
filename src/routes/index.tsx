@@ -545,58 +545,57 @@ function Index() {
           </div>
         </section>
 
-        {/* SYARAT */}
-        <section id="syarat" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-primary">Syarat Sewa</div>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Verifikasi tanpa deposit</h2>
-                <p className="mt-4 leading-relaxed text-muted-foreground">
-                  Siapkan dokumen berikut untuk verifikasi. Data hanya digunakan untuk keamanan transaksi.
-                </p>
-                <div className="mt-8 rounded-2xl border border-border bg-card p-6">
-                  <h3 className="text-sm font-semibold text-foreground">Jaminan</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    Penyewa meninggalkan 1 dokumen asli yang masih berlaku selama masa penyewaan. Dokumen dikembalikan saat unit kembali dalam kondisi baik.
-                  </p>
-                </div>
+        {/* KENAPA PILIH TECHPORA (COMPARISON) */}
+        <section id="kenapa-kami" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Kenapa Pilih Techpora</div>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Bandingkan sebelum kamu sewa</h2>
+              <p className="mt-4 text-muted-foreground">Beda Techpora dibanding rental laptop lain — value nyata untuk kamu.</p>
+            </div>
+            <div className="mt-12 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+              <div className="grid grid-cols-3 gap-0 border-b border-border bg-secondary/60 text-sm font-semibold">
+                <div className="px-4 py-4 sm:px-6">Aspek</div>
+                <div className="px-4 py-4 sm:px-6 text-primary">Techpora</div>
+                <div className="px-4 py-4 sm:px-6 text-muted-foreground">Rental Lain</div>
               </div>
-              <div className="space-y-5">
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex h-7 items-center rounded-full bg-primary px-2.5 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">Wajib</span>
-                    <h3 className="text-base font-semibold text-foreground">Data Wajib</h3>
+              {comparison.map((c, i) => (
+                <div key={c.title} className={`grid grid-cols-3 gap-0 text-sm ${i !== comparison.length - 1 ? "border-b border-border" : ""}`}>
+                  <div className="px-4 py-4 font-semibold text-foreground sm:px-6">{c.title}</div>
+                  <div className="flex items-start gap-2 px-4 py-4 text-foreground sm:px-6">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <span>{c.us}</span>
                   </div>
-                  <ul className="mt-4 space-y-2.5 text-sm">
-                    {["KTP", "Screenshot profil Instagram aktif"].map((x) => (
-                      <li key={x} className="flex items-start gap-2.5">
-                        <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                        <span className="text-foreground">{x}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="px-4 py-4 text-muted-foreground sm:px-6">{c.them}</div>
                 </div>
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex h-7 items-center rounded-full bg-secondary px-2.5 text-[11px] font-semibold uppercase tracking-wider text-foreground">Pilih 2</span>
-                    <h3 className="text-base font-semibold text-foreground">Data Pendukung</h3>
-                  </div>
-                  <ul className="mt-4 grid grid-cols-2 gap-2.5 text-sm">
-                    {["SIM", "NPWP", "KK", "KTM", "ID Card Kerja", "Paspor"].map((x) => (
-                      <li key={x} className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 flex-shrink-0 text-primary" />
-                        <span className="text-foreground">{x}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* TERMS */}
+        {/* AREA LAYANAN */}
+        <section id="area" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Area Layanan</div>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Sewa Laptop Jabodetabek</h2>
+              <p className="mt-4 text-muted-foreground">
+                Kami melayani sewa laptop, printer, dan proyektor ke seluruh area Jakarta dan sekitarnya.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {areaLayanan.map((a) => (
+                <div key={a.area} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <h3 className="text-base font-semibold text-foreground">Sewa Laptop {a.area}</h3>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
