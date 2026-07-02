@@ -508,6 +508,18 @@ function Index() {
                 </figure>
               ))}
             </div>
+            <div className="mt-10 text-center">
+              <a
+                href={MAPS_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-secondary"
+              >
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                Lihat semua review di Google Maps
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </section>
 
