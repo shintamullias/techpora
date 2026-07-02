@@ -134,12 +134,13 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          name: "Techpora.id",
+          "@type": ["LocalBusiness", "Store"],
+          name: "Techpora.id — Sewa Laptop Jakarta",
           description:
             "Layanan sewa laptop, printer, dan proyektor harian, mingguan, dan bulanan di Jakarta.",
           url: SITE_URL,
           telephone: "+62821-7798-4041",
+          image: `${SITE_URL}/og-image.jpg`,
           address: {
             "@type": "PostalAddress",
             streetAddress: "Jl. R. Mangun Muka Raya",
@@ -148,10 +149,20 @@ export const Route = createFileRoute("/")({
             postalCode: "13220",
             addressCountry: "ID",
           },
-          areaServed: "Jakarta",
-          priceRange: "Rp",
+          areaServed: [
+            "Jakarta Selatan","Jakarta Timur","Jakarta Barat","Jakarta Utara","Jakarta Pusat",
+            "Tangerang","Bekasi","Depok",
+          ],
+          openingHoursSpecification: [{
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            opens: "08:00",
+            closes: "21:00",
+          }],
+          priceRange: "Rp100.000 - Rp4.500.000",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
+          hasMap: MAPS_URL,
         }),
       },
       {
