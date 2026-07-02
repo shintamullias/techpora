@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { posts } from "@/data/blog";
 
-const BASE_URL = "https://techpora.id";
+const BASE_URL = "https://sewalaptopjakarta.lovable.app";
 
 interface SitemapEntry {
   path: string;

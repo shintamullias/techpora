@@ -37,8 +37,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const WA_NUMBER = "6282177984041";
 const PHONE = "0821-7798-4041";
-const SITE_URL = "https://techpora.id";
+const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const MAPS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
+const MAPS_REVIEWS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
 const MAPS_EMBED =
   "https://www.google.com/maps?q=SEWA+LAPTOP+JAKARTA+Jl.+R.Mangun+Muka+Raya+Rawamangun+Jakarta+Timur&output=embed";
 const ADDRESS =
@@ -79,12 +80,36 @@ const reviews = [
 ];
 
 const faqData = [
-  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan." },
-  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman area Jakarta dan sekitarnya." },
-  { q: "Apakah unit sudah siap pakai?", a: "Ya, semua laptop, printer, dan proyektor dicek dan siap digunakan." },
+  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan. Cocok untuk kebutuhan singkat 1 hari hingga proyek jangka panjang." },
+  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman ke seluruh area Jakarta (Selatan, Timur, Barat, Utara, Pusat) serta Tangerang, Bekasi, dan Depok." },
+  { q: "Apakah unit sudah siap pakai?", a: "Ya, semua laptop, printer, dan proyektor dicek, dibersihkan, dan siap digunakan tanpa instalasi tambahan." },
   { q: "Bisa untuk Zoom, meeting, dan event?", a: "Ya, cocok untuk Zoom, Google Meet, presentasi, registrasi event, dan kebutuhan kantor." },
   { q: "Apakah tersedia sewa proyektor dan printer?", a: "Ya, kami menyediakan proyektor ViewSonic & Epson serta printer Epson L3210 dan HP Smart Tank 215." },
   { q: "Bingung pilih unit?", a: "Admin siap membantu merekomendasikan unit sesuai kebutuhan dan budget." },
+  { q: "Sewa laptop untuk skripsi, apa rekomendasinya?", a: "Untuk skripsi dan sidang, kami rekomendasikan ASUS VivoBook atau Acer Aspire 5 (i5, 8GB, SSD) yang lancar untuk Word, SPSS, Zoom sidang, dan render dokumen. Bisa sewa bulanan agar lebih hemat." },
+  { q: "Sewa laptop untuk event atau pameran, bisa berapa unit?", a: "Kami melayani sewa laptop event dalam jumlah banyak (10–50+ unit) untuk registrasi, booth, training, dan pameran. Semua unit seragam, siap pakai, dan bisa diantar sekaligus dijemput di lokasi acara." },
+  { q: "Lebih hemat sewa harian atau bulanan?", a: "Sewa bulanan jauh lebih hemat jika kebutuhan lebih dari 10 hari. Contoh: ThinkPad harian Rp100rb × 15 hari = Rp1,5jt, sedangkan bulanan hanya Rp1,5jt untuk 30 hari. Untuk kebutuhan singkat 1–3 hari, pilih harian." },
+  { q: "Apa saja syarat sewa yang harus disiapkan?", a: "Wajib: KTP dan screenshot profil Instagram aktif. Pilih 2 dari dokumen pendukung: SIM, NPWP, KK, KTM, ID Card Kerja, atau Paspor. Dokumen jaminan dikembalikan setelah unit kembali dalam kondisi baik." },
+  { q: "Bagaimana ketentuan pembayaran & keterlambatan?", a: "Pembayaran lunas di awal masa sewa. Masa sewa dihitung 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan Rp10.000 per jam." },
+];
+
+const areaLayanan = [
+  { area: "Jakarta Selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
+  { area: "Jakarta Timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
+  { area: "Jakarta Barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
+  { area: "Jakarta Utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
+  { area: "Jakarta Pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
+  { area: "Tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
+  { area: "Bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
+  { area: "Depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
+];
+
+const comparison = [
+  { title: "Garansi Unit", us: "Semua unit dicek & bergaransi selama masa sewa", them: "Sering apa adanya, tanpa jaminan performa" },
+  { title: "Gratis Ongkir", us: "Gratis ongkir area Jakarta (min. sewa mingguan)", them: "Ongkir ditanggung penyewa" },
+  { title: "Respon WhatsApp", us: "Fast response, admin siap bantu tiap hari", them: "Balas lambat, sulit dihubungi weekend" },
+  { title: "Unit Ready Pakai", us: "Sudah terinstal, dibersihkan, siap pakai", them: "Belum siap, perlu setup ulang" },
+  { title: "Pilihan Unit", us: "Laptop, Printer & Proyektor lengkap", them: "Terbatas hanya laptop" },
 ];
 
 export const Route = createFileRoute("/")({
@@ -109,12 +134,13 @@ export const Route = createFileRoute("/")({
         type: "application/ld+json",
         children: JSON.stringify({
           "@context": "https://schema.org",
-          "@type": "LocalBusiness",
-          name: "Techpora.id",
+          "@type": ["LocalBusiness", "Store"],
+          name: "Techpora.id — Sewa Laptop Jakarta",
           description:
             "Layanan sewa laptop, printer, dan proyektor harian, mingguan, dan bulanan di Jakarta.",
           url: SITE_URL,
           telephone: "+62821-7798-4041",
+          image: `${SITE_URL}/og-image.jpg`,
           address: {
             "@type": "PostalAddress",
             streetAddress: "Jl. R. Mangun Muka Raya",
@@ -123,10 +149,20 @@ export const Route = createFileRoute("/")({
             postalCode: "13220",
             addressCountry: "ID",
           },
-          areaServed: "Jakarta",
-          priceRange: "Rp",
+          areaServed: [
+            "Jakarta Selatan","Jakarta Timur","Jakarta Barat","Jakarta Utara","Jakarta Pusat",
+            "Tangerang","Bekasi","Depok",
+          ],
+          openingHoursSpecification: [{
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+            opens: "08:00",
+            closes: "21:00",
+          }],
+          priceRange: "Rp100.000 - Rp4.500.000",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
+          hasMap: MAPS_URL,
         }),
       },
       {
@@ -151,6 +187,8 @@ const navLinks = [
   { href: "#laptop", label: "Laptop" },
   { href: "#printer", label: "Printer" },
   { href: "#proyektor", label: "Proyektor" },
+  { href: "#kenapa-kami", label: "Kenapa Kami" },
+  { href: "#area", label: "Area" },
   { href: "#review", label: "Review" },
   { href: "/blog", label: "Blog" },
   { href: "#lokasi", label: "Lokasi" },
@@ -298,8 +336,11 @@ function Index() {
                 Sewa Laptop, Printer & Proyektor Jakarta
               </div>
               <h1 className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Sewa <span className="text-primary">Laptop, Printer</span> & Proyektor Terpercaya
+                Sewa Laptop Jakarta <span className="text-primary">— Techpora</span>
               </h1>
+              <p className="mt-3 text-lg font-medium text-foreground/80">
+                Laptop, Printer & Proyektor siap pakai. Harian, mingguan, bulanan.
+              </p>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Unit siap pakai untuk mahasiswa, freelancer, kantor, event, seminar, dan kebutuhan harian. Harian, mingguan, bulanan — pengiriman cepat area Jakarta.
               </p>
@@ -467,6 +508,18 @@ function Index() {
                 </figure>
               ))}
             </div>
+            <div className="mt-10 text-center">
+              <a
+                href={MAPS_REVIEWS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm font-semibold text-foreground shadow-sm transition-colors hover:bg-secondary"
+              >
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" />
+                Lihat semua review di Google Maps
+                <ArrowRight className="h-4 w-4" />
+              </a>
+            </div>
           </div>
         </section>
 
@@ -492,58 +545,57 @@ function Index() {
           </div>
         </section>
 
-        {/* SYARAT */}
-        <section id="syarat" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-2 lg:gap-16">
-              <div>
-                <div className="text-xs font-semibold uppercase tracking-wider text-primary">Syarat Sewa</div>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Verifikasi tanpa deposit</h2>
-                <p className="mt-4 leading-relaxed text-muted-foreground">
-                  Siapkan dokumen berikut untuk verifikasi. Data hanya digunakan untuk keamanan transaksi.
-                </p>
-                <div className="mt-8 rounded-2xl border border-border bg-card p-6">
-                  <h3 className="text-sm font-semibold text-foreground">Jaminan</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                    Penyewa meninggalkan 1 dokumen asli yang masih berlaku selama masa penyewaan. Dokumen dikembalikan saat unit kembali dalam kondisi baik.
-                  </p>
-                </div>
+        {/* KENAPA PILIH TECHPORA (COMPARISON) */}
+        <section id="kenapa-kami" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Kenapa Pilih Techpora</div>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Bandingkan sebelum kamu sewa</h2>
+              <p className="mt-4 text-muted-foreground">Beda Techpora dibanding rental laptop lain — value nyata untuk kamu.</p>
+            </div>
+            <div className="mt-12 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+              <div className="grid grid-cols-3 gap-0 border-b border-border bg-secondary/60 text-sm font-semibold">
+                <div className="px-4 py-4 sm:px-6">Aspek</div>
+                <div className="px-4 py-4 sm:px-6 text-primary">Techpora</div>
+                <div className="px-4 py-4 sm:px-6 text-muted-foreground">Rental Lain</div>
               </div>
-              <div className="space-y-5">
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex h-7 items-center rounded-full bg-primary px-2.5 text-[11px] font-semibold uppercase tracking-wider text-primary-foreground">Wajib</span>
-                    <h3 className="text-base font-semibold text-foreground">Data Wajib</h3>
+              {comparison.map((c, i) => (
+                <div key={c.title} className={`grid grid-cols-3 gap-0 text-sm ${i !== comparison.length - 1 ? "border-b border-border" : ""}`}>
+                  <div className="px-4 py-4 font-semibold text-foreground sm:px-6">{c.title}</div>
+                  <div className="flex items-start gap-2 px-4 py-4 text-foreground sm:px-6">
+                    <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                    <span>{c.us}</span>
                   </div>
-                  <ul className="mt-4 space-y-2.5 text-sm">
-                    {["KTP", "Screenshot profil Instagram aktif"].map((x) => (
-                      <li key={x} className="flex items-start gap-2.5">
-                        <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
-                        <span className="text-foreground">{x}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="px-4 py-4 text-muted-foreground sm:px-6">{c.them}</div>
                 </div>
-                <div className="rounded-2xl border border-border bg-card p-6 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <span className="inline-flex h-7 items-center rounded-full bg-secondary px-2.5 text-[11px] font-semibold uppercase tracking-wider text-foreground">Pilih 2</span>
-                    <h3 className="text-base font-semibold text-foreground">Data Pendukung</h3>
-                  </div>
-                  <ul className="mt-4 grid grid-cols-2 gap-2.5 text-sm">
-                    {["SIM", "NPWP", "KK", "KTM", "ID Card Kerja", "Paspor"].map((x) => (
-                      <li key={x} className="flex items-center gap-2.5">
-                        <Check className="h-4 w-4 flex-shrink-0 text-primary" />
-                        <span className="text-foreground">{x}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* TERMS */}
+        {/* AREA LAYANAN */}
+        <section id="area" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl text-center">
+              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Area Layanan</div>
+              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Sewa Laptop Jabodetabek</h2>
+              <p className="mt-4 text-muted-foreground">
+                Kami melayani sewa laptop, printer, dan proyektor ke seluruh area Jakarta dan sekitarnya.
+              </p>
+            </div>
+            <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {areaLayanan.map((a) => (
+                <div key={a.area} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <h3 className="text-base font-semibold text-foreground">Sewa Laptop {a.area}</h3>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
         <section className="py-16 sm:py-24">
           <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
             <div className="text-center">
