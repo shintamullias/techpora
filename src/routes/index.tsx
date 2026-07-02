@@ -187,6 +187,8 @@ const navLinks = [
   { href: "#laptop", label: "Laptop" },
   { href: "#printer", label: "Printer" },
   { href: "#proyektor", label: "Proyektor" },
+  { href: "#kenapa-kami", label: "Kenapa Kami" },
+  { href: "#area", label: "Area" },
   { href: "#review", label: "Review" },
   { href: "/blog", label: "Blog" },
   { href: "#lokasi", label: "Lokasi" },
