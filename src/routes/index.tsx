@@ -336,8 +336,11 @@ function Index() {
                 Sewa Laptop, Printer & Proyektor Jakarta
               </div>
               <h1 className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Sewa <span className="text-primary">Laptop, Printer</span> & Proyektor Terpercaya
+                Sewa Laptop Jakarta <span className="text-primary">— Techpora</span>
               </h1>
+              <p className="mt-3 text-lg font-medium text-foreground/80">
+                Laptop, Printer & Proyektor siap pakai. Harian, mingguan, bulanan.
+              </p>
               <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
                 Unit siap pakai untuk mahasiswa, freelancer, kantor, event, seminar, dan kebutuhan harian. Harian, mingguan, bulanan — pengiriman cepat area Jakarta.
               </p>
