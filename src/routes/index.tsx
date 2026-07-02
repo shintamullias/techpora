@@ -80,12 +80,36 @@ const reviews = [
 ];
 
 const faqData = [
-  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan." },
-  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman area Jakarta dan sekitarnya." },
-  { q: "Apakah unit sudah siap pakai?", a: "Ya, semua laptop, printer, dan proyektor dicek dan siap digunakan." },
+  { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan. Cocok untuk kebutuhan singkat 1 hari hingga proyek jangka panjang." },
+  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman ke seluruh area Jakarta (Selatan, Timur, Barat, Utara, Pusat) serta Tangerang, Bekasi, dan Depok." },
+  { q: "Apakah unit sudah siap pakai?", a: "Ya, semua laptop, printer, dan proyektor dicek, dibersihkan, dan siap digunakan tanpa instalasi tambahan." },
   { q: "Bisa untuk Zoom, meeting, dan event?", a: "Ya, cocok untuk Zoom, Google Meet, presentasi, registrasi event, dan kebutuhan kantor." },
   { q: "Apakah tersedia sewa proyektor dan printer?", a: "Ya, kami menyediakan proyektor ViewSonic & Epson serta printer Epson L3210 dan HP Smart Tank 215." },
   { q: "Bingung pilih unit?", a: "Admin siap membantu merekomendasikan unit sesuai kebutuhan dan budget." },
+  { q: "Sewa laptop untuk skripsi, apa rekomendasinya?", a: "Untuk skripsi dan sidang, kami rekomendasikan ASUS VivoBook atau Acer Aspire 5 (i5, 8GB, SSD) yang lancar untuk Word, SPSS, Zoom sidang, dan render dokumen. Bisa sewa bulanan agar lebih hemat." },
+  { q: "Sewa laptop untuk event atau pameran, bisa berapa unit?", a: "Kami melayani sewa laptop event dalam jumlah banyak (10–50+ unit) untuk registrasi, booth, training, dan pameran. Semua unit seragam, siap pakai, dan bisa diantar sekaligus dijemput di lokasi acara." },
+  { q: "Lebih hemat sewa harian atau bulanan?", a: "Sewa bulanan jauh lebih hemat jika kebutuhan lebih dari 10 hari. Contoh: ThinkPad harian Rp100rb × 15 hari = Rp1,5jt, sedangkan bulanan hanya Rp1,5jt untuk 30 hari. Untuk kebutuhan singkat 1–3 hari, pilih harian." },
+  { q: "Apa saja syarat sewa yang harus disiapkan?", a: "Wajib: KTP dan screenshot profil Instagram aktif. Pilih 2 dari dokumen pendukung: SIM, NPWP, KK, KTM, ID Card Kerja, atau Paspor. Dokumen jaminan dikembalikan setelah unit kembali dalam kondisi baik." },
+  { q: "Bagaimana ketentuan pembayaran & keterlambatan?", a: "Pembayaran lunas di awal masa sewa. Masa sewa dihitung 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan Rp10.000 per jam." },
+];
+
+const areaLayanan = [
+  { area: "Jakarta Selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
+  { area: "Jakarta Timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
+  { area: "Jakarta Barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
+  { area: "Jakarta Utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
+  { area: "Jakarta Pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
+  { area: "Tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
+  { area: "Bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
+  { area: "Depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
+];
+
+const comparison = [
+  { title: "Garansi Unit", us: "Semua unit dicek & bergaransi selama masa sewa", them: "Sering apa adanya, tanpa jaminan performa" },
+  { title: "Gratis Ongkir", us: "Gratis ongkir area Jakarta (min. sewa mingguan)", them: "Ongkir ditanggung penyewa" },
+  { title: "Respon WhatsApp", us: "Fast response, admin siap bantu tiap hari", them: "Balas lambat, sulit dihubungi weekend" },
+  { title: "Unit Ready Pakai", us: "Sudah terinstal, dibersihkan, siap pakai", them: "Belum siap, perlu setup ulang" },
+  { title: "Pilihan Unit", us: "Laptop, Printer & Proyektor lengkap", them: "Terbatas hanya laptop" },
 ];
 
 export const Route = createFileRoute("/")({
