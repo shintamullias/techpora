@@ -39,7 +39,7 @@ const WA_NUMBER = "6282177984041";
 const PHONE = "0821-7798-4041";
 const SITE_URL = "https://sewalaptopjakarta.lovable.app";
 const MAPS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
-const MAPS_REVIEWS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
+const MAPS_REVIEWS_URL = "https://maps.app.goo.gl/eGnQSXjp4SkUSdSE9";
 const MAPS_EMBED =
   "https://www.google.com/maps?q=SEWA+LAPTOP+JAKARTA+Jl.+R.Mangun+Muka+Raya+Rawamangun+Jakarta+Timur&output=embed";
 const ADDRESS =
