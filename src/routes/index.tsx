@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+
 import {
   Check,
   MessageCircle,
@@ -37,7 +38,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const WA_NUMBER = "6282177984041";
 const PHONE = "0821-7798-4041";
-const SITE_URL = "https://sewalaptopjakarta.lovable.app";
+const SITE_URL = "https://techpora.id";
 const MAPS_URL = "https://maps.app.goo.gl/1bv9kcf5ynWE9VWn9";
 const MAPS_REVIEWS_URL = "https://maps.app.goo.gl/eGnQSXjp4SkUSdSE9";
 const MAPS_EMBED =
@@ -94,15 +95,16 @@ const faqData = [
 ];
 
 const areaLayanan = [
-  { area: "Jakarta Selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
-  { area: "Jakarta Timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
-  { area: "Jakarta Barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
-  { area: "Jakarta Utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
-  { area: "Jakarta Pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
-  { area: "Tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
-  { area: "Bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
-  { area: "Depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
+  { area: "Jakarta Selatan", slug: "sewa-laptop-jakarta-selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
+  { area: "Jakarta Timur", slug: "sewa-laptop-jakarta-timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
+  { area: "Jakarta Barat", slug: "sewa-laptop-jakarta-barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
+  { area: "Jakarta Utara", slug: "sewa-laptop-jakarta-utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
+  { area: "Jakarta Pusat", slug: "sewa-laptop-jakarta-pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
+  { area: "Tangerang", slug: "sewa-laptop-tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
+  { area: "Bekasi", slug: "sewa-laptop-bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
+  { area: "Depok", slug: "sewa-laptop-depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
 ];
+
 
 const comparison = [
   { title: "Garansi Unit", us: "Semua unit dicek & bergaransi selama masa sewa", them: "Sering apa adanya, tanpa jaminan performa" },
@@ -121,6 +123,8 @@ export const Route = createFileRoute("/")({
         content:
           "Sewa laptop, printer, dan proyektor harian, mingguan, dan bulanan di Jakarta. Unit terjamin, siap pakai, pengiriman cepat untuk mahasiswa, freelancer, kantor, dan event.",
       },
+      { name: "keywords", content: "sewa laptop jakarta, rental laptop jakarta, sewa laptop harian, sewa laptop bulanan, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { property: "og:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
       { property: "og:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
       { property: "og:url", content: `${SITE_URL}/` },
@@ -128,6 +132,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
       { name: "twitter:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
     ],
+
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
       {
@@ -254,9 +259,10 @@ function buildWaText(b: BookingForm) {
     `• Pengambilan: ${b.pickup}`,
   ];
   if (b.pickup === "Diantar") lines.push(`• Alamat: ${b.address || "-"}`);
-  lines.push("", "Terima kasih 🙏");
+  lines.push("", "Saya lihat dari techpora.id.", "Terima kasih 🙏");
   return lines.join("\n");
 }
+
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -585,15 +591,24 @@ function Index() {
             </div>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {areaLayanan.map((a) => (
-                <div key={a.area} className="rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:shadow-md">
+                <a
+                  key={a.area}
+                  href={`/${a.slug}`}
+                  className="group block rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+                >
+
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-primary" />
-                    <h3 className="text-base font-semibold text-foreground">Sewa Laptop {a.area}</h3>
+                    <h3 className="text-base font-semibold text-foreground group-hover:text-primary">Sewa Laptop {a.area}</h3>
                   </div>
                   <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{a.desc}</p>
-                </div>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                    Lihat detail area →
+                  </span>
+                </a>
               ))}
             </div>
+
           </div>
         </section>
         <section className="py-16 sm:py-24">

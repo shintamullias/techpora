@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://sewalaptopjakarta.lovable.app/sitemap.xml
+Sitemap: https://techpora.id/sitemap.xml
