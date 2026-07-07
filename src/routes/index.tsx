@@ -259,9 +259,10 @@ function buildWaText(b: BookingForm) {
     `• Pengambilan: ${b.pickup}`,
   ];
   if (b.pickup === "Diantar") lines.push(`• Alamat: ${b.address || "-"}`);
-  lines.push("", "Terima kasih 🙏");
+  lines.push("", "Saya lihat dari techpora.id.", "Terima kasih 🙏");
   return lines.join("\n");
 }
+
 
 function Index() {
   const [menuOpen, setMenuOpen] = useState(false);
