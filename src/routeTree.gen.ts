@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SewaMacbookRouteImport } from './routes/sewa-macbook'
 import { Route as SewaLaptopTangerangRouteImport } from './routes/sewa-laptop-tangerang'
 import { Route as SewaLaptopJakartaUtaraRouteImport } from './routes/sewa-laptop-jakarta-utara'
 import { Route as SewaLaptopJakartaTimurRouteImport } from './routes/sewa-laptop-jakarta-timur'
@@ -25,6 +26,11 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaMacbookRoute = SewaMacbookRouteImport.update({
+  id: '/sewa-macbook',
+  path: '/sewa-macbook',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SewaLaptopTangerangRoute = SewaLaptopTangerangRouteImport.update({
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
   '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
+  '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
   '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
   '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
+  '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -123,6 +131,7 @@ export interface FileRoutesById {
   '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
   '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
+  '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
@@ -139,6 +148,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-jakarta-timur'
     | '/sewa-laptop-jakarta-utara'
     | '/sewa-laptop-tangerang'
+    | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
@@ -153,6 +163,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-jakarta-timur'
     | '/sewa-laptop-jakarta-utara'
     | '/sewa-laptop-tangerang'
+    | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog'
@@ -167,6 +178,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-jakarta-timur'
     | '/sewa-laptop-jakarta-utara'
     | '/sewa-laptop-tangerang'
+    | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
@@ -182,6 +194,7 @@ export interface RootRouteChildren {
   SewaLaptopJakartaTimurRoute: typeof SewaLaptopJakartaTimurRoute
   SewaLaptopJakartaUtaraRoute: typeof SewaLaptopJakartaUtaraRoute
   SewaLaptopTangerangRoute: typeof SewaLaptopTangerangRoute
+  SewaMacbookRoute: typeof SewaMacbookRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -194,6 +207,13 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-macbook': {
+      id: '/sewa-macbook'
+      path: '/sewa-macbook'
+      fullPath: '/sewa-macbook'
+      preLoaderRoute: typeof SewaMacbookRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sewa-laptop-tangerang': {
@@ -286,6 +306,7 @@ const rootRouteChildren: RootRouteChildren = {
   SewaLaptopJakartaTimurRoute: SewaLaptopJakartaTimurRoute,
   SewaLaptopJakartaUtaraRoute: SewaLaptopJakartaUtaraRoute,
   SewaLaptopTangerangRoute: SewaLaptopTangerangRoute,
+  SewaMacbookRoute: SewaMacbookRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
@@ -293,13 +314,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
