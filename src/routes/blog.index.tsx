@@ -31,8 +31,9 @@ export const Route = createFileRoute("/blog/")({
       {
         property: "og:description",
         content:
-          "50+ artikel seputar sewa laptop: tips memilih, perbandingan unit, dan panduan untuk event.",
+          "30 artikel pilar seputar sewa laptop: tips memilih, panduan event, dan strategi hemat untuk mahasiswa & profesional.",
       },
+
       { property: "og:url", content: `${SITE_URL}/blog` },
       { property: "og:type", content: "website" },
       { name: "twitter:title", content: "Blog Techpora.id" },
