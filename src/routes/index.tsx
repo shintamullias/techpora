@@ -136,6 +136,8 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
       { name: "twitter:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
       { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
+    ],
+
 
     links: [
       { rel: "canonical", href: `${SITE_URL}/` },
