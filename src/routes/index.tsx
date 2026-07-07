@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { posts } from "@/data/blog";
+import { getUnitImage } from "@/assets/units";
 
 import {
   Check,
