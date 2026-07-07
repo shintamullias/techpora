@@ -375,7 +375,7 @@ function Index() {
             <div className="relative">
               <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/15 via-primary/5 to-transparent" />
               <div className="relative rounded-3xl border border-border bg-card p-6 shadow-[0_30px_80px_-20px_rgba(37,99,235,0.25)] sm:p-10">
-                <img src={heroLaptop} alt="Sewa laptop premium siap pakai Techpora Jakarta" width={1024} height={1024} className="mx-auto h-auto w-full max-w-md" />
+                <img src={heroLaptop} alt="Sewa laptop premium siap pakai Techpora Jakarta" width={1024} height={1024} fetchPriority="high" decoding="async" className="mx-auto h-auto w-full max-w-md" />
                 <div className="absolute -bottom-5 left-6 right-6 flex items-center justify-between rounded-2xl border border-border bg-background px-5 py-3 shadow-lg sm:left-10 sm:right-10">
                   <div>
                     <div className="text-xs text-muted-foreground">Mulai dari</div>
