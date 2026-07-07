@@ -91,7 +91,7 @@ const faqData = [
   { q: "Sewa laptop untuk event atau pameran, bisa berapa unit?", a: "Kami melayani sewa laptop event dalam jumlah banyak (10–50+ unit) untuk registrasi, booth, training, dan pameran. Semua unit seragam, siap pakai, dan bisa diantar sekaligus dijemput di lokasi acara." },
   { q: "Lebih hemat sewa harian atau bulanan?", a: "Sewa bulanan jauh lebih hemat jika kebutuhan lebih dari 10 hari. Contoh: ThinkPad harian Rp100rb × 15 hari = Rp1,5jt, sedangkan bulanan hanya Rp1,5jt untuk 30 hari. Untuk kebutuhan singkat 1–3 hari, pilih harian." },
   { q: "Apa saja syarat sewa yang harus disiapkan?", a: "Wajib: KTP dan screenshot profil Instagram aktif. Pilih 2 dari dokumen pendukung: SIM, NPWP, KK, KTM, ID Card Kerja, atau Paspor. Dokumen jaminan dikembalikan setelah unit kembali dalam kondisi baik." },
-  { q: "Bagaimana ketentuan pembayaran & keterlambatan?", a: "Pembayaran lunas di awal masa sewa. Masa sewa dihitung 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan Rp10.000 per jam." },
+  { q: "Bagaimana ketentuan pembayaran, keterlambatan & tanggung jawab penyewa?", a: "Ketentuan penyewaan lengkap: (1) Booking unit terlebih dahulu. (2) Pembayaran lunas di awal masa sewa. (3) Penyewa bersedia didokumentasikan saat serah terima unit. (4) Penyewa bertanggung jawab atas kerusakan akibat human error selama masa sewa. (5) Kehilangan unit menjadi tanggung jawab penyewa. (6) Masa sewa dihitung 24 jam sejak unit diterima. (7) Keterlambatan pengembalian dikenakan biaya Rp10.000 per jam. (8) Unit tidak boleh dipindahtangankan kepada pihak lain. (9) Jika terdapat kendala penggunaan, wajib mengirimkan video bukti agar tim dapat melakukan pengecekan. (10) Dokumen jaminan dikembalikan setelah unit diterima kembali dalam kondisi baik." },
 ];
 
 const areaLayanan = [
@@ -169,7 +169,7 @@ export const Route = createFileRoute("/")({
           }],
           priceRange: "Rp100.000 - Rp4.500.000",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
-          sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
+          sameAs: ["https://www.instagram.com/techpora.id"],
           hasMap: MAPS_URL,
         }),
       },
@@ -217,18 +217,6 @@ const steps = [
   { n: "05", title: "Unit Dikirim", desc: "Unit sampai, siap pakai." },
 ];
 
-const terms = [
-  "Booking unit terlebih dahulu.",
-  "Pembayaran dilakukan penuh di awal masa sewa.",
-  "Penyewa bersedia didokumentasikan saat serah terima unit.",
-  "Penyewa bertanggung jawab atas kerusakan akibat human error selama masa sewa.",
-  "Kehilangan unit menjadi tanggung jawab penyewa.",
-  "Masa sewa dihitung 24 jam sejak unit diterima.",
-  "Keterlambatan pengembalian dikenakan biaya Rp10.000 per jam.",
-  "Unit tidak boleh dipindahtangankan kepada pihak lain.",
-  "Jika terdapat kendala penggunaan, wajib mengirimkan video bukti agar tim dapat melakukan pengecekan.",
-  "Dokumen jaminan akan dikembalikan setelah unit diterima kembali dalam kondisi baik.",
-];
 
 type BookingForm = {
   unit: string;
@@ -614,22 +602,6 @@ function Index() {
 
           </div>
         </section>
-        <section className="py-16 sm:py-24">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
-            <div className="text-center">
-              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Syarat & Ketentuan</div>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Ketentuan penyewaan</h2>
-            </div>
-            <ol className="mt-10 grid gap-3 sm:grid-cols-2">
-              {terms.map((t, i) => (
-                <li key={i} className="flex gap-3 rounded-xl border border-border bg-card p-4 text-sm leading-relaxed">
-                  <span className="flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-bold text-primary">{i + 1}</span>
-                  <span className="text-foreground">{t}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </section>
 
         {/* FAQ */}
         <section id="faq" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
@@ -735,7 +707,7 @@ function Index() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Instagram className="h-4 w-4 text-primary" />
-                <a href="https://instagram.com/sewalaptopjakarta.co" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">@sewalaptopjakarta.co</a>
+                <a href="https://instagram.com/techpora.id" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">@techpora.id</a>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 text-primary" />
