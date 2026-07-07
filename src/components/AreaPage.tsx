@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, MapPin, ArrowLeft, Check, Clock, Truck, ShieldCheck } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
+import { getUnitImage } from "@/assets/units";
 import { Button } from "@/components/ui/button";
 import type { AreaData } from "@/data/areas";
 import { buildWaSimple, waLink } from "@/lib/wa";
