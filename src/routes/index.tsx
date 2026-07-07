@@ -707,7 +707,7 @@ function Index() {
               </li>
               <li className="flex items-center gap-2.5">
                 <Instagram className="h-4 w-4 text-primary" />
-                <a href="https://instagram.com/techpora.id" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">@techpora.id</a>
+                <a href="https://instagram.com/sewalaptopjakarta.co" target="_blank" rel="noopener noreferrer" className="hover:text-foreground">@sewalaptopjakarta.co</a>
               </li>
               <li className="flex items-start gap-2.5">
                 <MapPin className="mt-0.5 h-4 w-4 text-primary" />
