@@ -10,6 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as SewaLaptopTangerangRouteImport } from './routes/sewa-laptop-tangerang'
+import { Route as SewaLaptopJakartaUtaraRouteImport } from './routes/sewa-laptop-jakarta-utara'
+import { Route as SewaLaptopJakartaTimurRouteImport } from './routes/sewa-laptop-jakarta-timur'
+import { Route as SewaLaptopJakartaSelatanRouteImport } from './routes/sewa-laptop-jakarta-selatan'
+import { Route as SewaLaptopJakartaPusatRouteImport } from './routes/sewa-laptop-jakarta-pusat'
+import { Route as SewaLaptopJakartaBaratRouteImport } from './routes/sewa-laptop-jakarta-barat'
+import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
+import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -17,6 +25,47 @@ import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopTangerangRoute = SewaLaptopTangerangRouteImport.update({
+  id: '/sewa-laptop-tangerang',
+  path: '/sewa-laptop-tangerang',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaUtaraRoute = SewaLaptopJakartaUtaraRouteImport.update({
+  id: '/sewa-laptop-jakarta-utara',
+  path: '/sewa-laptop-jakarta-utara',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaTimurRoute = SewaLaptopJakartaTimurRouteImport.update({
+  id: '/sewa-laptop-jakarta-timur',
+  path: '/sewa-laptop-jakarta-timur',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaSelatanRoute =
+  SewaLaptopJakartaSelatanRouteImport.update({
+    id: '/sewa-laptop-jakarta-selatan',
+    path: '/sewa-laptop-jakarta-selatan',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SewaLaptopJakartaPusatRoute = SewaLaptopJakartaPusatRouteImport.update({
+  id: '/sewa-laptop-jakarta-pusat',
+  path: '/sewa-laptop-jakarta-pusat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaBaratRoute = SewaLaptopJakartaBaratRouteImport.update({
+  id: '/sewa-laptop-jakarta-barat',
+  path: '/sewa-laptop-jakarta-barat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopDepokRoute = SewaLaptopDepokRouteImport.update({
+  id: '/sewa-laptop-depok',
+  path: '/sewa-laptop-depok',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopBekasiRoute = SewaLaptopBekasiRouteImport.update({
+  id: '/sewa-laptop-bekasi',
+  path: '/sewa-laptop-bekasi',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -37,12 +86,28 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
+  '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
+  '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
+  '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
+  '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
+  '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
+  '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
+  '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
+  '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
+  '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
+  '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
+  '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
+  '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
@@ -50,20 +115,73 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
+  '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
+  '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
+  '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
+  '/sewa-laptop-jakarta-timur': typeof SewaLaptopJakartaTimurRoute
+  '/sewa-laptop-jakarta-utara': typeof SewaLaptopJakartaUtaraRoute
+  '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/sitemap.xml' | '/blog/$slug' | '/blog/'
+  fullPaths:
+    | '/'
+    | '/sewa-laptop-bekasi'
+    | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta-barat'
+    | '/sewa-laptop-jakarta-pusat'
+    | '/sewa-laptop-jakarta-selatan'
+    | '/sewa-laptop-jakarta-timur'
+    | '/sewa-laptop-jakarta-utara'
+    | '/sewa-laptop-tangerang'
+    | '/sitemap.xml'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/sitemap.xml' | '/blog/$slug' | '/blog'
-  id: '__root__' | '/' | '/sitemap.xml' | '/blog/$slug' | '/blog/'
+  to:
+    | '/'
+    | '/sewa-laptop-bekasi'
+    | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta-barat'
+    | '/sewa-laptop-jakarta-pusat'
+    | '/sewa-laptop-jakarta-selatan'
+    | '/sewa-laptop-jakarta-timur'
+    | '/sewa-laptop-jakarta-utara'
+    | '/sewa-laptop-tangerang'
+    | '/sitemap.xml'
+    | '/blog/$slug'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/sewa-laptop-bekasi'
+    | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta-barat'
+    | '/sewa-laptop-jakarta-pusat'
+    | '/sewa-laptop-jakarta-selatan'
+    | '/sewa-laptop-jakarta-timur'
+    | '/sewa-laptop-jakarta-utara'
+    | '/sewa-laptop-tangerang'
+    | '/sitemap.xml'
+    | '/blog/$slug'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SewaLaptopBekasiRoute: typeof SewaLaptopBekasiRoute
+  SewaLaptopDepokRoute: typeof SewaLaptopDepokRoute
+  SewaLaptopJakartaBaratRoute: typeof SewaLaptopJakartaBaratRoute
+  SewaLaptopJakartaPusatRoute: typeof SewaLaptopJakartaPusatRoute
+  SewaLaptopJakartaSelatanRoute: typeof SewaLaptopJakartaSelatanRoute
+  SewaLaptopJakartaTimurRoute: typeof SewaLaptopJakartaTimurRoute
+  SewaLaptopJakartaUtaraRoute: typeof SewaLaptopJakartaUtaraRoute
+  SewaLaptopTangerangRoute: typeof SewaLaptopTangerangRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -76,6 +194,62 @@ declare module '@tanstack/react-router' {
       path: '/sitemap.xml'
       fullPath: '/sitemap.xml'
       preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-tangerang': {
+      id: '/sewa-laptop-tangerang'
+      path: '/sewa-laptop-tangerang'
+      fullPath: '/sewa-laptop-tangerang'
+      preLoaderRoute: typeof SewaLaptopTangerangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-utara': {
+      id: '/sewa-laptop-jakarta-utara'
+      path: '/sewa-laptop-jakarta-utara'
+      fullPath: '/sewa-laptop-jakarta-utara'
+      preLoaderRoute: typeof SewaLaptopJakartaUtaraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-timur': {
+      id: '/sewa-laptop-jakarta-timur'
+      path: '/sewa-laptop-jakarta-timur'
+      fullPath: '/sewa-laptop-jakarta-timur'
+      preLoaderRoute: typeof SewaLaptopJakartaTimurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-selatan': {
+      id: '/sewa-laptop-jakarta-selatan'
+      path: '/sewa-laptop-jakarta-selatan'
+      fullPath: '/sewa-laptop-jakarta-selatan'
+      preLoaderRoute: typeof SewaLaptopJakartaSelatanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-pusat': {
+      id: '/sewa-laptop-jakarta-pusat'
+      path: '/sewa-laptop-jakarta-pusat'
+      fullPath: '/sewa-laptop-jakarta-pusat'
+      preLoaderRoute: typeof SewaLaptopJakartaPusatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-barat': {
+      id: '/sewa-laptop-jakarta-barat'
+      path: '/sewa-laptop-jakarta-barat'
+      fullPath: '/sewa-laptop-jakarta-barat'
+      preLoaderRoute: typeof SewaLaptopJakartaBaratRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-depok': {
+      id: '/sewa-laptop-depok'
+      path: '/sewa-laptop-depok'
+      fullPath: '/sewa-laptop-depok'
+      preLoaderRoute: typeof SewaLaptopDepokRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-bekasi': {
+      id: '/sewa-laptop-bekasi'
+      path: '/sewa-laptop-bekasi'
+      fullPath: '/sewa-laptop-bekasi'
+      preLoaderRoute: typeof SewaLaptopBekasiRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -104,6 +278,14 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SewaLaptopBekasiRoute: SewaLaptopBekasiRoute,
+  SewaLaptopDepokRoute: SewaLaptopDepokRoute,
+  SewaLaptopJakartaBaratRoute: SewaLaptopJakartaBaratRoute,
+  SewaLaptopJakartaPusatRoute: SewaLaptopJakartaPusatRoute,
+  SewaLaptopJakartaSelatanRoute: SewaLaptopJakartaSelatanRoute,
+  SewaLaptopJakartaTimurRoute: SewaLaptopJakartaTimurRoute,
+  SewaLaptopJakartaUtaraRoute: SewaLaptopJakartaUtaraRoute,
+  SewaLaptopTangerangRoute: SewaLaptopTangerangRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
