@@ -169,7 +169,7 @@ export const Route = createFileRoute("/")({
           }],
           priceRange: "Rp100.000 - Rp4.500.000",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
-          sameAs: ["https://www.instagram.com/techpora.id"],
+          sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
           hasMap: MAPS_URL,
         }),
       },
