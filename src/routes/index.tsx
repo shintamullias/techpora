@@ -605,7 +605,7 @@ function Index() {
                   <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
                     Lihat detail area →
                   </span>
-                </Link>
+                </a>
               ))}
             </div>
 
