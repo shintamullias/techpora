@@ -82,6 +82,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "Techpora.id" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "google-site-verification", content: "s38inJ6I2e5zwqwEqQDEWc5sxUeleIoG8d0rNvugujA" },
     ],
     links: [
       {
