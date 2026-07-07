@@ -1,55 +1,63 @@
 
-## Yang akan dikerjakan (point 1, 2, 4)
+## Diagnosis singkat
 
-### 1. Sitemap & robots.txt (untuk Google Search Console)
-- Buat `src/routes/sitemap[.]xml.ts` (server route, otomatis sinkron):
-  - Base URL: `https://techpora.id`
-  - Entries statis: `/`, `/blog`
-  - Entries dinamis: loop semua `posts` dari `src/data/blog.ts` → `/blog/{slug}` dengan `lastmod` dari `post.date`
-- Buat `public/robots.txt`:
-  ```
-  User-agent: *
-  Allow: /
+`site:techpora.id` masih kosong + domain baru < 1 minggu. Ini **normal**, bukan bug. Google belum sempat crawl domain baru. Semua fondasi SEO teknis sudah beres (sitemap live, Search Console terverifikasi, meta tag benar, canonical benar).
 
-  Sitemap: https://techpora.id/sitemap.xml
-  ```
-- Update `SITE_URL` di `src/routes/index.tsx`, `src/routes/blog.index.tsx`, `src/routes/blog.$slug.tsx` dari `techpora.id` → `https://techpora.id` (canonical, og:url, JSON-LD).
+**Ekspektasi realistis:**
+- Homepage keindex: 3–14 hari sejak submit ke Search Console
+- Halaman lain (blog, area) keindex: 1–4 minggu
+- Muncul di halaman 1 untuk keyword kompetitif (misal "sewa laptop jakarta"): 3–6 bulan + butuh backlink
 
-### 2. Custom domain techpora.id
-- Publish dulu ke Lovable URL (custom domain butuh project ter-publish).
-- Setelah publish, kamu connect domain di **Project Settings → Domains → Connect Domain**, masukkan `techpora.id`.
-- Di registrar (tempat beli domain), tambahkan DNS:
-  - A record `@` → `185.158.133.1`
-  - A record `www` → `185.158.133.1`
-  - TXT record `_lovable` → value yang diberi Lovable saat setup
-- Tunggu propagasi (bisa beberapa menit s/d 72 jam). SSL otomatis.
+## Langkah percepatan (yang bisa langsung dilakukan hari ini)
 
-### 4. Analytics (GA4)
-- Scaffold GA4 script di `src/routes/__root.tsx` (di head), pakai `process.env.VITE_GA_ID` agar bisa ditoggle.
-- **Butuh GA4 Measurement ID (G-XXXXXXX) dari kamu** — buat dulu di https://analytics.google.com lalu kasih ke aku. Tanpa ID, scriptnya tidak akan loaded (no-op).
-- Kalau mau pakai Meta Pixel juga, kasih Pixel ID-nya.
+### A. Aksi manual di Google Search Console (kamu login sebagai Shinta)
 
-### Setelah deploy: daftar ke Google Search Console
-Aku bisa otomatisin verifikasi GSC pakai connector Google Search Console (verify meta-tag + submit sitemap). Tinggal bilang aja setelah domain aktif.
+Tidak perlu ubah kode. Ini yang paling efektif.
 
----
+1. **Request Indexing manual untuk halaman prioritas** — buka Search Console → URL Inspection → paste URL → klik "Request Indexing". Lakukan untuk 5–8 URL berikut satu per satu:
+   - `https://techpora.id/`
+   - `https://techpora.id/blog`
+   - `https://techpora.id/sewa-macbook`
+   - `https://techpora.id/sewa-laptop-jakarta-selatan`
+   - `https://techpora.id/sewa-laptop-jakarta-pusat`
+   - `https://techpora.id/sewa-laptop-jakarta-timur`
+   - `https://techpora.id/sewa-laptop-jakarta-barat`
+   - 1–2 artikel blog paling penting
 
-## Jawaban pertanyaan kamu: "kalau udah jalan masih bisa ganti domain ga?"
+2. **Cek status sitemap** di Search Console → Sitemaps. Pastikan status "Success" dan "Discovered URLs" nunjukin angka > 0 (biasanya 40-an halaman untuk Techpora).
 
-**Bisa**, tapi:
-- **Di Lovable**: ganti/tambah custom domain kapan saja dari Project Settings → Domains. Konten & data tetap.
-- **Di Google Search Console**: domain dianggap **property baru**. Jadi:
-  - Harus tambah property baru untuk domain barunya
-  - Harus verifikasi ulang
-  - Submit sitemap ulang
-  - Riwayat indexing & data analytics property lama **tidak otomatis pindah**
-  - Untuk pertahankan SEO ranking → setup **301 redirect** dari domain lama ke baru + gunakan fitur **"Change of Address"** di GSC
-- **GA4**: tinggal update domain di setting property, datanya tetap nyambung (selama Measurement ID sama).
+3. **Cek "Coverage / Pages"** — kalau ada URL yang "Discovered - currently not indexed", biarkan; itu antrian normal.
 
-**Rekomendasi**: pakai `techpora.id` dari awal sebelum daftarin ke GSC, biar nggak perlu migrasi.
+### B. Sinyal eksternal (opsional tapi mempercepat)
 
----
+Google menemukan situs baru lewat link dari situs lain yang sudah dipercaya. Yang bisa dilakukan cepat:
 
-## Catatan teknis
-- Frontend changes (sitemap, robots, GA script) butuh klik **Update** di Publish dialog setelah aku edit.
-- Sitemap akan auto-update setiap kali kamu tambah artikel blog baru — nggak perlu maintain manual.
+1. **Update bio Instagram @sewalaptopjakarta.co** — ganti link di bio dari yang lama ke `https://techpora.id`. IG bio link dihitung Google.
+2. **Post 1 story/reels Instagram** yang mention `techpora.id`.
+3. **Google Business Profile** — kalau belum, daftarkan bisnis di Google Maps dengan nama "Techpora.id" + link website. Ini sinyal lokal Jakarta yang kuat.
+4. **Marketplace/direktori lokal** — daftarkan techpora.id di beberapa direktori sewa Indonesia (opsional).
+
+### C. Perbaikan kecil di kode yang bisa aku kerjakan sekarang (kalau kamu setuju)
+
+Bukan penyebab "ga muncul di Google", tapi meningkatkan kualitas sinyal ke Google:
+
+1. **Generate `og-image.jpg`** untuk homepage. Sekarang JSON-LD di `src/routes/index.tsx` merujuk `${SITE_URL}/og-image.jpg` tapi file-nya belum ada di `public/`. Kalau ada, share link Techpora di WhatsApp/IG akan tampil preview gambar → orang lebih sering klik → sinyal positif.
+2. **Tambah internal link dari homepage ke blog** yang lebih menonjol (sekarang cuma link kecil di nav). Membantu Google discover artikel blog lebih cepat via crawl homepage.
+3. **Tambah breadcrumbs JSON-LD** di halaman blog & area — bantu Google memahami struktur situs.
+
+Total ~15 menit kerja.
+
+## Yang TIDAK perlu dilakukan
+
+- **Jangan** submit terus-menerus ke sitemap yang sama — sekali cukup.
+- **Jangan** pakai jasa "backlink cepat" murah — Google akan menghukum, malah tambah lama.
+- **Jangan** ubah domain lagi — konsistensi domain justru bagus buat indexing.
+- **Jangan** panik kalau minggu depan masih belum keindex — normal untuk domain baru.
+
+## Pilihan langkah berikutnya
+
+Kasih tau aku mau yang mana:
+
+- **"Kerjain bagian C aja"** → aku bikin og-image, tambah internal linking, breadcrumbs JSON-LD.
+- **"Bantu aku jalanin bagian A"** → aku pandu step-by-step buka Google Search Console untuk request indexing.
+- **"Udah cukup info, aku tunggu Google aja dulu"** → tidak ada perubahan kode, tunggu 1–2 minggu lalu cek `site:techpora.id` lagi.
