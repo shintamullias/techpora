@@ -121,6 +121,8 @@ export const Route = createFileRoute("/")({
         content:
           "Sewa laptop, printer, dan proyektor harian, mingguan, dan bulanan di Jakarta. Unit terjamin, siap pakai, pengiriman cepat untuk mahasiswa, freelancer, kantor, dan event.",
       },
+      { name: "keywords", content: "sewa laptop jakarta, rental laptop jakarta, sewa laptop harian, sewa laptop bulanan, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
+      { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { property: "og:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
       { property: "og:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
       { property: "og:url", content: `${SITE_URL}/` },
@@ -128,6 +130,7 @@ export const Route = createFileRoute("/")({
       { name: "twitter:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
       { name: "twitter:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
     ],
+
     links: [{ rel: "canonical", href: `${SITE_URL}/` }],
     scripts: [
       {
