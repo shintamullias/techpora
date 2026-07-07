@@ -1,0 +1,38 @@
+# Techpora.id — Sewa Laptop Jakarta
+
+> Layanan sewa laptop, MacBook, printer, dan proyektor untuk kebutuhan
+> harian, mingguan, dan bulanan di Jakarta, Bekasi, Depok, dan Tangerang.
+> Unit ready pakai, antar-jemput cepat, dan konsultasi via WhatsApp.
+
+Techpora adalah penyedia rental laptop yang melayani mahasiswa, freelancer,
+profesional, dan event organizer di kawasan Jabodetabek. Katalog mencakup
+Lenovo ThinkPad, ASUS VivoBook, Acer Aspire, RedmiBook, dan MacBook Air M1.
+
+## Pages
+
+- [Beranda](/): Katalog unit, harga, area layanan, dan FAQ sewa laptop.
+- [Sewa MacBook Jakarta](/sewa-macbook): Halaman khusus rental MacBook untuk desainer, developer, dan kreatif.
+- [Blog](/blog): Tips memilih laptop sewa, panduan event, dan strategi hemat untuk mahasiswa serta profesional.
+
+## Area Layanan
+
+- [Sewa Laptop Jakarta Selatan](/sewa-laptop-jakarta-selatan): SCBD, Kemang, Blok M, dan sekitarnya.
+- [Sewa Laptop Jakarta Pusat](/sewa-laptop-jakarta-pusat): Sudirman, Thamrin, Menteng, Cikini.
+- [Sewa Laptop Jakarta Barat](/sewa-laptop-jakarta-barat): Grogol, Kebon Jeruk, Puri Indah.
+- [Sewa Laptop Jakarta Timur](/sewa-laptop-jakarta-timur): Cawang, Rawamangun, kampus UNJ dan sekitar.
+- [Sewa Laptop Jakarta Utara](/sewa-laptop-jakarta-utara): Kelapa Gading, Pluit, Ancol.
+- [Sewa Laptop Tangerang](/sewa-laptop-tangerang): BSD, Alam Sutera, Gading Serpong.
+- [Sewa Laptop Bekasi](/sewa-laptop-bekasi): Bekasi Barat, Bekasi Timur, Summarecon.
+- [Sewa Laptop Depok](/sewa-laptop-depok): Margonda, kawasan UI, Cinere.
+
+## Artikel Pilihan
+
+- [Tips memilih laptop sewa untuk skripsi](/blog/tips-memilih-laptop-sewa-untuk-skripsi): Panduan spek dan durasi.
+- [Sewa laptop untuk WFH jangka pendek](/blog/sewa-laptop-untuk-wfh-jangka-pendek): Solusi profesional remote.
+- [Panduan sewa laptop untuk pameran booth Jakarta](/blog/panduan-sewa-laptop-untuk-pameran-booth-jakarta): Untuk EO dan event.
+- [Simulasi biaya sewa laptop harian vs bulanan](/blog/simulasi-hitung-biaya-sewa-laptop-harian-vs-bulanan): Perbandingan biaya.
+- [Panduan syarat dan proses sewa laptop Techpora](/blog/panduan-syarat-dan-proses-sewa-laptop-techpora): Cara pesan dan syarat.
+
+## Optional
+
+- [Sitemap XML](/sitemap.xml): Daftar lengkap URL untuk crawler.
