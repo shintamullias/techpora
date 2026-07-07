@@ -329,59 +329,112 @@ function Index() {
       </header>
 
       <main>
-        {/* HERO */}
-        <section id="beranda" className="relative overflow-hidden">
-          <div className="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-40 -left-20 h-[400px] w-[400px] rounded-full bg-primary/5 blur-3xl" />
-          <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-8 lg:py-24 lg:px-8">
+        {/* HERO — deep navy premium band */}
+        <section id="beranda" className="relative overflow-hidden bg-ink text-white">
+          {/* Ambient glows */}
+          <div className="pointer-events-none absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-sky/30 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-52 -left-24 h-[460px] w-[460px] rounded-full bg-primary/50 blur-3xl" />
+          {/* Grid texture */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 opacity-[0.12]"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.4) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+              maskImage:
+                "radial-gradient(ellipse at 50% 20%, black 30%, transparent 75%)",
+            }}
+          />
+          <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-10 lg:py-28 lg:px-8">
             <div>
-              <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-sky" />
                 Sewa Laptop, Printer & Proyektor Jakarta
               </div>
-              <h1 className="mt-5 text-4xl font-bold tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-                Sewa Laptop Jakarta <span className="text-primary">— Techpora</span>
+              <h1 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
+                Sewa Laptop Jakarta
+                <span className="block italic text-gradient-sky">— Techpora</span>
               </h1>
-              <p className="mt-3 text-lg font-medium text-foreground/80">
+              <p className="mt-5 text-lg font-medium text-white/90">
                 Laptop, Printer & Proyektor siap pakai. Harian, mingguan, bulanan.
               </p>
-              <p className="mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-                Unit siap pakai untuk mahasiswa, freelancer, kantor, event, seminar, dan kebutuhan harian. Harian, mingguan, bulanan — pengiriman cepat area Jakarta.
+              <p className="mt-4 max-w-xl text-base leading-relaxed text-white/60 sm:text-lg">
+                Unit siap pakai untuk mahasiswa, freelancer, kantor, event, seminar, dan kebutuhan harian — pengiriman cepat area Jakarta.
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
-                <Button onClick={() => openBooking()} size="lg" className="w-full gap-2 rounded-full bg-primary px-7 hover:bg-primary/90 sm:w-auto">
+                <Button
+                  onClick={() => openBooking()}
+                  size="lg"
+                  className="w-full gap-2 rounded-full bg-white px-7 text-ink hover:bg-white/90 sm:w-auto"
+                >
                   <MessageCircle className="h-5 w-5" />
                   Cek Ketersediaan
                 </Button>
                 <a href="#laptop">
-                  <Button size="lg" variant="outline" className="w-full gap-2 rounded-full border-border px-7 sm:w-auto">
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="w-full gap-2 rounded-full border-white/25 bg-white/5 px-7 text-white hover:bg-white/10 hover:text-white sm:w-auto"
+                  >
                     Lihat Unit
                     <ArrowRight className="h-4 w-4" />
                   </Button>
                 </a>
               </div>
-              <div className="mt-8 flex items-center gap-3 text-sm">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <Phone className="h-4 w-4 text-primary" />
+              <div className="mt-10 flex items-center gap-8 border-t border-white/10 pt-6 text-sm">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/10">
+                    <Phone className="h-4 w-4 text-sky" />
+                  </div>
+                  <div>
+                    <div className="text-xs text-white/50">Hubungi Kami</div>
+                    <a href={`tel:${PHONE.replace(/-/g, "")}`} className="font-semibold text-white">
+                      {PHONE}
+                    </a>
+                  </div>
                 </div>
-                <div>
-                  <div className="text-xs text-muted-foreground">Hubungi Kami</div>
-                  <a href={`tel:${PHONE.replace(/-/g, "")}`} className="font-semibold text-foreground">{PHONE}</a>
+                <div className="hidden sm:block">
+                  <div className="flex items-center gap-1 text-amber-300">
+                    {Array.from({ length: 5 }).map((_, i) => (
+                      <Star key={i} className="h-4 w-4 fill-amber-300" />
+                    ))}
+                    <span className="ml-1.5 font-semibold text-white">4.9</span>
+                  </div>
+                  <div className="text-xs text-white/50">128+ ulasan Google</div>
                 </div>
               </div>
             </div>
+
+            {/* Hero visual — layered glass card */}
             <div className="relative">
-              <div className="absolute inset-0 -z-10 rounded-3xl bg-gradient-to-br from-primary/15 via-primary/5 to-transparent" />
-              <div className="relative rounded-3xl border border-border bg-card p-6 shadow-[0_30px_80px_-20px_rgba(37,99,235,0.25)] sm:p-10">
-                <img src={heroLaptop} alt="Sewa laptop premium siap pakai Techpora Jakarta" width={1024} height={1024} fetchPriority="high" decoding="async" className="mx-auto h-auto w-full max-w-md" />
-                <div className="absolute -bottom-5 left-6 right-6 flex items-center justify-between rounded-2xl border border-border bg-background px-5 py-3 shadow-lg sm:left-10 sm:right-10">
+              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-sky/25 via-white/5 to-transparent blur-2xl" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-xl sm:p-10">
+                <div className="absolute right-6 top-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold text-white/90 backdrop-blur">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                  Available now
+                </div>
+                <img
+                  src={heroLaptop}
+                  alt="Sewa laptop premium siap pakai Techpora Jakarta"
+                  width={1024}
+                  height={1024}
+                  fetchPriority="high"
+                  decoding="async"
+                  className="mx-auto h-auto w-full max-w-md drop-shadow-[0_30px_60px_rgba(123,179,255,0.25)]"
+                />
+                <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-6 text-white">
                   <div>
-                    <div className="text-xs text-muted-foreground">Mulai dari</div>
-                    <div className="text-lg font-bold text-foreground">Rp100rb<span className="text-sm font-medium text-muted-foreground">/hari</span></div>
+                    <div className="text-[11px] uppercase tracking-wider text-white/50">Mulai dari</div>
+                    <div className="mt-1 font-serif text-2xl">Rp100rb<span className="text-sm font-sans text-white/60">/hari</span></div>
                   </div>
-                  <div className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
-                    <span className="inline-block h-1.5 w-1.5 rounded-full bg-primary" />
-                    Available
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-white/50">Unit</div>
+                    <div className="mt-1 font-serif text-2xl">10+</div>
+                  </div>
+                  <div>
+                    <div className="text-[11px] uppercase tracking-wider text-white/50">Area</div>
+                    <div className="mt-1 font-serif text-2xl">8 Kota</div>
                   </div>
                 </div>
               </div>
@@ -389,26 +442,95 @@ function Index() {
           </div>
         </section>
 
-        {/* WHY */}
-        <section className="border-y border-border bg-secondary/40 py-16 sm:py-20">
+        {/* WHY — Bento grid */}
+        <section id="kenapa-kami" className="relative bg-background py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
-              <div className="text-xs font-semibold uppercase tracking-wider text-primary">Kenapa Techpora</div>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Sewa tanpa ribet, dijamin nyaman</h2>
+              <div className="text-xs font-semibold uppercase tracking-[0.2em] text-primary">Kenapa Techpora</div>
+              <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl">
+                Sewa tanpa ribet, <span className="italic text-primary">dijamin nyaman</span>
+              </h2>
+              <p className="mt-4 text-base text-muted-foreground">
+                Standar layanan premium untuk kebutuhan harian, event, dan proyek jangka panjang.
+              </p>
             </div>
-            <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-              {whyItems.map((item) => (
-                <div key={item.title} className="group rounded-2xl border border-border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                    <item.icon className="h-6 w-6" />
+
+            <div className="mt-14 grid gap-4 sm:grid-cols-6 sm:gap-5">
+              {/* Big feature card */}
+              <div className="relative overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-[0_30px_80px_-30px_rgba(15,36,71,0.6)] sm:col-span-4 sm:row-span-2 sm:p-10">
+                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sky/30 blur-3xl" />
+                <div className="pointer-events-none absolute -bottom-24 -left-10 h-64 w-64 rounded-full bg-primary/40 blur-3xl" />
+                <div className="relative">
+                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-sky">
+                    <ShieldCheck className="h-6 w-6" />
                   </div>
-                  <h3 className="mt-5 text-base font-semibold text-foreground">{item.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">{item.desc}</p>
+                  <h3 className="mt-6 font-serif text-3xl leading-tight sm:text-4xl">
+                    Unit dicek, dibersihkan, <span className="italic text-sky">siap pakai</span>
+                  </h3>
+                  <p className="mt-4 max-w-md text-white/70">
+                    Semua laptop, printer, dan proyektor melewati QC internal sebelum dikirim. Tidak perlu setup, tinggal colok dan pakai.
+                  </p>
+                  <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
+                    {["OS terupdate", "Baterai prima", "Sudah terinstal", "Bergaransi masa sewa"].map((t) => (
+                      <div key={t} className="flex items-center gap-2 text-white/85">
+                        <Check className="h-4 w-4 text-sky" />
+                        {t}
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              ))}
+              </div>
+
+              {/* Fast response */}
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-2">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <Zap className="h-5 w-5" />
+                </div>
+                <h3 className="mt-5 font-serif text-2xl text-foreground">Fast response</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  Admin balas WhatsApp dalam menit, 7 hari seminggu.
+                </p>
+              </div>
+
+              {/* Pengiriman */}
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-2">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <Truck className="h-5 w-5" />
+                </div>
+                <h3 className="mt-5 font-serif text-2xl text-foreground">Pengiriman cepat</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  Antar area Jakarta, Tangerang, Bekasi, Depok. Gratis ongkir min. sewa mingguan.
+                </p>
+              </div>
+
+              {/* Rating card */}
+              <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-background p-6 sm:col-span-3">
+                <div className="flex items-center gap-1 text-amber-500">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
+                  ))}
+                </div>
+                <div className="mt-3 flex items-baseline gap-2">
+                  <div className="font-serif text-5xl text-foreground">4.9</div>
+                  <div className="text-sm text-muted-foreground">/ 5 · 128+ ulasan</div>
+                </div>
+                <p className="mt-2 text-sm text-muted-foreground">Rating konsisten dari mahasiswa, freelancer & korporat.</p>
+              </div>
+
+              {/* Booking */}
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-3">
+                <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <h3 className="mt-5 font-serif text-2xl text-foreground">Harian · Mingguan · Bulanan</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  Fleksibel dari 1 hari sampai proyek berbulan-bulan — harga makin hemat untuk sewa panjang.
+                </p>
+              </div>
             </div>
           </div>
         </section>
+
 
         {/* PRODUCT SECTIONS by category */}
         {cats.map((cat) => {
