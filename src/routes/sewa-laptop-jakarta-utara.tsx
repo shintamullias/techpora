@@ -41,6 +41,17 @@ export const Route = createFileRoute("/sewa-laptop-jakarta-utara")({
           description: area.metaDescription,
         }),
       },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Beranda", item: `${SITE_URL}/` },
+            { "@type": "ListItem", position: 2, name: area.area, item: `${SITE_URL}/${SLUG}` },
+          ],
+        }),
+      },
     ],
   }),
   loader: () => {
