@@ -609,6 +609,49 @@ function Index() {
           </div>
         </section>
 
+        {/* BLOG HIGHLIGHTS */}
+        <section id="blog-highlights" className="py-16 sm:py-24">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div className="max-w-2xl">
+                <div className="text-xs font-semibold uppercase tracking-wider text-primary">Blog</div>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Panduan sewa laptop & printer</h2>
+                <p className="mt-3 text-muted-foreground">
+                  Tips memilih unit, hitung-hitungan paket, dan panduan sewa per area — ditulis dari pengalaman melayani ratusan penyewa Techpora.
+                </p>
+              </div>
+              <Link to="/blog" className="inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline">
+                Lihat semua artikel <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
+            <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {posts.slice(0, 3).map((p) => (
+                <Link
+                  key={p.slug}
+                  to="/blog/$slug"
+                  params={{ slug: p.slug }}
+                  className="group flex flex-col rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+                >
+                  <span className="inline-flex w-fit rounded-full bg-primary/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-primary">
+                    {p.category}
+                  </span>
+                  <h3 className="mt-3 text-base font-semibold leading-snug text-foreground group-hover:text-primary">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
+                    {p.description}
+                  </p>
+                  <span className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                    Baca artikel →
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
+
+
         {/* FAQ */}
         <section id="faq" className="border-y border-border bg-secondary/40 py-16 sm:py-24">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
