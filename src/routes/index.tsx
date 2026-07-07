@@ -94,15 +94,16 @@ const faqData = [
 ];
 
 const areaLayanan = [
-  { area: "Jakarta Selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
-  { area: "Jakarta Timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
-  { area: "Jakarta Barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
-  { area: "Jakarta Utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
-  { area: "Jakarta Pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
-  { area: "Tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
-  { area: "Bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
-  { area: "Depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
+  { area: "Jakarta Selatan", slug: "sewa-laptop-jakarta-selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
+  { area: "Jakarta Timur", slug: "sewa-laptop-jakarta-timur", desc: "Rawamangun, Cawang, Cakung, Pulogadung — area basis operasional, ambil sendiri paling praktis." },
+  { area: "Jakarta Barat", slug: "sewa-laptop-jakarta-barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
+  { area: "Jakarta Utara", slug: "sewa-laptop-jakarta-utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
+  { area: "Jakarta Pusat", slug: "sewa-laptop-jakarta-pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },
+  { area: "Tangerang", slug: "sewa-laptop-tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
+  { area: "Bekasi", slug: "sewa-laptop-bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
+  { area: "Depok", slug: "sewa-laptop-depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
 ];
+
 
 const comparison = [
   { title: "Garansi Unit", us: "Semua unit dicek & bergaransi selama masa sewa", them: "Sering apa adanya, tanpa jaminan performa" },
