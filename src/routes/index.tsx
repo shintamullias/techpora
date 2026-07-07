@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { posts } from "@/data/blog";
+import { getUnitImage } from "@/assets/units";
 
 import {
   Check,
@@ -430,21 +431,32 @@ function Index() {
                   <p className="text-sm text-muted-foreground">Semua unit dicek & siap pakai sebelum dikirim.</p>
                 </div>
                 <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {items.map((u) => (
+                  {items.map((u) => {
+                    const img = getUnitImage(u.name);
+                    return (
                     <article
                       key={u.name}
                       className={`relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl ${
                         u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"
                       }`}
                     >
-                      <div className="flex items-center gap-4 bg-secondary/60 p-6">
-                        <div className="inline-flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                          <cat.icon className="h-6 w-6" />
+                      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-secondary/70 via-secondary/30 to-background p-6">
+                        <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
+                          <cat.icon className="h-3.5 w-3.5" />
+                          {u.category}
                         </div>
-                        <div className="min-w-0">
-                          <h3 className="text-lg font-bold leading-snug text-foreground">{u.name}</h3>
-                          {u.specs && <p className="mt-0.5 text-xs text-muted-foreground">{u.specs}</p>}
-                        </div>
+                        {img ? (
+                          <img
+                            src={img}
+                            alt={`${u.name} — sewa ${u.category.toLowerCase()} Techpora`}
+                            width={800}
+                            height={600}
+                            loading="lazy"
+                            className="max-h-full w-auto object-contain drop-shadow-lg transition-transform duration-300 group-hover:scale-105"
+                          />
+                        ) : (
+                          <cat.icon className="h-16 w-16 text-primary/40" />
+                        )}
                       </div>
                       <div className="flex flex-1 flex-col p-6">
                         <div className="flex items-start justify-between">
@@ -472,7 +484,8 @@ function Index() {
                         </Button>
                       </div>
                     </article>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </section>

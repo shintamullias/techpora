@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { MessageCircle, MapPin, ArrowLeft, Check, Clock, Truck, ShieldCheck } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
+import { getUnitImage } from "@/assets/units";
 import { Button } from "@/components/ui/button";
 import type { AreaData } from "@/data/areas";
 import { buildWaSimple, waLink } from "@/lib/wa";
@@ -114,8 +115,16 @@ export function AreaPage({ area }: { area: AreaData }) {
             <h2 className="text-2xl font-bold sm:text-3xl">Unit yang tersedia untuk {area.area}</h2>
             <p className="mt-2 text-sm text-muted-foreground">Harga sudah termasuk pengecekan unit sebelum kirim.</p>
             <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {area.units.map((u) => (
-                <article key={u.name} className={`flex flex-col rounded-2xl border bg-card p-6 shadow-sm ${u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"}`}>
+              {area.units.map((u) => {
+                const img = getUnitImage(u.name);
+                return (
+                <article key={u.name} className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"}`}>
+                  {img && (
+                    <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-secondary/60 to-secondary/20 p-6">
+                      <img src={img} alt={u.name} width={800} height={600} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-md" />
+                    </div>
+                  )}
+                  <div className="flex flex-1 flex-col p-6">
                   <div className="text-xs font-semibold uppercase tracking-wider text-primary">{u.category}</div>
                   <h3 className="mt-2 text-lg font-bold">{u.name}</h3>
                   {u.specs && <p className="mt-1 text-xs text-muted-foreground">{u.specs}</p>}
@@ -135,8 +144,10 @@ export function AreaPage({ area }: { area: AreaData }) {
                       Sewa {u.name}
                     </Button>
                   </a>
+                  </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
