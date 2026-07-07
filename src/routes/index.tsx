@@ -591,11 +591,12 @@ function Index() {
             </div>
             <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {areaLayanan.map((a) => (
-                <Link
+                <a
                   key={a.area}
-                  to={`/${a.slug}` as "/"}
+                  href={`/${a.slug}`}
                   className="group block rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
                 >
+
                   <div className="flex items-center gap-2">
                     <MapPin className="h-4 w-4 text-primary" />
                     <h3 className="text-base font-semibold text-foreground group-hover:text-primary">Sewa Laptop {a.area}</h3>
