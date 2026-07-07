@@ -483,7 +483,8 @@ function Index() {
                         </Button>
                       </div>
                     </article>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             </section>
