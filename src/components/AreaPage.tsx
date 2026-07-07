@@ -144,8 +144,10 @@ export function AreaPage({ area }: { area: AreaData }) {
                       Sewa {u.name}
                     </Button>
                   </a>
+                  </div>
                 </article>
-              ))}
+                );
+              })}
             </div>
           </div>
         </section>
