@@ -133,7 +133,10 @@ export const Route = createFileRoute("/")({
       { name: "twitter:description", content: "Laptop, printer, proyektor siap pakai. Harian, mingguan, bulanan. Area Jakarta." },
     ],
 
-    links: [{ rel: "canonical", href: `${SITE_URL}/` }],
+    links: [
+      { rel: "canonical", href: `${SITE_URL}/` },
+      { rel: "preload", as: "image", href: heroLaptop, fetchpriority: "high" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
