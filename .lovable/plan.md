@@ -13,7 +13,7 @@
 
   Sitemap: https://techpora.id/sitemap.xml
   ```
-- Update `SITE_URL` di `src/routes/index.tsx`, `src/routes/blog.index.tsx`, `src/routes/blog.$slug.tsx` dari `sewalaptopjakarta.lovable.app` → `https://techpora.id` (canonical, og:url, JSON-LD).
+- Update `SITE_URL` di `src/routes/index.tsx`, `src/routes/blog.index.tsx`, `src/routes/blog.$slug.tsx` dari `techpora.id` → `https://techpora.id` (canonical, og:url, JSON-LD).
 
 ### 2. Custom domain techpora.id
 - Publish dulu ke Lovable URL (custom domain butuh project ter-publish).

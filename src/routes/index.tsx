@@ -217,18 +217,6 @@ const steps = [
   { n: "05", title: "Unit Dikirim", desc: "Unit sampai, siap pakai." },
 ];
 
-const terms = [
-  "Booking unit terlebih dahulu.",
-  "Pembayaran dilakukan penuh di awal masa sewa.",
-  "Penyewa bersedia didokumentasikan saat serah terima unit.",
-  "Penyewa bertanggung jawab atas kerusakan akibat human error selama masa sewa.",
-  "Kehilangan unit menjadi tanggung jawab penyewa.",
-  "Masa sewa dihitung 24 jam sejak unit diterima.",
-  "Keterlambatan pengembalian dikenakan biaya Rp10.000 per jam.",
-  "Unit tidak boleh dipindahtangankan kepada pihak lain.",
-  "Jika terdapat kendala penggunaan, wajib mengirimkan video bukti agar tim dapat melakukan pengecekan.",
-  "Dokumen jaminan akan dikembalikan setelah unit diterima kembali dalam kondisi baik.",
-];
 
 type BookingForm = {
   unit: string;
