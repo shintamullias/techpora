@@ -971,4 +971,105 @@ export const posts: BlogPost[] = [
       "sewa-laptop-untuk-coworking-space-jakarta-barat",
     ],
   },
+  // ===================== KATEGORI: LOKASI JAKARTA (pilar SEO) =====================
+  {
+    slug: "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026",
+    title: "Sewa Laptop Jakarta: Panduan Lengkap Harga & Syarat 2026",
+    description:
+      "Panduan menyeluruh soal sewa laptop Jakarta di 2026 — kisaran harga real per unit, syarat administrasi, cakupan area pengiriman, dan tips pilih vendor yang tidak bikin repot.",
+    category: "Lokasi",
+    date: "2026-07-01",
+    readMinutes: 8,
+    intro:
+      "Sewa laptop di Jakarta ramai peminat karena satu alasan: harga beli laptop baru semakin naik, sementara kebutuhan pemakaian sering hanya berlangsung 1 minggu sampai 3 bulan. Panduan ini merangkum semua yang perlu kamu tahu sebelum sewa — mulai dari harga real per unit di 2026, syarat administrasi yang wajar, area Jakarta yang dijangkau, sampai tanda vendor yang layak dipercaya.",
+    sections: [
+      { h: "Kisaran harga sewa laptop Jakarta 2026", p: "Untuk laptop dasar (Lenovo ThinkPad i3, RAM 8GB, SSD 256GB) harga sewa harian di Jakarta ada di kisaran Rp100.000, mingguan Rp650.000, bulanan Rp1.500.000. Naik ke level i5 (Acer Aspire 5) sekitar Rp175.000/hari atau Rp3.000.000/bulan. MacBook Air M1 paling premium: Rp250.000/hari, Rp4.500.000/bulan. Angka-angka ini standar market Jakarta 2026 — kalau ada vendor kasih harga 50% lebih murah, pastikan unit yang dikirim benar-benar sesuai spek yang dijanjikan." },
+      { h: "Syarat administrasi yang wajar", p: "Vendor sewa laptop yang profesional di Jakarta biasanya minta: KTP (foto atau scan), NPWP (opsional, untuk corporate), dan pembayaran lunas di awal masa sewa. Deposit tambahan biasanya diminta untuk unit premium seperti MacBook — nominal wajar Rp1–2 juta yang dikembalikan setelah unit kembali dalam kondisi baik. Kalau ada vendor minta jaminan BPKB mobil untuk unit senilai Rp15 juta, itu tanda merah — cari yang lain." },
+      { h: "Area Jakarta yang biasa dijangkau", p: "Vendor Jakarta yang serius menjangkau 5 kota administrasi: Jakarta Selatan (SCBD, Kemang, Pondok Indah), Timur (Rawamangun, Cawang, Cakung), Barat (Grogol, Puri Indah, Kalideres), Utara (Kelapa Gading, PIK, Ancol), dan Pusat (Thamrin, Menteng, Kemayoran). Techpora sendiri berbasis di Rawamangun, jadi Jakarta Timur bahkan bisa ambil langsung tanpa ongkir. Estimasi kirim untuk area Jakarta 1–3 jam tergantung jarak dari basis vendor." },
+      { h: "Harian, mingguan, atau bulanan — pilih yang mana?", p: "Rumus sederhananya: kalau pakai < 5 hari, ambil harian. Kalau 5–14 hari, mingguan biasanya lebih hemat. Kalau > 3 minggu, langsung bulanan — hitungan harian × 25 hari hampir selalu lebih mahal dari paket bulanan. Untuk kebutuhan skripsi mahasiswa Jakarta yang durasinya bisa 2–3 bulan menuju sidang, paket bulanan berjalan adalah yang paling logis." },
+      { h: "Tanda vendor sewa laptop Jakarta yang layak dipercaya", p: "Pertama, punya alamat fisik yang jelas — bukan cuma nomor WhatsApp dan Instagram. Kedua, kasih detail spek dan tipe SSD/HDD di deskripsi unit (bukan cuma foto stok pabrik). Ketiga, siap kasih invoice resmi kalau kamu perlu reimburse ke kantor. Keempat, punya SLA penggantian unit — kalau unit error di tengah masa sewa, mereka ganti hari yang sama untuk area Jakarta. Kalau salah satu poin ini tidak terpenuhi, timbang lagi." },
+      { h: "Sewa vs beli untuk kerja di Jakarta", p: "Kalau kebutuhan pakai < 6 bulan (misalnya proyek freelance, staff kontrak, mahasiswa magang), sewa hampir selalu lebih hemat daripada beli. Untuk pemakaian > 1 tahun full-time, beli biasanya lebih ekonomis — asal kamu siap dengan overhead maintenance dan resale value yang cepat turun. Banyak pekerja hybrid Jakarta yang pakai kombinasi: laptop pribadi untuk kerja rutin, sewa laptop premium (MacBook / i7) hanya di minggu-minggu proyek berat." },
+      { h: "Kesalahan umum saat sewa laptop di Jakarta", p: "Yang paling sering: tidak konfirmasi ulang jam pengiriman sehingga di hari-H unit belum sampai saat presentasi mulai. Solusi: konfirmasi lagi H-1 dan minta nomor kurir. Kesalahan kedua: tidak backup Google Drive sejak hari pertama — kalau unit tiba-tiba rusak, semua kerjaan hilang. Ketiga: pilih unit terlalu tinggi spesifikasinya untuk kerjaan biasa — bayar 40% lebih mahal untuk fitur yang tidak dipakai." },
+    ],
+    cta: {
+      heading: "Siap sewa laptop di Jakarta?",
+      body: "Techpora melayani seluruh DKI Jakarta dengan pengiriman 1–3 jam, invoice resmi, dan SLA penggantian unit di hari yang sama. Chat admin untuk cek ketersediaan dan harga terkini.",
+      waMessage:
+        "Halo Techpora, saya mau tanya soal sewa laptop di Jakarta. Boleh info paket dan cara ordernya? Saya lihat dari artikel panduan sewa laptop Jakarta.",
+      internalPath: "/sewa-laptop-jakarta",
+      internalLabel: "Lihat semua unit sewa Jakarta",
+    },
+    related: [
+      "perbandingan-sewa-vs-beli-laptop-jakarta",
+      "cara-pilih-tempat-sewa-laptop-terpercaya-jakarta",
+      "sewa-laptop-untuk-wfh-jangka-pendek",
+    ],
+  },
+  {
+    slug: "perbandingan-sewa-vs-beli-laptop-jakarta",
+    title: "Sewa vs Beli Laptop untuk Kerja di Jakarta — Mana yang Lebih Hemat?",
+    description:
+      "Hitungan real biaya sewa vs beli laptop untuk pekerja Jakarta — kapan sewa lebih masuk akal, kapan beli menang, dan skenario hybrid yang paling hemat.",
+    category: "Lokasi",
+    date: "2026-07-02",
+    readMinutes: 7,
+    intro:
+      "Pertanyaan klasik yang muncul tiap tahun di Jakarta: mendingan sewa atau beli laptop? Jawabannya sangat tergantung durasi pakai, jenis kerjaan, dan kesediaan kamu mengurus maintenance. Artikel ini menghitung angka real 2026 — bukan opini — untuk 3 skenario paling umum di Jakarta.",
+    sections: [
+      { h: "Skenario 1: freelancer / staff kontrak 3 bulan", p: "Kalau kontrak kerjamu 3 bulan di kantor Jakarta yang minta bawa laptop sendiri, hitungannya sederhana: sewa Acer Aspire 5 i5 bulanan Rp3.000.000 × 3 = Rp9.000.000. Beli laptop baru dengan spek sama sekitar Rp10–12 juta. Beda hanya Rp1–3 juta, tapi setelah kontrak selesai laptopnya jadi kamu — resale value 12 bulan kemudian tinggal Rp7 juta. Jadi cost of ownership sekitar Rp3–5 juta untuk beli, versus Rp9 juta full sewa. Beli menang tipis, TAPI kamu harus siap urus setup Windows/Office sendiri, plus tanggung risiko rusak." },
+      { h: "Skenario 2: mahasiswa skripsi 2 bulan", p: "Sewa ThinkPad i3 bulanan Rp1.500.000 × 2 = Rp3.000.000. Beli laptop bekas dengan spek serupa Rp3.500.000–4.500.000. Kalau kamu jual setelah skripsi selesai, dapet balik Rp2.500.000. Cost ownership bersih Rp1–2 juta — LEBIH HEMAT daripada sewa. Tapi ada trade-off: repotnya jual bekas, risiko unit bekas yang battery-nya sudah drop, dan kalau tiba-tiba rusak di hari H sidang, tidak ada tim yang antarkan pengganti. Untuk mahasiswa Jakarta yang sudah dekat sidang, kestabilan lebih penting dari selisih Rp1–2 juta." },
+      { h: "Skenario 3: event 1 minggu untuk registrasi (20 unit)", p: "Ini paling telak: sewa 20 laptop mingguan sekitar Rp650.000 × 20 = Rp13 juta. Beli 20 laptop bekas Rp3 juta each = Rp60 juta. Setelah event selesai, kamu punya 20 laptop yang tidak dipakai — tanggung jawab jual, gudang, dan resale value yang jatuh cepat. Untuk event organizer Jakarta, sewa BUKAN pilihan — itu satu-satunya jawaban yang masuk akal secara finansial dan operasional." },
+      { h: "Skenario 4: kerja hybrid full-time (1 tahun+)", p: "Untuk kerja hybrid full-time > 1 tahun di Jakarta, beli laptop biasanya menang jauh. Sewa Acer i5 bulanan Rp3 juta × 12 = Rp36 juta setahun. Beli laptop baru Rp10 juta, pakai 3 tahun, resale Rp4 juta — cost of ownership sekitar Rp2 juta/tahun. Sewa masuk akal di skenario ini HANYA kalau kamu tidak mau urus maintenance atau butuh laptop kelas premium (MacBook Air M1) tanpa keluar Rp20 juta di depan." },
+      { h: "Kombinasi hybrid yang paling hemat", p: "Banyak profesional Jakarta pakai skema kombinasi: laptop pribadi kelas menengah (Rp8–10 juta) untuk pemakaian sehari-hari, plus sewa unit premium (MacBook Air M1 atau i7) hanya di 1–2 minggu proyek berat per bulan. Total keluar sekitar Rp1 juta/bulan untuk sewa premium tambahan, tapi kamu tetap punya laptop pribadi yang jadi aset. Skema ini paling banyak dipakai freelancer & konsultan Jaksel yang sesekali harus meeting klien dengan tampilan 'wah'." },
+      { h: "Faktor non-uang yang sering diabaikan", p: "Sewa punya beberapa keuntungan non-finansial yang jarang dihitung: tidak perlu urus setup Windows Update, tidak takut laptop hilang / dicuri karena bisa dilaporkan ke vendor, dan bisa upgrade spek kapan saja kalau kerjaan berubah. Beli punya keuntungan: laptop kenal jari kamu (keyboard, layout, shortcut), tidak ada tekanan 'harus balikin', dan cocok untuk kerjaan sensitif yang tidak nyaman di unit yang dipakai bergiliran." },
+    ],
+    cta: {
+      heading: "Ragu sewa atau beli? Cek harga sewa Jakarta dulu",
+      body: "Chat admin dengan detail kebutuhan — kami bantu hitungin skenario sewa vs beli yang paling hemat untuk kondisi kamu di Jakarta.",
+      waMessage:
+        "Halo Techpora, saya lagi banding-bandingin sewa vs beli laptop untuk kebutuhan di Jakarta. Boleh konsultasi paketnya? Saya lihat dari artikel perbandingan sewa vs beli.",
+      internalPath: "/sewa-laptop-jakarta",
+      internalLabel: "Lihat paket sewa laptop Jakarta",
+    },
+    related: [
+      "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026",
+      "cara-pilih-tempat-sewa-laptop-terpercaya-jakarta",
+      "mahasiswa-rantau-jakarta-sewa-vs-beli-laptop",
+    ],
+  },
+  {
+    slug: "cara-pilih-tempat-sewa-laptop-terpercaya-jakarta",
+    title: "Cara Pilih Tempat Sewa Laptop Terpercaya di Jakarta — 7 Checklist",
+    description:
+      "Checklist praktis untuk mengevaluasi vendor sewa laptop di Jakarta — dari alamat fisik, invoice, SLA, sampai review Google Maps. Hindari vendor abal-abal.",
+    category: "Lokasi",
+    date: "2026-07-03",
+    readMinutes: 6,
+    intro:
+      "Cari tempat sewa laptop di Jakarta itu mudah — Google menampilkan puluhan vendor. Yang sulit: memastikan yang kamu pilih benar-benar profesional dan tidak akan menghilang di tengah masa sewa. Ini 7 checklist real yang dipakai penyewa jangka panjang di Jakarta sebelum tanda tangan kontrak sewa.",
+    sections: [
+      { h: "1. Punya alamat fisik yang bisa dicek di Google Maps", p: "Vendor sewa laptop Jakarta yang serius pasti punya kantor / toko dengan alamat jelas di Google Maps. Cek dulu apakah alamatnya real — kalau cuma nomor WhatsApp dan Instagram tanpa alamat yang bisa didatangi, timbang ulang. Techpora misalnya berbasis di Jl. R. Mangun Muka Raya, Rawamangun, Jakarta Timur, dan pelanggan Jakarta Timur bisa datang langsung untuk ambil sendiri." },
+      { h: "2. Detail spek dan tipe SSD dituliskan jelas", p: "Vendor yang malas biasanya cuma tulis 'Laptop i5' tanpa detail. Vendor profesional tulis: 'Acer Aspire 5, i5-1135G7, RAM 8GB, SSD 256GB NVMe, layar 14 inch'. Perbedaan detail ini penting — RAM 4GB vs 8GB itu beda pengalaman pemakaian yang sangat besar, dan SSD NVMe vs SATA beda kecepatan booting 3–4x lipat." },
+      { h: "3. Siap kasih invoice resmi corporate", p: "Kalau kamu perlu reimburse ke kantor Jakarta, tanyakan di awal: 'Bisa kasih invoice resmi dengan detail pajak?' Vendor yang serius menjawab 'ya' tanpa ragu. Yang cuma bilang 'nota tulis tangan saja ya' berarti belum bisa handle klien corporate — mungkin fine untuk sewa personal, tapi tidak ideal untuk pemakaian kantor Sudirman-Thamrin." },
+      { h: "4. Ada SLA penggantian unit", p: "Ini yang paling sering dilupakan. Tanya: 'Kalau unit error di tengah masa sewa, berapa lama kalian ganti?' Vendor profesional di Jakarta biasanya jawab 'hari yang sama untuk area Jakarta'. Yang bilang 'nanti kita lihat dulu' atau 'H+3 baru bisa ganti' punya prioritas operasional yang lemah — hindari untuk sewa jangka panjang." },
+      { h: "5. Cek review Google Maps, bukan cuma testimoni Instagram", p: "Testimoni Instagram bisa di-curate. Review Google Maps lebih sulit dimanipulasi karena ada moderasi Google. Cari vendor yang punya minimal 50+ review di Google Maps dengan rating > 4.5. Baca review 1–2 bintangnya juga — kadang keluhan yang ada di review negatif memang deal-breaker untuk kondisi kamu." },
+      { h: "6. Respon WhatsApp cepat & informatif", p: "Cek respon awal admin. Vendor Jakarta yang serius biasanya balas < 15 menit di jam kerja dengan jawaban informatif — bukan cuma 'iya kak' atau 'DM aja'. Ini indikator ke depannya: kalau di awal aja balasnya lama, jangan harap responsive saat kamu ada masalah di malam hari." },
+      { h: "7. Ada opsi ambil sendiri (untuk area dekat)", p: "Vendor yang membolehkan ambil sendiri di alamat fisik biasanya lebih dipercaya. Alasannya sederhana: mereka tidak takut ketemu langsung, tidak menyembunyikan operasi, dan siap terima keluhan tatap muka. Untuk penyewa area Jakarta Timur, opsi ambil sendiri di Rawamangun juga menghemat ongkir." },
+      { h: "Red flag yang harus dihindari", p: "Beberapa tanda vendor Jakarta yang sebaiknya di-skip: (1) minta pembayaran seluruhnya ke rekening pribadi (bukan rekening perusahaan), (2) tidak mau kasih foto kantor / toko, (3) harga jauh di bawah market (biasanya sewa unit second yang battery-nya sudah drop parah), (4) tidak mau ketemu tatap muka bahkan untuk sewa nilai puluhan juta. Kalau ada 2 dari 4 red flag ini, cari vendor lain." },
+    ],
+    cta: {
+      heading: "Cari vendor sewa laptop Jakarta yang lolos 7 checklist?",
+      body: "Techpora buka sejak 2018 di Rawamangun Jakarta Timur, invoice corporate ready, SLA penggantian unit hari yang sama untuk area Jakarta. Chat admin untuk mulai sewa hari ini.",
+      waMessage:
+        "Halo Techpora, saya cari tempat sewa laptop terpercaya di Jakarta. Boleh info paket dan alamat toko untuk cek langsung? Saya lihat dari artikel checklist tempat sewa laptop.",
+      internalPath: "/sewa-laptop-jakarta",
+      internalLabel: "Lihat unit sewa Jakarta",
+    },
+    related: [
+      "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026",
+      "perbandingan-sewa-vs-beli-laptop-jakarta",
+      "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    ],
+  },
 ];
+

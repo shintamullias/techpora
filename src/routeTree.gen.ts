@@ -17,8 +17,10 @@ import { Route as SewaLaptopJakartaTimurRouteImport } from './routes/sewa-laptop
 import { Route as SewaLaptopJakartaSelatanRouteImport } from './routes/sewa-laptop-jakarta-selatan'
 import { Route as SewaLaptopJakartaPusatRouteImport } from './routes/sewa-laptop-jakarta-pusat'
 import { Route as SewaLaptopJakartaBaratRouteImport } from './routes/sewa-laptop-jakarta-barat'
+import { Route as SewaLaptopJakartaRouteImport } from './routes/sewa-laptop-jakarta'
 import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
 import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
+import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-jakarta'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -64,6 +66,11 @@ const SewaLaptopJakartaBaratRoute = SewaLaptopJakartaBaratRouteImport.update({
   path: '/sewa-laptop-jakarta-barat',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SewaLaptopJakartaRoute = SewaLaptopJakartaRouteImport.update({
+  id: '/sewa-laptop-jakarta',
+  path: '/sewa-laptop-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SewaLaptopDepokRoute = SewaLaptopDepokRouteImport.update({
   id: '/sewa-laptop-depok',
   path: '/sewa-laptop-depok',
@@ -72,6 +79,11 @@ const SewaLaptopDepokRoute = SewaLaptopDepokRouteImport.update({
 const SewaLaptopBekasiRoute = SewaLaptopBekasiRouteImport.update({
   id: '/sewa-laptop-bekasi',
   path: '/sewa-laptop-bekasi',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RentalLaptopJakartaRoute = RentalLaptopJakartaRouteImport.update({
+  id: '/rental-laptop-jakarta',
+  path: '/rental-laptop-jakarta',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -92,8 +104,10 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
   '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
@@ -107,8 +121,10 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
   '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
@@ -123,8 +139,10 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
+  '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
   '/sewa-laptop-jakarta-selatan': typeof SewaLaptopJakartaSelatanRoute
@@ -140,8 +158,10 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
     | '/sewa-laptop-jakarta-selatan'
@@ -155,8 +175,10 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
     | '/sewa-laptop-jakarta-selatan'
@@ -170,8 +192,10 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-depok'
+    | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
     | '/sewa-laptop-jakarta-selatan'
@@ -186,8 +210,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RentalLaptopJakartaRoute: typeof RentalLaptopJakartaRoute
   SewaLaptopBekasiRoute: typeof SewaLaptopBekasiRoute
   SewaLaptopDepokRoute: typeof SewaLaptopDepokRoute
+  SewaLaptopJakartaRoute: typeof SewaLaptopJakartaRoute
   SewaLaptopJakartaBaratRoute: typeof SewaLaptopJakartaBaratRoute
   SewaLaptopJakartaPusatRoute: typeof SewaLaptopJakartaPusatRoute
   SewaLaptopJakartaSelatanRoute: typeof SewaLaptopJakartaSelatanRoute
@@ -258,6 +284,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SewaLaptopJakartaBaratRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sewa-laptop-jakarta': {
+      id: '/sewa-laptop-jakarta'
+      path: '/sewa-laptop-jakarta'
+      fullPath: '/sewa-laptop-jakarta'
+      preLoaderRoute: typeof SewaLaptopJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sewa-laptop-depok': {
       id: '/sewa-laptop-depok'
       path: '/sewa-laptop-depok'
@@ -270,6 +303,13 @@ declare module '@tanstack/react-router' {
       path: '/sewa-laptop-bekasi'
       fullPath: '/sewa-laptop-bekasi'
       preLoaderRoute: typeof SewaLaptopBekasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rental-laptop-jakarta': {
+      id: '/rental-laptop-jakarta'
+      path: '/rental-laptop-jakarta'
+      fullPath: '/rental-laptop-jakarta'
+      preLoaderRoute: typeof RentalLaptopJakartaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -298,8 +338,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RentalLaptopJakartaRoute: RentalLaptopJakartaRoute,
   SewaLaptopBekasiRoute: SewaLaptopBekasiRoute,
   SewaLaptopDepokRoute: SewaLaptopDepokRoute,
+  SewaLaptopJakartaRoute: SewaLaptopJakartaRoute,
   SewaLaptopJakartaBaratRoute: SewaLaptopJakartaBaratRoute,
   SewaLaptopJakartaPusatRoute: SewaLaptopJakartaPusatRoute,
   SewaLaptopJakartaSelatanRoute: SewaLaptopJakartaSelatanRoute,
