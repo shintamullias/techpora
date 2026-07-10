@@ -1,0 +1,32 @@
+{
+  "slug": "rental-laptop-tahunan-jakarta",
+  "title": "Rental laptop tahunan Jakarta untuk Perusahaan",
+  "description": "Rental laptop tahunan Jakarta untuk tim kantor, proyek, dan pelatihan. Bandingkan biaya, pilih unit tepat, lalu konsultasikan paketnya.",
+  "category": "Lokasi",
+  "date": "2026-07-10",
+  "readMinutes": 2,
+  "intro": "Sewa laptop durasi 12 bulan cocok untuk perusahaan yang butuh perangkat stabil tanpa menambah aset tetap. Skema ini biasanya dipakai untuk onboarding karyawan, proyek outsourcing, kelas pelatihan, atau ekspansi tim sementara di Jakarta. Techpora membantu menyesuaikan spesifikasi, jumlah unit, dan jadwal pengiriman agar perangkat siap pakai saat dibutuhkan. Untuk estimasi cepat, hubungi 6282177984041 atau chat via WhatsApp dengan info jumlah unit, durasi, aplikasi yang digunakan, serta lokasi kantor secara lengkap.",
+  "sections": [
+    {
+      "h": "Overview singkat",
+      "p": "Secara praktis, kontrak tahunan memberi kepastian stok dan biaya dibanding sewa harian yang dipakai ad hoc. Perusahaan bisa menetapkan standar perangkat, misalnya Core i5/Ryzen 5 dengan RAM 8-16 GB untuk admin, atau MacBook untuk desain dan produksi konten. Harga referensi Techpora: laptop mulai Rp100.000/hari, MacBook mulai Rp250.000/hari, dan sewa bulanan mulai Rp1.500.000. Untuk durasi 12 bulan, tim biasanya meminta penawaran khusus berdasarkan jumlah unit, spesifikasi, garansi penggantian, serta kebutuhan instalasi software. Model ini memudahkan procurement karena tagihan lebih rapi."
+    },
+    {
+      "h": "Perbandingan sewa vs beli",
+      "p": "Jika dihitung kasar, membeli 20 laptop kelas bisnis bisa mengunci modal ratusan juta rupiah di awal, belum termasuk depresiasi 20-30% per tahun, perbaikan, dan perangkat cadangan. Dengan sewa, biaya berubah menjadi operasional bulanan yang lebih mudah diprediksi. Saat proyek selesai atau komposisi tim berubah, jumlah unit bisa dievaluasi tanpa menjual aset bekas. Pembelian tetap masuk akal untuk karyawan permanen dengan masa pakai 3-4 tahun, tetapi sewa lebih fleksibel untuk kontrak kerja, vendor, pelatihan, atau tim yang skalanya naik-turun di Jakarta."
+    },
+    {
+      "h": "Cara memilih unit",
+      "p": "Untuk pemilihan unit, mulai dari beban kerja, bukan dari merek. Aplikasi Office, browser, dan meeting online cukup nyaman di Core i5/Ryzen 5, RAM 8 GB, SSD 256 GB. Analisis data, multitasking berat, atau desain ringan lebih aman memakai RAM 16 GB. Tim kreatif yang memakai Final Cut, Logic, atau ekosistem Apple bisa mempertimbangkan MacBook. Pastikan juga SLA penggantian unit, kondisi baterai, kelengkapan charger, instalasi aplikasi, serta opsi delivery ke area Jakarta. Mintalah daftar stok aktual agar spesifikasi yang ditawarkan benar-benar tersedia, bukan sekadar katalog."
+    }
+  ],
+  "cta": {
+    "heading": "Konsultasikan Paket Tahunan Anda",
+    "body": "Chat via WhatsApp untuk cek stok, rekomendasi spesifikasi, dan simulasi biaya 12 bulan sesuai jumlah unit serta lokasi kantor di Jakarta.",
+    "waMessage": "Halo Techpora, saya melihat dari techpora.id dan butuh rental laptop tahunan Jakarta. Mohon info pilihan unit, stok, dan estimasi biaya.",
+    "internalPath": "/sewa-laptop-jakarta",
+    "internalLabel": "Cek layanan Jakarta"
+  },
+  "related": [],
+  "keywords": "rental laptop tahunan Jakarta"
+}
