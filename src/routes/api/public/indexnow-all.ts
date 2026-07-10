@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
 import { generatedPosts } from "@/content/blog";
-import { staticBlogPosts } from "@/data/blog";
+import { posts as staticBlogPosts } from "@/data/blog";
 
 const HOST = "techpora.id";
 const BASE_URL = `https://${HOST}`;
