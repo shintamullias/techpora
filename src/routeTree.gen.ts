@@ -24,6 +24,9 @@ import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ApiPublicPingSitemapRouteImport } from './routes/api/public/ping-sitemap'
+import { Route as ApiPublicIndexnowAllRouteImport } from './routes/api/public/indexnow-all'
+import { Route as ApiPublicIndexnowRouteImport } from './routes/api/public/indexnow'
 
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
@@ -101,6 +104,21 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicPingSitemapRoute = ApiPublicPingSitemapRouteImport.update({
+  id: '/api/public/ping-sitemap',
+  path: '/api/public/ping-sitemap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicIndexnowAllRoute = ApiPublicIndexnowAllRouteImport.update({
+  id: '/api/public/indexnow-all',
+  path: '/api/public/indexnow-all',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicIndexnowRoute = ApiPublicIndexnowRouteImport.update({
+  id: '/api/public/indexnow',
+  path: '/api/public/indexnow',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -118,6 +136,9 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/api/public/indexnow': typeof ApiPublicIndexnowRoute
+  '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
+  '/api/public/ping-sitemap': typeof ApiPublicPingSitemapRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -135,6 +156,9 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog': typeof BlogIndexRoute
+  '/api/public/indexnow': typeof ApiPublicIndexnowRoute
+  '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
+  '/api/public/ping-sitemap': typeof ApiPublicPingSitemapRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -153,6 +177,9 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/blog/': typeof BlogIndexRoute
+  '/api/public/indexnow': typeof ApiPublicIndexnowRoute
+  '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
+  '/api/public/ping-sitemap': typeof ApiPublicPingSitemapRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -172,6 +199,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
+    | '/api/public/indexnow'
+    | '/api/public/indexnow-all'
+    | '/api/public/ping-sitemap'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -189,6 +219,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog'
+    | '/api/public/indexnow'
+    | '/api/public/indexnow-all'
+    | '/api/public/ping-sitemap'
   id:
     | '__root__'
     | '/'
@@ -206,6 +239,9 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/blog/'
+    | '/api/public/indexnow'
+    | '/api/public/indexnow-all'
+    | '/api/public/ping-sitemap'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -224,6 +260,9 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
+  ApiPublicIndexnowRoute: typeof ApiPublicIndexnowRoute
+  ApiPublicIndexnowAllRoute: typeof ApiPublicIndexnowAllRoute
+  ApiPublicPingSitemapRoute: typeof ApiPublicPingSitemapRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -333,6 +372,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ping-sitemap': {
+      id: '/api/public/ping-sitemap'
+      path: '/api/public/ping-sitemap'
+      fullPath: '/api/public/ping-sitemap'
+      preLoaderRoute: typeof ApiPublicPingSitemapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/indexnow-all': {
+      id: '/api/public/indexnow-all'
+      path: '/api/public/indexnow-all'
+      fullPath: '/api/public/indexnow-all'
+      preLoaderRoute: typeof ApiPublicIndexnowAllRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/indexnow': {
+      id: '/api/public/indexnow'
+      path: '/api/public/indexnow'
+      fullPath: '/api/public/indexnow'
+      preLoaderRoute: typeof ApiPublicIndexnowRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -352,6 +412,9 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
+  ApiPublicIndexnowRoute: ApiPublicIndexnowRoute,
+  ApiPublicIndexnowAllRoute: ApiPublicIndexnowAllRoute,
+  ApiPublicPingSitemapRoute: ApiPublicPingSitemapRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
