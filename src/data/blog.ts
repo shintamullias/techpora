@@ -1073,3 +1073,15 @@ export const posts: BlogPost[] = [
   },
 ];
 
+// Merge generated articles (500 SEO artikel dari scripts/generate-articles.ts)
+import { generatedPosts } from "@/content/blog";
+
+const _existingSlugs = new Set(posts.map((p) => p.slug));
+for (const gp of generatedPosts) {
+  if (!_existingSlugs.has(gp.slug)) {
+    posts.push(gp);
+    _existingSlugs.add(gp.slug);
+  }
+}
+
+
