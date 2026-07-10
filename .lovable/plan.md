@@ -1,101 +1,87 @@
-# Target: Ranking #1 "sewa laptop jakarta" & "rental laptop jakarta"
+## Ringkasan
 
-## Data lapangan (Semrush, market Indonesia)
+Audit + generate 500 artikel SEO baru untuk menang di **"sewa laptop jakarta"** & **"rental laptop jakarta"**, plus semua turunannya (harian, mingguan, bulanan, murah, free ongkir, per area, per unit). Semua CTA ke WhatsApp. Auto-submit sitemap ke Google Search Console tiap deploy.
 
-| Keyword | Volume/bulan | Difficulty | Status kita |
-|---|---|---|---|
-| sewa laptop jakarta | **1.900** | 12/100 (very easy) | belum keindex |
-| rental laptop jakarta | 170 | 12/100 (very easy) | belum keindex |
-| sewa laptop | 5.400 | 14/100 (very easy) | bonus target |
-| rental laptop | 1.300 | 14/100 (very easy) | bonus target |
+## Yang akan aku bangun
 
-**Kabar baik:** difficulty rendah semua — realistis buat kejar top 3 dalam 2–3 bulan.
+### 1. Audit cepat (before-touch)
+- Cek keyword existing di homepage & pilar `/sewa-laptop-jakarta`, `/rental-laptop-jakarta` (via Semrush).
+- Cek keyword variasi: harian/mingguan/bulanan/murah — pastikan tiap grup punya cluster artikel penopang.
+- Cek `robots.txt`, sitemap, meta, internal linking dari hasil audit.
+- Output: daftar quick-fix + peta 500 artikel (dimensi keyword × area × unit × modifier).
 
-**Kompetitor yang harus dilewatin (posisi 1–10 sekarang):**
-arental.co.id, javarent.co.id, kanaprorent.com, sewalaptopjakarta.co.id, asani.co.id, nusarental.com, indotek.id, rentalan.id. Plus dua akun Instagram (@techtopia.id & @happytop_id) yang nangkring di top 3 — jadi profil Instagram juga penting.
+### 2. Matriks 500 artikel (anti-duplikat)
 
-**Domain kita:** baru, belum ada authority di mata Google. Ini bottleneck utama — bukan konten, tapi umur & sinyal kepercayaan.
+Kombinasi dimensi (semua slug di-hash & di-dedupe supaya unik):
 
----
+```text
+[intent]        sewa / rental
+[unit]          laptop / macbook / thinkpad / vivobook / redmibook / acer
+[durasi]        harian / mingguan / bulanan / tahunan / 3-hari / seminggu
+[modifier]      murah / terjangkau / free-ongkir / ready-stock / bergaransi
+                / bisa-antar / tanpa-dp / paling-hemat / 24-jam
+[area]          jakarta / jaksel / jaktim / jakbar / jakut / jakpus
+                / bekasi / depok / tangerang / bsd / bintaro / pik / kelapa-gading
+                / rawamangun / kuningan / sudirman / thamrin
+[use-case]      mahasiswa / freelancer / event / kantor / meeting / editing
+                / gaming / design / kuliah-online / wfh / bootcamp
+```
 
-## Strategi 3 lapis
+Total kombinasi > 5.000. Aku ambil **500 slug pertama** yang paling relevan untuk cluster utama (prioritas: intent × durasi × area, lalu intent × unit × area, lalu use-case × durasi).
 
-### Lapis 1 — Bikin halaman yang layak nomor 1 (on-page, kerjaan kode)
+Struktur artikel per volume (mix biar tidak spam):
+- 30% **pendek** (400–600 kata) — 3–4 paragraf pendek, 1 list, 1 CTA WA.
+- 50% **sedang** (900–1.200 kata) — H2 (kenapa, harga, unit, area, cara sewa), FAQ 3 item, 2 CTA WA.
+- 20% **panjang** (1.800–2.500 kata) — H2 lengkap + tabel harga + FAQ 6 item + testimoni + 3 CTA WA + internal link block.
 
-Saat ini ada 8 halaman area (`/sewa-laptop-jakarta-selatan`, dst) tapi **belum ada halaman payung `/sewa-laptop-jakarta`** yang secara eksplisit menargetkan keyword utama. Kompetitor top semua punya halaman semacam ini.
+### 3. Pipeline generate (sekali jalan, hasil di-commit)
 
-1. **Buat `/sewa-laptop-jakarta`** — halaman hub Jakarta.
-   - H1: "Sewa Laptop Jakarta — Harian, Mingguan, Bulanan"
-   - Isi: intro kuat, list semua unit + harga, breakdown 5 area Jakarta (link ke area page yang sudah ada), tabel perbandingan harga vs kompetitor, testimoni, FAQ Jakarta-specific, CTA WA.
-   - Sekitar 1.500–2.000 kata (kompetitor rata-rata segitu).
-   - Full meta + JSON-LD (LocalBusiness + FAQPage + BreadcrumbList).
+`scripts/generate-articles.ts` (dijalankan lokal via `bun` sekali; tidak ada AI call saat runtime app):
 
-2. **Buat `/rental-laptop-jakarta`** — alias untuk keyword "rental" (masyarakat pakai dua istilah).
-   - Konten mirip tapi bahasanya dibedakan (bukan copy-paste — Google deteksi duplicate).
-   - Cross-link ke halaman "sewa laptop jakarta".
+1. Baca matriks slug (deterministic, hash-based, dedup).
+2. Untuk tiap slug, pilih template panjang (30/50/20) + persona penulis (rotasi 6 gaya) + variasi struktur H2 (rotasi 8 pola).
+3. Panggil **Lovable AI (`openai/gpt-5.5`)** dengan prompt yang menyertakan: keyword utama, LSI, area, unit, durasi, style guidelines Bahasa Indonesia natural, aturan anti-spam (larangan paragraf identik, wajib variasi opening).
+4. Hasil disimpan sebagai `src/content/blog/{slug}.mdx` + frontmatter (title, description ≤160, date, category, keywords, readMinutes, hero image key).
+5. Concurrency dibatasi (5 paralel) + retry + resume-from-last supaya bisa lanjut kalau kena rate-limit.
+6. Estimasi biaya: ±500 request `gpt-5.5` (aku tampilkan estimasi kredit sebelum menjalankan; kamu confirm dulu sebelum aku jalankan generate).
 
-3. **Perkuat homepage untuk keyword utama.**
-   - H1 homepage saat ini: cek dulu — kalau belum ada "Sewa Laptop Jakarta" verbatim di H1 atau meta, dimasukin.
-   - Section pertama below hero: paragraf 150 kata yang jelas nyebut "sewa laptop jakarta", "rental laptop jakarta", area yang dilayani.
+### 4. Blog runtime
+- Loader `src/data/blog.ts` di-refactor untuk read dari file MDX/JSON generated (bukan hardcoded array).
+- Route `/blog/$slug` sudah ada → tinggal support konten baru + section CTA WA yang di-inject otomatis (nomor `6282177984041`, message prefilled ke keyword artikel + area).
+- 3 CTA WA per artikel (atas, tengah, bawah) — button + sticky mobile bar.
+- Internal linking otomatis: tiap artikel link ke 3 artikel sibling (same area / same durasi) + pilar `/sewa-laptop-jakarta`.
 
-4. **Internal linking rapi.**
-   - Semua area page link balik ke `/sewa-laptop-jakarta` (parent).
-   - Homepage kasih section "Sewa Laptop per Wilayah Jakarta" yang link ke 5 area page + hub Jakarta.
-   - Blog post relevan link ke hub Jakarta.
+### 5. Sitemap + auto-index GSC
+- `src/routes/sitemap[.]xml.ts` sudah ada → 500 URL baru otomatis masuk (loader baca dari `posts`).
+- **Auto-submit tiap deploy** via Search Console API menggunakan connector Google Search Console yang sudah tersedia:
+  - Server route `/api/public/gsc-ping` (protected by shared secret) → PUT sitemap.
+  - GitHub-less: aku tambah note supaya kamu klik "Publish" → aku sediakan tombol/manual trigger di dashboard settings? **Alternatif lebih simpel**: aku tambah script `bun run gsc:submit` yang bisa dijalankan tiap kali publish (aku dokumentasikan di README).
+- Selain sitemap, aku pakai **URL Inspection API** untuk cek status batch (rate-limited jadi cek sampling 20 URL random per run).
+- `robots.txt` diperbarui: `Sitemap: https://techpora.id/sitemap.xml`.
 
-5. **Tambah konten blog Jakarta-specific.**
-   - "Sewa laptop Jakarta: panduan lengkap harga & syarat 2026"
-   - "Perbandingan sewa vs beli laptop untuk kerja di Jakarta"
-   - "Tempat sewa laptop terpercaya Jakarta — apa yang harus dicek"
-   - 3 artikel ini masing-masing 1.000+ kata, link ke halaman hub.
+### 6. Bagian teknis lain
+- Schema `Article` + `BreadcrumbList` di tiap post (sudah ada — dipertahankan).
+- Meta description tiap post ≤ 160 char (validator di script).
+- H1 unik per artikel; title ≤ 60 char (validator).
+- Hero image: rotasi 8 image existing (bukan generate 500 image baru — biar hemat).
+- Prefetch WA link + `rel="noopener"`.
 
-### Lapis 2 — Sinyal kepercayaan (off-page, kerjaan kamu di luar kode)
+## Yang tidak aku lakukan (biar ekspektasi jelas)
+- Tidak generate 500 gambar unik (mahal & tidak perlu untuk SEO).
+- Tidak pakai Google Indexing API resmi (Google larang untuk konten non-JobPosting — bisa kena manual action). Fokus sitemap resmi.
+- Tidak menjanjikan indexing < 24 jam — Google butuh 1–14 hari; aku hanya bisa memaksimalkan sinyalnya.
 
-Domain baru ranking-nya lambat sampai Google percaya. Ini yang paling ngangkat:
+## Urutan eksekusi (aku minta konfirmasi sebelum langkah 3)
 
-1. **Google Business Profile.** Bikin listing "Techpora — Sewa Laptop Jakarta" di alamat Rawamangun. Ini bahkan bisa muncul di Google Maps pack di atas hasil organik. **Efeknya paling gede & paling cepat** untuk local search seperti "sewa laptop jakarta".
-2. **Direktori bisnis Indonesia.** Daftar di: bukalapak (jasa), tokopedia (jasa sewa), OLX, jualo.com, Yellowpages.co.id. Backlink + NAP consistency (nama, alamat, phone sama di semua tempat).
-3. **Instagram + TikTok bisnis.** Kompetitor top 3 di SERP itu akun IG — Google respect social presence. Post rutin 3x/minggu, cantumin link techpora.id di bio.
-4. **Testimoni + review Google Maps.** Minta 20 klien pertama kasih review 5⭐ di Google Business. Ini sinyal kuat.
-5. **Konten link-worthy.** Kalau bisa dapet mention dari blog mahasiswa UI/Binus/UMN atau artikel event organizer — impact besar.
+1. **Audit + fix quick-win** (meta, internal link, robots, sitemap ping infra). ~cepat.
+2. **Bangun pipeline + generate 5 artikel dummy** untuk sample review kualitas. Kamu approve → lanjut.
+3. **Generate 500 artikel** (butuh confirm karena konsumsi kredit AI besar).
+4. **Wire ke blog + sitemap + GSC submit**.
+5. **Verify**: build success, `/sitemap.xml` berisi 500+ URL, sample artikel render + CTA WA jalan.
 
-### Lapis 3 — Technical + monitoring (kerjaan kode ringan)
+## Yang butuh dari kamu
 
-1. **Search Console** — verifikasi & submit sitemap (kalau belum). Request indexing manual untuk `/sewa-laptop-jakarta` + `/rental-laptop-jakarta` setelah live.
-2. **Update sitemap.xml** — tambah dua route baru.
-3. **Schema markup di homepage:** tambah `LocalBusiness` JSON-LD dengan address, phone, hours, coordinates, aggregateRating (kalau ada rating dari review).
-4. **Page speed** — pastikan gambar unit yang barusan ditambah tidak bikin LCP > 2.5s. Kalau iya, lazy-load atau kompres lebih agresif.
+- **Connect Google Search Console connector** (kalau belum). Aku akan trigger flow-nya di build mode.
+- Konfirmasi lanjut ke step 3 setelah lihat sample 5 artikel.
 
----
-
-## Realistis: kapan bisa #1?
-
-| Timeline | Yang bisa dicapai |
-|---|---|
-| Minggu 1–2 | Kerjaan kode selesai, semua halaman live & submit ke Search Console |
-| Bulan 1 | Mulai keindex, ranking di posisi 30–50 |
-| Bulan 2 | Naik ke halaman 2 (11–20) kalau Google Business + direktori aktif |
-| Bulan 3–4 | Top 10 realistis, kalau kompetitor tidak agresif |
-| Bulan 4–6 | Top 3 achievable — level ini biasanya ditentukan Google Business Profile + review count |
-
-**Yang bikin gagal:** cuma ngerjain kode tanpa Google Business Profile & review Google Maps. Domain baru butuh sinyal eksternal, on-page saja tidak cukup.
-
----
-
-## Deliverables kalau plan ini di-approve (kerjaan kode)
-
-- ✅ Buat `src/routes/sewa-laptop-jakarta.tsx` (hub Jakarta, ~1.800 kata)
-- ✅ Buat `src/routes/rental-laptop-jakarta.tsx` (varian keyword)
-- ✅ Update `src/routes/index.tsx` — tighten H1 & intro untuk keyword utama, tambah section "wilayah Jakarta"
-- ✅ Tambah `LocalBusiness` JSON-LD di homepage dengan koordinat + jam operasional
-- ✅ Update sitemap dengan 2 route baru
-- ✅ Tambah 3 blog post baru di `src/data/blog.ts` (draft outline; full copy user tulis atau minta aku tulis)
-- ✅ Internal linking dari area page → hub Jakarta
-
-**Yang harus kamu kerjain (di luar kode, tapi paling penting):**
-- Bikin Google Business Profile — aku bisa pandu step-by-step
-- Daftar 5 direktori bisnis Indonesia
-- Post IG rutin
-- Kumpulin review Google Maps
-
-Setuju arah ini? Kalau ya, tinggal switch ke build mode dan aku mulai dari halaman hub `/sewa-laptop-jakarta` dulu (impact tertinggi).
+Aku mulai dari audit + infrastruktur dulu, lalu berhenti dan minta review 5 sample sebelum bakar kredit untuk 500 artikel.
