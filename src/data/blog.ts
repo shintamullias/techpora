@@ -1,7 +1,10 @@
-// Blog Techpora — 30 artikel pilar + cluster.
+// Blog Techpora — 30 artikel pilar + cluster + generated SEO articles.
 // Konten unik: gaya pembuka bervariasi, panjang berbeda (~400-700 kata),
 // CTA per-artikel kontekstual dengan WA pre-filled dan internal link ke halaman
 // area / homepage yang paling relevan dengan topik.
+
+import { generatedPosts } from "@/content/blog";
+
 
 export type BlogSection = { h: string; p: string };
 
@@ -1074,8 +1077,6 @@ export const posts: BlogPost[] = [
 ];
 
 // Merge generated articles (500 SEO artikel dari scripts/generate-articles.ts)
-import { generatedPosts } from "@/content/blog";
-
 const _existingSlugs = new Set(posts.map((p) => p.slug));
 for (const gp of generatedPosts) {
   if (!_existingSlugs.has(gp.slug)) {
@@ -1083,5 +1084,6 @@ for (const gp of generatedPosts) {
     _existingSlugs.add(gp.slug);
   }
 }
+
 
 
