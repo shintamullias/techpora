@@ -6,7 +6,7 @@ import { buildWaSimple, waLink } from "@/lib/wa";
 
 const SITE_URL = "https://techpora.id";
 const SLUG = "sewa-macbook";
-const TITLE = "Sewa MacBook Jakarta — Rental MacBook Air M1 Harian & Bulanan | Techpora";
+const TITLE = "Sewa MacBook Jakarta — Air M1 Harian & Bulanan";
 const DESC =
   "Sewa MacBook di Jakarta untuk desainer, developer, dan pekerja kreatif. MacBook Air M1 ready — harian, mingguan, bulanan. Antar-jemput area Jabodetabek.";
 
