@@ -174,7 +174,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-tangerang",
     area: "Tangerang",
     areaShort: "Tangerang",
-    title: "Sewa Laptop Tangerang — BSD, Alam Sutera, Karawaci | Techpora",
+    title: "Sewa Laptop Tangerang — BSD & Alam Sutera | Techpora",
     metaDescription:
       "Sewa laptop Tangerang harian & bulanan. Kirim ke BSD, Alam Sutera, Karawaci, Gading Serpong, Bintaro. Cocok untuk mahasiswa Prasmul, UMN, SGU.",
     keywords: "sewa laptop tangerang, rental laptop bsd, sewa laptop alam sutera, sewa laptop karawaci, sewa laptop umn, sewa laptop prasmul",
