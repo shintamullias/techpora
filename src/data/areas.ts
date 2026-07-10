@@ -122,7 +122,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-utara",
     area: "Jakarta Utara",
     areaShort: "Jakut",
-    title: "Sewa Laptop Jakarta Utara — PIK, Kelapa Gading, Ancol | Techpora",
+    title: "Sewa Laptop Jakarta Utara — PIK & Kelapa Gading | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Utara untuk event MICE, pameran, dan kantor. Kirim ke PIK, Kelapa Gading, Sunter, Ancol, Pluit. Paket bulk untuk event tersedia.",
     keywords: "sewa laptop jakarta utara, rental laptop jakut, sewa laptop kelapa gading, sewa laptop pik, sewa laptop pluit, sewa laptop event ancol",
