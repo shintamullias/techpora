@@ -96,7 +96,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-barat",
     area: "Jakarta Barat",
     areaShort: "Jakbar",
-    title: "Sewa Laptop Jakarta Barat — Grogol, Puri, Kalideres | Techpora",
+    title: "Sewa Laptop Jakarta Barat — Grogol & Puri | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Barat harian & bulanan. Kirim ke Grogol, Kebon Jeruk, Puri Indah, Kalideres, Taman Anggrek. Cocok untuk mahasiswa Untar, Binus, Trisakti.",
     keywords: "sewa laptop jakarta barat, rental laptop jakbar, sewa laptop grogol, sewa laptop puri indah, sewa laptop binus, sewa laptop untar",
