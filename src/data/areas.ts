@@ -148,7 +148,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-pusat",
     area: "Jakarta Pusat",
     areaShort: "Jakpus",
-    title: "Sewa Laptop Jakarta Pusat — Sudirman, Thamrin, Menteng | Techpora",
+    title: "Sewa Laptop Jakarta Pusat — Sudirman & Thamrin | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Pusat untuk kantor Sudirman-Thamrin, hotel Menteng, dan venue seminar Kemayoran. Fast response, unit siap pakai, invoice tersedia.",
     keywords: "sewa laptop jakarta pusat, rental laptop jakpus, sewa laptop sudirman, sewa laptop thamrin, sewa laptop menteng, sewa laptop kemayoran",
