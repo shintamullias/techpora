@@ -70,7 +70,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-timur",
     area: "Jakarta Timur",
     areaShort: "Jaktim",
-    title: "Sewa Laptop Jakarta Timur — Ambil Langsung di Rawamangun | Techpora",
+    title: "Sewa Laptop Jakarta Timur — Rawamangun Ready | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Timur — basis operasional Techpora di Rawamangun. Bisa ambil langsung tanpa ongkir. Melayani Cawang, Cakung, Pulogadung, Duren Sawit.",
     keywords: "sewa laptop jakarta timur, rental laptop jaktim, sewa laptop rawamangun, sewa laptop cakung, sewa laptop pulogadung, sewa laptop duren sawit",
@@ -96,7 +96,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-barat",
     area: "Jakarta Barat",
     areaShort: "Jakbar",
-    title: "Sewa Laptop Jakarta Barat — Grogol, Puri, Kalideres | Techpora",
+    title: "Sewa Laptop Jakarta Barat — Grogol & Puri | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Barat harian & bulanan. Kirim ke Grogol, Kebon Jeruk, Puri Indah, Kalideres, Taman Anggrek. Cocok untuk mahasiswa Untar, Binus, Trisakti.",
     keywords: "sewa laptop jakarta barat, rental laptop jakbar, sewa laptop grogol, sewa laptop puri indah, sewa laptop binus, sewa laptop untar",
@@ -122,7 +122,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-utara",
     area: "Jakarta Utara",
     areaShort: "Jakut",
-    title: "Sewa Laptop Jakarta Utara — PIK, Kelapa Gading, Ancol | Techpora",
+    title: "Sewa Laptop Jakarta Utara — PIK & Kelapa Gading | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Utara untuk event MICE, pameran, dan kantor. Kirim ke PIK, Kelapa Gading, Sunter, Ancol, Pluit. Paket bulk untuk event tersedia.",
     keywords: "sewa laptop jakarta utara, rental laptop jakut, sewa laptop kelapa gading, sewa laptop pik, sewa laptop pluit, sewa laptop event ancol",
@@ -148,7 +148,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-pusat",
     area: "Jakarta Pusat",
     areaShort: "Jakpus",
-    title: "Sewa Laptop Jakarta Pusat — Sudirman, Thamrin, Menteng | Techpora",
+    title: "Sewa Laptop Jakarta Pusat — Sudirman & Thamrin | Techpora",
     metaDescription:
       "Sewa laptop Jakarta Pusat untuk kantor Sudirman-Thamrin, hotel Menteng, dan venue seminar Kemayoran. Fast response, unit siap pakai, invoice tersedia.",
     keywords: "sewa laptop jakarta pusat, rental laptop jakpus, sewa laptop sudirman, sewa laptop thamrin, sewa laptop menteng, sewa laptop kemayoran",
@@ -174,7 +174,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-tangerang",
     area: "Tangerang",
     areaShort: "Tangerang",
-    title: "Sewa Laptop Tangerang — BSD, Alam Sutera, Karawaci | Techpora",
+    title: "Sewa Laptop Tangerang — BSD & Alam Sutera | Techpora",
     metaDescription:
       "Sewa laptop Tangerang harian & bulanan. Kirim ke BSD, Alam Sutera, Karawaci, Gading Serpong, Bintaro. Cocok untuk mahasiswa Prasmul, UMN, SGU.",
     keywords: "sewa laptop tangerang, rental laptop bsd, sewa laptop alam sutera, sewa laptop karawaci, sewa laptop umn, sewa laptop prasmul",
