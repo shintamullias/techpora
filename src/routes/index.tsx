@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
-import { posts } from "@/data/blog";
+
 import { getUnitImage } from "@/assets/units";
 
 import {
@@ -116,7 +117,18 @@ const comparison = [
   { title: "Pilihan Unit", us: "Laptop, Printer & Proyektor lengkap", them: "Terbatas hanya laptop" },
 ];
 
+const fetchLatestPosts = createServerFn({ method: "GET" }).handler(async () => {
+  const { posts } = await import("@/data/blog");
+  return posts.slice(0, 3).map((p) => ({
+    slug: p.slug,
+    title: p.title,
+    description: p.description,
+    category: p.category,
+  }));
+});
+
 export const Route = createFileRoute("/")({
+  loader: () => fetchLatestPosts(),
   head: () => ({
     meta: [
       { title: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
@@ -263,6 +275,7 @@ function buildWaText(b: BookingForm) {
 
 
 function Index() {
+  const posts = Route.useLoaderData();
   const [menuOpen, setMenuOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [bookingOpen, setBookingOpen] = useState(false);

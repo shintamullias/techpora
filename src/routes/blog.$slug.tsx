@@ -1,8 +1,26 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Calendar, Clock, MessageCircle } from "lucide-react";
+import { createServerFn } from "@tanstack/react-start";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
-import { posts, waLinkFor, type BlogPost, type BlogSection } from "@/data/blog";
+import { waLinkFor } from "@/lib/wa-link";
+import type { BlogPost, BlogSection } from "@/data/blog";
+
+const fetchBlogPostData = createServerFn({ method: "GET" })
+  .inputValidator((slug: string) => slug)
+  .handler(async ({ data: slug }) => {
+    const { posts } = await import("@/data/blog");
+    const post = posts.find((p) => p.slug === slug);
+    if (!post) return null;
+    const curated = post.related
+      .map((s) => posts.find((p) => p.slug === s))
+      .filter((p): p is BlogPost => Boolean(p) && p!.slug !== post.slug);
+    const fillers = posts.filter(
+      (p) => p.slug !== post.slug && p.category === post.category && !curated.find((c) => c.slug === p.slug),
+    );
+    const related = [...curated, ...fillers].slice(0, 3);
+    return { post, related };
+  });
 
 const SITE_URL = "https://techpora.id";
 const WA_GENERIC = waLinkFor(
@@ -30,13 +48,13 @@ function coverFor(category: string) {
 }
 
 export const Route = createFileRoute("/blog/$slug")({
-  loader: ({ params }) => {
-    const post = posts.find((p) => p.slug === params.slug);
-    if (!post) throw notFound();
-    return post;
+  loader: async ({ params }) => {
+    const result = await fetchBlogPostData({ data: params.slug });
+    if (!result) throw notFound();
+    return result;
   },
   head: ({ loaderData }) => {
-    const post = loaderData;
+    const post = loaderData?.post;
     if (!post) return { meta: [{ title: "Artikel tidak ditemukan" }] };
     const url = `${SITE_URL}/blog/${post.slug}`;
     const cover = coverFor(post.category);
@@ -108,16 +126,7 @@ export const Route = createFileRoute("/blog/$slug")({
 });
 
 function BlogPostPage() {
-  const post = Route.useLoaderData() as BlogPost;
-
-  // Related: curated first, then fill from same category if fewer than 3
-  const curated = post.related
-    .map((slug) => posts.find((p) => p.slug === slug))
-    .filter((p): p is BlogPost => Boolean(p) && p!.slug !== post.slug);
-  const fillers = posts.filter(
-    (p) => p.slug !== post.slug && p.category === post.category && !curated.find((c) => c.slug === p.slug),
-  );
-  const related = [...curated, ...fillers].slice(0, 3);
+  const { post, related } = Route.useLoaderData();
 
   const cover = coverFor(post.category);
   const midIndex = Math.floor(post.sections.length / 2);

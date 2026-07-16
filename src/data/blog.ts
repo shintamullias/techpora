@@ -29,9 +29,7 @@ export type BlogPost = {
   related: string[]; // curated internal linking (slug list)
 };
 
-const WA = "6282177984041";
-export const waLinkFor = (msg: string) =>
-  `https://wa.me/${WA}?text=${encodeURIComponent(msg)}`;
+export { waLinkFor } from "@/lib/wa-link";
 
 // Kept for backward-compat; komponen artikel sekarang pakai post.cta.
 export const ctaText =

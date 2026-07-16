@@ -1,7 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
+import { createServerFn } from "@tanstack/react-start";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
-import { posts } from "@/data/blog";
+
+const fetchBlogList = createServerFn({ method: "GET" }).handler(async () => {
+  const { posts } = await import("@/data/blog");
+  const sorted = [...posts]
+    .sort((a, b) => (a.date < b.date ? 1 : -1))
+    .map((p) => ({
+      slug: p.slug,
+      title: p.title,
+      description: p.description,
+      category: p.category,
+      date: p.date,
+      readMinutes: p.readMinutes,
+    }));
+  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  return { sorted, categories };
+});
 
 const SITE_URL = "https://techpora.id";
 const WA_LINK =
@@ -19,6 +35,7 @@ const DEFAULT_IMAGE =
 
 
 export const Route = createFileRoute("/blog/")({
+  loader: () => fetchBlogList(),
   head: () => ({
     meta: [
       { title: "Blog Techpora.id — Tips & Panduan Sewa Laptop" },
@@ -48,8 +65,7 @@ export const Route = createFileRoute("/blog/")({
 });
 
 function BlogIndex() {
-  const sorted = [...posts].sort((a, b) => (a.date < b.date ? 1 : -1));
-  const categories = Array.from(new Set(posts.map((p) => p.category)));
+  const { sorted, categories } = Route.useLoaderData();
 
   return (
     <div className="min-h-screen bg-background">
