@@ -104,7 +104,7 @@ const COPY: Record<JakartaHubVariant, Copy> = {
     faqs: [
       {
         q: "Berapa harga sewa laptop di Jakarta?",
-        a: "Mulai dari Rp100.000/hari untuk Lenovo ThinkPad i3, hingga Rp250.000/hari untuk MacBook Air M1. Paket bulanan jauh lebih hemat: mulai Rp1.500.000/bulan (ThinkPad) sampai Rp4.500.000/bulan (MacBook Air M1). Semua harga sudah termasuk pengecekan unit sebelum kirim.",
+        a: "Mulai dari Rp40.000/hari untuk Advan i3 (paling hemat), Rp100.000/hari untuk Lenovo ThinkPad i3, hingga Rp250.000/hari untuk MacBook Air M1. Semua harga sudah termasuk pengecekan unit sebelum kirim.",
       },
       {
         q: "Apa saja area Jakarta yang dilayani?",
@@ -185,7 +185,7 @@ const COPY: Record<JakartaHubVariant, Copy> = {
     faqs: [
       {
         q: "Berapa harga rental laptop di Jakarta?",
-        a: "Rental harian mulai Rp100.000 (Lenovo ThinkPad i3) sampai Rp250.000 (MacBook Air M1). Rental bulanan lebih hemat: Rp1.500.000 – Rp4.500.000 tergantung unit. Semua harga include pengecekan unit dan pengiriman ke Jakarta.",
+        a: "Rental harian mulai Rp40.000 (Advan i3, paling hemat), Rp100.000 (Lenovo ThinkPad i3), sampai Rp250.000 (MacBook Air M1). Semua harga include pengecekan unit dan pengiriman ke Jakarta.",
       },
       {
         q: "Apakah rental laptop Techpora menerima PO corporate?",
@@ -500,6 +500,7 @@ export function JakartaHub({ variant }: { variant: JakartaHubVariant }) {
 }
 
 function Row({ label, value, highlight }: { label: string; value: string; highlight?: boolean }) {
+  if (!value) return null;
   return (
     <div className="flex items-center justify-between">
       <span className="text-muted-foreground">{label}</span>
