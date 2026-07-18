@@ -11,7 +11,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
-import { getUnitImage } from "@/assets/units";
+import { getUnitImage, hasWhiteBackdrop } from "@/assets/units";
 import { Button } from "@/components/ui/button";
 import { areas } from "@/data/areas";
 import { buildWaSimple, waLink } from "@/lib/wa";
@@ -346,7 +346,7 @@ export function JakartaHub({ variant }: { variant: JakartaHubVariant }) {
                       >
                         {img && (
                           <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-secondary/70 via-secondary/30 to-background p-6">
-                            <img src={img} alt={`${c.Term} ${u.name} Jakarta`} width={800} height={600} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-lg" />
+                            <img src={img} alt={`${c.Term} ${u.name} Jakarta`} width={800} height={600} loading="lazy" className={`max-h-full w-auto object-contain ${hasWhiteBackdrop(u.name) ? "mix-blend-multiply" : "drop-shadow-lg"}`} />
                           </div>
                         )}
                         <div className="flex flex-1 flex-col p-6">

@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
-import { getUnitImage } from "@/assets/units";
+import { getUnitImage, hasWhiteBackdrop } from "@/assets/units";
 
 import {
   Check,
@@ -577,7 +577,7 @@ function Index() {
                       }`}
                     >
                       <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-secondary/70 via-secondary/30 to-background p-6">
-                        <div className="absolute left-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
+                        <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
                           <cat.icon className="h-3.5 w-3.5" />
                           {u.category}
                         </div>
@@ -588,7 +588,9 @@ function Index() {
                             width={800}
                             height={600}
                             loading="lazy"
-                            className="max-h-full w-auto object-contain drop-shadow-lg transition-transform duration-300 group-hover:scale-105"
+                            className={`max-h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105 ${
+                              hasWhiteBackdrop(u.name) ? "mix-blend-multiply" : "drop-shadow-lg"
+                            }`}
                           />
                         ) : (
                           <cat.icon className="h-16 w-16 text-primary/40" />

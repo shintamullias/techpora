@@ -25,3 +25,11 @@ export const unitImages: Record<string, string> = {
 };
 
 export const getUnitImage = (name: string): string | undefined => unitImages[name];
+
+/**
+ * Foto produk yang latarnya putih solid (bukan PNG transparan).
+ * Dipakai untuk mem-blend latar putih agar menyatu dengan kartu.
+ */
+const whiteBackdropUnits = new Set<string>(["Advan Workplus"]);
+
+export const hasWhiteBackdrop = (name: string): boolean => whiteBackdropUnits.has(name);
