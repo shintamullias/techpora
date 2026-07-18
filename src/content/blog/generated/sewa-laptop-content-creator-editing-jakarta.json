@@ -27,6 +27,10 @@
     "internalPath": "/sewa-macbook",
     "internalLabel": "Lihat Sewa MacBook"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-jakarta-pusat-content-creator",
+    "sewa-laptop-jakarta-selatan-content-creator",
+    "sewa-laptop-jakarta-timur-content-creator"
+  ],
   "keywords": "sewa laptop content creator jakarta, sewa macbook editing, rental laptop editing video"
 }

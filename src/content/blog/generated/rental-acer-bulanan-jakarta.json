@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Cek layanan Jakarta"
   },
-  "related": [],
+  "related": [
+    "sewa-acer-bulanan-jakarta",
+    "rental-acer-bulanan-jakarta-selatan",
+    "rental-acer-bulanan-jakarta-timur"
+  ],
   "keywords": "rental acer bulanan Jakarta"
 }

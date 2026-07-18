@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-barat",
     "internalLabel": "Lihat semua unit di Jakarta Barat"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-depok-ujian-online",
+    "sewa-laptop-jakarta-selatan-ujian-online",
+    "sewa-laptop-jakarta-timur-ujian-online"
+  ]
 }

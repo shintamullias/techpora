@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-bekasi",
     "internalLabel": "Lihat semua unit di Bekasi"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-depok-event-pameran",
+    "sewa-laptop-jakarta-barat-event-pameran",
+    "sewa-laptop-jakarta-pusat-event-pameran"
+  ]
 }

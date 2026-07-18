@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "sewa-redmibook-3-hari-jakarta-selatan",
+    "sewa-redmibook-3-hari-jakarta-timur",
+    "sewa-redmibook-3-hari-jakarta"
+  ],
   "keywords": "rental redmibook 3 hari Jakarta Selatan"
 }

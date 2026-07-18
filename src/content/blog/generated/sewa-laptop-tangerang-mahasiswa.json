@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-tangerang",
     "internalLabel": "Lihat semua unit di Tangerang"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-bekasi-mahasiswa",
+    "sewa-laptop-depok-mahasiswa",
+    "sewa-laptop-jakarta-barat-mahasiswa"
+  ]
 }

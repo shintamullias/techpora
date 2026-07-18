@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-redmibook-tahunan-jakarta-selatan",
+    "rental-redmibook-tahunan-jakarta",
+    "rental-thinkpad-tahunan-jakarta-selatan"
+  ],
   "keywords": "sewa redmibook tahunan Jakarta Selatan"
 }

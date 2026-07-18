@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-thinkpad-bulanan-jakarta-selatan",
+    "rental-thinkpad-bulanan-jakarta",
+    "sewa-thinkpad-bulanan-jakarta"
+  ],
   "keywords": "sewa thinkpad bulanan Jakarta Selatan"
 }

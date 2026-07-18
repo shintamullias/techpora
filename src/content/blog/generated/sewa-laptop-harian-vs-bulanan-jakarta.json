@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Lihat pilihan durasi & harga"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-bulanan-jakarta",
+    "sewa-laptop-harian-jakarta",
+    "rental-laptop-bulanan-jakarta"
+  ],
   "keywords": "sewa laptop harian vs bulanan, sewa laptop bulanan jakarta, sewa laptop harian jakarta"
 }

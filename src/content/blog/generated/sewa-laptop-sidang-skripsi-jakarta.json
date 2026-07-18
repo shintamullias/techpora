@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Sewa Laptop Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-jakarta-utara-mahasiswa",
+    "sewa-laptop-mahasiswa-rawamangun",
+    "sewa-laptop-tangerang-mahasiswa"
+  ],
   "keywords": "sewa laptop sidang skripsi, sewa laptop mahasiswa jakarta, rental laptop skripsi"
 }

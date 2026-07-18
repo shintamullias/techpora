@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Lihat semua unit di Jakarta Timur"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-content-creator-editing-jakarta",
+    "sewa-laptop-depok-content-creator",
+    "sewa-laptop-jakarta-barat-content-creator"
+  ]
 }

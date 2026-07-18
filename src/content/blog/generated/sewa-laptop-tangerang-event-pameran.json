@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-tangerang",
     "internalLabel": "Lihat semua unit di Tangerang"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-jakarta-utara-event-pameran",
+    "sewa-laptop-depok-event-pameran",
+    "sewa-laptop-jakarta-barat-event-pameran"
+  ]
 }

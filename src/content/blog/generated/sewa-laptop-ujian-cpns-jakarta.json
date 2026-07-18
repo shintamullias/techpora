@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Lihat layanan Sewa Laptop Jakarta"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-jakarta-timur-ujian-online",
+    "sewa-laptop-jakarta-utara-ujian-online",
+    "sewa-laptop-tangerang-ujian-online"
+  ],
   "keywords": "sewa laptop ujian cpns jakarta, sewa laptop cat, sewa laptop tryout"
 }

@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-pusat",
     "internalLabel": "Lihat semua unit di Jakarta Pusat"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-tangerang-developer",
+    "sewa-laptop-bekasi-developer",
+    "sewa-laptop-depok-developer"
+  ]
 }

@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Cek layanan Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "sewa-redmibook-bulanan-jakarta-timur",
+    "sewa-redmibook-bulanan-jakarta",
+    "sewa-redmibook-harian-jakarta-timur"
+  ],
   "keywords": "rental redmibook bulanan Jakarta Timur"
 }

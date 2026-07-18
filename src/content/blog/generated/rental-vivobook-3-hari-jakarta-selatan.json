@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "sewa-vivobook-3-hari-jakarta-selatan",
+    "rental-vivobook-3-hari-jakarta",
+    "sewa-vivobook-3-hari-jakarta"
+  ],
   "keywords": "rental vivobook 3 hari Jakarta Selatan"
 }

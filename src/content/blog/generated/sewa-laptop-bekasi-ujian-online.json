@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-bekasi",
     "internalLabel": "Lihat semua unit di Bekasi"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-jakarta-timur-ujian-online",
+    "sewa-laptop-jakarta-utara-ujian-online",
+    "sewa-laptop-tangerang-ujian-online"
+  ]
 }

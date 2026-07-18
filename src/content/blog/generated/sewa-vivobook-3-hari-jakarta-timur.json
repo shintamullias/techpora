@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Cek layanan Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "rental-vivobook-3-hari-jakarta-timur",
+    "sewa-acer-3-hari-jakarta-timur",
+    "sewa-laptop-3-hari-jakarta-timur"
+  ],
   "keywords": "sewa vivobook 3 hari Jakarta Timur"
 }

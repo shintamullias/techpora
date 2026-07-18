@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-vivobook-mingguan-jakarta-selatan",
+    "rental-vivobook-mingguan-jakarta",
+    "sewa-laptop-mingguan-jakarta-selatan"
+  ],
   "keywords": "sewa vivobook mingguan Jakarta Selatan"
 }

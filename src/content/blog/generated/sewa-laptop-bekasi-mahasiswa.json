@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-bekasi",
     "internalLabel": "Lihat semua unit di Bekasi"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-depok-mahasiswa",
+    "sewa-laptop-jakarta-barat-mahasiswa",
+    "sewa-laptop-jakarta-pusat-mahasiswa"
+  ]
 }

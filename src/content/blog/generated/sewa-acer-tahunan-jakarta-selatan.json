@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-acer-tahunan-jakarta-selatan",
+    "rental-acer-tahunan-jakarta",
+    "rental-laptop-tahunan-jakarta-selatan"
+  ],
   "keywords": "sewa acer tahunan Jakarta Selatan"
 }

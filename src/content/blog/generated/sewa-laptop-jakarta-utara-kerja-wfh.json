@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-utara",
     "internalLabel": "Lihat semua unit di Jakarta Utara"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-depok-kerja-wfh",
+    "sewa-laptop-jakarta-barat-kerja-wfh",
+    "sewa-laptop-jakarta-pusat-kerja-wfh"
+  ]
 }

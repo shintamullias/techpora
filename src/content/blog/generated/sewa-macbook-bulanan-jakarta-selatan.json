@@ -47,6 +47,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-macbook-bulanan-jakarta-selatan",
+    "sewa-laptop-bulanan-jakarta-selatan",
+    "sewa-macbook-bulanan-jakarta"
+  ],
   "keywords": "sewa macbook bulanan Jakarta Selatan"
 }

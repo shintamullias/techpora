@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-depok",
     "internalLabel": "Lihat semua unit di Depok"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-bekasi-mahasiswa",
+    "sewa-laptop-jakarta-selatan-mahasiswa",
+    "sewa-laptop-jakarta-timur-mahasiswa"
+  ]
 }

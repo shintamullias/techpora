@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Lihat layanan Sewa Laptop Jakarta"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-jakarta-barat-ujian-online",
+    "sewa-laptop-jakarta-pusat-ujian-online",
+    "sewa-laptop-jakarta-selatan-ujian-online"
+  ],
   "keywords": "cara sewa laptop online jakarta, sewa laptop antar lokasi, rental laptop online"
 }

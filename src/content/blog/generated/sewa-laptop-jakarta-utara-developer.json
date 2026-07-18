@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-utara",
     "internalLabel": "Lihat semua unit di Jakarta Utara"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-bekasi-developer",
+    "sewa-laptop-depok-developer",
+    "sewa-laptop-jakarta-barat-developer"
+  ]
 }

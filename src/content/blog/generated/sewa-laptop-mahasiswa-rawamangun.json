@@ -27,6 +27,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Sewa Laptop Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "sewa-laptop-jakarta-pusat-mahasiswa",
+    "sewa-laptop-jakarta-selatan-mahasiswa",
+    "sewa-laptop-jakarta-timur-mahasiswa"
+  ],
   "keywords": "sewa laptop rawamangun, sewa laptop mahasiswa unj, sewa laptop murah jakarta timur"
 }

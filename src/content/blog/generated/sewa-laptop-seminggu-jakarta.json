@@ -47,6 +47,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Cek layanan Jakarta"
   },
-  "related": [],
+  "related": [
+    "rental-laptop-seminggu-jakarta",
+    "rental-macbook-seminggu-jakarta",
+    "rental-redmibook-seminggu-jakarta"
+  ],
   "keywords": "sewa laptop seminggu Jakarta"
 }

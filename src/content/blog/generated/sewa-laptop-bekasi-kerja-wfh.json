@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-bekasi",
     "internalLabel": "Lihat semua unit di Bekasi"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-depok-kerja-wfh",
+    "sewa-laptop-jakarta-barat-kerja-wfh",
+    "sewa-laptop-jakarta-pusat-kerja-wfh"
+  ]
 }

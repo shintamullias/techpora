@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Lihat semua unit di Jakarta Timur"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-tangerang-kerja-wfh",
+    "sewa-laptop-wfh-kerja-remote-jakarta",
+    "sewa-laptop-bekasi-kerja-wfh"
+  ]
 }

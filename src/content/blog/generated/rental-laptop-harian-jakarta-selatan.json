@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-selatan",
     "internalLabel": "Cek layanan Jakarta Selatan"
   },
-  "related": [],
+  "related": [
+    "rental-macbook-harian-jakarta-selatan",
+    "rental-redmibook-harian-jakarta-selatan",
+    "rental-thinkpad-harian-jakarta-selatan"
+  ],
   "keywords": "rental laptop harian Jakarta Selatan"
 }

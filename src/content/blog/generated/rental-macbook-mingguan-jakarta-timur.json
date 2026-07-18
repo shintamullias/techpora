@@ -47,6 +47,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Cek layanan Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "sewa-macbook-mingguan-jakarta-timur",
+    "rental-vivobook-mingguan-jakarta-timur",
+    "sewa-laptop-mingguan-jakarta-timur"
+  ],
   "keywords": "rental macbook mingguan Jakarta Timur"
 }

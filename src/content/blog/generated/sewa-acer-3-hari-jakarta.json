@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Cek layanan Jakarta"
   },
-  "related": [],
+  "related": [
+    "sewa-acer-3-hari-jakarta-timur",
+    "rental-acer-3-hari-jakarta",
+    "sewa-acer-3-hari-jakarta-selatan"
+  ],
   "keywords": "sewa acer 3 hari Jakarta"
 }

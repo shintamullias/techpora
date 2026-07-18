@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Cek layanan Jakarta"
   },
-  "related": [],
+  "related": [
+    "rental-redmibook-bulanan-jakarta-selatan",
+    "rental-redmibook-bulanan-jakarta-timur",
+    "sewa-redmibook-bulanan-jakarta-selatan"
+  ],
   "keywords": "rental redmibook bulanan Jakarta"
 }

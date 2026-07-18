@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta-timur",
     "internalLabel": "Cek layanan Jakarta Timur"
   },
-  "related": [],
+  "related": [
+    "sewa-acer-seminggu-jakarta-timur",
+    "rental-laptop-seminggu-jakarta-timur",
+    "rental-macbook-seminggu-jakarta-timur"
+  ],
   "keywords": "rental acer seminggu Jakarta Timur"
 }

@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-jakarta-pusat",
     "internalLabel": "Lihat semua unit di Jakarta Pusat"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-jakarta-barat-event-pameran",
+    "sewa-laptop-jakarta-timur-event-pameran",
+    "sewa-laptop-jakarta-utara-event-pameran"
+  ]
 }

@@ -35,6 +35,10 @@
     "internalPath": "/sewa-laptop-jakarta",
     "internalLabel": "Cek layanan Jakarta"
   },
-  "related": [],
+  "related": [
+    "rental-macbook-tahunan-jakarta-selatan",
+    "rental-macbook-tahunan-jakarta-timur",
+    "sewa-macbook-tahunan-jakarta-selatan"
+  ],
   "keywords": "rental macbook tahunan Jakarta"
 }

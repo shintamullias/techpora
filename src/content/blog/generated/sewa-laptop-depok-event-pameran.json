@@ -31,5 +31,9 @@
     "internalPath": "/sewa-laptop-depok",
     "internalLabel": "Lihat semua unit di Depok"
   },
-  "related": []
+  "related": [
+    "sewa-laptop-bekasi-event-pameran",
+    "sewa-laptop-jakarta-selatan-event-pameran",
+    "sewa-laptop-jakarta-timur-event-pameran"
+  ]
 }
