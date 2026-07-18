@@ -11,6 +11,7 @@ import epsonProjX600 from "./epson-projector-x600.png.asset.json";
 
 // Map unit name -> product photo URL
 export const unitImages: Record<string, string> = {
+  "Advan Workplus": "https://metrokomputer.id/wp-content/uploads/2026/04/white-satu.png",
   "Lenovo ThinkPad": thinkpad.url,
   "ASUS VivoBook": vivobook.url,
   "RedmiBook 15": redmibook.url,
