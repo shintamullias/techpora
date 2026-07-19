@@ -45,7 +45,7 @@
     "body": "Kirim kebutuhan jumlah unit, tanggal pakai, dan lokasi ke chat via WhatsApp agar tim Techpora menyesuaikan stok, spesifikasi, serta jadwal pengiriman.",
     "waMessage": "Halo Techpora, saya butuh rental laptop 3 hari Jakarta Selatan. Saya lihat dari techpora.id dan ingin cek stok serta harga untuk pemakaian 3 hari.",
     "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek layanan Jakarta Selatan"
+    "internalLabel": "Lihat layanan sewa laptop Jakarta Selatan"
   },
   "related": [
     "rental-macbook-3-hari-jakarta-selatan",

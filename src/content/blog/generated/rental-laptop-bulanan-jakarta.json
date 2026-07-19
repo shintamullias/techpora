@@ -32,8 +32,8 @@
     "heading": "Siapkan Unit untuk Bulan Ini",
     "body": "Kirim kebutuhan jumlah unit, durasi, dan spesifikasi ke WhatsApp 6282177984041 agar tim Techpora menyiapkan opsi unit serta jadwal kirim yang paling pas.",
     "waMessage": "Halo Techpora, saya ingin tanya rental laptop bulanan Jakarta. Saya lihat dari techpora.id dan butuh info stok serta estimasi biaya.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Halaman rental laptop Jakarta"
   },
   "related": [
     "rental-laptop-bulanan-jakarta-selatan",

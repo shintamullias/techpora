@@ -33,7 +33,7 @@
     "body": "Kirim jumlah unit, durasi, dan kebutuhan aplikasi Anda, lalu chat via WhatsApp agar Techpora bisa bantu cek stok serta skema sewa paling pas.",
     "waMessage": "Halo Techpora, saya butuh info rental thinkpad tahunan Jakarta. Saya lihat dari techpora.id dan ingin cek stok serta estimasi biayanya.",
     "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalLabel": "Lihat layanan sewa laptop Jakarta"
   },
   "related": [
     "rental-thinkpad-tahunan-jakarta-selatan",

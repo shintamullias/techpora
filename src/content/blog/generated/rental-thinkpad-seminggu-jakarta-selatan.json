@@ -33,7 +33,7 @@
     "body": "Kirim kebutuhan unit, tanggal pakai, dan lokasi kantor lewat chat via WhatsApp agar tim Techpora bisa bantu cek stok serta estimasi biayanya.",
     "waMessage": "Halo Techpora, saya butuh rental thinkpad seminggu Jakarta Selatan. Saya lihat dari techpora.id, mohon dibantu cek stok dan harganya.",
     "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek layanan Jakarta Selatan"
+    "internalLabel": "Lihat layanan sewa laptop Jakarta Selatan"
   },
   "related": [
     "sewa-thinkpad-seminggu-jakarta-selatan",

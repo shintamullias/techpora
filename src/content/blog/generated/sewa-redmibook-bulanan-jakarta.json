@@ -24,8 +24,8 @@
     "heading": "Cek Stok RedmiBook Bulanan",
     "body": "Chat via WhatsApp untuk cek stok, estimasi harga, dan rekomendasi unit RedmiBook yang paling pas untuk kebutuhan tim kamu di Jakarta.",
     "waMessage": "Halo Techpora, saya mau tanya sewa redmibook bulanan Jakarta. Saya lihat dari techpora.id, mohon info stok dan paketnya.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Halaman rental laptop Jakarta"
   },
   "related": [
     "sewa-redmibook-bulanan-jakarta-selatan",

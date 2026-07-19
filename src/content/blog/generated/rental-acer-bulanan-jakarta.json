@@ -32,8 +32,8 @@
     "heading": "Cek Stok Acer Bulanan",
     "body": "Chat via WhatsApp 6282177984041, kirim jumlah unit dan durasi, lalu tim Techpora bantu cek stok Acer serta opsi kontrak bulanan paling pas.",
     "waMessage": "Halo Techpora, saya mencari rental acer bulanan Jakarta dan lihat dari techpora.id. Mohon bantu cek stok, harga, dan opsi sewa bulanan.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Cek paket rental laptop Jakarta"
   },
   "related": [
     "sewa-acer-bulanan-jakarta",

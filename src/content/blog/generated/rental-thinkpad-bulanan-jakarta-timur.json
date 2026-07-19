@@ -32,8 +32,8 @@
     "heading": "Siap Sewa ThinkPad Bulanan?",
     "body": "Kirim jumlah unit, lokasi Jakarta Timur, dan durasi pemakaian ke WhatsApp 6282177984041 agar tim Techpora menyiapkan rekomendasi serta penawaran yang pas.",
     "waMessage": "Halo Techpora, saya butuh info rental thinkpad bulanan Jakarta Timur. Saya lihat dari techpora.id, mohon dibantu cek stok dan harga.",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Cek layanan Jakarta Timur"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Rental laptop Jakarta untuk kantor & event"
   },
   "related": [
     "sewa-thinkpad-bulanan-jakarta-timur",

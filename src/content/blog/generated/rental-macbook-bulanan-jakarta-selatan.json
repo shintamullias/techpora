@@ -44,8 +44,8 @@
     "heading": "Siap Sewa MacBook Bulanan?",
     "body": "Kirim kebutuhan unit, durasi, dan lokasi kantor Anda lewat chat via WhatsApp agar tim Techpora bisa cek stok serta opsi pengiriman terdekat.",
     "waMessage": "Halo Techpora, saya mau tanya rental macbook bulanan Jakarta Selatan. Saya lihat dari techpora.id, mohon info stok dan paketnya.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek layanan Jakarta Selatan"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Lihat layanan rental laptop Jakarta"
   },
   "related": [
     "sewa-macbook-bulanan-jakarta-selatan",

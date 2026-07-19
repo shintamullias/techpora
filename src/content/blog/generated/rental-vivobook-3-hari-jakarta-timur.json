@@ -33,7 +33,7 @@
     "body": "Kirim kebutuhan unit, tanggal pakai, dan lokasi Jakarta Timur lewat chat via WhatsApp agar tim Techpora cek stok serta estimasi biaya hari ini.",
     "waMessage": "Halo Techpora, saya butuh info rental vivobook 3 hari Jakarta Timur. Saya lihat dari techpora.id, mohon cek stok dan total biayanya.",
     "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Cek layanan Jakarta Timur"
+    "internalLabel": "Cek unit sewa laptop Jakarta Timur"
   },
   "related": [
     "sewa-vivobook-3-hari-jakarta-timur",

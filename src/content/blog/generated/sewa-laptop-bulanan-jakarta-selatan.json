@@ -32,8 +32,8 @@
     "heading": "Siap Cek Stok Laptop?",
     "body": "Langsung chat via WhatsApp ke Techpora, ceritakan kebutuhan unit dan durasinya, lalu tim akan bantu pilih paket yang paling pas.",
     "waMessage": "Halo Techpora, saya butuh info sewa laptop bulanan Jakarta Selatan. Saya lihat dari techpora.id dan ingin cek stok serta paket yang tersedia.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek layanan Jakarta Selatan"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Rental laptop Jakarta untuk kantor & event"
   },
   "related": [
     "sewa-macbook-bulanan-jakarta-selatan",

@@ -32,8 +32,8 @@
     "heading": "Cek Stok MacBook Bulanan",
     "body": "Kirim kebutuhan tim Anda lewat chat via WhatsApp 6282177984041, lalu Techpora bantu rekomendasikan unit, durasi, dan jadwal kirim yang paling masuk akal.",
     "waMessage": "Halo Techpora, saya ingin tanya sewa macbook bulanan Jakarta. Saya lihat dari techpora.id, mohon info stok dan harga untuk kebutuhan tim saya.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Cek paket rental laptop Jakarta"
   },
   "related": [
     "sewa-macbook-bulanan-jakarta-selatan",

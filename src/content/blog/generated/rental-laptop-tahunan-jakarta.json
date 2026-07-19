@@ -25,7 +25,7 @@
     "body": "Chat via WhatsApp untuk cek stok, rekomendasi spesifikasi, dan simulasi biaya 12 bulan sesuai jumlah unit serta lokasi kantor di Jakarta.",
     "waMessage": "Halo Techpora, saya melihat dari techpora.id dan butuh rental laptop tahunan Jakarta. Mohon info pilihan unit, stok, dan estimasi biaya.",
     "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalLabel": "Halaman sewa laptop Jakarta"
   },
   "related": [
     "rental-macbook-tahunan-jakarta-timur",

@@ -24,8 +24,8 @@
     "heading": "Siap Pakai di Jaksel",
     "body": "Ceritakan jumlah unit, durasi, dan kebutuhan aplikasi lewat chat via WhatsApp ke 6282177984041 agar Techpora bisa cek stok paling sesuai.",
     "waMessage": "Halo Techpora, saya lihat dari techpora.id dan ingin tanya sewa thinkpad bulanan Jakarta Selatan. Boleh dibantu rekomendasi unit dan biayanya?",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek layanan Jakarta Selatan"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Lihat layanan rental laptop Jakarta"
   },
   "related": [
     "rental-thinkpad-bulanan-jakarta-selatan",

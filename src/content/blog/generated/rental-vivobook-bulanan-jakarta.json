@@ -24,8 +24,8 @@
     "heading": "Cek Stok Vivobook Bulanan",
     "body": "Kirim kebutuhan jumlah unit, durasi, dan lokasi pengiriman lewat chat via WhatsApp 6282177984041 agar Techpora bisa hitungkan paket paling efisien.",
     "waMessage": "Halo Techpora, saya mencari rental vivobook bulanan Jakarta. Saya lihat informasinya dari techpora.id dan ingin cek stok serta harga.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalPath": "/rental-laptop-jakarta",
+    "internalLabel": "Halaman rental laptop Jakarta"
   },
   "related": [
     "rental-vivobook-bulanan-jakarta-selatan",

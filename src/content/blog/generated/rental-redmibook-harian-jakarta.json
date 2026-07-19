@@ -45,7 +45,7 @@
     "body": "Ceritakan kebutuhan unit, jumlah, tanggal pakai, dan lokasi pengiriman; tim Techpora siap bantu cek stok lewat chat via WhatsApp dengan cepat.",
     "waMessage": "Halo Techpora, saya lihat dari techpora.id dan ingin tanya rental redmibook harian Jakarta. Bisa cek stok, harga, dan pengiriman untuk tanggal yang saya butuhkan?",
     "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek layanan Jakarta"
+    "internalLabel": "Cek paket sewa laptop Jakarta"
   },
   "related": [
     "rental-redmibook-harian-jakarta-selatan",
