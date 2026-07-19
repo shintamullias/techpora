@@ -18,6 +18,14 @@
     {
       "h": "Cara Cepat Memutuskan",
       "p": "Perkirakan total hari pakai. Kalau di bawah sekitar sepuluh hari, harian umumnya lebih efisien. Kalau di atas itu, minta admin membandingkan tarif harian × jumlah hari dengan paket bulanan — sering kali selisihnya membuat bulanan lebih menguntungkan."
+    },
+    {
+      "h": "Faktor Selain Harga yang Perlu Dipertimbangkan",
+      "p": "Selisih biaya memang penting, tetapi bukan satu-satunya. Sewa harian menuntut koordinasi berulang: konfirmasi perpanjangan, penjadwalan antar-jemput, dan risiko unit sudah dipesan orang lain saat kamu ingin memperpanjang. Sewa bulanan menghilangkan semua itu dan memberi kepastian bahwa unit tetap di tanganmu selama periode kerja. Jika pekerjaanmu punya tenggat yang mungkin bergeser, kepastian ini sering lebih berharga daripada selisih beberapa puluh ribu rupiah. Sampaikan perkiraan durasimu ke admin sejak awal agar bisa dibandingkan langsung mana yang lebih menguntungkan."
+    },
+    {
+      "h": "Contoh Perhitungan Sederhana",
+      "p": "Anggap kamu butuh laptop selama dua minggu untuk satu proyek. Dengan tarif harian, biayanya adalah tarif tersebut dikalikan empat belas hari, ditambah kemungkinan ongkos antar-jemput yang berulang bila sempat dikembalikan di tengah jalan. Bandingkan dengan tarif bulanan yang sudah mencakup seluruh periode tanpa perlu perpanjangan. Pada banyak kasus, titik impasnya jatuh di kisaran sepuluh hari — di bawah itu harian lebih ringan, di atas itu bulanan lebih menguntungkan. Sampaikan estimasi durasimu ke admin agar keduanya bisa dihitung berdampingan sebelum kamu memutuskan."
     }
   ],
   "cta": {

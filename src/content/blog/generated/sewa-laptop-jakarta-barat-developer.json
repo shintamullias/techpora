@@ -1,7 +1,7 @@
 {
   "slug": "sewa-laptop-jakarta-barat-developer",
-  "title": "Sewa Laptop Jakarta Barat untuk Developer & Coding Bootcamp — Techpora.id",
-  "description": "Sewa laptop di Jakarta Barat khusus untuk coding, hackathon, dan bootcamp programming. Unit siap pakai, harga transparan, pengiriman ke Kalideres dan sekitarnya.",
+  "title": "Sewa Laptop Jakarta Barat untuk Developer & Coding Bootcamp",
+  "description": "Sewa laptop di Jakarta Barat khusus untuk coding, hackathon, dan bootcamp programming. Unit siap pakai. Pengiriman ke Kalideres dan sekitarnya.",
   "category": "Profesional",
   "date": "2026-07-18",
   "readMinutes": 4,
@@ -22,6 +22,14 @@
     {
       "h": "Proses Sewa dan Pengiriman",
       "p": "Proses sewa gampang — chat WhatsApp, pilih unit dan durasi, transfer DP, lalu unit dikirim ke lokasi kamu di Jakarta Barat. Estimasi pengiriman 2–4 jam ke area Jakarta Barat. Semua unit dicek dulu sebelum dikirim supaya siap pakai begitu sampai."
+    },
+    {
+      "h": "Spesifikasi yang Perlu Diperhatikan untuk Coding",
+      "p": "Beban terberat saat ngoding jarang datang dari prosesor, melainkan dari RAM. Menjalankan IDE, browser dengan banyak tab dokumentasi, plus emulator atau container sekaligus akan cepat memenuhi RAM 8GB — jadi kalau alur kerjamu berat, mintalah unit dengan RAM lebih besar atau prosesor i5 ke admin. SSD juga menentukan: proses build dan indexing project terasa jauh lebih ringan dibanding hard disk biasa. Satu hal yang sering terlupa adalah waktu setup: menginstal runtime, dependency, dan editor bisa memakan satu hingga dua jam. Ambil unit sehari lebih awal supaya hari kerja pertamamu tidak habis untuk konfigurasi."
+    },
+    {
+      "h": "Pengiriman & Cakupan Area Jakarta Barat",
+      "p": "Permintaan di Jakarta Barat umumnya datang dari kawasan Grogol, Kebon Jeruk, Puri Indah, Kalideres, dan sekitarnya. Estimasi pengiriman 2–4 jam. Untuk memastikan unit tiba tepat waktu, sebutkan alamat lengkap beserta patokan terdekat saat memesan, dan beri tahu jam kamu benar-benar mulai membutuhkan unit — bukan sekadar tanggalnya. Bila jadwalmu padat, pemesanan sehari sebelumnya membuat unit bisa disiapkan lebih dulu sehingga kamu tidak menunggu pada hari pemakaian."
     }
   ],
   "cta": {

@@ -18,6 +18,14 @@
     {
       "h": "Siap Kirim ke Lokasi Produksi",
       "p": "Techpora mengantar unit ke lokasi — studio, kantor, atau lokasi syuting di area Jakarta. Semua unit dicek sebelum dikirim, jadi tim bisa langsung bekerja begitu unit tiba."
+    },
+    {
+      "h": "Mengatur Alur Kerja dan File Proyek",
+      "p": "Kunci kerja kreatif dengan unit sewaan ada pada pengelolaan file. Sejak hari pertama, simpan seluruh materi mentah dan proyek di penyimpanan eksternal atau cloud, bukan di dalam unit. Selain mencegah kapasitas penuh, kebiasaan ini membuat proses pengembalian unit jadi cepat dan aman karena tidak ada data pribadi yang tertinggal. Kalau bekerja dalam tim, samakan struktur folder sejak awal supaya editor lain bisa langsung melanjutkan. Untuk proyek dengan tenggat ketat, ambil unit satu hari lebih awal untuk memasang software dan memastikan proses render berjalan sesuai perkiraan."
+    },
+    {
+      "h": "Memperkirakan Kebutuhan untuk Satu Proyek",
+      "p": "Sebelum menyewa, petakan dulu beban proyekmu: berapa lama durasi materi mentah, berapa banyak lapisan efek yang dipakai, dan berapa tenggat penyerahannya. Proyek pendek dengan revisi cepat cukup ditangani unit ringan, sementara proyek panjang dengan render berulang menuntut spesifikasi lebih tinggi. Perhitungkan juga waktu render dalam rencana sewamu — banyak orang menghitung durasi berdasarkan hari kerja saja dan lupa bahwa proses render bisa memakan waktu semalaman. Menambah satu hari sebagai penyangga jauh lebih murah daripada terburu-buru memperpanjang di menit terakhir."
     }
   ],
   "cta": {

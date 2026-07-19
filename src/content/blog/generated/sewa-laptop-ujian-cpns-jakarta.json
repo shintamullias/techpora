@@ -18,6 +18,14 @@
     {
       "h": "Cek Aplikasi Sebelum Hari Ujian",
       "p": "Begitu unit diterima, sempatkan uji coba: buka platform tryout yang akan dipakai, tes login, cek mikrofon dan kamera jika ujian diawasi online (proctoring), dan pastikan browser sudah update. Pemeriksaan 15 menit ini mencegah drama teknis di detik-detik ujian. Kalau ada kendala, kamu masih punya waktu menghubungi admin untuk penggantian unit."
+    },
+    {
+      "h": "Simulasi Sebelum Hari Ujian",
+      "p": "Jangan tunggu hari pelaksanaan untuk mengetahui bahwa ada yang tidak berfungsi. Sehari sebelumnya, buka platform tryout yang akan dipakai, lakukan login, dan kerjakan beberapa soal contoh sampai selesai. Perhatikan apakah timer berjalan normal dan halaman soal berpindah tanpa jeda panjang. Bila seleksi mensyaratkan pengawasan jarak jauh, uji kamera dan mikrofon sekaligus, karena keduanya paling sering bermasalah pada menit-menit awal. Menemukan kendala pada H-1 masih memberimu waktu menghubungi admin untuk penggantian unit; menemukannya saat ujian dimulai tidak."
+    },
+    {
+      "h": "Menjaga Fokus Saat Ujian Berlangsung",
+      "p": "Kestabilan perangkat hanya separuh cerita. Siapkan koneksi cadangan lewat tethering ponsel, dan pastikan charger terpasang sepanjang ujian agar unit tidak beralih ke mode hemat daya yang bisa memperlambat kinerja. Tutup aplikasi lain yang tidak diperlukan supaya RAM tidak terbagi. Duduklah di ruangan dengan pencahayaan cukup bila ujian diawasi kamera. Persiapan sederhana ini membuat perhatianmu tetap pada soal, bukan pada perangkat."
     }
   ],
   "cta": {
