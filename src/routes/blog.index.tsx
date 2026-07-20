@@ -95,7 +95,7 @@ function BlogIndex() {
         </div>
 
         <div className="mb-8 flex flex-wrap gap-2">
-          {categories.map((c) => (
+          {categories.map((c: string) => (
             <span
               key={c}
               className="rounded-full border border-border bg-secondary/60 px-3 py-1 text-xs font-medium text-foreground"
@@ -106,7 +106,7 @@ function BlogIndex() {
         </div>
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {sorted.map((post) => (
+          {sorted.map((post: { slug: string; title: string; description: string; category: string; date: string; readMinutes: number }) => (
             <Link
               key={post.slug}
               to="/blog/$slug"

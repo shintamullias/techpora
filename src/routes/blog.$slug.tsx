@@ -224,7 +224,7 @@ function BlogPostPage() {
           <section className="mt-16">
             <h2 className="text-2xl font-bold">Artikel terkait</h2>
             <div className="mt-6 grid gap-4 sm:grid-cols-3">
-              {related.map((r) => (
+              {related.map((r: BlogPost) => (
                 <Link
                   key={r.slug}
                   to="/blog/$slug"
