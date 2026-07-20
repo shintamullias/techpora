@@ -11,6 +11,8 @@ import epsonProjX600 from "./epson-projector-x600.png.asset.json";
 
 // Map unit name -> product photo URL
 export const unitImages: Record<string, string> = {
+  // Foto milik sendiri, latar sudah dihapus (disimpan di /public/units)
+  "HP 14s": "/units/hp-14s.png",
   "Lenovo ThinkPad": thinkpad.url,
   "ASUS VivoBook": vivobook.url,
   "RedmiBook 15": redmibook.url,
