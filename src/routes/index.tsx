@@ -62,7 +62,7 @@ type Product = {
 };
 
 const products: Product[] = [
-  { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: "Rp49.000", weekly: "", monthly: "" },
+  { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: "Rp49.000", weekly: "Rp300.000", monthly: "Rp990.000" },
   { name: "Lenovo ThinkPad", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
   { name: "ASUS VivoBook", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
