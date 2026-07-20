@@ -125,6 +125,18 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="id">
       <head>
         <HeadContent />
+        {/*
+          Pengaman domain kembar: bila situs diakses lewat domain staging
+          *.lovable.app, beri tahu mesin pencari untuk tidak mengindeksnya.
+          Sengaja HANYA menyasar akhiran ".lovable.app" — bukan "selain
+          techpora.id" — supaya domain produksi (termasuk www dan preview
+          Netlify) tidak pernah ikut ter-noindex.
+        */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{if(location.hostname.endsWith(".lovable.app")){var m=document.createElement("meta");m.name="robots";m.content="noindex, follow";document.head.appendChild(m);}}catch(e){}})();`,
+          }}
+        />
       </head>
       <body>
         {children}
