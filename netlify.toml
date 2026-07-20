@@ -1,3 +1,11 @@
 [build]
   command = "npm run build"
   publish = "dist"
+
+# Artikel harga diganti dari Rp40rb ke Rp49rb saat unit entry berubah.
+# URL lama dialihkan agar tautan yang sudah beredar tidak mati.
+[[redirects]]
+  from = "/blog/sewa-laptop-jakarta-40-ribu"
+  to = "/blog/sewa-laptop-jakarta-49-ribu"
+  status = 301
+  force = true

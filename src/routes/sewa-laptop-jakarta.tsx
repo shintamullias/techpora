@@ -31,7 +31,7 @@ export const Route = createFileRoute("/sewa-laptop-jakarta")({
           image: `${SITE_URL}/og-image.jpg`,
           url: `${SITE_URL}${PATH}`,
           telephone: "+62821-7798-4041",
-          priceRange: "Rp40.000 - Rp4.500.000",
+          priceRange: "Rp49.000 - Rp4.500.000",
           address: {
             "@type": "PostalAddress",
             streetAddress: "Jl. R. Mangun Muka Raya, Rawamangun",

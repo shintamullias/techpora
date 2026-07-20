@@ -28,7 +28,7 @@ export type AreaData = {
 };
 
 const laptops: Record<string, AreaProduct> = {
-  advan: { name: "Advan Workplus", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp40.000", weekly: "", monthly: "", featured: true },
+  hp14s: { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: "Rp49.000", weekly: "", monthly: "", featured: true },
   thinkpad: { name: "Lenovo ThinkPad", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
   vivobook: { name: "ASUS VivoBook", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   redmibook: { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
@@ -91,7 +91,7 @@ export const areas: AreaData[] = [
       "Event kecil-menengah di venue Jaktim",
       "Kebutuhan harian keluarga (belajar anak, kerja WFH)",
     ],
-    units: [laptops.advan, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.epsonPrinter],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.epsonPrinter],
   },
   {
     slug: "sewa-laptop-jakarta-barat",

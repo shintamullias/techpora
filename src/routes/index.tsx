@@ -62,7 +62,7 @@ type Product = {
 };
 
 const products: Product[] = [
-  { name: "Advan Workplus", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp40.000", weekly: "", monthly: "" },
+  { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: "Rp49.000", weekly: "", monthly: "" },
   { name: "Lenovo ThinkPad", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
   { name: "ASUS VivoBook", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
@@ -187,7 +187,7 @@ export const Route = createFileRoute("/")({
             opens: "08:00",
             closes: "21:00",
           }],
-          priceRange: "Rp40.000 - Rp4.500.000",
+          priceRange: "Rp49.000 - Rp4.500.000",
           aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
           hasMap: MAPS_URL,
@@ -440,7 +440,7 @@ function Index() {
                 <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-6 text-white">
                   <div>
                     <div className="text-[11px] uppercase tracking-wider text-white/50">Mulai dari</div>
-                    <div className="mt-1 font-serif text-2xl">Rp40rb<span className="text-sm font-sans text-white/60">/hari</span></div>
+                    <div className="mt-1 font-serif text-2xl">Rp49rb<span className="text-sm font-sans text-white/60">/hari</span></div>
                   </div>
                   <div>
                     <div className="text-[11px] uppercase tracking-wider text-white/50">Unit</div>
