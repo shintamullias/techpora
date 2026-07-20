@@ -132,7 +132,7 @@ export const Route = createFileRoute("/")({
   loader: () => fetchLatestPosts(),
   head: () => ({
     meta: [
-      { title: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
+      { title: "Sewa / Rental Laptop Jakarta - Techpora.id" },
       {
         name: "description",
         content:
@@ -140,14 +140,14 @@ export const Route = createFileRoute("/")({
       },
       { name: "keywords", content: "sewa laptop jakarta, rental laptop jakarta, sewa laptop harian, sewa laptop bulanan, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
-      { property: "og:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
+      { property: "og:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
       { property: "og:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:type", content: "website" },
       { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { name: "twitter:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
+      { name: "twitter:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
       { name: "twitter:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
       { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
     ],

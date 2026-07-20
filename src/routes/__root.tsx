@@ -83,9 +83,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Techpora.id" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "google-site-verification", content: "s38inJ6I2e5zwqwEqQDEWc5sxUeleIoG8d0rNvugujA" },
-      { title: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
-      { property: "og:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
-      { name: "twitter:title", content: "Techpora.id — Sewa Laptop, Printer & Proyektor Jakarta" },
+      { title: "Sewa / Rental Laptop Jakarta - Techpora.id" },
+      { property: "og:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
+      { name: "twitter:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
       { name: "description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
       { property: "og:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
       { name: "twitter:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
@@ -100,6 +100,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Fira+Sans:wght@300;400;500;600;700;800&display=swap",
       },
+      { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
     ],
     scripts: GA_ID
       ? [
