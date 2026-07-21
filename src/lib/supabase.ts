@@ -32,6 +32,36 @@ export type Unit = {
   bulanan: number;
   aktif: boolean;
   urutan: number;
+  modal: number;
+  pemilik: string;
+  porsi_pemilik: number;
+  nilai_ganti: number;
+};
+
+export type Pengeluaran = {
+  id: string;
+  tanggal: string;
+  kategori: string;
+  keterangan: string;
+  jumlah: number;
+  unit_id: string | null;
+};
+
+export const KATEGORI_BIAYA = [
+  { key: "unit", label: "Beli unit" },
+  { key: "perawatan", label: "Perawatan" },
+  { key: "transport", label: "Transport / bensin" },
+  { key: "pemasaran", label: "Pemasaran" },
+  { key: "operasional", label: "Operasional" },
+  { key: "lainnya", label: "Lainnya" },
+] as const;
+
+/** Bulan "YYYY-MM" dari tanggal ISO */
+export const bulanDari = (iso: string) => (iso || "").slice(0, 7);
+
+export const namaBulan = (ym: string) => {
+  const [y, m] = ym.split("-").map(Number);
+  return new Date(y, m - 1, 1).toLocaleDateString("id-ID", { month: "long", year: "numeric" });
 };
 
 export type StatusPesanan = "dipesan" | "berjalan" | "selesai" | "batal";

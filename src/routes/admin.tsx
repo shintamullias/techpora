@@ -2,8 +2,9 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN,
-  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen,
+  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
 } from "@/lib/supabase";
+import TabKeuangan from "@/components/TabKeuangan";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "kalender" | "pesanan" | "pelanggan" | "unit";
+type Tab = "kalender" | "pesanan" | "pelanggan" | "unit" | "uang";
 
 function Dashboard() {
   const nav = useNavigate();
@@ -23,6 +24,7 @@ function Dashboard() {
   const [unit, setUnit] = useState<Unit[]>([]);
   const [pesanan, setPesanan] = useState<Pesanan[]>([]);
   const [set, setSet] = useState<Pengaturan>({ ongkir_per_km: 10000, ongkir_minimum: 50000 });
+  const [biaya, setBiaya] = useState<Pengeluaran[]>([]);
   const [galat, setGalat] = useState("");
 
   const muat = async () => {
@@ -31,12 +33,14 @@ function Dashboard() {
     const { data: me } = await supabase.from("profil").select("is_admin").eq("id", sesi.session.user.id).maybeSingle();
     if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
     setBoleh(true);
-    const [p, u, o, s] = await Promise.all([
+    const [p, u, o, s, b] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
       supabase.from("pesanan").select("*, pelanggan(nama, wa), unit(nama)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
+      supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
     ]);
+    setBiaya((b.data as Pengeluaran[]) || []);
     setPelanggan((p.data as Pelanggan[]) || []);
     setUnit((u.data as Unit[]) || []);
     setPesanan((o.data as Pesanan[]) || []);
@@ -82,9 +86,9 @@ function Dashboard() {
 
       <nav className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 backdrop-blur">
         <div className="mx-auto flex max-w-3xl gap-1 py-2">
-          {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"]] as [Tab,string][]).map(([k,t]) => (
+          {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"],["uang","Uang"]] as [Tab,string][]).map(([k,t]) => (
             <button key={k} onClick={() => setTab(k)}
-              className={"flex-1 rounded-lg px-2 py-2 text-sm font-semibold transition " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
+              className={"flex-1 rounded-lg px-1.5 py-2 text-xs font-semibold transition sm:text-sm " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
           ))}
         </div>
       </nav>
@@ -95,6 +99,7 @@ function Dashboard() {
         {tab === "pesanan" && <TabPesanan pesanan={pesanan} pelanggan={pelanggan} unit={unit} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelanggan} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unit} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "uang" && <TabKeuangan pesanan={pesanan} unit={unit} biaya={biaya} muat={muat} setGalat={setGalat} />}
       </main>
     </div>
   );
@@ -537,7 +542,7 @@ function KartuPelanggan({ p, jml, hapus, setGalat }: { p: Pelanggan; jml: number
 
 /* ============ TAB 4: UNIT ============ */
 function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void }) {
-  const kosong = { id: "", nama: "", spek: "", harian: "", mingguan: "", bulanan: "" };
+  const kosong = { id: "", nama: "", spek: "", harian: "", mingguan: "", bulanan: "", modal: "", pemilik: "Techpora", porsi: "70" };
   const [f, setF] = useState(kosong);
   const [buka, setBuka] = useState(false);
   const [ongkir, setOngkir] = useState(set);
@@ -548,6 +553,7 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
     const { error } = await supabase.from("unit").insert({
       id: f.id.trim().toUpperCase(), nama: f.nama.trim(), spek: f.spek.trim(),
       harian: Number(f.harian) || 0, mingguan: Number(f.mingguan) || 0, bulanan: Number(f.bulanan) || 0,
+      modal: Number(f.modal) || 0, pemilik: f.pemilik.trim() || "Techpora", porsi_pemilik: Number(f.porsi) || 70,
       urutan: unit.length + 1,
     });
     if (error) return setGalat(error.code === "23505" ? "Kode unit itu sudah dipakai." : error.message);
@@ -578,6 +584,11 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
               <Kol label="Bulanan"><input type="number" value={f.bulanan} onChange={(e) => s("bulanan", e.target.value)} className={inp} /></Kol>
             </div>
             <p className="text-xs text-muted-foreground">Isi 0 kalau durasi itu tidak ditawarkan.</p>
+            <div className="grid grid-cols-2 gap-3">
+              <Kol label="Modal / nilai unit"><input type="number" value={f.modal} onChange={(e) => s("modal", e.target.value)} placeholder="3000000" className={inp} /></Kol>
+              <Kol label="Porsi pemilik (%)"><input type="number" value={f.porsi} onChange={(e) => s("porsi", e.target.value)} className={inp} /></Kol>
+            </div>
+            <Kol label="Pemilik unit"><input value={f.pemilik} onChange={(e) => s("pemilik", e.target.value)} placeholder="Techpora / nama investor" className={inp} /></Kol>
             <button onClick={simpan} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Simpan unit</button>
           </div>
         )}
@@ -592,6 +603,7 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
                   <p className="mt-1 text-xs text-muted-foreground">
                     {rp(u.harian)}/hari{u.mingguan ? ` · ${rp(u.mingguan)}/mgg` : ""}{u.bulanan ? ` · ${rp(u.bulanan)}/bln` : ""}
                   </p>
+                  <p className="text-xs text-muted-foreground">Modal {rp(u.modal)} · {u.pemilik} ({u.porsi_pemilik}%)</p>
                 </div>
                 <button onClick={() => ubah(u.id, { aktif: !u.aktif })}
                   className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
