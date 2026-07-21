@@ -104,7 +104,7 @@ const COPY: Record<JakartaHubVariant, Copy> = {
     faqs: [
       {
         q: "Berapa harga sewa laptop di Jakarta?",
-        a: "Mulai dari Rp49.000/hari untuk HP 14s (paling hemat), Rp100.000/hari untuk Lenovo ThinkPad i3, hingga Rp250.000/hari untuk MacBook Air M1. Semua harga sudah termasuk pengecekan unit sebelum kirim.",
+        a: "Mulai dari Rp79.000/hari untuk HP 14s (paling hemat), Rp100.000/hari untuk Lenovo ThinkPad i3, hingga Rp250.000/hari untuk MacBook Air M1. Semua harga sudah termasuk pengecekan unit sebelum kirim.",
       },
       {
         q: "Apa saja area Jakarta yang dilayani?",
@@ -185,7 +185,7 @@ const COPY: Record<JakartaHubVariant, Copy> = {
     faqs: [
       {
         q: "Berapa harga rental laptop di Jakarta?",
-        a: "Rental harian mulai Rp49.000 (HP 14s, paling hemat), Rp100.000 (Lenovo ThinkPad i3), sampai Rp250.000 (MacBook Air M1). Semua harga include pengecekan unit dan pengiriman ke Jakarta.",
+        a: "Rental harian mulai Rp79.000 (HP 14s, paling hemat), Rp100.000 (Lenovo ThinkPad i3), sampai Rp250.000 (MacBook Air M1). Semua harga include pengecekan unit dan pengiriman ke Jakarta.",
       },
       {
         q: "Apakah rental laptop Techpora menerima PO corporate?",
