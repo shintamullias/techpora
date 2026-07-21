@@ -93,3 +93,20 @@ export const waLink = (wa: string, teks = "") =>
 
 /** Dua rentang tanggal beririsan? (akhir bersifat eksklusif) */
 export const beririsan = (a1: string, a2: string, b1: string, b2: string) => a1 < b2 && b1 < a2;
+
+export type Dokumen = {
+  id: string;
+  pelanggan_id: string;
+  jenis: string;
+  path: string;
+  nama_file: string;
+  diunggah_pada: string;
+};
+
+export const JENIS_DOKUMEN = [
+  { key: "ktp", label: "KTP", wajib: true },
+  { key: "jaminan", label: "Jaminan ke-2", wajib: true },
+  { key: "selfie", label: "Selfie + KTP", wajib: true },
+  { key: "getcontact", label: "GetContact", wajib: false },
+  { key: "lainnya", label: "Lainnya", wajib: false },
+] as const;

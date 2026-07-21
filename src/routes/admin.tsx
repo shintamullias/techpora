@@ -1,8 +1,8 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan,
-  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan,
+  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN,
+  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen,
 } from "@/lib/supabase";
 
 export const Route = createFileRoute("/admin")({
@@ -411,28 +411,115 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
 
       {daftar.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pelanggan.</p> : (
         <ul className="space-y-2">
-          {daftar.map((p) => {
-            const jml = pesanan.filter((o) => o.pelanggan_id === p.id).length;
-            return (
-              <li key={p.id} className="rounded-xl border border-border p-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-foreground">{p.nama}</p>
-                    <p className="truncate text-xs text-muted-foreground">{p.wa}{p.instagram && ` · ${p.instagram}`}</p>
-                    {p.catatan && <p className="mt-1 text-xs text-muted-foreground">{p.catatan}</p>}
-                  </div>
-                  <span className="shrink-0 text-xs text-muted-foreground">{jml}× sewa</span>
-                </div>
-                <div className="mt-2 flex gap-1.5">
-                  <a href={waLink(p.wa)} target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
-                  {jml === 0 && <button onClick={() => hapus(p.id)} className="ml-auto text-xs text-muted-foreground underline underline-offset-2">Hapus</button>}
-                </div>
-              </li>
-            );
-          })}
+          {daftar.map((p) => (
+            <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length} hapus={hapus} setGalat={setGalat} />
+          ))}
         </ul>
       )}
     </Kartu>
+  );
+}
+
+function KartuPelanggan({ p, jml, hapus, setGalat }: { p: Pelanggan; jml: number; hapus: (id: string) => void; setGalat: (s: string) => void }) {
+  const [buka, setBuka] = useState(false);
+  const [dok, setDok] = useState<Dokumen[]>([]);
+  const [sibuk, setSibuk] = useState("");
+
+  const muatDok = async () => {
+    const { data } = await supabase.from("dokumen").select("*").eq("pelanggan_id", p.id);
+    setDok((data as Dokumen[]) || []);
+  };
+
+  const unggah = async (jenis: string, file: File) => {
+    if (file.size > 10 * 1024 * 1024) return setGalat("Ukuran file maksimal 10 MB.");
+    setSibuk(jenis); setGalat("");
+    try {
+      const ext = file.name.split(".").pop() || "jpg";
+      const path = `${p.id}/${jenis}-${Date.now()}.${ext}`;
+      const { error: e1 } = await supabase.storage.from("dokumen").upload(path, file);
+      if (e1) throw e1;
+      const { error: e2 } = await supabase.from("dokumen").insert({ pelanggan_id: p.id, jenis, path, nama_file: file.name });
+      if (e2) throw e2;
+      await muatDok();
+    } catch (e: any) {
+      setGalat("Gagal mengunggah: " + String(e?.message || e));
+    } finally { setSibuk(""); }
+  };
+
+  const lihat = async (d: Dokumen) => {
+    const { data, error } = await supabase.storage.from("dokumen").createSignedUrl(d.path, 600);
+    if (error) return setGalat(error.message);
+    if (data?.signedUrl) window.open(data.signedUrl, "_blank");
+  };
+
+  const hapusDok = async (d: Dokumen) => {
+    await supabase.storage.from("dokumen").remove([d.path]);
+    await supabase.from("dokumen").delete().eq("id", d.id);
+    muatDok();
+  };
+
+  const lengkap = JENIS_DOKUMEN.filter((j) => j.wajib).every((j) => dok.some((d) => d.jenis === j.key));
+
+  return (
+    <li className="rounded-xl border border-border">
+      <button onClick={() => { setBuka(!buka); if (!buka && !dok.length) muatDok(); }} className="flex w-full items-start justify-between gap-3 p-3 text-left">
+        <div className="min-w-0">
+          <p className="truncate font-semibold text-foreground">{p.nama}</p>
+          <p className="truncate text-xs text-muted-foreground">{p.wa}{p.instagram && ` · ${p.instagram}`}</p>
+          {p.catatan && <p className="mt-1 text-xs text-muted-foreground">{p.catatan}</p>}
+        </div>
+        <div className="shrink-0 text-right">
+          <span className="block text-xs text-muted-foreground">{jml}× sewa</span>
+          <span className="text-xs text-muted-foreground">{buka ? "tutup" : "berkas"}</span>
+        </div>
+      </button>
+
+      {buka && (
+        <div className="space-y-3 border-t border-border p-3">
+          {p.alamat && <p className="text-xs text-muted-foreground"><b className="text-foreground">Alamat:</b> {p.alamat}</p>}
+          {p.no_darurat && <p className="text-xs text-muted-foreground"><b className="text-foreground">Darurat:</b> {p.no_darurat}</p>}
+
+          <div>
+            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              Berkas persyaratan {dok.length > 0 && (lengkap ? <span className="text-primary">· wajib lengkap</span> : <span className="text-amber-700">· belum lengkap</span>)}
+            </p>
+            <div className="space-y-2">
+              {JENIS_DOKUMEN.map((j) => {
+                const ada = dok.filter((d) => d.jenis === j.key);
+                return (
+                  <div key={j.key} className="rounded-lg border border-border p-2">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-sm text-foreground">
+                        {j.label} {j.wajib && <span className="text-destructive">*</span>}
+                      </span>
+                      <label className="shrink-0 cursor-pointer rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground hover:bg-secondary">
+                        {sibuk === j.key ? "Mengunggah…" : ada.length ? "+ Tambah" : "Unggah"}
+                        <input type="file" accept="image/*,application/pdf" className="hidden" disabled={sibuk === j.key}
+                          onChange={(e) => { const file = e.target.files?.[0]; if (file) unggah(j.key, file); e.target.value = ""; }} />
+                      </label>
+                    </div>
+                    {ada.map((d) => (
+                      <div key={d.id} className="mt-1.5 flex items-center gap-2 rounded bg-secondary/60 px-2 py-1.5">
+                        <button onClick={() => lihat(d)} className="min-w-0 flex-1 truncate text-left text-xs text-primary underline underline-offset-2">
+                          {d.nama_file || "lihat berkas"}
+                        </button>
+                        <button onClick={() => hapusDok(d)} className="shrink-0 text-xs text-muted-foreground">hapus</button>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
+            </div>
+            <p className="mt-2 text-xs text-muted-foreground">Berkas tersimpan privat. Tautan yang dibuka hanya berlaku 10 menit.</p>
+          </div>
+
+          <div className="flex gap-1.5 border-t border-border pt-3">
+            <a href={waLink(p.wa)} target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
+            {jml === 0 && <button onClick={() => hapus(p.id)} className="ml-auto text-xs text-muted-foreground underline underline-offset-2">Hapus pelanggan</button>}
+          </div>
+        </div>
+      )}
+    </li>
   );
 }
 
