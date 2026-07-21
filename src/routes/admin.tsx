@@ -1,348 +1,524 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { supabase, rp, tglIndo, type Profil, type Dokumen, type Pesanan } from "@/lib/supabase";
-
-const SITE_URL = "https://techpora.id";
+import { useEffect, useMemo, useState } from "react";
+import {
+  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan,
+  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan,
+} from "@/lib/supabase";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
-    meta: [
-      { title: "Dashboard Admin — Techpora" },
-      { name: "robots", content: "noindex, nofollow" },
-    ],
-    links: [{ rel: "canonical", href: `${SITE_URL}/admin` }],
+    meta: [{ title: "Dashboard — Techpora" }, { name: "robots", content: "noindex, nofollow" }],
   }),
-  component: Admin,
+  component: Dashboard,
 });
 
-function Admin() {
+type Tab = "kalender" | "pesanan" | "pelanggan" | "unit";
+
+function Dashboard() {
   const nav = useNavigate();
   const [siap, setSiap] = useState(false);
   const [boleh, setBoleh] = useState(false);
-  const [tab, setTab] = useState<"verifikasi" | "pesanan">("verifikasi");
-  const [profilList, setProfilList] = useState<Profil[]>([]);
+  const [tab, setTab] = useState<Tab>("kalender");
+  const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
+  const [unit, setUnit] = useState<Unit[]>([]);
   const [pesanan, setPesanan] = useState<Pesanan[]>([]);
+  const [set, setSet] = useState<Pengaturan>({ ongkir_per_km: 10000, ongkir_minimum: 50000 });
   const [galat, setGalat] = useState("");
 
   const muat = async () => {
     const { data: sesi } = await supabase.auth.getSession();
-    if (!sesi.session) {
-      nav({ to: "/masuk" });
-      return;
-    }
+    if (!sesi.session) return nav({ to: "/masuk" });
     const { data: me } = await supabase.from("profil").select("is_admin").eq("id", sesi.session.user.id).maybeSingle();
-    if (!me?.is_admin) {
-      setBoleh(false);
-      setSiap(true);
-      return;
-    }
+    if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
     setBoleh(true);
-    const [p, o] = await Promise.all([
-      supabase.from("profil").select("*").order("dibuat_pada", { ascending: false }),
-      supabase.from("pesanan").select("*, profil(nama, wa), unit(nama)").order("dibuat_pada", { ascending: false }),
+    const [p, u, o, s] = await Promise.all([
+      supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
+      supabase.from("unit").select("*").order("urutan"),
+      supabase.from("pesanan").select("*, pelanggan(nama, wa), unit(nama)").order("mulai", { ascending: false }),
+      supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
     ]);
-    setProfilList((p.data as Profil[]) || []);
+    setPelanggan((p.data as Pelanggan[]) || []);
+    setUnit((u.data as Unit[]) || []);
     setPesanan((o.data as Pesanan[]) || []);
+    if (s.data) setSet(s.data as Pengaturan);
     setSiap(true);
   };
 
-  useEffect(() => {
-    muat();
-  }, []);
+  useEffect(() => { muat(); }, []);
 
-  if (!siap) return <div className="flex min-h-screen items-center justify-center text-sm text-muted-foreground">Memuat…</div>;
-
+  if (!siap) return <Pusat>Memuat…</Pusat>;
   if (!boleh)
     return (
-      <div className="flex min-h-screen flex-col items-center justify-center gap-3 px-6 text-center">
-        <h1 className="font-serif text-2xl">Halaman khusus admin</h1>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          Akun ini belum ditandai sebagai admin. Buka Supabase → tabel <code>profil</code> → ubah <code>is_admin</code> menjadi{" "}
-          <code>true</code> untuk akunmu.
-        </p>
-        <Link to="/akun" className="text-sm text-primary underline underline-offset-4">
-          Kembali ke akun
-        </Link>
-      </div>
+      <Pusat>
+        <p className="mb-2 font-serif text-xl">Khusus admin</p>
+        <Link to="/masuk" className="text-primary underline underline-offset-4">Masuk dengan akun admin</Link>
+      </Pusat>
     );
 
-  const menunggu = profilList.filter((p) => p.status_verifikasi === "menunggu").length;
-  const pesananBaru = pesanan.filter((p) => p.status === "menunggu").length;
+  const aktif = pesanan.filter((p) => p.status === "berjalan").length;
+  const akanDatang = pesanan.filter((p) => p.status === "dipesan").length;
 
   return (
-    <div className="min-h-screen bg-secondary/30 px-4 py-8">
-      <div className="mx-auto w-full max-w-3xl space-y-5">
-        <div className="flex items-center justify-between">
-          <h1 className="font-serif text-2xl text-foreground">Dashboard Techpora</h1>
-          <Link to="/akun" className="text-sm text-muted-foreground underline underline-offset-4">
-            Akun saya
-          </Link>
-        </div>
-
-        <div className="flex gap-1 rounded-xl bg-background p-1">
-          {(
-            [
-              ["verifikasi", `Verifikasi${menunggu ? ` (${menunggu})` : ""}`],
-              ["pesanan", `Pesanan${pesananBaru ? ` (${pesananBaru})` : ""}`],
-            ] as const
-          ).map(([k, t]) => (
+    <div className="min-h-screen bg-secondary/30 pb-10">
+      <header className="bg-slate-900 px-4 py-4 text-white">
+        <div className="mx-auto max-w-3xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="font-serif text-2xl leading-none">Techpora</h1>
+              <p className="mt-1 text-xs tracking-widest text-white/50">DASHBOARD SEWA</p>
+            </div>
             <button
-              key={k}
-              onClick={() => setTab(k)}
-              className={`flex-1 rounded-lg px-3 py-2.5 text-sm font-semibold transition ${
-                tab === k ? "bg-primary text-primary-foreground" : "text-muted-foreground"
-              }`}
-            >
-              {t}
-            </button>
+              onClick={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
+              className="text-xs text-white/70 underline underline-offset-4"
+            >Keluar</button>
+          </div>
+          <div className="mt-3 flex gap-3 text-xs text-white/70">
+            <span><b className="text-white">{aktif}</b> unit keluar</span>
+            <span><b className="text-white">{akanDatang}</b> akan datang</span>
+            <span><b className="text-white">{unit.filter((u) => u.aktif).length}</b> unit aktif</span>
+          </div>
+        </div>
+      </header>
+
+      <nav className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl gap-1 py-2">
+          {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"]] as [Tab,string][]).map(([k,t]) => (
+            <button key={k} onClick={() => setTab(k)}
+              className={"flex-1 rounded-lg px-2 py-2 text-sm font-semibold transition " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
           ))}
         </div>
+      </nav>
 
+      <main className="mx-auto max-w-3xl space-y-4 px-4 py-4">
         {galat && <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">{galat}</p>}
+        {tab === "kalender" && <TabKalender pesanan={pesanan} unit={unit} />}
+        {tab === "pesanan" && <TabPesanan pesanan={pesanan} pelanggan={pelanggan} unit={unit} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "pelanggan" && <TabPelanggan pelanggan={pelanggan} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
+        {tab === "unit" && <TabUnit unit={unit} set={set} muat={muat} setGalat={setGalat} />}
+      </main>
+    </div>
+  );
+}
 
-        {tab === "verifikasi"
-          ? profilList.map((p) => <KartuProfil key={p.id} p={p} muat={muat} setGalat={setGalat} />)
-          : pesanan.map((o) => <KartuPesanan key={o.id} o={o} muat={muat} setGalat={setGalat} />)}
+const Pusat = ({ children }: { children: React.ReactNode }) => (
+  <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center text-muted-foreground">{children}</div>
+);
+
+const inp = "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
+
+function Kol({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</label>
+      {children}
+    </div>
+  );
+}
+
+function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: string; aksi?: React.ReactNode }) {
+  return (
+    <section className="rounded-2xl border border-border bg-background p-4">
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-serif text-xl text-foreground">{judul}</h2>
+        {aksi}
       </div>
-    </div>
+      {children}
+    </section>
   );
 }
 
-/* ---------------- Kartu verifikasi penyewa ---------------- */
+const warnaStatus: Record<StatusPesanan, string> = {
+  dipesan: "bg-amber-50 text-amber-800 border-amber-200",
+  berjalan: "bg-blue-50 text-blue-800 border-blue-200",
+  selesai: "bg-emerald-50 text-emerald-800 border-emerald-200",
+  batal: "bg-slate-100 text-slate-600 border-slate-200",
+};
 
-function KartuProfil({ p, muat, setGalat }: { p: Profil; muat: () => void; setGalat: (s: string) => void }) {
-  const [buka, setBuka] = useState(false);
-  const [dok, setDok] = useState<Dokumen[]>([]);
-  const [tautan, setTautan] = useState<Record<string, string>>({});
-  const [catatan, setCatatan] = useState(p.catatan_review || "");
-
-  const muatDokumen = async () => {
-    const { data } = await supabase.from("dokumen").select("*").eq("user_id", p.id);
-    const list = (data as Dokumen[]) || [];
-    setDok(list);
-    const t: Record<string, string> = {};
-    for (const d of list) {
-      const { data: s } = await supabase.storage.from("dokumen").createSignedUrl(d.path, 600);
-      if (s?.signedUrl) t[d.id] = s.signedUrl;
-    }
-    setTautan(t);
-  };
-
-  const ubahStatus = async (status: "disetujui" | "ditolak" | "menunggu") => {
-    const { error } = await supabase
-      .from("profil")
-      .update({ status_verifikasi: status, catatan_review: catatan, direview_pada: new Date().toISOString() })
-      .eq("id", p.id);
-    if (error) setGalat(error.message);
-    else muat();
-  };
-
-  const warna =
-    p.status_verifikasi === "disetujui"
-      ? "bg-primary/10 text-primary"
-      : p.status_verifikasi === "ditolak"
-      ? "bg-destructive/10 text-destructive"
-      : "bg-secondary text-muted-foreground";
+/* ============ TAB 1: KALENDER ============ */
+function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
+  const [bln, setBln] = useState(() => { const d = new Date(); return { th: d.getFullYear(), bl: d.getMonth() }; });
+  const aktif = pesanan.filter((p) => p.status === "dipesan" || p.status === "berjalan");
+  const awal = new Date(bln.th, bln.bl, 1);
+  const jml = new Date(bln.th, bln.bl + 1, 0).getDate();
+  const iso = (d: number) => `${bln.th}-${String(bln.bl + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
+  const geser = (a: number) => setBln(({ th, bl }) => { const d = new Date(th, bl + a, 1); return { th: d.getFullYear(), bl: d.getMonth() }; });
 
   return (
-    <div className="rounded-2xl border border-border bg-background">
-      <button
-        onClick={() => {
-          setBuka(!buka);
-          if (!buka && !dok.length) muatDokumen();
-        }}
-        className="flex w-full items-start justify-between gap-3 p-4 text-left"
-      >
-        <div className="min-w-0">
-          <p className="truncate font-semibold text-foreground">{p.nama || "(tanpa nama)"}</p>
-          <p className="truncate text-sm text-muted-foreground">{p.wa}</p>
-        </div>
-        <span className={`shrink-0 rounded-full px-2.5 py-1 text-xs font-semibold capitalize ${warna}`}>
-          {p.status_verifikasi}
-        </span>
-      </button>
-
-      {buka && (
-        <div className="space-y-4 border-t border-border p-4">
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <Info k="Instagram" v={p.instagram || "—"} />
-            <Info k="Daftar" v={tglIndo(p.dibuat_pada?.slice(0, 10))} />
-          </div>
-
-          <div>
-            <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Dokumen ({dok.length})
-            </p>
-            {dok.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Belum ada dokumen diunggah.</p>
-            ) : (
-              <div className="grid grid-cols-2 gap-2">
-                {dok.map((d) => (
-                  <a
-                    key={d.id}
-                    href={tautan[d.id]}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-lg border border-border p-2 text-xs hover:bg-secondary"
-                  >
-                    <span className="block font-semibold capitalize text-foreground">{d.jenis}</span>
-                    <span className="block truncate text-muted-foreground">{d.nama_file || "lihat file"}</span>
-                  </a>
-                ))}
-              </div>
-            )}
-            <p className="mt-2 text-xs text-muted-foreground">Tautan dokumen berlaku 10 menit demi keamanan.</p>
-          </div>
-
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Catatan untuk penyewa
-            </label>
-            <input
-              value={catatan}
-              onChange={(e) => setCatatan(e.target.value)}
-              placeholder="mis. foto KTP buram, mohon diulang"
-              className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none focus:border-primary"
-            />
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {p.status_verifikasi !== "disetujui" && (
-              <button onClick={() => ubahStatus("disetujui")} className="flex-1 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-                Setujui
-              </button>
-            )}
-            {p.status_verifikasi !== "ditolak" && (
-              <button onClick={() => ubahStatus("ditolak")} className="flex-1 rounded-lg border border-destructive/40 px-4 py-2.5 text-sm font-semibold text-destructive">
-                Tolak
-              </button>
-            )}
-            <a
-              href={`https://wa.me/${(p.wa || "").replace(/[^0-9]/g, "").replace(/^0/, "62")}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg border border-border px-3 py-2.5 text-sm font-semibold text-foreground"
-            >
-              WhatsApp
-            </a>
-          </div>
-        </div>
+    <Kartu judul={awal.toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
+      aksi={<div className="flex gap-1">
+        <button onClick={() => geser(-1)} className="rounded-lg border border-border px-3 py-1 text-sm">‹</button>
+        <button onClick={() => geser(1)} className="rounded-lg border border-border px-3 py-1 text-sm">›</button>
+      </div>}>
+      {unit.filter((u) => u.aktif).length === 0 && (
+        <p className="rounded-lg bg-secondary px-3 py-2 text-sm text-muted-foreground">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
       )}
-    </div>
+      <div className="space-y-3">
+        {unit.filter((u) => u.aktif).map((u) => (
+          <div key={u.id}>
+            <p className="mb-1 text-sm font-semibold text-foreground">
+              <span className="font-mono text-xs text-muted-foreground">{u.id}</span> · {u.nama}
+            </p>
+            <div className="flex gap-[2px] overflow-hidden rounded-md">
+              {Array.from({ length: jml }).map((_, i) => {
+                const t = iso(i + 1);
+                const isi = aktif.find((p) => p.unit_id === u.id && t >= p.mulai && t < p.selesai);
+                return (
+                  <div key={i} title={isi ? `${isi.pelanggan?.nama} · ${tglIndo(isi.mulai)}–${tglIndo(isi.selesai)}` : t}
+                    className={"h-8 flex-1 " + (isi ? (isi.status === "berjalan" ? "bg-blue-500" : "bg-amber-400") : "bg-secondary")} />
+                );
+              })}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="mt-4 flex gap-4 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-amber-400" /> Dipesan</span>
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-blue-500" /> Sedang keluar</span>
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-secondary" /> Kosong</span>
+      </div>
+
+      <div className="mt-5 border-t border-border pt-4">
+        <p className="mb-2 text-sm font-semibold text-foreground">Jadwal terdekat</p>
+        {aktif.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada sewa terjadwal.</p> : (
+          <ul className="space-y-2">
+            {[...aktif].sort((a, b) => (a.mulai < b.mulai ? -1 : 1)).slice(0, 6).map((p) => (
+              <li key={p.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
+                <div className="min-w-0">
+                  <p className="truncate text-sm font-semibold text-foreground">{p.pelanggan?.nama}</p>
+                  <p className="text-xs text-muted-foreground">
+                    <span className="font-mono">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)}
+                  </p>
+                </div>
+                <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Kartu>
   );
 }
 
-/* ---------------- Kartu pesanan ---------------- */
-
-function KartuPesanan({ o, muat, setGalat }: { o: Pesanan; muat: () => void; setGalat: (s: string) => void }) {
+/* ============ TAB 2: PESANAN ============ */
+function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
+  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+}) {
   const [buka, setBuka] = useState(false);
-  const [catatan, setCatatan] = useState(o.catatan_admin || "");
+  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "" };
+  const [f, setF] = useState<any>(kosong);
+  const [sibuk, setSibuk] = useState(false);
+  const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
 
-  const ubah = async (status: Pesanan["status"]) => {
-    const { error } = await supabase.from("pesanan").update({ status, catatan_admin: catatan }).eq("id", o.id);
-    if (error) setGalat(error.message);
-    else muat();
+  const u = unit.find((x) => x.id === f.unit_id);
+  const tipeAda = useMemo(() => (u ? (["harian","mingguan","bulanan"] as const).filter((t) => u[t] > 0) : (["harian"] as const)), [u]);
+  useEffect(() => { if (u && !tipeAda.includes(f.durasi_tipe)) s("durasi_tipe", tipeAda[0]); }, [f.unit_id]);
+
+  const n = Math.max(1, Number(f.durasi_jumlah) || 1);
+  const totalHari = hariDari(f.durasi_tipe, n);
+  const selesai = f.mulai ? tambahHari(f.mulai, totalHari) : "";
+  const hargaSewa = u ? (u[f.durasi_tipe as "harian"] || 0) * n : 0;
+  const km = Math.max(0, Number(f.jarak) || 0);
+  const hargaAntar = hitungOngkir(km, f.antar, set);
+  const total = hargaSewa + hargaAntar;
+
+  const bentrok = useMemo(() => {
+    if (!f.unit_id || !f.mulai) return null;
+    return pesanan.find((p) => p.unit_id === f.unit_id && p.status !== "batal" && p.status !== "selesai" && beririsan(f.mulai, selesai, p.mulai, p.selesai));
+  }, [f.unit_id, f.mulai, selesai, pesanan]);
+
+  const simpan = async () => {
+    if (!f.pelanggan_id || !f.unit_id || !f.mulai) return setGalat("Pelanggan, unit, dan tanggal mulai wajib diisi.");
+    setSibuk(true); setGalat("");
+    const { error } = await supabase.from("pesanan").insert({
+      pelanggan_id: f.pelanggan_id, unit_id: f.unit_id, durasi_tipe: f.durasi_tipe, durasi_jumlah: n,
+      mulai: f.mulai, jam: f.jam, selesai, total_hari: totalHari, antar: f.antar,
+      alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar, total, catatan: f.catatan.trim(),
+    });
+    setSibuk(false);
+    if (error) return setGalat(error.message);
+    setF(kosong); setBuka(false); muat();
   };
 
-  const wa = (o.profil?.wa || "").replace(/[^0-9]/g, "").replace(/^0/, "62");
-  const pesanAntar = `Halo kak ${o.profil?.nama || ""}, unit ${o.unit?.nama || o.unit_id} siap diantar ${tglIndo(
-    o.mulai
-  )} pukul ${o.jam} ke ${o.alamat || "lokasi yang disepakati"}. Nanti kita cek unit bersama dan tanda tangan perjanjian sewa saat serah terima ya 🙏`;
-  const pesanTagihan = `Halo kak ${o.profil?.nama || ""}, pesanan disetujui ✅\n\nUnit: ${o.unit?.nama || o.unit_id}\nDurasi: ${
-    o.durasi_jumlah
-  } ${o.durasi_tipe} (${tglIndo(o.mulai)} — ${tglIndo(o.selesai)}, pukul ${o.jam})\nTotal: ${rp(
-    o.total
-  )}\n\nSilakan lakukan pelunasan, lalu unit kami antar sesuai jadwal 🙌`;
+  const ubahStatus = async (id: string, status: StatusPesanan) => {
+    const { error } = await supabase.from("pesanan").update({ status }).eq("id", id);
+    if (error) setGalat(error.message); else muat();
+  };
 
   return (
-    <div className="rounded-2xl border border-border bg-background">
-      <button onClick={() => setBuka(!buka)} className="flex w-full items-start justify-between gap-3 p-4 text-left">
-        <div className="min-w-0">
-          <p className="truncate font-semibold text-foreground">{o.profil?.nama || "—"}</p>
-          <p className="truncate text-sm text-muted-foreground">
-            {o.unit?.nama || o.unit_id} · {tglIndo(o.mulai)} → {tglIndo(o.selesai)}
-          </p>
-        </div>
-        <div className="shrink-0 text-right">
-          <p className="font-semibold text-foreground">{rp(o.total)}</p>
-          <span className="text-xs capitalize text-muted-foreground">{o.status}</span>
-        </div>
-      </button>
-
-      {buka && (
-        <div className="space-y-4 border-t border-border p-4">
-          <div className="grid grid-cols-2 gap-2 text-sm">
-            <Info k="WhatsApp" v={o.profil?.wa || "—"} />
-            <Info k="Jam ambil" v={o.jam} />
-            <Info k="Sewa" v={rp(o.harga_sewa)} />
-            <Info k="Antar" v={o.antar === "tidak" ? "Ambil sendiri" : `${rp(o.harga_antar)} · ${o.jarak_km} km`} />
-          </div>
-          {o.alamat && <Info k="Alamat" v={o.alamat} />}
-          {o.catatan && <Info k="Catatan penyewa" v={o.catatan} />}
-
-          <div>
-            <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-              Catatan admin
-            </label>
-            <input
-              value={catatan}
-              onChange={(e) => setCatatan(e.target.value)}
-              className="w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none focus:border-primary"
-            />
-          </div>
-
-          <div className="flex flex-wrap gap-2">
-            {o.status === "menunggu" && (
+    <>
+      <Kartu judul="Pesanan" aksi={
+        <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+          {buka ? "Tutup" : "+ Tambah"}
+        </button>}>
+        {buka && (
+          <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+            {pelanggan.length === 0 && <p className="text-sm text-destructive">Tambahkan pelanggan dulu di tab Pelanggan.</p>}
+            <Kol label="Pelanggan">
+              <select value={f.pelanggan_id} onChange={(e) => s("pelanggan_id", e.target.value)} className={inp}>
+                <option value="">— pilih —</option>
+                {pelanggan.map((p) => <option key={p.id} value={p.id}>{p.nama} · {p.wa}</option>)}
+              </select>
+            </Kol>
+            <Kol label="Unit">
+              <select value={f.unit_id} onChange={(e) => s("unit_id", e.target.value)} className={inp}>
+                <option value="">— pilih —</option>
+                {unit.filter((x) => x.aktif).map((x) => <option key={x.id} value={x.id}>{x.id} · {x.nama} · {rp(x.harian)}/hari</option>)}
+              </select>
+            </Kol>
+            {u && (
               <>
-                <button onClick={() => ubah("disetujui")} className="flex-1 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-                  Setujui
-                </button>
-                <button onClick={() => ubah("ditolak")} className="flex-1 rounded-lg border border-destructive/40 px-4 py-2.5 text-sm font-semibold text-destructive">
-                  Tolak
+                <div className="flex gap-2">
+                  {tipeAda.map((t) => (
+                    <button key={t} onClick={() => s("durasi_tipe", t)}
+                      className={"flex-1 rounded-lg border px-2 py-2 text-sm font-semibold capitalize " + (f.durasi_tipe===t?"border-primary bg-primary/5 text-primary":"border-border text-muted-foreground")}>{t}</button>
+                  ))}
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <Kol label={`Jumlah ${f.durasi_tipe === "harian" ? "hari" : f.durasi_tipe === "mingguan" ? "minggu" : "bulan"}`}>
+                    <input type="number" min={1} value={f.durasi_jumlah} onChange={(e) => s("durasi_jumlah", e.target.value)} className={inp} />
+                  </Kol>
+                  <Kol label="Jam ambil"><input type="time" value={f.jam} onChange={(e) => s("jam", e.target.value)} className={inp} /></Kol>
+                </div>
+                <Kol label="Tanggal mulai"><input type="date" value={f.mulai} onChange={(e) => s("mulai", e.target.value)} className={inp} /></Kol>
+                {f.mulai && <p className="text-xs text-muted-foreground">Kembali <b className="text-foreground">{tglIndo(selesai)}</b> pukul {f.jam} · {totalHari} × 24 jam</p>}
+                {bentrok && <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
+                  Bentrok: {bentrok.unit_id} sudah dipakai {bentrok.pelanggan?.nama} ({tglIndo(bentrok.mulai)}–{tglIndo(bentrok.selesai)}).
+                </p>}
+                <div className="flex gap-2">
+                  {([["tidak","Ambil sendiri"],["antar","Antar saja"],["pp","Antar + jemput"]] as const).map(([k,t]) => (
+                    <button key={k} onClick={() => s("antar", k)}
+                      className={"flex-1 rounded-lg border px-2 py-2 text-xs font-semibold " + (f.antar===k?"border-primary bg-primary/5 text-primary":"border-border text-muted-foreground")}>{t}</button>
+                  ))}
+                </div>
+                {f.antar !== "tidak" && (
+                  <>
+                    <Kol label="Alamat"><input value={f.alamat} onChange={(e) => s("alamat", e.target.value)} placeholder="Jalan, patokan" className={inp} /></Kol>
+                    <Kol label="Jarak (km)"><input type="number" min={0} value={f.jarak} onChange={(e) => s("jarak", e.target.value)} className={inp} /></Kol>
+                    <p className="text-xs text-muted-foreground">{rp(set.ongkir_per_km)}/km, minimum {rp(set.ongkir_minimum)}.</p>
+                  </>
+                )}
+                <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
+                <div className="rounded-xl border-2 border-dashed border-border p-3 text-sm">
+                  <Baris k={`${u.nama} · ${n} ${f.durasi_tipe}`} v={hargaSewa} />
+                  {f.antar !== "tidak" && <Baris k={`Antar${f.antar === "pp" ? " + jemput" : ""} ${km} km`} v={hargaAntar} />}
+                  <div className="mt-2 flex items-baseline justify-between border-t border-border pt-2">
+                    <span className="font-semibold text-muted-foreground">TOTAL</span>
+                    <span className="font-serif text-2xl text-foreground">{rp(total)}</span>
+                  </div>
+                </div>
+                <button onClick={simpan} disabled={sibuk} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
+                  {sibuk ? "Menyimpan…" : "Simpan pesanan"}
                 </button>
               </>
             )}
-            {o.status === "disetujui" && (
-              <button onClick={() => ubah("berjalan")} className="flex-1 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-                Tandai unit sudah diantar
-              </button>
-            )}
-            {o.status === "berjalan" && (
-              <button onClick={() => ubah("selesai")} className="flex-1 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">
-                Tandai selesai (unit kembali)
-              </button>
-            )}
           </div>
+        )}
 
-          <div className="flex flex-wrap gap-2 border-t border-border pt-3">
-            <a
-              href={`https://wa.me/${wa}?text=${encodeURIComponent(pesanTagihan)}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground"
-            >
-              Kirim tagihan
-            </a>
-            <a
-              href={`https://wa.me/${wa}?text=${encodeURIComponent(pesanAntar)}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-lg border border-border px-3 py-2 text-xs font-semibold text-foreground"
-            >
-              Jadwalkan antar
-            </a>
-          </div>
-        </div>
-      )}
-    </div>
+        {pesanan.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pesanan.</p> : (
+          <ul className="space-y-2">
+            {pesanan.map((p) => (
+              <li key={p.id} className="rounded-xl border border-border p-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-foreground">{p.pelanggan?.nama}</p>
+                    <p className="truncate text-xs text-muted-foreground">
+                      <span className="font-mono">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)} · {p.durasi_jumlah} {p.durasi_tipe}
+                    </p>
+                    {p.antar !== "tidak" && <p className="truncate text-xs text-muted-foreground">Antar {p.jarak_km} km · {rp(p.harga_antar)}</p>}
+                  </div>
+                  <div className="shrink-0 text-right">
+                    <p className="font-semibold text-foreground">{rp(p.total)}</p>
+                    <span className={"rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
+                  </div>
+                </div>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
+                  {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
+                  {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
+                  {p.pelanggan?.wa && (
+                    <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, konfirmasi sewa ${p.unit?.nama} ${tglIndo(p.mulai)} — ${tglIndo(p.selesai)} pukul ${p.jam}. Total ${rp(p.total)}. Terima kasih 🙏`)}
+                      target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
+                  )}
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </Kartu>
+    </>
   );
 }
 
-function Info({ k, v }: { k: string; v: string }) {
+const Aksi = ({ onClick, children }: { onClick: () => void; children: React.ReactNode }) => (
+  <button onClick={onClick} className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground hover:bg-secondary">{children}</button>
+);
+
+const Baris = ({ k, v }: { k: string; v: number }) => (
+  <div className="flex items-baseline justify-between gap-2 py-0.5">
+    <span className="text-muted-foreground">{k}</span>
+    <span className="flex-1 border-b border-dotted border-border" />
+    <span className="text-foreground">{rp(v)}</span>
+  </div>
+);
+
+/* ============ TAB 3: PELANGGAN ============ */
+function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelanggan[]; pesanan: Pesanan[]; muat: () => void; setGalat: (s: string) => void }) {
+  const kosong = { nama: "", wa: "", instagram: "", alamat: "", no_darurat: "", catatan: "" };
+  const [f, setF] = useState(kosong);
+  const [buka, setBuka] = useState(false);
+  const [sibuk, setSibuk] = useState(false);
+  const [cari, setCari] = useState("");
+  const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
+
+  const simpan = async () => {
+    if (!f.nama.trim() || !f.wa.trim()) return setGalat("Nama dan nomor WA wajib diisi.");
+    setSibuk(true); setGalat("");
+    const { error } = await supabase.from("pelanggan").insert({ ...f, nama: f.nama.trim(), wa: f.wa.trim() });
+    setSibuk(false);
+    if (error) return setGalat(error.message);
+    setF(kosong); setBuka(false); muat();
+  };
+
+  const hapus = async (id: string) => {
+    const { error } = await supabase.from("pelanggan").delete().eq("id", id);
+    if (error) setGalat(error.message); else muat();
+  };
+
+  const daftar = pelanggan.filter((p) => (p.nama + p.wa + p.instagram).toLowerCase().includes(cari.toLowerCase()));
+
   return (
-    <div>
-      <p className="text-xs uppercase tracking-wide text-muted-foreground">{k}</p>
-      <p className="text-foreground">{v}</p>
-    </div>
+    <Kartu judul="Pelanggan" aksi={
+      <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+        {buka ? "Tutup" : "+ Tambah"}
+      </button>}>
+      {buka && (
+        <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+          <Kol label="Nama sesuai KTP"><input value={f.nama} onChange={(e) => s("nama", e.target.value)} className={inp} /></Kol>
+          <div className="grid grid-cols-2 gap-3">
+            <Kol label="Nomor WhatsApp"><input value={f.wa} onChange={(e) => s("wa", e.target.value)} placeholder="08…" className={inp} /></Kol>
+            <Kol label="Instagram"><input value={f.instagram} onChange={(e) => s("instagram", e.target.value)} placeholder="@user" className={inp} /></Kol>
+          </div>
+          <Kol label="Alamat"><input value={f.alamat} onChange={(e) => s("alamat", e.target.value)} className={inp} /></Kol>
+          <Kol label="Nomor darurat"><input value={f.no_darurat} onChange={(e) => s("no_darurat", e.target.value)} className={inp} /></Kol>
+          <Kol label="Catatan verifikasi"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} placeholder="mis. KTP + KTM ok, GetContact bersih" className={inp} /></Kol>
+          <button onClick={simpan} disabled={sibuk} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
+            {sibuk ? "Menyimpan…" : "Simpan pelanggan"}
+          </button>
+        </div>
+      )}
+
+      {pelanggan.length > 4 && <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama / WA…" className={inp + " mb-3"} />}
+
+      {daftar.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pelanggan.</p> : (
+        <ul className="space-y-2">
+          {daftar.map((p) => {
+            const jml = pesanan.filter((o) => o.pelanggan_id === p.id).length;
+            return (
+              <li key={p.id} className="rounded-xl border border-border p-3">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate font-semibold text-foreground">{p.nama}</p>
+                    <p className="truncate text-xs text-muted-foreground">{p.wa}{p.instagram && ` · ${p.instagram}`}</p>
+                    {p.catatan && <p className="mt-1 text-xs text-muted-foreground">{p.catatan}</p>}
+                  </div>
+                  <span className="shrink-0 text-xs text-muted-foreground">{jml}× sewa</span>
+                </div>
+                <div className="mt-2 flex gap-1.5">
+                  <a href={waLink(p.wa)} target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
+                  {jml === 0 && <button onClick={() => hapus(p.id)} className="ml-auto text-xs text-muted-foreground underline underline-offset-2">Hapus</button>}
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </Kartu>
+  );
+}
+
+/* ============ TAB 4: UNIT ============ */
+function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void }) {
+  const kosong = { id: "", nama: "", spek: "", harian: "", mingguan: "", bulanan: "" };
+  const [f, setF] = useState(kosong);
+  const [buka, setBuka] = useState(false);
+  const [ongkir, setOngkir] = useState(set);
+  const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
+
+  const simpan = async () => {
+    if (!f.id.trim() || !f.nama.trim()) return setGalat("Kode unit dan nama wajib diisi.");
+    const { error } = await supabase.from("unit").insert({
+      id: f.id.trim().toUpperCase(), nama: f.nama.trim(), spek: f.spek.trim(),
+      harian: Number(f.harian) || 0, mingguan: Number(f.mingguan) || 0, bulanan: Number(f.bulanan) || 0,
+      urutan: unit.length + 1,
+    });
+    if (error) return setGalat(error.code === "23505" ? "Kode unit itu sudah dipakai." : error.message);
+    setF(kosong); setBuka(false); muat();
+  };
+
+  const ubah = async (id: string, patch: Partial<Unit>) => {
+    const { error } = await supabase.from("unit").update(patch).eq("id", id);
+    if (error) setGalat(error.message); else muat();
+  };
+
+  return (
+    <>
+      <Kartu judul="Unit" aksi={
+        <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+          {buka ? "Tutup" : "+ Tambah"}
+        </button>}>
+        {buka && (
+          <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+            <div className="grid grid-cols-2 gap-3">
+              <Kol label="Kode unit"><input value={f.id} onChange={(e) => s("id", e.target.value)} placeholder="TP-002" className={inp} /></Kol>
+              <Kol label="Nama"><input value={f.nama} onChange={(e) => s("nama", e.target.value)} placeholder="Lenovo ThinkPad" className={inp} /></Kol>
+            </div>
+            <Kol label="Spesifikasi"><input value={f.spek} onChange={(e) => s("spek", e.target.value)} placeholder="i3 · 8GB · SSD 256GB" className={inp} /></Kol>
+            <div className="grid grid-cols-3 gap-2">
+              <Kol label="Harian"><input type="number" value={f.harian} onChange={(e) => s("harian", e.target.value)} className={inp} /></Kol>
+              <Kol label="Mingguan"><input type="number" value={f.mingguan} onChange={(e) => s("mingguan", e.target.value)} className={inp} /></Kol>
+              <Kol label="Bulanan"><input type="number" value={f.bulanan} onChange={(e) => s("bulanan", e.target.value)} className={inp} /></Kol>
+            </div>
+            <p className="text-xs text-muted-foreground">Isi 0 kalau durasi itu tidak ditawarkan.</p>
+            <button onClick={simpan} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Simpan unit</button>
+          </div>
+        )}
+
+        <ul className="space-y-2">
+          {unit.map((u) => (
+            <li key={u.id} className={"rounded-xl border p-3 " + (u.aktif ? "border-border" : "border-dashed border-border opacity-60")}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <p className="truncate font-semibold text-foreground"><span className="font-mono text-xs text-muted-foreground">{u.id}</span> · {u.nama}</p>
+                  <p className="truncate text-xs text-muted-foreground">{u.spek}</p>
+                  <p className="mt-1 text-xs text-muted-foreground">
+                    {rp(u.harian)}/hari{u.mingguan ? ` · ${rp(u.mingguan)}/mgg` : ""}{u.bulanan ? ` · ${rp(u.bulanan)}/bln` : ""}
+                  </p>
+                </div>
+                <button onClick={() => ubah(u.id, { aktif: !u.aktif })}
+                  className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
+                  {u.aktif ? "Nonaktifkan" : "Aktifkan"}
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Kartu>
+
+      <Kartu judul="Ongkir">
+        <div className="grid grid-cols-2 gap-3">
+          <Kol label="Per km"><input type="number" value={ongkir.ongkir_per_km} onChange={(e) => setOngkir({ ...ongkir, ongkir_per_km: Number(e.target.value) || 0 })} className={inp} /></Kol>
+          <Kol label="Minimum"><input type="number" value={ongkir.ongkir_minimum} onChange={(e) => setOngkir({ ...ongkir, ongkir_minimum: Number(e.target.value) || 0 })} className={inp} /></Kol>
+        </div>
+        <p className="mt-2 text-xs text-muted-foreground">
+          Contoh: 3 km → {rp(Math.max(ongkir.ongkir_minimum, 3 * ongkir.ongkir_per_km))} · 8 km → {rp(Math.max(ongkir.ongkir_minimum, 8 * ongkir.ongkir_per_km))}
+        </p>
+        <button
+          onClick={async () => {
+            const { error } = await supabase.from("pengaturan").update(ongkir).eq("id", true);
+            if (error) setGalat(error.message); else muat();
+          }}
+          className="mt-3 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Simpan ongkir</button>
+      </Kartu>
+    </>
   );
 }

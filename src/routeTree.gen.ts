@@ -22,7 +22,6 @@ import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
 import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
 import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-jakarta'
 import { Route as MasukRouteImport } from './routes/masuk'
-import { Route as AkunRouteImport } from './routes/akun'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
@@ -97,11 +96,6 @@ const MasukRoute = MasukRouteImport.update({
   path: '/masuk',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AkunRoute = AkunRouteImport.update({
-  id: '/akun',
-  path: '/akun',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AdminRoute = AdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -141,7 +135,6 @@ const ApiPublicIndexnowRoute = ApiPublicIndexnowRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/akun': typeof AkunRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
@@ -164,7 +157,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/akun': typeof AkunRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
@@ -188,7 +180,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/admin': typeof AdminRoute
-  '/akun': typeof AkunRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
@@ -213,7 +204,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
-    | '/akun'
     | '/masuk'
     | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
@@ -236,7 +226,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/admin'
-    | '/akun'
     | '/masuk'
     | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
@@ -259,7 +248,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/admin'
-    | '/akun'
     | '/masuk'
     | '/rental-laptop-jakarta'
     | '/sewa-laptop-bekasi'
@@ -283,7 +271,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdminRoute: typeof AdminRoute
-  AkunRoute: typeof AkunRoute
   MasukRoute: typeof MasukRoute
   RentalLaptopJakartaRoute: typeof RentalLaptopJakartaRoute
   SewaLaptopBekasiRoute: typeof SewaLaptopBekasiRoute
@@ -397,13 +384,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MasukRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/akun': {
-      id: '/akun'
-      path: '/akun'
-      fullPath: '/akun'
-      preLoaderRoute: typeof AkunRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/admin': {
       id: '/admin'
       path: '/admin'
@@ -459,7 +439,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdminRoute: AdminRoute,
-  AkunRoute: AkunRoute,
   MasukRoute: MasukRoute,
   RentalLaptopJakartaRoute: RentalLaptopJakartaRoute,
   SewaLaptopBekasiRoute: SewaLaptopBekasiRoute,
