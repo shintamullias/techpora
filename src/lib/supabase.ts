@@ -55,6 +55,10 @@ export type Pesanan = {
   status: StatusPesanan;
   catatan: string;
   dibuat_pada: string;
+  token: string;
+  ttd_nama: string | null;
+  ttd_pada: string | null;
+  ttd_setuju: boolean;
   pelanggan?: { nama: string; wa: string } | null;
   unit?: { nama: string } | null;
 };

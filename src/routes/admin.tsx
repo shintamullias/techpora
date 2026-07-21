@@ -331,7 +331,19 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                     <span className={"rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
                   </div>
                 </div>
+                <p className="mt-1.5 text-xs">
+                  {p.ttd_setuju
+                    ? <span className="text-primary">Perjanjian ditandatangani {p.ttd_nama ? `oleh ${p.ttd_nama}` : ""}</span>
+                    : <span className="text-amber-700">Perjanjian belum ditandatangani</span>}
+                </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">
+                  {!p.ttd_setuju && p.pelanggan?.wa && (
+                    <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, ini perjanjian sewa ${p.unit?.nama} untuk ${tglIndo(p.mulai)}. Mohon dibaca lalu tanda tangan langsung di halaman ini ya:\n\n${typeof window !== "undefined" ? window.location.origin : "https://techpora.id"}/ttd/${p.token}\n\nNanti saat serah terima tinggal cek unit, tidak perlu tanda tangan lagi 🙏`)}
+                      target="_blank" rel="noreferrer"
+                      className="rounded-lg bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">Kirim link TTD</a>
+                  )}
+                  <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
+                    className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">Lihat perjanjian</a>
                   {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
                   {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
                   {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}

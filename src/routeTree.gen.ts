@@ -25,6 +25,7 @@ import { Route as MasukRouteImport } from './routes/masuk'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as TtdTokenRouteImport } from './routes/ttd.$token'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ApiPublicPingSitemapRouteImport } from './routes/api/public/ping-sitemap'
 import { Route as ApiPublicIndexnowAllRouteImport } from './routes/api/public/indexnow-all'
@@ -111,6 +112,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TtdTokenRoute = TtdTokenRouteImport.update({
+  id: '/ttd/$token',
+  path: '/ttd/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -149,6 +155,7 @@ export interface FileRoutesByFullPath {
   '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ttd/$token': typeof TtdTokenRoute
   '/blog/': typeof BlogIndexRoute
   '/api/public/indexnow': typeof ApiPublicIndexnowRoute
   '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
@@ -171,6 +178,7 @@ export interface FileRoutesByTo {
   '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ttd/$token': typeof TtdTokenRoute
   '/blog': typeof BlogIndexRoute
   '/api/public/indexnow': typeof ApiPublicIndexnowRoute
   '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
@@ -194,6 +202,7 @@ export interface FileRoutesById {
   '/sewa-macbook': typeof SewaMacbookRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/ttd/$token': typeof TtdTokenRoute
   '/blog/': typeof BlogIndexRoute
   '/api/public/indexnow': typeof ApiPublicIndexnowRoute
   '/api/public/indexnow-all': typeof ApiPublicIndexnowAllRoute
@@ -218,6 +227,7 @@ export interface FileRouteTypes {
     | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/ttd/$token'
     | '/blog/'
     | '/api/public/indexnow'
     | '/api/public/indexnow-all'
@@ -240,6 +250,7 @@ export interface FileRouteTypes {
     | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/ttd/$token'
     | '/blog'
     | '/api/public/indexnow'
     | '/api/public/indexnow-all'
@@ -262,6 +273,7 @@ export interface FileRouteTypes {
     | '/sewa-macbook'
     | '/sitemap.xml'
     | '/blog/$slug'
+    | '/ttd/$token'
     | '/blog/'
     | '/api/public/indexnow'
     | '/api/public/indexnow-all'
@@ -285,6 +297,7 @@ export interface RootRouteChildren {
   SewaMacbookRoute: typeof SewaMacbookRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  TtdTokenRoute: typeof TtdTokenRoute
   BlogIndexRoute: typeof BlogIndexRoute
   ApiPublicIndexnowRoute: typeof ApiPublicIndexnowRoute
   ApiPublicIndexnowAllRoute: typeof ApiPublicIndexnowAllRoute
@@ -405,6 +418,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ttd/$token': {
+      id: '/ttd/$token'
+      path: '/ttd/$token'
+      fullPath: '/ttd/$token'
+      preLoaderRoute: typeof TtdTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -453,6 +473,7 @@ const rootRouteChildren: RootRouteChildren = {
   SewaMacbookRoute: SewaMacbookRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
+  TtdTokenRoute: TtdTokenRoute,
   BlogIndexRoute: BlogIndexRoute,
   ApiPublicIndexnowRoute: ApiPublicIndexnowRoute,
   ApiPublicIndexnowAllRoute: ApiPublicIndexnowAllRoute,
