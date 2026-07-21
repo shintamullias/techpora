@@ -68,10 +68,22 @@ export const rp = (n: number) => "Rp" + (Number(n) || 0).toLocaleString("id-ID")
 export const hariDari = (tipe: string, jumlah: number) =>
   tipe === "harian" ? jumlah : tipe === "mingguan" ? jumlah * 7 : jumlah * 30;
 
+/**
+ * Menambah hari pada tanggal "YYYY-MM-DD".
+ * Sengaja TIDAK memakai toISOString(): fungsi itu mengonversi ke UTC,
+ * sehingga di zona WIB (UTC+7) penambahan harinya termakan balik dan
+ * tanggal selesai jadi sama dengan tanggal mulai.
+ */
 export function tambahHari(tanggal: string, hari: number) {
-  const d = new Date(tanggal + "T00:00:00");
-  d.setDate(d.getDate() + hari);
-  return d.toISOString().slice(0, 10);
+  const [y, m, d] = tanggal.split("-").map(Number);
+  const dt = new Date(y, m - 1, d + hari);
+  return (
+    dt.getFullYear() +
+    "-" +
+    String(dt.getMonth() + 1).padStart(2, "0") +
+    "-" +
+    String(dt.getDate()).padStart(2, "0")
+  );
 }
 
 export const tglIndo = (iso?: string | null) =>
