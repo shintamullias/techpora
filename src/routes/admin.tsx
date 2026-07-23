@@ -266,10 +266,33 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
   pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
 }) {
   const [buka, setBuka] = useState(false);
+  const [edit, setEdit] = useState<string | null>(null);
   const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "" };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
+
+  const tutup = () => { setBuka(false); setEdit(null); setF(kosong); };
+
+  const bukaTambah = () => {
+    if (buka && !edit) return tutup();
+    setEdit(null); setF(kosong); setBuka(true);
+  };
+
+  /* Mengisi ulang formulir dari pesanan yang dipilih. Status tidak ikut
+     diubah di sini — status tetap lewat tombol alur (diantar/kembali/batal). */
+  const bukaEdit = (o: Pesanan) => {
+    if (edit === o.id) return tutup();
+    setEdit(o.id);
+    setF({
+      pelanggan_id: o.pelanggan_id, unit_id: o.unit_id,
+      durasi_tipe: o.durasi_tipe, durasi_jumlah: o.durasi_jumlah || 1,
+      mulai: o.mulai, jam: (o.jam || "08:00").slice(0, 5), antar: o.antar || "tidak",
+      alamat: o.alamat || "", jarak: String(o.jarak_km || ""), catatan: o.catatan || "",
+    });
+    setBuka(true);
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   const u = unit.find((x) => x.id === f.unit_id);
   const tipeAda = useMemo(() => (u ? (["harian","mingguan","bulanan"] as const).filter((t) => u[t] > 0) : (["harian"] as const)), [u]);
@@ -285,20 +308,23 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
 
   const bentrok = useMemo(() => {
     if (!f.unit_id || !f.mulai) return null;
-    return pesanan.find((p) => p.unit_id === f.unit_id && p.status !== "batal" && p.status !== "selesai" && beririsan(f.mulai, selesai, p.mulai, p.selesai));
-  }, [f.unit_id, f.mulai, selesai, pesanan]);
+    return pesanan.find((p) => p.id !== edit && p.unit_id === f.unit_id && p.status !== "batal" && p.status !== "selesai" && beririsan(f.mulai, selesai, p.mulai, p.selesai));
+  }, [f.unit_id, f.mulai, selesai, pesanan, edit]);
 
   const simpan = async () => {
     if (!f.pelanggan_id || !f.unit_id || !f.mulai) return setGalat("Pelanggan, unit, dan tanggal mulai wajib diisi.");
     setSibuk(true); setGalat("");
-    const { error } = await supabase.from("pesanan").insert({
+    const isi = {
       pelanggan_id: f.pelanggan_id, unit_id: f.unit_id, durasi_tipe: f.durasi_tipe, durasi_jumlah: n,
       mulai: f.mulai, jam: f.jam, selesai, total_hari: totalHari, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar, total, catatan: f.catatan.trim(),
-    });
+    };
+    const { error } = edit
+      ? await supabase.from("pesanan").update(isi).eq("id", edit)
+      : await supabase.from("pesanan").insert(isi);
     setSibuk(false);
     if (error) return setGalat(error.message);
-    setF(kosong); setBuka(false); muat();
+    tutup(); muat();
   };
 
   const ubahStatus = async (id: string, status: StatusPesanan) => {
@@ -309,11 +335,12 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
   return (
     <>
       <Kartu judul="Pesanan" aksi={
-        <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
-          {buka ? "Tutup" : "+ Tambah"}
+        <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+          {buka && !edit ? "Tutup" : "+ Tambah"}
         </button>}>
         {buka && (
           <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+            {edit && <p className="text-sm font-semibold text-foreground">Edit pesanan</p>}
             {pelanggan.length === 0 && <p className="text-sm text-destructive">Tambahkan pelanggan dulu di tab Pelanggan.</p>}
             <Kol label="Pelanggan">
               <select value={f.pelanggan_id} onChange={(e) => s("pelanggan_id", e.target.value)} className={inp}>
@@ -324,7 +351,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
             <Kol label="Unit">
               <select value={f.unit_id} onChange={(e) => s("unit_id", e.target.value)} className={inp}>
                 <option value="">— pilih —</option>
-                {unit.filter((x) => x.aktif).map((x) => <option key={x.id} value={x.id}>{x.id} · {x.nama} · {rp(x.harian)}/hari</option>)}
+                {unit.filter((x) => x.aktif || x.id === f.unit_id).map((x) => <option key={x.id} value={x.id}>{x.id} · {x.nama} · {rp(x.harian)}/hari</option>)}
               </select>
             </Kol>
             {u && (
@@ -368,9 +395,12 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                     <span className="font-serif text-2xl text-foreground">{rp(total)}</span>
                   </div>
                 </div>
-                <button onClick={simpan} disabled={sibuk} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
-                  {sibuk ? "Menyimpan…" : "Simpan pesanan"}
-                </button>
+                <div className="flex gap-2">
+                  <button onClick={simpan} disabled={sibuk} className="flex-1 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
+                    {sibuk ? "Menyimpan…" : edit ? "Simpan perubahan" : "Simpan pesanan"}
+                  </button>
+                  <button onClick={tutup} className="rounded-lg border border-border px-4 py-3 text-sm font-semibold text-foreground">Batal</button>
+                </div>
               </>
             )}
           </div>
@@ -406,6 +436,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                   )}
                   <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">Lihat perjanjian</a>
+                  <Aksi onClick={() => bukaEdit(p)}>{edit === p.id ? "Tutup edit" : "Edit"}</Aksi>
                   {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
                   {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
                   {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
