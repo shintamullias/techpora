@@ -52,15 +52,6 @@ function Dashboard() {
 
   useEffect(() => { muat(); }, []);
 
-  if (!siap) return <Pusat>Memuat…</Pusat>;
-  if (!boleh)
-    return (
-      <Pusat>
-        <p className="mb-2 font-serif text-xl">Khusus admin</p>
-        <Link to="/masuk" className="text-primary underline underline-offset-4">Masuk dengan akun admin</Link>
-      </Pusat>
-    );
-
   /* ---------- saringan kategori ----------
      Satu unit selalu milik tepat satu kategori, jadi seluruh tab cukup
      disaring lewat unit_id-nya. Pelanggan ikut tersaring dari pesanan. */
@@ -90,6 +81,15 @@ function Dashboard() {
     () => (kat === "semua" ? biaya : biaya.filter((b) => cocok(b.unit_id))),
     [biaya, kat, katUnit],
   );
+
+  if (!siap) return <Pusat>Memuat…</Pusat>;
+  if (!boleh)
+    return (
+      <Pusat>
+        <p className="mb-2 font-serif text-xl">Khusus admin</p>
+        <Link to="/masuk" className="text-primary underline underline-offset-4">Masuk dengan akun admin</Link>
+      </Pusat>
+    );
 
   const aktif = pesananTampil.filter((p) => p.status === "berjalan").length;
   const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
