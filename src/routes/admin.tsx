@@ -533,33 +533,58 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
   const kosong = { nama: "", wa: "", instagram: "", alamat: "", no_darurat: "", catatan: "" };
   const [f, setF] = useState(kosong);
   const [buka, setBuka] = useState(false);
+  const [edit, setEdit] = useState<string | null>(null);
   const [sibuk, setSibuk] = useState(false);
   const [cari, setCari] = useState("");
   const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
 
+  const tutup = () => { setBuka(false); setEdit(null); setF(kosong); };
+
+  const bukaTambah = () => {
+    if (buka && !edit) return tutup();
+    setEdit(null); setF(kosong); setBuka(true);
+  };
+
+  const bukaEdit = (o: Pelanggan) => {
+    if (edit === o.id) return tutup();
+    setEdit(o.id);
+    setF({
+      nama: o.nama || "", wa: o.wa || "", instagram: o.instagram || "",
+      alamat: o.alamat || "", no_darurat: o.no_darurat || "", catatan: o.catatan || "",
+    });
+    setBuka(true);
+    if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const simpan = async () => {
     if (!f.nama.trim() || !f.wa.trim()) return setGalat("Nama dan nomor WA wajib diisi.");
     setSibuk(true); setGalat("");
-    const { error } = await supabase.from("pelanggan").insert({ ...f, nama: f.nama.trim(), wa: f.wa.trim() });
+    const isi = { ...f, nama: f.nama.trim(), wa: f.wa.trim() };
+    const { error } = edit
+      ? await supabase.from("pelanggan").update(isi).eq("id", edit)
+      : await supabase.from("pelanggan").insert(isi);
     setSibuk(false);
     if (error) return setGalat(error.message);
-    setF(kosong); setBuka(false); muat();
+    tutup(); muat();
   };
 
   const hapus = async (id: string) => {
     const { error } = await supabase.from("pelanggan").delete().eq("id", id);
-    if (error) setGalat(error.message); else muat();
+    if (error) return setGalat("Tidak bisa dihapus, kemungkinan masih terpakai di pesanan.");
+    if (edit === id) tutup();
+    muat();
   };
 
   const daftar = pelanggan.filter((p) => (p.nama + p.wa + p.instagram).toLowerCase().includes(cari.toLowerCase()));
 
   return (
     <Kartu judul="Pelanggan" aksi={
-      <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
-        {buka ? "Tutup" : "+ Tambah"}
+      <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+        {buka && !edit ? "Tutup" : "+ Tambah"}
       </button>}>
       {buka && (
         <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+          {edit && <p className="text-sm font-semibold text-foreground">Edit pelanggan</p>}
           <Kol label="Nama sesuai KTP"><input value={f.nama} onChange={(e) => s("nama", e.target.value)} className={inp} /></Kol>
           <div className="grid grid-cols-2 gap-3">
             <Kol label="Nomor WhatsApp"><input value={f.wa} onChange={(e) => s("wa", e.target.value)} placeholder="08…" className={inp} /></Kol>
@@ -568,9 +593,12 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
           <Kol label="Alamat"><input value={f.alamat} onChange={(e) => s("alamat", e.target.value)} className={inp} /></Kol>
           <Kol label="Nomor darurat"><input value={f.no_darurat} onChange={(e) => s("no_darurat", e.target.value)} className={inp} /></Kol>
           <Kol label="Catatan verifikasi"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} placeholder="mis. KTP + KTM ok, GetContact bersih" className={inp} /></Kol>
-          <button onClick={simpan} disabled={sibuk} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
-            {sibuk ? "Menyimpan…" : "Simpan pelanggan"}
-          </button>
+          <div className="flex gap-2">
+            <button onClick={simpan} disabled={sibuk} className="flex-1 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
+              {sibuk ? "Menyimpan…" : edit ? "Simpan perubahan" : "Simpan pelanggan"}
+            </button>
+            <button onClick={tutup} className="rounded-lg border border-border px-4 py-3 text-sm font-semibold text-foreground">Batal</button>
+          </div>
         </div>
       )}
 
@@ -579,7 +607,8 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
       {daftar.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pelanggan.</p> : (
         <ul className="space-y-2">
           {daftar.map((p) => (
-            <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length} hapus={hapus} setGalat={setGalat} />
+            <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length}
+              hapus={hapus} setGalat={setGalat} bukaEdit={bukaEdit} sedangEdit={edit === p.id} />
           ))}
         </ul>
       )}
@@ -587,7 +616,10 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
   );
 }
 
-function KartuPelanggan({ p, jml, hapus, setGalat }: { p: Pelanggan; jml: number; hapus: (id: string) => void; setGalat: (s: string) => void }) {
+function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
+  p: Pelanggan; jml: number; hapus: (id: string) => void; setGalat: (s: string) => void;
+  bukaEdit: (p: Pelanggan) => void; sedangEdit: boolean;
+}) {
   const [buka, setBuka] = useState(false);
   const [dok, setDok] = useState<Dokumen[]>([]);
   const [sibuk, setSibuk] = useState("");
@@ -682,6 +714,9 @@ function KartuPelanggan({ p, jml, hapus, setGalat }: { p: Pelanggan; jml: number
 
           <div className="flex gap-1.5 border-t border-border pt-3">
             <a href={waLink(p.wa)} target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
+            <button onClick={() => bukaEdit(p)} className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
+              {sedangEdit ? "Tutup edit" : "Edit"}
+            </button>
             {jml === 0 && <button onClick={() => hapus(p.id)} className="ml-auto text-xs text-muted-foreground underline underline-offset-2">Hapus pelanggan</button>}
           </div>
         </div>
