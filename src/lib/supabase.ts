@@ -81,6 +81,13 @@ export const namaBulan = (ym: string) => {
 
 export type StatusPesanan = "dipesan" | "berjalan" | "selesai" | "batal";
 
+/** Baris tambahan pada sebuah pesanan.
+ *  jumlah positif menambah tagihan, negatif berarti potongan/diskon. */
+export type ItemPesanan = { nama: string; jumlah: number };
+
+export const totalItem = (item?: ItemPesanan[] | null) =>
+  (item || []).reduce((a, i) => a + (Number(i.jumlah) || 0), 0);
+
 export type Pesanan = {
   id: string;
   pelanggan_id: string;
@@ -96,6 +103,7 @@ export type Pesanan = {
   jarak_km: number;
   harga_sewa: number;
   harga_antar: number;
+  item: ItemPesanan[];
   total: number;
   status: StatusPesanan;
   catatan: string;

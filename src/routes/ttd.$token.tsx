@@ -137,6 +137,10 @@ function Ttd() {
             {data.antar !== "tidak" && <B k="Pengantaran" v={`${data.alamat_antar || "-"} · ${data.jarak_km} km`} />}
             <B k="Biaya sewa" v={rp(data.harga_sewa)} />
             {data.harga_antar > 0 && <B k="Antar-jemput" v={rp(data.harga_antar)} />}
+            {(data.item || []).map((it: { nama: string; jumlah: number }, i: number) => (
+              <B key={i} k={it.nama || (it.jumlah < 0 ? "Potongan" : "Tambahan")}
+                v={`${it.jumlah < 0 ? "− " : ""}${rp(Math.abs(it.jumlah))}`} />
+            ))}
             <div className="flex items-baseline justify-between border-t border-border pt-2">
               <dt className="font-semibold text-foreground">Total</dt>
               <dd className="font-serif text-2xl text-foreground">{rp(data.total)}</dd>
