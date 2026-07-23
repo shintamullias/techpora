@@ -38,14 +38,15 @@ function Dashboard() {
     const [p, u, o, s, b] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("*, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
+      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
     ]);
     setBiaya((b.data as Pengeluaran[]) || []);
     setPelanggan((p.data as Pelanggan[]) || []);
     setUnit((u.data as Unit[]) || []);
-    setPesanan((o.data as Pesanan[]) || []);
+    // Kolom dipilih eksplisit, jadi bentuk relasi harus dilepas dulu ke unknown.
+    setPesanan((o.data as unknown as Pesanan[]) || []);
     if (s.data) setSet(s.data as Pengaturan);
     setSiap(true);
   };
@@ -482,7 +483,10 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                 </div>
                 <p className="mt-1.5 text-xs">
                   {p.ttd_setuju
-                    ? <span className="text-primary">Perjanjian ditandatangani {p.ttd_nama ? `oleh ${p.ttd_nama}` : ""}</span>
+                    ? <span className="text-primary">
+                        Perjanjian ditandatangani{p.ttd_nama ? ` oleh ${p.ttd_nama}` : ""}
+                        {p.ttd_pada ? ` · ${new Date(p.ttd_pada).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}` : ""}
+                      </span>
                     : <span className="text-amber-700">Perjanjian belum ditandatangani</span>}
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1.5">

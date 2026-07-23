@@ -122,11 +122,25 @@ function Ttd() {
           <h1 className="mt-1 font-serif text-2xl text-foreground">{judul}</h1>
 
           {data.ttd_setuju && (
-            <p className="mt-3 rounded-lg bg-primary/10 px-3 py-2.5 text-sm text-primary">
-              Sudah ditandatangani oleh <b>{data.ttd_nama}</b> pada{" "}
-              {new Date(data.ttd_pada).toLocaleString("id-ID", { dateStyle: "long", timeStyle: "short" })}.
-              Simpan halaman ini sebagai bukti.
-            </p>
+            <div className="mt-3 rounded-lg bg-primary/10 px-3 py-2.5 text-sm text-primary">
+              <p>
+                Sudah ditandatangani oleh <b>{data.ttd_nama}</b> pada{" "}
+                {new Date(data.ttd_pada).toLocaleString("id-ID", { dateStyle: "long", timeStyle: "short" })}.
+              </p>
+              {data.ttd_gambar && (
+                <figure className="mt-3">
+                  <img src={data.ttd_gambar} alt={`Tanda tangan ${data.ttd_nama}`}
+                    className="h-24 w-auto max-w-full rounded-md border border-primary/20 bg-white object-contain p-1" />
+                  <figcaption className="mt-1 border-t border-primary/20 pt-1 text-xs">
+                    {data.ttd_nama}
+                  </figcaption>
+                </figure>
+              )}
+              <button onClick={() => window.print()}
+                className="mt-3 rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground print:hidden">
+                Simpan sebagai PDF
+              </button>
+            </div>
           )}
 
           <dl className="mt-4 space-y-2 text-sm">
