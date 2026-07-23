@@ -23,6 +23,20 @@ export type Pelanggan = {
   dibuat_pada: string;
 };
 
+/** Kategori aset sewa. Satu unit selalu milik tepat satu kategori. */
+export type Kategori = "laptop" | "sepatu";
+
+/** Pilihan saringan di dashboard: satu kategori, atau gabungan semuanya. */
+export type Saring = "semua" | Kategori;
+
+export const KATEGORI: { key: Kategori; label: string; prefiks: string }[] = [
+  { key: "laptop", label: "Laptop", prefiks: "TP" },
+  { key: "sepatu", label: "Sepatu", prefiks: "SS" },
+];
+
+export const labelKategori = (k?: string) =>
+  KATEGORI.find((x) => x.key === k)?.label ?? "Laptop";
+
 export type Unit = {
   id: string;
   nama: string;
@@ -36,6 +50,7 @@ export type Unit = {
   pemilik: string;
   porsi_pemilik: number;
   nilai_ganti: number;
+  kategori: Kategori;
 };
 
 export type Pengeluaran = {
@@ -90,7 +105,7 @@ export type Pesanan = {
   ttd_pada: string | null;
   ttd_setuju: boolean;
   pelanggan?: { nama: string; wa: string } | null;
-  unit?: { nama: string } | null;
+  unit?: { nama: string; kategori?: Kategori } | null;
 };
 
 export type Pengaturan = { ongkir_per_km: number; ongkir_minimum: number };

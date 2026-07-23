@@ -1,8 +1,9 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN,
+  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
+  type Kategori, type Saring,
 } from "@/lib/supabase";
 import TabKeuangan from "@/components/TabKeuangan";
 
@@ -20,6 +21,7 @@ function Dashboard() {
   const [siap, setSiap] = useState(false);
   const [boleh, setBoleh] = useState(false);
   const [tab, setTab] = useState<Tab>("kalender");
+  const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
   const [unit, setUnit] = useState<Unit[]>([]);
   const [pesanan, setPesanan] = useState<Pesanan[]>([]);
@@ -36,7 +38,7 @@ function Dashboard() {
     const [p, u, o, s, b] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("*, pelanggan(nama, wa), unit(nama)").order("mulai", { ascending: false }),
+      supabase.from("pesanan").select("*, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
     ]);
@@ -59,8 +61,38 @@ function Dashboard() {
       </Pusat>
     );
 
-  const aktif = pesanan.filter((p) => p.status === "berjalan").length;
-  const akanDatang = pesanan.filter((p) => p.status === "dipesan").length;
+  /* ---------- saringan kategori ----------
+     Satu unit selalu milik tepat satu kategori, jadi seluruh tab cukup
+     disaring lewat unit_id-nya. Pelanggan ikut tersaring dari pesanan. */
+  const katUnit = useMemo(() => {
+    const m: Record<string, string> = {};
+    unit.forEach((u) => { m[u.id] = u.kategori || "laptop"; });
+    return m;
+  }, [unit]);
+
+  const cocok = (unitId?: string | null) =>
+    kat === "semua" || (!!unitId && katUnit[unitId] === kat);
+
+  const unitTampil = useMemo(
+    () => (kat === "semua" ? unit : unit.filter((u) => (u.kategori || "laptop") === kat)),
+    [unit, kat],
+  );
+  const pesananTampil = useMemo(
+    () => (kat === "semua" ? pesanan : pesanan.filter((p) => cocok(p.unit_id))),
+    [pesanan, kat, katUnit],
+  );
+  const pelangganTampil = useMemo(() => {
+    if (kat === "semua") return pelanggan;
+    const ada = new Set(pesananTampil.map((p) => p.pelanggan_id));
+    return pelanggan.filter((p) => ada.has(p.id));
+  }, [pelanggan, pesananTampil, kat]);
+  const biayaTampil = useMemo(
+    () => (kat === "semua" ? biaya : biaya.filter((b) => cocok(b.unit_id))),
+    [biaya, kat, katUnit],
+  );
+
+  const aktif = pesananTampil.filter((p) => p.status === "berjalan").length;
+  const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
 
   return (
     <div className="min-h-screen bg-secondary/30 pb-10">
@@ -79,27 +111,41 @@ function Dashboard() {
           <div className="mt-3 flex gap-3 text-xs text-white/70">
             <span><b className="text-white">{aktif}</b> unit keluar</span>
             <span><b className="text-white">{akanDatang}</b> akan datang</span>
-            <span><b className="text-white">{unit.filter((u) => u.aktif).length}</b> unit aktif</span>
+            <span><b className="text-white">{unitTampil.filter((u) => u.aktif).length}</b> unit aktif</span>
           </div>
         </div>
       </header>
 
       <nav className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 backdrop-blur">
-        <div className="mx-auto flex max-w-3xl gap-1 py-2">
-          {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"],["uang","Uang"]] as [Tab,string][]).map(([k,t]) => (
-            <button key={k} onClick={() => setTab(k)}
-              className={"flex-1 rounded-lg px-1.5 py-2 text-xs font-semibold transition sm:text-sm " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
-          ))}
+        <div className="mx-auto max-w-3xl">
+          <div className="flex gap-1 py-2">
+            {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"],["uang","Uang"]] as [Tab,string][]).map(([k,t]) => (
+              <button key={k} onClick={() => setTab(k)}
+                className={"flex-1 rounded-lg px-1.5 py-2 text-xs font-semibold transition sm:text-sm " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
+            ))}
+          </div>
+          <div className="flex gap-1.5 pb-2">
+            {([["semua","Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring,string][]).map(([k,t]) => {
+              const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
+              return (
+                <button key={k} onClick={() => setKat(k)}
+                  className={"flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition " +
+                    (kat===k ? "border-slate-900 bg-slate-900 text-white" : "border-border bg-background text-muted-foreground")}>
+                  {t}<span className={kat===k ? "text-white/55" : "text-muted-foreground/55"}>{n}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </nav>
 
       <main className="mx-auto max-w-3xl space-y-4 px-4 py-4">
         {galat && <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">{galat}</p>}
-        {tab === "kalender" && <TabKalender pesanan={pesanan} unit={unit} />}
-        {tab === "pesanan" && <TabPesanan pesanan={pesanan} pelanggan={pelanggan} unit={unit} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "pelanggan" && <TabPelanggan pelanggan={pelanggan} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
-        {tab === "unit" && <TabUnit unit={unit} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "uang" && <TabKeuangan pesanan={pesanan} unit={unit} biaya={biaya} muat={muat} setGalat={setGalat} />}
+        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
+        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "uang" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
       </main>
     </div>
   );
@@ -143,6 +189,16 @@ const warnaStatus: Record<StatusPesanan, string> = {
 function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
   const [bln, setBln] = useState(() => { const d = new Date(); return { th: d.getFullYear(), bl: d.getMonth() }; });
   const aktif = pesanan.filter((p) => p.status === "dipesan" || p.status === "berjalan");
+  /* Bilah kalender menampilkan seluruh sewa kecuali yang dibatalkan, supaya
+     riwayat "selesai" tetap kelihatan. Tanggal selesai bersifat eksklusif;
+     kalau ada data lama yang selesai == mulai, dianggap sewa 1 hari. */
+  const terpakai = pesanan.filter((p) => p.status !== "batal");
+  const habis = (p: Pesanan) => (p.selesai > p.mulai ? p.selesai : tambahHari(p.mulai, 1));
+  const warnaBilah: Record<string, string> = {
+    berjalan: "bg-blue-500",
+    dipesan: "bg-amber-400",
+    selesai: "bg-emerald-300",
+  };
   const awal = new Date(bln.th, bln.bl, 1);
   const jml = new Date(bln.th, bln.bl + 1, 0).getDate();
   const iso = (d: number) => `${bln.th}-${String(bln.bl + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
@@ -166,10 +222,10 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
             <div className="flex gap-[2px] overflow-hidden rounded-md">
               {Array.from({ length: jml }).map((_, i) => {
                 const t = iso(i + 1);
-                const isi = aktif.find((p) => p.unit_id === u.id && t >= p.mulai && t < p.selesai);
+                const isi = terpakai.find((p) => p.unit_id === u.id && t >= p.mulai && t < habis(p));
                 return (
-                  <div key={i} title={isi ? `${isi.pelanggan?.nama} · ${tglIndo(isi.mulai)}–${tglIndo(isi.selesai)}` : t}
-                    className={"h-8 flex-1 " + (isi ? (isi.status === "berjalan" ? "bg-blue-500" : "bg-amber-400") : "bg-secondary")} />
+                  <div key={i} title={isi ? `${isi.pelanggan?.nama} · ${isi.status} · ${tglIndo(isi.mulai)}–${tglIndo(isi.selesai)}` : t}
+                    className={"h-8 flex-1 " + (isi ? warnaBilah[isi.status] || "bg-slate-300" : "bg-secondary")} />
                 );
               })}
             </div>
@@ -179,6 +235,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
       <div className="mt-4 flex gap-4 text-xs text-muted-foreground">
         <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-amber-400" /> Dipesan</span>
         <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-blue-500" /> Sedang keluar</span>
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-emerald-300" /> Selesai</span>
         <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-secondary" /> Kosong</span>
       </div>
 
@@ -541,23 +598,66 @@ function KartuPelanggan({ p, jml, hapus, setGalat }: { p: Pelanggan; jml: number
 }
 
 /* ============ TAB 4: UNIT ============ */
-function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void }) {
-  const kosong = { id: "", nama: "", spek: "", harian: "", mingguan: "", bulanan: "", modal: "", pemilik: "Techpora", porsi: "70" };
-  const [f, setF] = useState(kosong);
+function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
+  unit: Unit[]; unitSemua: Unit[]; kat: Saring; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+}) {
+  /* Nilai awal ikut kategori yang sedang dipilih: sepatu memakai bagi hasil
+     investor 40%, laptop memakai porsi Techpora 70%. */
+  const bawaan = (k: Saring) => {
+    const kategori: Kategori = k === "sepatu" ? "sepatu" : "laptop";
+    return {
+      id: "", nama: "", spek: "", harian: "", mingguan: "", bulanan: "",
+      modal: "", nilai_ganti: "", kategori,
+      pemilik: kategori === "sepatu" ? "" : "Techpora",
+      porsi: kategori === "sepatu" ? "40" : "70",
+    };
+  };
+  const [f, setF] = useState(() => bawaan(kat));
   const [buka, setBuka] = useState(false);
+  const [edit, setEdit] = useState<string | null>(null);
+  const [sibuk, setSibuk] = useState(false);
   const [ongkir, setOngkir] = useState(set);
   const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
 
+  const tutup = () => { setBuka(false); setEdit(null); setF(bawaan(kat)); };
+
+  const bukaTambah = () => {
+    if (buka && !edit) return tutup();
+    setEdit(null); setF(bawaan(kat)); setBuka(true);
+  };
+
+  const bukaEdit = (u: Unit) => {
+    if (edit === u.id) return tutup();
+    setEdit(u.id);
+    setF({
+      id: u.id, nama: u.nama || "", spek: u.spek || "",
+      harian: String(u.harian || ""), mingguan: String(u.mingguan || ""), bulanan: String(u.bulanan || ""),
+      modal: String(u.modal || ""), nilai_ganti: String(u.nilai_ganti || ""),
+      pemilik: u.pemilik || "", porsi: String(u.porsi_pemilik ?? ""),
+      kategori: (u.kategori || "laptop") as Kategori,
+    });
+    setBuka(true);
+  };
+
   const simpan = async () => {
     if (!f.id.trim() || !f.nama.trim()) return setGalat("Kode unit dan nama wajib diisi.");
-    const { error } = await supabase.from("unit").insert({
-      id: f.id.trim().toUpperCase(), nama: f.nama.trim(), spek: f.spek.trim(),
+    setSibuk(true); setGalat("");
+    const isi = {
+      nama: f.nama.trim(), spek: f.spek.trim(), kategori: f.kategori,
       harian: Number(f.harian) || 0, mingguan: Number(f.mingguan) || 0, bulanan: Number(f.bulanan) || 0,
-      modal: Number(f.modal) || 0, pemilik: f.pemilik.trim() || "Techpora", porsi_pemilik: Number(f.porsi) || 70,
-      urutan: unit.length + 1,
-    });
+      modal: Number(f.modal) || 0, nilai_ganti: Number(f.nilai_ganti) || 0,
+      pemilik: f.pemilik.trim() || "Techpora", porsi_pemilik: Number(f.porsi) || 0,
+    };
+    const { error } = edit
+      ? await supabase.from("unit").update(isi).eq("id", edit)
+      : await supabase.from("unit").insert({
+          id: f.id.trim().toUpperCase(),
+          urutan: Math.max(0, ...unitSemua.map((u) => u.urutan || 0)) + 1,
+          ...isi,
+        });
+    setSibuk(false);
     if (error) return setGalat(error.code === "23505" ? "Kode unit itu sudah dipakai." : error.message);
-    setF(kosong); setBuka(false); muat();
+    tutup(); muat();
   };
 
   const ubah = async (id: string, patch: Partial<Unit>) => {
@@ -568,16 +668,30 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
   return (
     <>
       <Kartu judul="Unit" aksi={
-        <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
-          {buka ? "Tutup" : "+ Tambah"}
+        <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
+          {buka && !edit ? "Tutup" : "+ Tambah"}
         </button>}>
         {buka && (
           <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
+            <p className="text-sm font-semibold text-foreground">
+              {edit ? `Edit unit ${edit}` : "Unit baru"}
+            </p>
             <div className="grid grid-cols-2 gap-3">
-              <Kol label="Kode unit"><input value={f.id} onChange={(e) => s("id", e.target.value)} placeholder="TP-002" className={inp} /></Kol>
-              <Kol label="Nama"><input value={f.nama} onChange={(e) => s("nama", e.target.value)} placeholder="Lenovo ThinkPad" className={inp} /></Kol>
+              <Kol label="Kode unit">
+                <input value={f.id} onChange={(e) => s("id", e.target.value)} disabled={!!edit}
+                  placeholder={f.kategori === "sepatu" ? "SS-008" : "TP-07"}
+                  className={inp + (edit ? " opacity-60" : "")} />
+              </Kol>
+              <Kol label="Kategori">
+                <select value={f.kategori} onChange={(e) => s("kategori", e.target.value)} className={inp}>
+                  {KATEGORI.map((k) => <option key={k.key} value={k.key}>{k.label}</option>)}
+                </select>
+              </Kol>
             </div>
-            <Kol label="Spesifikasi"><input value={f.spek} onChange={(e) => s("spek", e.target.value)} placeholder="i3 · 8GB · SSD 256GB" className={inp} /></Kol>
+            <Kol label="Nama"><input value={f.nama} onChange={(e) => s("nama", e.target.value)} placeholder={f.kategori === "sepatu" ? "ZENITH FG WhiteGold" : "Lenovo ThinkPad"} className={inp} /></Kol>
+            <Kol label={f.kategori === "sepatu" ? "Jenis & ukuran" : "Spesifikasi"}>
+              <input value={f.spek} onChange={(e) => s("spek", e.target.value)} placeholder={f.kategori === "sepatu" ? "Bola · uk 43" : "i3 · 8GB · SSD 256GB"} className={inp} />
+            </Kol>
             <div className="grid grid-cols-3 gap-2">
               <Kol label="Harian"><input type="number" value={f.harian} onChange={(e) => s("harian", e.target.value)} className={inp} /></Kol>
               <Kol label="Mingguan"><input type="number" value={f.mingguan} onChange={(e) => s("mingguan", e.target.value)} className={inp} /></Kol>
@@ -585,12 +699,27 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
             </div>
             <p className="text-xs text-muted-foreground">Isi 0 kalau durasi itu tidak ditawarkan.</p>
             <div className="grid grid-cols-2 gap-3">
-              <Kol label="Modal / nilai unit"><input type="number" value={f.modal} onChange={(e) => s("modal", e.target.value)} placeholder="3000000" className={inp} /></Kol>
+              <Kol label="Modal / harga beli"><input type="number" value={f.modal} onChange={(e) => s("modal", e.target.value)} placeholder="3000000" className={inp} /></Kol>
+              <Kol label="Nilai ganti bila hilang"><input type="number" value={f.nilai_ganti} onChange={(e) => s("nilai_ganti", e.target.value)} placeholder="3500000" className={inp} /></Kol>
+            </div>
+            <p className="text-xs text-muted-foreground">Modal dipakai menghitung balik modal. Nilai ganti muncul di perjanjian sewa.</p>
+            <div className="grid grid-cols-2 gap-3">
+              <Kol label="Pemilik unit"><input value={f.pemilik} onChange={(e) => s("pemilik", e.target.value)} placeholder="Techpora / nama investor" className={inp} /></Kol>
               <Kol label="Porsi pemilik (%)"><input type="number" value={f.porsi} onChange={(e) => s("porsi", e.target.value)} className={inp} /></Kol>
             </div>
-            <Kol label="Pemilik unit"><input value={f.pemilik} onChange={(e) => s("pemilik", e.target.value)} placeholder="Techpora / nama investor" className={inp} /></Kol>
-            <button onClick={simpan} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Simpan unit</button>
+            <div className="flex gap-2">
+              <button onClick={simpan} disabled={sibuk} className="flex-1 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
+                {sibuk ? "Menyimpan…" : edit ? "Simpan perubahan" : "Simpan unit"}
+              </button>
+              <button onClick={tutup} className="rounded-lg border border-border px-4 py-3 text-sm font-semibold text-foreground">Batal</button>
+            </div>
           </div>
+        )}
+
+        {unit.length === 0 && (
+          <p className="rounded-lg bg-secondary px-3 py-2 text-sm text-muted-foreground">
+            Belum ada unit di kategori ini.
+          </p>
         )}
 
         <ul className="space-y-2">
@@ -598,17 +727,25 @@ function TabUnit({ unit, set, muat, setGalat }: { unit: Unit[]; set: Pengaturan;
             <li key={u.id} className={"rounded-xl border p-3 " + (u.aktif ? "border-border" : "border-dashed border-border opacity-60")}>
               <div className="flex items-start justify-between gap-3">
                 <div className="min-w-0">
-                  <p className="truncate font-semibold text-foreground"><span className="font-mono text-xs text-muted-foreground">{u.id}</span> · {u.nama}</p>
+                  <p className="truncate font-semibold text-foreground">
+                    <span className="font-mono text-xs text-muted-foreground">{u.id}</span> · {u.nama}
+                  </p>
                   <p className="truncate text-xs text-muted-foreground">{u.spek}</p>
                   <p className="mt-1 text-xs text-muted-foreground">
                     {rp(u.harian)}/hari{u.mingguan ? ` · ${rp(u.mingguan)}/mgg` : ""}{u.bulanan ? ` · ${rp(u.bulanan)}/bln` : ""}
                   </p>
                   <p className="text-xs text-muted-foreground">Modal {rp(u.modal)} · {u.pemilik} ({u.porsi_pemilik}%)</p>
                 </div>
-                <button onClick={() => ubah(u.id, { aktif: !u.aktif })}
-                  className="shrink-0 rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
-                  {u.aktif ? "Nonaktifkan" : "Aktifkan"}
-                </button>
+                <div className="flex shrink-0 flex-col gap-1.5">
+                  <button onClick={() => bukaEdit(u)}
+                    className="rounded-lg bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
+                    {edit === u.id ? "Tutup" : "Edit"}
+                  </button>
+                  <button onClick={() => ubah(u.id, { aktif: !u.aktif })}
+                    className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
+                    {u.aktif ? "Nonaktifkan" : "Aktifkan"}
+                  </button>
+                </div>
               </div>
             </li>
           ))}

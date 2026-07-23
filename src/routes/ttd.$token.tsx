@@ -108,13 +108,18 @@ function Ttd() {
   if (!data) return <Pusat>Link tidak ditemukan atau sudah tidak berlaku.</Pusat>;
 
   const durasi = `${data.durasi_jumlah} ${data.durasi_tipe} (${data.total_hari} × 24 jam)`;
+  /* Ketentuan mengikuti jenis barang: laptop dan sepatu punya risiko yang
+     berbeda, jadi isinya tidak boleh disamakan. */
+  const sepatu = data.kategori === "sepatu";
+  const merek = sepatu ? "Sewa Sepatu Jakarta" : "Techpora · Sewa Laptop Jakarta";
+  const judul = sepatu ? "Perjanjian Sewa Sepatu" : "Perjanjian Sewa Laptop";
 
   return (
     <div className="min-h-screen bg-secondary/30 px-4 py-8">
       <div className="mx-auto w-full max-w-2xl space-y-4">
         <div className="rounded-2xl border border-border bg-background p-5">
-          <p className="text-xs uppercase tracking-widest text-muted-foreground">Techpora · Sewa Laptop Jakarta</p>
-          <h1 className="mt-1 font-serif text-2xl text-foreground">Perjanjian Sewa Laptop</h1>
+          <p className="text-xs uppercase tracking-widest text-muted-foreground">{merek}</p>
+          <h1 className="mt-1 font-serif text-2xl text-foreground">{judul}</h1>
 
           {data.ttd_setuju && (
             <p className="mt-3 rounded-lg bg-primary/10 px-3 py-2.5 text-sm text-primary">
@@ -126,7 +131,7 @@ function Ttd() {
 
           <dl className="mt-4 space-y-2 text-sm">
             <B k="Penyewa" v={data.nama} />
-            <B k="Unit" v={`${data.unit} (${data.unit_id}) — ${data.spek}`} />
+            <B k={sepatu ? "Sepatu" : "Unit"} v={`${data.unit} (${data.unit_id}) — ${data.spek}`} />
             <B k="Periode" v={`${tglIndo(data.mulai)} pukul ${String(data.jam).slice(0,5)} → ${tglIndo(data.selesai)} pukul ${String(data.jam).slice(0,5)}`} />
             <B k="Durasi" v={durasi} />
             {data.antar !== "tidak" && <B k="Pengantaran" v={`${data.alamat_antar || "-"} · ${data.jarak_km} km`} />}
@@ -142,14 +147,29 @@ function Ttd() {
         <div className="rounded-2xl border border-border bg-background p-5">
           <h2 className="font-serif text-lg text-foreground">Ketentuan</h2>
           <ol className="mt-3 space-y-2.5 text-sm text-muted-foreground">
-            <Li n="1">Penyewa menerima unit dalam kondisi baik dan berfungsi, lengkap dengan charger, dan wajib mengembalikannya dalam kondisi yang sama.</Li>
-            <Li n="2">Masa sewa dihitung per 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan tarif sewa harian penuh untuk setiap hari keterlambatan.</Li>
-            <Li n="3">Unit hanya boleh dipakai oleh penyewa yang namanya tercantum di perjanjian ini, dan dilarang dipindahtangankan, disewakan ulang, atau dijaminkan kepada pihak lain.</Li>
-            <Li n="4">Penyewa dilarang membongkar, mengganti komponen, menghapus sistem operasi, atau mengubah pengaturan keamanan pada unit.</Li>
-            <Li n="5">Unit dilengkapi perangkat lunak pelacak. Penyewa mengetahui dan menyetujui bahwa posisi unit dapat dipantau selama masa sewa, semata-mata untuk pengamanan aset.</Li>
-            <Li n="6">Kerusakan akibat kelalaian menjadi tanggung jawab penyewa sesuai biaya perbaikan yang berlaku.</Li>
-            <Li n="7">Apabila unit hilang, dicuri, atau tidak dikembalikan, penyewa wajib mengganti sebesar {rp(data.nilai_ganti)} dan hal ini dapat diproses secara hukum.</Li>
-            <Li n="8">Data pribadi dan dokumen yang diserahkan hanya digunakan untuk keperluan verifikasi sewa dan tidak dibagikan kepada pihak lain.</Li>
+            {sepatu ? (
+              <>
+                <Li n="1">Penyewa menerima sepatu dalam kondisi bersih dan layak pakai sesuai ukuran yang dipesan, dan wajib mengembalikannya dalam kondisi yang sama.</Li>
+                <Li n="2">Masa sewa dihitung per 24 jam sejak sepatu diterima. Keterlambatan pengembalian dikenakan tarif sewa harian penuh untuk setiap hari keterlambatan.</Li>
+                <Li n="3">Sepatu hanya boleh dipakai oleh penyewa yang namanya tercantum di perjanjian ini, dan dilarang dipindahtangankan atau disewakan ulang kepada pihak lain.</Li>
+                <Li n="4">Sepatu wajib dikembalikan dalam keadaan sudah dibersihkan dari tanah, lumpur, dan rumput. Bila dikembalikan kotor, dikenakan biaya pencucian.</Li>
+                <Li n="5">Sepatu hanya boleh dipakai sesuai peruntukannya. Pemakaian di permukaan yang tidak sesuai — misalnya sepatu FG di lapangan berbatu atau aspal — mempercepat keausan sol dan menjadi tanggung jawab penyewa.</Li>
+                <Li n="6">Kerusakan akibat kelalaian seperti sol terlepas, jahitan atau bagian atas sobek, serta noda permanen yang tidak dapat dihilangkan, menjadi tanggung jawab penyewa sesuai biaya perbaikan yang berlaku.</Li>
+                <Li n="7">Apabila sepatu hilang atau tidak dikembalikan, penyewa wajib mengganti sebesar {rp(data.nilai_ganti)} dan hal ini dapat diproses secara hukum.</Li>
+                <Li n="8">Data pribadi dan dokumen yang diserahkan hanya digunakan untuk keperluan verifikasi sewa dan tidak dibagikan kepada pihak lain.</Li>
+              </>
+            ) : (
+              <>
+                <Li n="1">Penyewa menerima unit dalam kondisi baik dan berfungsi, lengkap dengan charger, dan wajib mengembalikannya dalam kondisi yang sama.</Li>
+                <Li n="2">Masa sewa dihitung per 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan tarif sewa harian penuh untuk setiap hari keterlambatan.</Li>
+                <Li n="3">Unit hanya boleh dipakai oleh penyewa yang namanya tercantum di perjanjian ini, dan dilarang dipindahtangankan, disewakan ulang, atau dijaminkan kepada pihak lain.</Li>
+                <Li n="4">Penyewa dilarang membongkar, mengganti komponen, menghapus sistem operasi, atau mengubah pengaturan keamanan pada unit.</Li>
+                <Li n="5">Unit dilengkapi perangkat lunak pelacak. Penyewa mengetahui dan menyetujui bahwa posisi unit dapat dipantau selama masa sewa, semata-mata untuk pengamanan aset.</Li>
+                <Li n="6">Kerusakan akibat kelalaian menjadi tanggung jawab penyewa sesuai biaya perbaikan yang berlaku.</Li>
+                <Li n="7">Apabila unit hilang, dicuri, atau tidak dikembalikan, penyewa wajib mengganti sebesar {rp(data.nilai_ganti)} dan hal ini dapat diproses secara hukum.</Li>
+                <Li n="8">Data pribadi dan dokumen yang diserahkan hanya digunakan untuk keperluan verifikasi sewa dan tidak dibagikan kepada pihak lain.</Li>
+              </>
+            )}
           </ol>
         </div>
 
@@ -188,7 +208,7 @@ function Ttd() {
           <div className="rounded-2xl border border-border bg-background p-5 text-center">
             <p className="font-serif text-xl text-foreground">Terima kasih</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Perjanjian sudah ditandatangani. Saat serah terima nanti tinggal pengecekan unit — tidak perlu tanda tangan lagi.
+              Perjanjian sudah ditandatangani. Saat serah terima nanti tinggal pengecekan {sepatu ? "sepatu" : "unit"} — tidak perlu tanda tangan lagi.
             </p>
             <a href="https://wa.me/6282177984041" target="_blank" rel="noreferrer"
               className="mt-4 inline-block rounded-lg border border-border px-4 py-2.5 text-sm font-semibold text-foreground">
