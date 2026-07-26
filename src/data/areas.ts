@@ -275,6 +275,58 @@ export const areas: AreaData[] = [
     ],
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.epsonPrinter, laptops.viewsonic],
   },
+  {
+    slug: "sewa-laptop-event-jakarta",
+    area: "Event Jakarta",
+    areaShort: "Event",
+    title: "Sewa Laptop Event Jakarta — Seminar, Ujian, Pameran",
+    metaDescription:
+      "Sewa laptop untuk event di Jakarta: seminar, workshop, ujian serentak, pameran, hingga lomba. Unit seragam, siap antar ke venue, mulai Rp79rb/hari.",
+    keywords: "sewa laptop event jakarta, rental laptop seminar, sewa laptop workshop jakarta, sewa laptop ujian serentak, rental laptop pameran jakarta, sewa laptop lomba",
+    h1: "Sewa Laptop untuk Event di Jakarta",
+    intro:
+      "Event punya kebutuhan yang berbeda dari sewa perorangan: jumlahnya banyak, waktunya ketat, dan tidak ada ruang untuk unit yang bermasalah di tengah acara. Techpora melayani kebutuhan laptop untuk seminar, workshop, pelatihan, ujian serentak, pameran, hingga lomba di berbagai venue Jakarta. Kami paham bahwa untuk panitia, yang paling menentukan bukan sekadar harga, melainkan kepastian: unit datang tepat waktu, jumlahnya sesuai, dan siap dipakai begitu tiba. Karena itu setiap unit kami cek sebelum diserahkan, dan untuk pesanan beberapa unit kami usahakan spesifikasi yang seragam supaya pengalaman peserta konsisten. Sampaikan tanggal, jumlah, dan jenis acaramu, dan kami bantu susun kebutuhannya.",
+    highlights: [
+      { title: "Unit Seragam", desc: "Untuk beberapa unit, kami usahakan spesifikasi setara supaya semua peserta dapat pengalaman sama." },
+      { title: "Antar ke Venue", desc: "Diantar dan disiapkan di lokasi acara, sudah dicek berfungsi sebelum peserta datang." },
+      { title: "Booking Jauh Hari", desc: "Amankan tanggal event-mu lebih awal supaya jumlah unit terjamin, terutama untuk acara besar." },
+    ],
+    landmarks: ["Hotel & convention", "Kampus", "Co-working space", "Gedung pelatihan", "Balai pertemuan", "Kantor"],
+    eta: "Diantar ke venue sesuai jadwal acara. Untuk jumlah banyak, koordinasi H-beberapa hari.",
+    useCases: [
+      "Seminar, workshop, dan pelatihan perusahaan",
+      "Ujian serentak & asesmen berbasis komputer",
+      "Pameran, expo, dan booth interaktif",
+      "Lomba, hackathon, dan kompetisi",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.epsonProj],
+  },
+  {
+    slug: "sewa-laptop-mahasiswa-jakarta",
+    area: "Mahasiswa Jakarta",
+    areaShort: "Mahasiswa",
+    title: "Sewa Laptop Mahasiswa Jakarta — Harian & Bulanan",
+    metaDescription:
+      "Rental laptop mahasiswa Jakarta untuk skripsi, sidang, tugas, dan ujian online. Tanpa deposit, harian mulai Rp79rb, bisa bulanan. Dekat kampus UNJ.",
+    keywords: "rental laptop mahasiswa jakarta, sewa laptop mahasiswa jakarta, sewa laptop skripsi, sewa laptop sidang, sewa laptop ujian online, rental laptop kuliah",
+    h1: "Sewa Laptop untuk Mahasiswa Jakarta",
+    intro:
+      "Buat mahasiswa, laptop sering jadi kebutuhan yang muncul mendadak dan tidak selalu terjangkau untuk dibeli. Laptop rusak menjelang sidang, butuh perangkat lebih layak untuk ujian online berpengawas, atau sekadar butuh unit sementara selama laptop utama diperbaiki — semuanya bisa diatasi dengan menyewa. Techpora melayani mahasiswa di seluruh Jakarta, dengan basis di Rawamangun yang dekat kampus UNJ. Kami tahu kondisi kantong mahasiswa, jadi harga kami mulai Rp79rb per hari tanpa deposit, dan ada opsi bulanan yang jauh lebih hemat untuk kebutuhan sepanjang semester seperti mengerjakan skripsi. Cukup foto dokumen identitas, tidak perlu setor uang jaminan.",
+    highlights: [
+      { title: "Ramah Kantong Mahasiswa", desc: "Harian mulai Rp79rb, tanpa deposit. Bulanan lebih hemat untuk kebutuhan sepanjang semester." },
+      { title: "Dekat Kampus UNJ", desc: "Basis di Rawamangun. Mahasiswa UNJ dan sekitarnya bisa ambil langsung tanpa ongkir." },
+      { title: "Cocok Ujian Online", desc: "Unit dengan kamera dan mikrofon berfungsi untuk ujian berpengawas dan sidang daring." },
+    ],
+    landmarks: ["UNJ", "UKI", "STIE Trisakti", "IISIP", "Kampus sekitar Jaktim", "Kos mahasiswa"],
+    eta: "Ambil sendiri di Rawamangun (0 ongkir) atau diantar ke kos/kampus area Jakarta.",
+    useCases: [
+      "Skripsi & sidang akhir",
+      "Ujian online berpengawas (proctored)",
+      "Tugas kuliah & presentasi kelompok",
+      "Pengganti sementara saat laptop diperbaiki",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook],
+  },
 ];
 
 export const areaBySlug = (slug: string) => areas.find((a) => a.slug === slug);

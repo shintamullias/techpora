@@ -108,6 +108,8 @@ const areaLayanan = [
   { area: "Tangerang", slug: "sewa-laptop-tangerang", desc: "BSD, Alam Sutera, Karawaci, Gading Serpong — sewa laptop event dan kantor tersedia." },
   { area: "Bekasi", slug: "sewa-laptop-bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
   { area: "Depok", slug: "sewa-laptop-depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
+  { area: "Untuk Event", slug: "sewa-laptop-event-jakarta", desc: "Seminar, workshop, ujian serentak, pameran, lomba — unit seragam, diantar & disiapkan di venue." },
+  { area: "Untuk Mahasiswa", slug: "sewa-laptop-mahasiswa-jakarta", desc: "Skripsi, sidang, ujian online — tanpa deposit, harian mulai Rp79rb, ada opsi bulanan hemat." },
 ];
 
 
