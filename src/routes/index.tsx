@@ -101,6 +101,7 @@ const faqData = [
 const areaLayanan = [
   { area: "Jakarta Selatan", slug: "sewa-laptop-jakarta-selatan", desc: "Kemang, Senayan, Pondok Indah, Cilandak, TB Simatupang — pengiriman cepat untuk kantor & event." },
   { area: "Jakarta Timur", slug: "sewa-laptop-jakarta-timur", desc: "Solusi rental laptop murah dan cepat di Rawamangun, Cawang, Cakung, Pulogadung — basis operasional kami, ambil sendiri tanpa ongkir." },
+  { area: "Rawamangun", slug: "sewa-laptop-rawamangun", desc: "Toko kami di Jl. R. Mangun Muka Raya — sewa laptop paling dekat, ambil langsung tanpa ongkir. Dekat kampus UNJ." },
   { area: "Jakarta Barat", slug: "sewa-laptop-jakarta-barat", desc: "Grogol, Kebon Jeruk, Puri Indah, Kalideres — sewa laptop harian & bulanan untuk mahasiswa & startup." },
   { area: "Jakarta Utara", slug: "sewa-laptop-jakarta-utara", desc: "Kelapa Gading, Sunter, Ancol, PIK — cocok untuk event MICE dan pameran di kawasan bisnis Utara." },
   { area: "Jakarta Pusat", slug: "sewa-laptop-jakarta-pusat", desc: "Sudirman, Thamrin, Menteng, Kemayoran — pengiriman ke perkantoran & venue seminar." },

@@ -249,6 +249,32 @@ export const areas: AreaData[] = [
     ],
     units: [laptops.vivobook, laptops.acer, laptops.thinkpad, laptops.redmibook, laptops.macbook],
   },
+  {
+    slug: "sewa-laptop-rawamangun",
+    area: "Rawamangun",
+    areaShort: "Rawamangun",
+    title: "Sewa & Rental Laptop Rawamangun — Ambil Langsung",
+    metaDescription:
+      "Sewa & rental laptop Rawamangun, Jakarta Timur. Basis toko di Jl. R. Mangun Muka Raya — ambil langsung tanpa ongkir, mulai Rp79rb/hari, tanpa deposit.",
+    keywords: "sewa laptop rawamangun, rental laptop rawamangun, sewa laptop dekat unj, rental laptop pulogadung, sewa laptop jakarta timur, sewa laptop harian rawamangun",
+    h1: "Sewa & Rental Laptop di Rawamangun",
+    intro:
+      "Rawamangun adalah rumah Techpora. Toko kami ada di Jl. R. Mangun Muka Raya, jadi buat warga Rawamangun ini sewa laptop paling dekat yang bisa diambil langsung tanpa ongkir sepeser pun. Tidak perlu menunggu pengiriman, tidak perlu menyeberang kota — cukup mampir, cek unitnya sendiri, dan bawa pulang hari itu juga. Kawasan ini padat kampus dan kantor: mahasiswa UNJ yang kosnya di sekitar Pemuda dan Balai Pustaka sering sewa harian untuk sidang, sementara kantor di Kawasan Industri Pulogadung yang bersebelahan kerap sewa mingguan untuk staff tambahan. Karena kami benar-benar berada di sini, respons dan serah terimanya jauh lebih cepat dibanding penyedia yang basisnya di luar Jakarta Timur.",
+    highlights: [
+      { title: "Toko di Rawamangun", desc: "Jl. R. Mangun Muka Raya. Ambil langsung, nol ongkir, cek unit di tempat sebelum bawa pulang." },
+      { title: "Jalan Kaki dari Kos UNJ", desc: "Mahasiswa di sekitar Pemuda, Balai Pustaka, dan Pramuka tinggal jalan kaki atau sekali naik ojek." },
+      { title: "Buka Sampai Malam", desc: "Laptop bermasalah menjelang sidang besok pagi? Chat malam ini, unit bisa siap." },
+    ],
+    landmarks: ["Jl. Pemuda", "Balai Pustaka", "Jl. Pramuka", "Arion Mall", "UNJ", "Velodrome Rawamangun", "Kawasan Industri Pulogadung", "Sunan Giri"],
+    eta: "Ambil sendiri di toko (0 ongkir) atau kirim ke sekitar Rawamangun dalam hitungan menit.",
+    useCases: [
+      "Mahasiswa UNJ untuk sidang skripsi & tugas kuliah",
+      "Kantor & pabrik Kawasan Industri Pulogadung",
+      "Warga Rawamangun untuk kebutuhan mendadak",
+      "Acara & pelatihan di venue sekitar Rawamangun",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.epsonPrinter, laptops.viewsonic],
+  },
 ];
 
 export const areaBySlug = (slug: string) => areas.find((a) => a.slug === slug);
