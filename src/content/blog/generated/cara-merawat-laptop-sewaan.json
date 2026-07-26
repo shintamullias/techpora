@@ -1,0 +1,48 @@
+{
+  "slug": "cara-merawat-laptop-sewaan",
+  "title": "Cara Merawat Laptop Sewaan Selama Masa Sewa",
+  "description": "Panduan praktis merawat laptop sewaan agar tidak kena biaya tambahan: kebiasaan harian, cara membawa, dan hal yang harus dihindari selama masa sewa.",
+  "category": "Panduan",
+  "readMinutes": 5,
+  "intro": "Menyewa laptop berarti memegang barang milik orang lain yang nilainya jutaan rupiah. Kabar baiknya, menjaganya tidak rumit — sebagian besar masalah yang berujung biaya tambahan sebenarnya berasal dari kebiasaan kecil yang mudah dihindari. Artikel ini merangkum hal-hal praktis yang membuat unit kembali dalam kondisi baik, dan membuatmu terhindar dari perselisihan saat pengembalian.",
+  "sections": [
+    {
+      "h": "Cara Membawa yang Benar",
+      "p": "Sebagian besar kerusakan fisik terjadi saat unit berpindah tempat, bukan saat dipakai. Selalu gunakan tas berbantalan, dan pastikan laptop berada di kompartemen khusus — bukan diselipkan bersama buku tebal atau botol minum. Sebelum menutup layar, periksa tidak ada benda tertinggal di atas keyboard; pulpen atau kabel yang terjepit adalah penyebab layar retak yang paling sering terjadi dan paling mahal. Saat naik kendaraan, letakkan tas di pangkuan atau tempat yang tidak tertindih, bukan di bagasi bersama barang berat."
+    },
+    {
+      "h": "Kebiasaan Harian yang Menyelamatkan",
+      "p": "Jauhkan minuman dari meja kerja, atau setidaknya letakkan di sisi berlawanan dan gunakan wadah bertutup. Cairan adalah penyebab kerusakan yang paling sulit diperbaiki dan hampir selalu jadi tanggung jawab penyewa. Cuci tangan sebelum memakai laptop untuk menjaga keyboard dan touchpad tetap bersih. Jangan makan di atas perangkat — remah yang masuk sela keyboard sulit dibersihkan dan bisa membuat tombol macet. Kebiasaan sederhana ini menghemat biaya jauh lebih besar daripada usahanya."
+    },
+    {
+      "h": "Menjaga Suhu dan Sirkulasi Udara",
+      "p": "Laptop membuang panas lewat celah di bagian bawah dan samping. Memakainya di atas kasur, bantal, atau selimut menutup celah itu dan membuat suhu naik cepat — ini mempercepat penurunan kualitas komponen dan bisa membuat unit mati mendadak. Gunakan permukaan keras dan rata, atau setidaknya alas datar bila terpaksa bekerja di kasur. Kalau kipas terdengar bekerja keras terus-menerus dan bodi terasa sangat panas, istirahatkan sebentar dan periksa apakah ada aplikasi berat yang berjalan tanpa kamu sadari."
+    },
+    {
+      "h": "Merawat Baterai dan Charger",
+      "p": "Charger adalah komponen yang paling sering rusak dan paling sering tertinggal. Saat mencabut, tarik bagian kepala colokannya, jangan kabelnya — menarik kabel merusak sambungan di dalam. Hindari menggulung kabel terlalu kencang di sekitar adaptor, karena itu mempercepat retaknya lapisan pelindung di dekat konektor. Untuk baterai, tidak masalah membiarkan laptop tercolok saat dipakai lama, tapi sesekali biarkan terpakai dengan baterai supaya tidak selalu dalam kondisi penuh. Dan simpan charger di tas yang sama dengan unit supaya tidak tertinggal."
+    },
+    {
+      "h": "Yang Sebaiknya Tidak Kamu Lakukan",
+      "p": "Beberapa hal sebaiknya dihindari sama sekali. Jangan membongkar unit, mengganti komponen, atau membuka penutup bawah — walau niatnya membantu, tindakan ini hampir selalu memindahkan tanggung jawab kerusakan ke pundakmu. Jangan menghapus atau memasang ulang sistem operasi. Jangan mencabut atau menonaktifkan perangkat lunak yang sudah terpasang dari penyedia. Dan jangan meminjamkan unit ke orang lain — perjanjian sewa mengikat namamu, dan apa pun yang terjadi di tangan orang lain tetap jadi tanggung jawabmu."
+    },
+    {
+      "h": "Menyiapkan Unit Sebelum Dikembalikan",
+      "p": "Sisihkan waktu sebelum jadwal pengembalian. Pindahkan seluruh berkasmu ke penyimpanan pribadi, lalu hapus dari unit. Keluar dari semua akun — surel, peramban, aplikasi pesan, akun kampus atau kantor. Kosongkan folder unduhan dan tempat sampah. Bersihkan bodi dan layar dengan kain lembut. Pastikan charger dan seluruh kelengkapan yang kamu terima ikut kembali. Unit yang dikembalikan bersih dan lengkap membuat proses pengecekan cepat, dan meninggalkan kesan baik yang berguna bila suatu saat kamu menyewa lagi."
+    }
+  ],
+  "cta": {
+    "heading": "Sewa dengan Ketentuan yang Jelas",
+    "body": "Chat WhatsApp 6282177984041 untuk cek ketersediaan unit dan membaca ketentuannya lebih dulu. Solusi rental laptop murah dan cepat di Jakarta Timur, kondisi unit dicek bersama saat serah terima.",
+    "waMessage": "Halo Techpora, saya mau sewa laptop dan ingin tahu ketentuan perawatannya. Berikut kebutuhan saya:",
+    "internalPath": "/sewa-laptop-jakarta-timur",
+    "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
+  },
+  "related": [
+    "cara-cek-laptop-sewaan-saat-serah-terima",
+    "laptop-sewaan-rusak-siapa-tanggung-jawab",
+    "syarat-sewa-laptop-tanpa-deposit-jakarta"
+  ],
+  "keywords": "cara merawat laptop sewaan, tips sewa laptop, laptop sewa rusak, rental laptop jakarta timur",
+  "date": "2026-07-21"
+}

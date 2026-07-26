@@ -32,8 +32,8 @@
     "heading": "Cek Stok Minggu Ini",
     "body": "Kirim kebutuhan unit, tanggal pakai, lokasi Jakarta Selatan, dan aplikasi yang digunakan lewat chat via WhatsApp 6282177984041 agar tim Techpora cek stok.",
     "waMessage": "Halo Techpora, saya butuh rental laptop mingguan Jakarta Selatan dan lihat dari techpora.id. Mohon bantu cek stok, rekomendasi spesifikasi, dan estimasi biaya untuk kebutuhan saya.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek unit sewa laptop Jakarta Selatan"
+    "internalPath": "/sewa-laptop-jakarta-timur",
+    "internalLabel": "Rental laptop Jakarta Timur, siap antar"
   },
   "related": [
     "rental-macbook-mingguan-jakarta-selatan",

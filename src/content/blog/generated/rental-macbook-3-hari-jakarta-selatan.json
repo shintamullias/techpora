@@ -24,8 +24,8 @@
     "heading": "Cek Jadwal Antar Jaksel",
     "body": "Kirim detail kebutuhan Anda ke WhatsApp 6282177984041, lalu Techpora bantu cek stok, rekomendasi unit, dan opsi jadwal yang paling pas.",
     "waMessage": "Halo Techpora, saya butuh rental macbook 3 hari Jakarta Selatan. Saya lihat dari techpora.id, mohon dibantu cek stok dan harganya.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek unit sewa laptop Jakarta Selatan"
+    "internalPath": "/sewa-laptop-jakarta-timur",
+    "internalLabel": "Rental laptop Jakarta Timur, siap antar"
   },
   "related": [
     "sewa-macbook-3-hari-jakarta-selatan",

@@ -96,58 +96,77 @@ function Dashboard() {
   const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
 
   return (
-    <div className="min-h-screen bg-secondary/30 pb-10">
-      <header className="bg-slate-900 px-4 py-4 text-white">
-        <div className="mx-auto max-w-3xl">
+    <div className="min-h-screen bg-[#F4F6FA] pb-24">
+      <header className="bg-slate-900">
+        <div className="mx-auto max-w-3xl px-4 pb-5 pt-4">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="font-serif text-2xl leading-none">Techpora</h1>
-              <p className="mt-1 text-xs tracking-widest text-white/50">DASHBOARD SEWA</p>
+            <div className="flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary font-serif text-lg font-bold text-white">T</div>
+              <div>
+                <p className="text-base font-bold leading-none text-white">TECHPORA</p>
+                <p className="mt-1 text-[11px] tracking-widest text-slate-400">DASHBOARD SEWA</p>
+              </div>
             </div>
             <button
               onClick={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
-              className="text-xs text-white/70 underline underline-offset-4"
+              className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/10"
             >Keluar</button>
           </div>
-          <div className="mt-3 flex gap-3 text-xs text-white/70">
-            <span><b className="text-white">{aktif}</b> unit keluar</span>
-            <span><b className="text-white">{akanDatang}</b> akan datang</span>
-            <span><b className="text-white">{unitTampil.filter((u) => u.aktif).length}</b> unit aktif</span>
-          </div>
-        </div>
-      </header>
 
-      <nav className="sticky top-0 z-10 border-b border-border bg-background/95 px-4 backdrop-blur">
-        <div className="mx-auto max-w-3xl">
-          <div className="flex gap-1 py-2">
-            {([["kalender","Kalender"],["pesanan","Pesanan"],["pelanggan","Pelanggan"],["unit","Unit"],["uang","Uang"]] as [Tab,string][]).map(([k,t]) => (
-              <button key={k} onClick={() => setTab(k)}
-                className={"flex-1 rounded-lg px-1.5 py-2 text-xs font-semibold transition sm:text-sm " + (tab===k?"bg-primary text-primary-foreground":"text-muted-foreground")}>{t}</button>
-            ))}
+          <div className="mt-4 grid grid-cols-3 gap-2.5">
+            <StatKartu warna="#3B82F6" nilai={aktif} label="Unit keluar" />
+            <StatKartu warna="#F59E0B" nilai={akanDatang} label="Akan datang" />
+            <StatKartu warna="#10B981" nilai={unitTampil.filter((u) => u.aktif).length} label="Unit aktif" />
           </div>
-          <div className="flex gap-1.5 pb-2">
+
+          {/* Saringan kategori (Semua / Laptop / Sepatu) */}
+          <div className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5">
             {([["semua","Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring,string][]).map(([k,t]) => {
               const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
               return (
                 <button key={k} onClick={() => setKat(k)}
-                  className={"flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold transition " +
-                    (kat===k ? "border-slate-900 bg-slate-900 text-white" : "border-border bg-background text-muted-foreground")}>
-                  {t}<span className={kat===k ? "text-white/55" : "text-muted-foreground/55"}>{n}</span>
+                  className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition " +
+                    (kat===k ? "bg-white text-slate-900" : "bg-white/10 text-slate-300")}>
+                  {t}<span className={kat===k ? "text-slate-400" : "text-slate-500"}>{n}</span>
                 </button>
               );
             })}
           </div>
         </div>
-      </nav>
+      </header>
 
       <main className="mx-auto max-w-3xl space-y-4 px-4 py-4">
-        {galat && <p className="rounded-lg bg-destructive/10 px-3 py-2 text-sm text-destructive">{galat}</p>}
+        {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "uang" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
       </main>
+
+      {/* Navigasi bawah — mudah dijangkau jempol di HP */}
+      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur">
+        <div className="mx-auto flex max-w-3xl">
+          {([
+            ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
+            ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
+            ["pelanggan", "Pelanggan", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
+            ["unit", "Unit", "M3 5h14v8H3V5Zm-1 11h16M8 16v1.5m4-1.5v1.5"],
+            ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
+          ] as [Tab,string,string][]).map(([k, label, d]) => {
+            const on = tab === k;
+            return (
+              <button key={k} onClick={() => setTab(k)}
+                className={"flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px] font-semibold transition " + (on ? "text-primary" : "text-slate-400")}>
+                <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+                  <path d={d} />
+                </svg>
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      </nav>
     </div>
   );
 }
@@ -155,6 +174,16 @@ function Dashboard() {
 const Pusat = ({ children }: { children: React.ReactNode }) => (
   <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center text-muted-foreground">{children}</div>
 );
+
+function StatKartu({ warna, nilai, label }: { warna: string; nilai: number; label: string }) {
+  return (
+    <div className="rounded-2xl bg-white/5 p-3 ring-1 ring-white/10">
+      <span className="mb-1.5 block h-2 w-2 rounded-full" style={{ background: warna, boxShadow: `0 0 10px ${warna}` }} />
+      <p className="text-2xl font-bold leading-none tracking-tight text-white">{nilai}</p>
+      <p className="mt-1 text-[11px] text-slate-400">{label}</p>
+    </div>
+  );
+}
 
 const inp = "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
 
@@ -169,15 +198,22 @@ function Kol({ label, children }: { label: string; children: React.ReactNode }) 
 
 function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: string; aksi?: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border border-border bg-background p-4">
+    <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="font-serif text-xl text-foreground">{judul}</h2>
+        <h2 className="text-lg font-bold text-slate-900">{judul}</h2>
         {aksi}
       </div>
       {children}
     </section>
   );
 }
+
+const warnaBar: Record<StatusPesanan, string> = {
+  dipesan: "#F59E0B",
+  berjalan: "#3B82F6",
+  selesai: "#10B981",
+  batal: "#CBD5E1",
+};
 
 const warnaStatus: Record<StatusPesanan, string> = {
   dipesan: "bg-amber-50 text-amber-800 border-amber-200",
@@ -459,54 +495,59 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
           </div>
         )}
 
-        {pesanan.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pesanan.</p> : (
-          <ul className="space-y-2">
+        {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-slate-400">Belum ada pesanan.</p> : (
+          <ul className="space-y-2.5">
             {pesanan.map((p) => (
-              <li key={p.id} className="rounded-xl border border-border p-3">
-                <div className="flex items-start justify-between gap-3">
-                  <div className="min-w-0">
-                    <p className="truncate font-semibold text-foreground">{p.pelanggan?.nama}</p>
-                    <p className="truncate text-xs text-muted-foreground">
-                      <span className="font-mono">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)} · {p.durasi_jumlah} {p.durasi_tipe}
-                    </p>
-                    {p.antar !== "tidak" && <p className="truncate text-xs text-muted-foreground">Antar {p.jarak_km} km · {rp(p.harga_antar)}</p>}
-                  </div>
-                  <div className="shrink-0 text-right">
-                    <p className="font-semibold text-foreground">{rp(p.total)}</p>
-                    {(p.item || []).length > 0 && (
-                      <p className="text-[11px] text-muted-foreground">
-                        {(p.item || []).map((it) => `${it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} ${it.jumlah < 0 ? "−" : "+"}${rp(Math.abs(it.jumlah))}`).join(" · ")}
+              <li key={p.id} className="overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-sm">
+                <div className="h-1" style={{ background: warnaBar[p.status] }} />
+                <div className="p-3.5">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0">
+                      <p className="truncate font-bold text-slate-900">{p.pelanggan?.nama}</p>
+                      <p className="mt-0.5 truncate text-xs text-slate-500">
+                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)}
                       </p>
-                    )}
-                    <span className={"rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
+                      <p className="text-xs text-slate-400">{p.durasi_jumlah} {p.durasi_tipe}{p.antar !== "tidak" ? ` · antar ${p.jarak_km} km` : ""}</p>
+                    </div>
+                    <div className="shrink-0 text-right">
+                      <p className="text-lg font-bold text-slate-900">{rp(p.total)}</p>
+                      {(p.item || []).length > 0 && (
+                        <p className="text-[11px] text-slate-400">
+                          {(p.item || []).map((it) => `${it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} ${it.jumlah < 0 ? "−" : "+"}${rp(Math.abs(it.jumlah))}`).join(" · ")}
+                        </p>
+                      )}
+                      <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold capitalize " + warnaStatus[p.status]}>{p.status}</span>
+                    </div>
                   </div>
-                </div>
-                <p className="mt-1.5 text-xs">
-                  {p.ttd_setuju
-                    ? <span className="text-primary">
-                        Perjanjian ditandatangani{p.ttd_nama ? ` oleh ${p.ttd_nama}` : ""}
-                        {p.ttd_pada ? ` · ${new Date(p.ttd_pada).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}` : ""}
-                      </span>
-                    : <span className="text-amber-700">Perjanjian belum ditandatangani</span>}
-                </p>
-                <div className="mt-2 flex flex-wrap gap-1.5">
-                  {!p.ttd_setuju && p.pelanggan?.wa && (
-                    <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, ini perjanjian sewa ${p.unit?.nama} untuk ${tglIndo(p.mulai)}. Mohon dibaca lalu tanda tangan langsung di halaman ini ya:\n\n${typeof window !== "undefined" ? window.location.origin : "https://techpora.id"}/ttd/${p.token}\n\nNanti saat serah terima tinggal cek unit, tidak perlu tanda tangan lagi 🙏`)}
-                      target="_blank" rel="noreferrer"
-                      className="rounded-lg bg-primary px-2.5 py-1 text-xs font-semibold text-primary-foreground">Kirim link TTD</a>
-                  )}
-                  <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
-                    className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">Lihat perjanjian</a>
-                  <Aksi onClick={() => bukaEdit(p)}>{edit === p.id ? "Tutup edit" : "Edit"}</Aksi>
-                  {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
-                  {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
-                  {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
-                  <button onClick={() => hapusPesanan(p)}
-                    className="rounded-lg border border-destructive/40 px-2.5 py-1 text-xs font-semibold text-destructive">Hapus</button>
-                  {p.pelanggan?.wa && (
-                    <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, konfirmasi sewa ${p.unit?.nama} ${tglIndo(p.mulai)} — ${tglIndo(p.selesai)} pukul ${p.jam}. Total ${rp(p.total)}. Terima kasih 🙏`)}
-                      target="_blank" rel="noreferrer" className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">WhatsApp</a>
-                  )}
+
+                  <div className={"mt-2.5 flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-medium " + (p.ttd_setuju ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700")}>
+                    <span className={"h-1.5 w-1.5 shrink-0 rounded-full " + (p.ttd_setuju ? "bg-emerald-500" : "bg-amber-500")} />
+                    <span className="truncate">
+                      {p.ttd_setuju
+                        ? `Ditandatangani${p.ttd_nama ? ` · ${p.ttd_nama}` : ""}${p.ttd_pada ? ` · ${new Date(p.ttd_pada).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}` : ""}`
+                        : "Perjanjian belum ditandatangani"}
+                    </span>
+                  </div>
+
+                  <div className="mt-2.5 flex flex-wrap gap-1.5">
+                    {!p.ttd_setuju && p.pelanggan?.wa && (
+                      <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, ini perjanjian sewa ${p.unit?.nama} untuk ${tglIndo(p.mulai)}. Mohon dibaca lalu tanda tangan langsung di halaman ini ya:\n\n${typeof window !== "undefined" ? window.location.origin : "https://techpora.id"}/ttd/${p.token}\n\nNanti saat serah terima tinggal cek unit, tidak perlu tanda tangan lagi 🙏`)}
+                        target="_blank" rel="noreferrer"
+                        className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">Kirim link TTD</a>
+                    )}
+                    {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
+                    {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
+                    {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
+                    <Aksi onClick={() => bukaEdit(p)}>{edit === p.id ? "Tutup edit" : "Edit"}</Aksi>
+                    {p.pelanggan?.wa && (
+                      <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, konfirmasi sewa ${p.unit?.nama} ${tglIndo(p.mulai)} — ${tglIndo(p.selesai)} pukul ${p.jam}. Total ${rp(p.total)}. Terima kasih 🙏`)}
+                        target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">WhatsApp</a>
+                    )}
+                    <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
+                      className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">Perjanjian</a>
+                    <button onClick={() => hapusPesanan(p)}
+                      className="ml-auto rounded-lg px-2 py-1.5 text-xs font-semibold text-red-400 hover:text-red-600">Hapus</button>
+                  </div>
                 </div>
               </li>
             ))}

@@ -1,0 +1,48 @@
+{
+  "slug": "sewa-laptop-hackathon-lomba-coding-jakarta",
+  "title": "Sewa Laptop untuk Hackathon & Lomba Coding",
+  "description": "Persiapan perangkat untuk hackathon dan lomba coding di Jakarta: spesifikasi yang dibutuhkan, waktu persiapan, dan checklist sebelum hari lomba.",
+  "category": "Event",
+  "readMinutes": 5,
+  "intro": "Hackathon dan lomba pemrograman punya karakter yang berbeda dari kegiatan belajar biasa: durasinya padat, tenggatnya ketat, dan tidak ada ruang untuk kendala teknis. Peserta yang perangkatnya bermasalah di tengah lomba praktis kehilangan kesempatan, karena tidak ada waktu memperbaiki. Artikel ini membahas persiapan perangkat untuk peserta yang laptopnya kurang memadai atau sedang bermasalah menjelang hari lomba.",
+  "sections": [
+    {
+      "h": "Beban Kerja Khas Hackathon",
+      "p": "Selama lomba, laptopmu biasanya menjalankan beberapa hal sekaligus: editor kode, server pengembangan lokal, basis data, peramban dengan banyak tab dokumentasi, serta aplikasi komunikasi tim. Kombinasi ini memakan RAM jauh lebih cepat dibanding pemakaian belajar biasa. Untuk lomba yang berlangsung berjam-jam tanpa jeda panjang, daya tahan baterai dan kestabilan suhu juga jadi penting — terutama bila tempat duduk yang kamu dapat jauh dari colokan."
+    },
+    {
+      "h": "Spesifikasi yang Layak Dipertimbangkan",
+      "p": "Untuk lomba dengan jalur pengembangan web atau aplikasi sederhana, unit dengan RAM 8GB dan penyimpanan SSD masih memadai selama kamu disiplin menutup aplikasi yang tidak dipakai. Untuk jalur yang melibatkan container, emulator, atau pengolahan data, RAM lebih besar akan sangat terasa. Yang sering luput dipertimbangkan adalah layar: bekerja belasan jam dengan layar kecil jauh lebih melelahkan, dan kelelahan mata di jam-jam akhir lomba berpengaruh nyata pada kualitas kerjamu."
+    },
+    {
+      "h": "Kenapa Perangkat Harus Siap Jauh Sebelum Hari-H",
+      "p": "Kesalahan yang paling sering terjadi adalah menyiapkan lingkungan kerja di hari lomba. Memasang runtime, dependensi, editor, dan mengonfigurasi semuanya bisa memakan satu sampai dua jam — dan itu jam yang seharusnya kamu pakai untuk membangun. Ambil unit setidaknya dua hari sebelumnya, pasang semua yang dibutuhkan, lalu jalankan proyek percobaan kecil sampai berhasil. Menemukan masalah dua hari sebelum lomba masih bisa ditangani; menemukannya di lokasi lomba tidak."
+    },
+    {
+      "h": "Checklist Sebelum Berangkat",
+      "p": "Siapkan daftar sederhana dan periksa satu per satu. Charger dan kabel tambahan, karena colokan di lokasi lomba sering terbatas dan berebut. Adaptor untuk port yang mungkin dibutuhkan saat presentasi, terutama HDMI. Koneksi cadangan lewat tethering ponsel, karena jaringan panitia sering tidak stabil saat semua peserta memakainya bersamaan. Salinan proyek awalmu di repositori daring. Dan mouse eksternal bila kamu tidak nyaman bekerja lama dengan touchpad."
+    },
+    {
+      "h": "Mengamankan Kode Selama Lomba",
+      "p": "Simpan kodemu di repositori daring sejak menit pertama, dan lakukan commit secara berkala — bukan hanya di akhir. Kebiasaan ini bukan sekadar praktik baik; dalam konteks lomba, ini yang menyelamatkanmu bila perangkat bermasalah di tengah jalan. Dengan kode tersimpan di luar, pindah ke perangkat lain hanya soal menarik ulang repositori, bukan mengulang dari nol. Kalau bekerja dalam tim, sepakati struktur folder dan alur cabang sejak awal supaya tidak ada waktu terbuang untuk menyelaraskan pekerjaan."
+    },
+    {
+      "h": "Bila Perangkat Bermasalah Menjelang Lomba",
+      "p": "Kalau laptopmu bermasalah beberapa hari sebelum lomba, menyewa unit pengganti jauh lebih masuk akal daripada memaksakan perbaikan yang belum tentu selesai tepat waktu. Sampaikan sejak awal ke penyedia bahwa unit dibutuhkan untuk lomba dengan beban kerja pengembangan, supaya rekomendasi unitnya sesuai. Untuk peserta di Jakarta Timur, penyedia yang berbasis di Rawamangun bisa jadi pilihan cepat — unit bisa diambil langsung tanpa menunggu pengiriman, sehingga waktu persiapanmu tidak terpotong."
+    }
+  ],
+  "cta": {
+    "heading": "Siapkan Perangkat Sebelum Hari Lomba",
+    "body": "Sebutkan tanggal lomba dan jalur yang kamu ikuti lewat WhatsApp 6282177984041. Ambil unit lebih awal supaya sempat menyiapkan lingkungan kerja. Rental laptop Jakarta Timur, bisa ambil di Rawamangun.",
+    "waMessage": "Halo Techpora, saya mau ikut hackathon dan butuh sewa laptop. Berikut tanggal lomba dan kebutuhan saya:",
+    "internalPath": "/sewa-laptop-jakarta-timur",
+    "internalLabel": "Cek paket sewa laptop Jakarta Timur"
+  },
+  "related": [
+    "sewa-laptop-bootcamp-coding-jakarta",
+    "sewa-laptop-mendadak-malam-hari-jakarta",
+    "sewa-laptop-harian-vs-bulanan-jakarta"
+  ],
+  "keywords": "sewa laptop hackathon, rental laptop lomba coding, sewa laptop jakarta timur, laptop untuk kompetisi programming",
+  "date": "2026-07-21"
+}

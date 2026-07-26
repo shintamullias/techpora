@@ -71,13 +71,13 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-timur",
     area: "Jakarta Timur",
     areaShort: "Jaktim",
-    title: "Sewa Laptop Jakarta Timur — Rawamangun Ready | Techpora",
+    title: "Sewa & Rental Laptop Jakarta Timur — Murah, Cepat",
     metaDescription:
-      "Sewa laptop Jakarta Timur — basis operasional Techpora di Rawamangun. Bisa ambil langsung tanpa ongkir. Melayani Cawang, Cakung, Pulogadung, Duren Sawit.",
-    keywords: "sewa laptop jakarta timur, rental laptop jaktim, sewa laptop rawamangun, sewa laptop cakung, sewa laptop pulogadung, sewa laptop duren sawit",
-    h1: "Sewa Laptop Jakarta Timur — Techpora",
+      "Solusi rental laptop murah dan cepat di Jakarta Timur. Basis di Rawamangun, ambil langsung tanpa ongkir atau kirim <1 jam. Mulai Rp79rb, tanpa deposit.",
+    keywords: "sewa laptop jakarta timur, rental laptop jakarta timur, solusi rental laptop murah dan cepat, sewa laptop rawamangun, rental laptop jaktim, sewa laptop cakung, sewa laptop pulogadung, sewa laptop duren sawit",
+    h1: "Sewa & Rental Laptop Jakarta Timur",
     intro:
-      "Techpora berbasis di Rawamangun, Jakarta Timur — jadi pengambilan langsung di sini paling praktis dan tanpa ongkir. Kami rutin melayani area Rawamangun, Cawang, Cakung, Pulogadung, Duren Sawit, Kampung Melayu, hingga Jatinegara. Banyak mahasiswa UNJ, UKI, dan STIE Trisakti yang sewa harian untuk sidang dan tugas kuliah — dan kantor-kantor di Kawasan Industri Pulogadung sewa mingguan untuk kebutuhan staff temporary.",
+      "Techpora adalah solusi rental laptop murah dan cepat untuk warga Jakarta Timur. Kami berbasis di Rawamangun, jadi pengambilan langsung di sini paling praktis dan tanpa ongkir. Kami rutin melayani area Rawamangun, Cawang, Cakung, Pulogadung, Duren Sawit, Kampung Melayu, hingga Jatinegara. Banyak mahasiswa UNJ, UKI, dan STIE Trisakti yang sewa harian untuk sidang dan tugas kuliah — dan kantor-kantor di Kawasan Industri Pulogadung sewa mingguan untuk kebutuhan staff temporary.",
     highlights: [
       { title: "Ambil Sendiri di Rawamangun", desc: "Hemat ongkir. Alamat toko: Jl. R. Mangun Muka Raya, siap sambut kapan pun jam operasional." },
       { title: "Dekat Kampus UNJ", desc: "Mahasiswa UNJ tinggal jalan kaki. Sewa harian ThinkPad & VivoBook paling laris untuk skripsi." },
