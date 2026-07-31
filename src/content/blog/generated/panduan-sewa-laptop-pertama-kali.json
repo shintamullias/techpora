@@ -1,0 +1,52 @@
+{
+  "slug": "panduan-sewa-laptop-pertama-kali",
+  "title": "Panduan Sewa Laptop Pertama Kali di Jakarta",
+  "description": "Baru pertama kali menyewa laptop? Panduan lengkap dari memilih unit, syarat, biaya, sampai serah terima — semua yang perlu diketahui pemula.",
+  "category": "Panduan",
+  "readMinutes": 7,
+  "intro": "Menyewa laptop untuk pertama kali sering terasa membingungkan: berapa biayanya, apa syaratnya, apakah aman, dan apa yang harus dicek. Padahal prosesnya sederhana kalau tahu urutannya. Panduan ini merangkum semua yang perlu diketahui pemula, dari menentukan kebutuhan sampai mengembalikan unit, supaya pengalaman pertamamu berjalan mulus.",
+  "sections": [
+    {
+      "h": "Langkah 1: Tentukan Kebutuhan Dulu",
+      "p": "Sebelum bertanya harga, tentukan dulu untuk apa laptopnya dan berapa lama. Mengetik dan Office butuh unit yang berbeda dari editing atau pemrograman. Durasi juga menentukan: pemakaian beberapa hari cocok tarif harian, sedangkan sebulan atau lebih jauh lebih hemat dengan tarif bulanan. Menyampaikan kebutuhan dengan jelas sejak awal membuat penyedia bisa merekomendasikan unit yang tepat, bukan yang termahal."
+    },
+    {
+      "h": "Langkah 2: Pahami Sistem Biaya",
+      "p": "Sewa laptop umumnya dihitung per 24 jam sejak unit diterima. Perhatikan apakah ada deposit, biaya antar, dan bagaimana perhitungan keterlambatan. Di Techpora, sewa dimulai Rp79.000 per hari tanpa deposit uang, dengan ongkir antar-jemput dihitung per kilometer. Tanyakan rincian biaya di awal supaya tidak ada kejutan."
+    },
+    {
+      "h": "Langkah 3: Siapkan Syarat",
+      "p": "Syarat sewa biasanya berupa dokumen identitas. Siapkan foto KTP, satu dokumen jaminan kedua seperti KK atau kartu mahasiswa, dan foto diri memegang KTP. Sebagian penyedia menahan kartu identitas asli selama masa sewa sebagai pengganti deposit — tanyakan kebijakan ini di awal supaya kamu siap. Pastikan nama pada semua dokumen sama."
+    },
+    {
+      "h": "Langkah 4: Cek Unit Saat Serah Terima",
+      "p": "Saat menerima unit, luangkan lima menit memeriksa kondisinya bersama pengantar: nyalakan, cek layar untuk titik mati, uji keyboard dan seluruh port, pastikan charger mengisi, dan cek kamera serta mikrofon bila akan dipakai. Foto kondisi unit dan kirim ke penyedia. Ini melindungimu dari perselisihan soal kerusakan yang sudah ada sebelumnya."
+    },
+    {
+      "h": "Langkah 5: Rawat Selama Masa Sewa",
+      "p": "Perlakukan unit seperti barang pinjaman berharga. Bawa dalam tas berbantalan, jauhkan dari cairan, jangan membongkar atau mengubah pengaturannya, dan jangan meminjamkan ke orang lain karena perjanjian mengikat namamu. Simpan filemu di cloud sejak awal supaya perpindahan perangkat nanti mudah."
+    },
+    {
+      "h": "Langkah 6: Kembalikan dengan Benar",
+      "p": "Menjelang pengembalian, pindahkan seluruh berkasmu ke penyimpanan pribadi lalu hapus dari unit. Keluar dari semua akun. Bersihkan bodi dan pastikan charger serta kelengkapan ikut kembali. Kembalikan tepat waktu untuk menghindari biaya keterlambatan. Unit yang dikembalikan bersih dan lengkap membuat proses cepat dan meninggalkan kesan baik untuk sewa berikutnya."
+    },
+    {
+      "h": "Kapan Sewa Lebih Baik daripada Beli",
+      "p": "Menyewa masuk akal untuk kebutuhan berbatas waktu: skripsi, proyek, masa transisi kerja, atau pengganti sementara. Untuk pemakaian harian bertahun-tahun, membeli lebih ekonomis. Kalau kamu belum yakin spesifikasi yang dibutuhkan, menyewa dulu beberapa minggu sering memberi gambaran yang lebih akurat sebelum memutuskan membeli."
+    }
+  ],
+  "cta": {
+    "heading": "Siap Sewa Laptop Pertamamu?",
+    "body": "Chat WhatsApp 6282177984041 dan ceritakan kebutuhanmu. Admin Techpora akan memandu dari memilih unit sampai serah terima. Mulai Rp79.000 per hari, tanpa deposit.",
+    "waMessage": "Halo Techpora, saya baru pertama kali mau sewa laptop. Berikut kebutuhan saya, mohon dibantu ya:",
+    "internalPath": "/sewa-laptop-jakarta",
+    "internalLabel": "Lihat unit & harga sewa laptop Jakarta"
+  },
+  "related": [
+    "kenapa-ktp-ditahan-sewa-laptop",
+    "cara-cek-laptop-sewaan-saat-serah-terima",
+    "laptop-bekas-atau-sewa-jakarta"
+  ],
+  "keywords": "panduan sewa laptop, cara sewa laptop pertama kali, sewa laptop untuk pemula, tips sewa laptop jakarta",
+  "date": "2026-07-21"
+}
