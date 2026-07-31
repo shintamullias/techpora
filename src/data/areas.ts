@@ -327,6 +327,84 @@ export const areas: AreaData[] = [
     ],
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook],
   },
+  {
+    slug: "sewa-laptop-pulogadung",
+    area: "Pulogadung",
+    areaShort: "Pulogadung",
+    title: "Sewa & Rental Laptop Pulogadung, Jakarta Timur",
+    metaDescription:
+      "Sewa laptop Pulogadung, Jakarta Timur — dekat basis kami di Rawamangun. Cepat sampai ke Kawasan Industri Pulogadung, mulai Rp79rb/hari, tanpa deposit.",
+    keywords: "sewa laptop pulogadung, rental laptop pulogadung, sewa laptop kawasan industri pulogadung, sewa laptop jakarta timur",
+    h1: "Sewa & Rental Laptop di Pulogadung",
+    intro:
+      "Pulogadung bersebelahan langsung dengan Rawamangun, tempat toko Techpora berada — jadi untuk warga dan kantor di Pulogadung, kami termasuk penyedia terdekat yang bisa sampai cepat. Kawasan Industri Pulogadung padat dengan pabrik dan kantor yang kerap butuh laptop tambahan mendadak: untuk staf kontrak, audit, pelatihan, atau presentasi ke klien. Karena jaraknya dekat, unit bisa diambil langsung atau diantar dalam waktu singkat tanpa ongkir yang membengkak. Kami paham kebutuhan kantor berbeda dari perorangan — butuh cepat, butuh pasti, dan sering butuh beberapa unit sekaligus.",
+    highlights: [
+      { title: "Dekat dari Basis Kami", desc: "Rawamangun dan Pulogadung bersebelahan. Antar cepat, ongkir minim." },
+      { title: "Siap untuk Kantor", desc: "Beberapa unit sekaligus untuk staf tambahan, pelatihan, atau audit." },
+      { title: "Ambil atau Diantar", desc: "Bisa ambil langsung di toko atau diantar ke kantor kawasan industri." },
+    ],
+    landmarks: ["Kawasan Industri Pulogadung", "JIEP", "Terminal Pulogadung", "Jl. Bekasi Raya", "Rawamangun", "Pulomas"],
+    eta: "Antar cepat ke area Pulogadung dari basis Rawamangun, atau ambil sendiri tanpa ongkir.",
+    useCases: [
+      "Kantor & pabrik untuk staf tambahan",
+      "Pelatihan & audit di kawasan industri",
+      "Presentasi ke klien",
+      "Kebutuhan perorangan warga Pulogadung",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.epsonProj, laptops.epsonPrinter],
+  },
+  {
+    slug: "sewa-laptop-cempaka-putih",
+    area: "Cempaka Putih",
+    areaShort: "Cempaka Putih",
+    title: "Sewa & Rental Laptop Cempaka Putih Jakarta",
+    metaDescription:
+      "Sewa laptop Cempaka Putih — dekat dari basis kami di Rawamangun, cepat sampai. Mulai Rp79rb/hari, tanpa deposit, bisa ambil langsung atau diantar.",
+    keywords: "sewa laptop cempaka putih, rental laptop cempaka putih, sewa laptop jakarta pusat, sewa laptop dekat cempaka putih",
+    h1: "Sewa & Rental Laptop di Cempaka Putih",
+    intro:
+      "Cempaka Putih berbatasan dengan area Rawamangun dan Pulomas, sehingga dari basis Techpora unit bisa sampai dengan cepat. Kawasan ini punya campuran perkantoran, rumah sakit besar, dan permukiman — kebutuhannya beragam, dari staf kantor yang butuh unit tambahan, tenaga kesehatan yang butuh laptop untuk pelatihan, sampai warga yang laptopnya sedang bermasalah. Karena jaraknya dekat, kamu tidak perlu menunggu pengiriman lama atau membayar ongkir jauh. Cukup sampaikan lokasi dan kebutuhanmu, unit bisa diantar atau diambil langsung di toko kami.",
+    highlights: [
+      { title: "Jarak Dekat", desc: "Berbatasan dengan Rawamangun dan Pulomas — antar cepat, ongkir minim." },
+      { title: "Untuk Beragam Kebutuhan", desc: "Kantor, tenaga kesehatan, pelatihan, hingga kebutuhan perorangan." },
+      { title: "Tanpa Deposit", desc: "Cukup dokumen identitas, mulai Rp79rb per hari." },
+    ],
+    landmarks: ["RS Islam Cempaka Putih", "Jl. Letjen Suprapto", "Cempaka Mas", "Pulomas", "Rawamangun", "Jl. Ahmad Yani"],
+    eta: "Antar cepat ke Cempaka Putih dari basis Rawamangun, atau ambil sendiri tanpa ongkir.",
+    useCases: [
+      "Perkantoran sekitar Letjen Suprapto",
+      "Pelatihan tenaga kesehatan",
+      "Kebutuhan mendadak warga",
+      "Presentasi & rapat",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.redmibook, laptops.epsonProj],
+  },
+  {
+    slug: "sewa-laptop-matraman",
+    area: "Matraman",
+    areaShort: "Matraman",
+    title: "Sewa & Rental Laptop Matraman Jakarta Timur",
+    metaDescription:
+      "Sewa laptop Matraman, Jakarta Timur — dekat dari basis kami di Rawamangun. Cepat sampai, mulai Rp79rb/hari, tanpa deposit, bisa diantar atau ambil sendiri.",
+    keywords: "sewa laptop matraman, rental laptop matraman, sewa laptop jakarta timur, sewa laptop dekat matraman",
+    h1: "Sewa & Rental Laptop di Matraman",
+    intro:
+      "Matraman berada di jalur yang menghubungkan Jakarta Timur dan Pusat, tidak jauh dari basis Techpora di Rawamangun. Kawasan ini ramai dengan permukiman padat, sekolah, dan usaha kecil — kebutuhan sewa laptopnya sering muncul mendadak: pelajar dan mahasiswa untuk tugas, pelaku usaha untuk mengurus pembukuan atau katalog daring, atau warga yang butuh pengganti sementara. Karena jaraknya dekat, unit bisa sampai cepat tanpa ongkir yang jauh. Sampaikan lokasi dan kebutuhanmu, kami bantu siapkan unit yang sesuai.",
+    highlights: [
+      { title: "Akses Cepat", desc: "Di jalur Rawamangun–Matraman, unit sampai cepat tanpa ongkir jauh." },
+      { title: "Untuk Pelajar & UMKM", desc: "Tugas sekolah, pembukuan usaha, katalog daring, hingga pengganti mendadak." },
+      { title: "Fleksibel", desc: "Harian, mingguan, atau bulanan — sesuai kebutuhanmu." },
+    ],
+    landmarks: ["Jl. Matraman Raya", "Stasiun Pondok Jati", "Berlan", "Salemba", "Rawamangun", "Jl. Pramuka"],
+    eta: "Antar cepat ke Matraman dari basis Rawamangun, atau ambil sendiri tanpa ongkir.",
+    useCases: [
+      "Pelajar & mahasiswa untuk tugas",
+      "UMKM untuk pembukuan & katalog",
+      "Pengganti laptop sementara",
+      "Kebutuhan rumahan mendadak",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer],
+  },
 ];
 
 export const areaBySlug = (slug: string) => areas.find((a) => a.slug === slug);
