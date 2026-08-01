@@ -168,7 +168,7 @@ function Ttd() {
             {sepatu ? (
               <>
                 <Li n="1">Penyewa menerima sepatu dalam kondisi bersih dan layak pakai sesuai ukuran yang dipesan, dan wajib mengembalikannya dalam kondisi yang sama.</Li>
-                <Li n="2">Masa sewa dihitung per 24 jam sejak sepatu diterima. Keterlambatan pengembalian dikenakan tarif sewa harian penuh untuk setiap hari keterlambatan.</Li>
+                <Li n="2">Masa sewa dihitung per 24 jam sejak sepatu diterima. Tersedia toleransi keterlambatan 3 jam. Pengembalian yang melewati batas toleransi dihitung sebagai tambahan 1 hari sewa penuh, dan berlaku kelipatan untuk setiap hari keterlambatan berikutnya.</Li>
                 <Li n="3">Sepatu hanya boleh dipakai oleh penyewa yang namanya tercantum di perjanjian ini, dan dilarang dipindahtangankan atau disewakan ulang kepada pihak lain.</Li>
                 <Li n="4">Sepatu wajib dikembalikan dalam keadaan sudah dibersihkan dari tanah, lumpur, dan rumput. Bila dikembalikan kotor, dikenakan biaya pencucian.</Li>
                 <Li n="5">Sepatu hanya boleh dipakai sesuai peruntukannya. Pemakaian di permukaan yang tidak sesuai — misalnya sepatu FG di lapangan berbatu atau aspal — mempercepat keausan sol dan menjadi tanggung jawab penyewa.</Li>
@@ -179,7 +179,7 @@ function Ttd() {
             ) : (
               <>
                 <Li n="1">Penyewa menerima unit dalam kondisi baik dan berfungsi, lengkap dengan charger, dan wajib mengembalikannya dalam kondisi yang sama.</Li>
-                <Li n="2">Masa sewa dihitung per 24 jam sejak unit diterima. Keterlambatan pengembalian dikenakan tarif sewa harian penuh untuk setiap hari keterlambatan.</Li>
+                <Li n="2">Masa sewa dihitung per 24 jam sejak unit diterima. Tersedia toleransi keterlambatan 3 jam. Pengembalian yang melewati batas toleransi dihitung sebagai tambahan 1 hari sewa penuh, dan berlaku kelipatan untuk setiap hari keterlambatan berikutnya.</Li>
                 <Li n="3">Unit hanya boleh dipakai oleh penyewa yang namanya tercantum di perjanjian ini, dan dilarang dipindahtangankan, disewakan ulang, atau dijaminkan kepada pihak lain.</Li>
                 <Li n="4">Penyewa dilarang membongkar, mengganti komponen, menghapus sistem operasi, atau mengubah pengaturan keamanan pada unit.</Li>
                 <Li n="5">Unit dilengkapi perangkat lunak pelacak. Penyewa mengetahui dan menyetujui bahwa posisi unit dapat dipantau selama masa sewa, semata-mata untuk pengamanan aset.</Li>
