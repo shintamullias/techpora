@@ -224,79 +224,108 @@ const warnaStatus: Record<StatusPesanan, string> = {
 
 /* ============ TAB 1: KALENDER ============ */
 function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
-  const [bln, setBln] = useState(() => { const d = new Date(); return { th: d.getFullYear(), bl: d.getMonth() }; });
+  // Grid harian bergaya Transgo: satu kolom per hari, nama pelanggan tertulis
+  // di dalam blok, hari ini disorot. Navigasi per minggu (7 hari) — lebih pas
+  // di layar HP daripada sebulan penuh.
+  const [anchor, setAnchor] = useState(() => {
+    const d = new Date(); d.setHours(0, 0, 0, 0);
+    d.setDate(d.getDate() - d.getDay()); // mulai dari Minggu
+    return d;
+  });
   const aktif = pesanan.filter((p) => p.status === "dipesan" || p.status === "berjalan");
-  /* Bilah kalender menampilkan seluruh sewa kecuali yang dibatalkan, supaya
-     riwayat "selesai" tetap kelihatan. Tanggal selesai bersifat eksklusif;
-     kalau ada data lama yang selesai == mulai, dianggap sewa 1 hari. */
   const terpakai = pesanan.filter((p) => p.status !== "batal");
   const habis = (p: Pesanan) => (p.selesai > p.mulai ? p.selesai : tambahHari(p.mulai, 1));
-  const warnaBilah: Record<string, string> = {
-    berjalan: "bg-blue-500",
-    dipesan: "bg-amber-400",
-    selesai: "bg-emerald-300",
+
+  const warnaBlok: Record<string, string> = {
+    berjalan: "bg-blue-100 text-blue-900 border-l-4 border-blue-500",
+    dipesan: "bg-amber-100 text-amber-900 border-l-4 border-amber-400",
+    selesai: "bg-emerald-50 text-emerald-800 border-l-4 border-emerald-300",
   };
-  const awal = new Date(bln.th, bln.bl, 1);
-  const jml = new Date(bln.th, bln.bl + 1, 0).getDate();
-  const iso = (d: number) => `${bln.th}-${String(bln.bl + 1).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
-  const geser = (a: number) => setBln(({ th, bl }) => { const d = new Date(th, bl + a, 1); return { th: d.getFullYear(), bl: d.getMonth() }; });
+
+  const hari = Array.from({ length: 7 }).map((_, i) => {
+    const d = new Date(anchor); d.setDate(anchor.getDate() + i); return d;
+  });
+  const isoOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const hariIni = isoOf(new Date());
+  const namaHari = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+  const geser = (n: number) => setAnchor((a) => { const d = new Date(a); d.setDate(a.getDate() + n); return d; });
+
+  const unitAktif = unit.filter((u) => u.aktif);
+  const rentang = `${hari[0].toLocaleDateString("id-ID", { day: "numeric", month: "short" })} – ${hari[6].toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}`;
 
   return (
-    <Kartu judul={awal.toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
-      aksi={<div className="flex gap-1">
-        <button onClick={() => geser(-1)} className="rounded-lg border border-border px-3 py-1 text-sm">‹</button>
-        <button onClick={() => geser(1)} className="rounded-lg border border-border px-3 py-1 text-sm">›</button>
+    <Kartu judul="Kalender"
+      aksi={<div className="flex items-center gap-1">
+        <button onClick={() => geser(-7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">‹</button>
+        <button onClick={() => setAnchor(() => { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - d.getDay()); return d; })}
+          className="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold">Ini</button>
+        <button onClick={() => geser(7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">›</button>
       </div>}>
-      {unit.filter((u) => u.aktif).length === 0 && (
-        <p className="rounded-lg bg-secondary px-3 py-2 text-sm text-muted-foreground">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
-      )}
-      <div className="space-y-3">
-        {unit.filter((u) => u.aktif).map((u) => (
-          <div key={u.id}>
-            <p className="mb-1 text-sm font-semibold text-foreground">
-              <span className="font-mono text-xs text-muted-foreground">{u.id}</span> · {u.nama}
-            </p>
-            <div className="flex gap-[2px] overflow-hidden rounded-md">
-              {Array.from({ length: jml }).map((_, i) => {
-                const t = iso(i + 1);
-                const isi = terpakai.find((p) => p.unit_id === u.id && t >= p.mulai && t < habis(p));
+      <p className="mb-3 text-xs font-medium text-slate-400">{rentang}</p>
+
+      {unitAktif.length === 0 ? (
+        <p className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-400">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <div className="min-w-[560px]">
+            {/* Header hari + tanggal */}
+            <div className="grid grid-cols-7 gap-1">
+              {hari.map((d) => {
+                const ini = isoOf(d) === hariIni;
                 return (
-                  <div key={i} title={isi ? `${isi.pelanggan?.nama} · ${isi.status} · ${tglIndo(isi.mulai)}–${tglIndo(isi.selesai)}` : t}
-                    className={"h-8 flex-1 " + (isi ? warnaBilah[isi.status] || "bg-slate-300" : "bg-secondary")} />
-                );
-              })}
-            </div>
-            {/* Penanda tanggal supaya jelas kotak warna itu tanggal berapa */}
-            <div className="mt-0.5 flex gap-[2px]">
-              {Array.from({ length: jml }).map((_, i) => {
-                const d = i + 1;
-                const tampil = d === 1 || d % 5 === 0 || d === jml;
-                return (
-                  <div key={i} className="flex-1 text-center text-[9px] leading-none text-muted-foreground">
-                    {tampil ? d : ""}
+                  <div key={d.toISOString()} className={"rounded-lg py-1.5 text-center " + (ini ? "bg-primary text-white" : "bg-slate-50 text-slate-500")}>
+                    <p className="text-[10px] leading-none">{namaHari[d.getDay()]}</p>
+                    <p className="mt-0.5 text-base font-bold leading-none">{d.getDate()}</p>
                   </div>
                 );
               })}
             </div>
+
+            {/* Baris per unit */}
+            <div className="mt-1 space-y-1">
+              {unitAktif.map((u) => (
+                <div key={u.id}>
+                  <p className="mb-0.5 mt-2 text-[11px] font-semibold text-slate-500">
+                    <span className="font-mono">{u.id}</span> · {u.nama}
+                  </p>
+                  <div className="grid grid-cols-7 gap-1">
+                    {hari.map((d) => {
+                      const t = isoOf(d);
+                      const isi = terpakai.find((p) => p.unit_id === u.id && t >= p.mulai && t < habis(p));
+                      const mulaiHari = isi && t === isi.mulai; // tampilkan nama hanya di hari pertama blok
+                      const ini = t === hariIni;
+                      return (
+                        <div key={t} className={"min-h-[38px] rounded-md p-1 text-[11px] leading-tight " +
+                          (isi ? warnaBlok[isi.status] || "bg-slate-100" : ini ? "bg-primary/5" : "bg-slate-50")}>
+                          {isi && (mulaiHari
+                            ? <span className="line-clamp-2 font-semibold">{isi.pelanggan?.nama}</span>
+                            : <span className="text-current/50">·</span>)}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-      </div>
-      <div className="mt-4 flex gap-4 text-xs text-muted-foreground">
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-amber-400" /> Dipesan</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-blue-500" /> Sedang keluar</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-emerald-300" /> Selesai</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm bg-secondary" /> Kosong</span>
+        </div>
+      )}
+
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-400">
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-amber-400 bg-amber-100" /> Dipesan</span>
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-blue-500 bg-blue-100" /> Sedang keluar</span>
+        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-emerald-300 bg-emerald-50" /> Selesai</span>
       </div>
 
-      <div className="mt-5 border-t border-border pt-4">
-        <p className="mb-2 text-sm font-semibold text-foreground">Jadwal terdekat</p>
-        {aktif.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada sewa terjadwal.</p> : (
+      <div className="mt-5 border-t border-slate-200 pt-4">
+        <p className="mb-2 text-sm font-semibold text-slate-900">Jadwal terdekat</p>
+        {aktif.length === 0 ? <p className="text-sm text-slate-400">Belum ada sewa terjadwal.</p> : (
           <ul className="space-y-2">
             {[...aktif].sort((a, b) => (a.mulai < b.mulai ? -1 : 1)).slice(0, 6).map((p) => (
-              <li key={p.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
+              <li key={p.id} className="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-foreground">{p.pelanggan?.nama}</p>
-                  <p className="text-xs text-muted-foreground">
+                  <p className="truncate text-sm font-semibold text-slate-900">{p.pelanggan?.nama}</p>
+                  <p className="text-xs text-slate-400">
                     <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam}` : ""} → {tglHariIndo(p.selesai)}
                   </p>
                 </div>
