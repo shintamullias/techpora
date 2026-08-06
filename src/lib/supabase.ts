@@ -152,6 +152,17 @@ export const tglIndo = (iso?: string | null) =>
       })
     : "—";
 
+/** Seperti tglIndo tapi menyertakan nama hari, mis. "Sen, 3 Agu 2026". */
+export const tglHariIndo = (iso?: string | null) =>
+  iso
+    ? new Date(iso.slice(0, 10) + "T00:00:00").toLocaleDateString("id-ID", {
+        weekday: "short",
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+      })
+    : "—";
+
 /** Ongkir antar-jemput: tarif per km, tapi tidak kurang dari minimum. */
 export const hitungOngkir = (km: number, antar: string, p: Pengaturan) =>
   antar === "tidak" ? 0 : Math.max(p.ongkir_minimum, Math.round(km * p.ongkir_per_km));

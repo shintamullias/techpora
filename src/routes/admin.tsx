@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
+  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
 } from "@/lib/supabase";
@@ -266,6 +266,18 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
                 );
               })}
             </div>
+            {/* Penanda tanggal supaya jelas kotak warna itu tanggal berapa */}
+            <div className="mt-0.5 flex gap-[2px]">
+              {Array.from({ length: jml }).map((_, i) => {
+                const d = i + 1;
+                const tampil = d === 1 || d % 5 === 0 || d === jml;
+                return (
+                  <div key={i} className="flex-1 text-center text-[9px] leading-none text-muted-foreground">
+                    {tampil ? d : ""}
+                  </div>
+                );
+              })}
+            </div>
           </div>
         ))}
       </div>
@@ -285,7 +297,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
                 <div className="min-w-0">
                   <p className="truncate text-sm font-semibold text-foreground">{p.pelanggan?.nama}</p>
                   <p className="text-xs text-muted-foreground">
-                    <span className="font-mono">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)}
+                    <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam}` : ""} → {tglHariIndo(p.selesai)}
                   </p>
                 </div>
                 <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
@@ -505,7 +517,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                     <div className="min-w-0">
                       <p className="truncate font-bold text-slate-900">{p.pelanggan?.nama}</p>
                       <p className="mt-0.5 truncate text-xs text-slate-500">
-                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglIndo(p.mulai)} → {tglIndo(p.selesai)}
+                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglHariIndo(p.mulai)} → {tglHariIndo(p.selesai)}
                       </p>
                       <p className="text-xs text-slate-400">{p.durasi_jumlah} {p.durasi_tipe}{p.antar !== "tidak" ? ` · antar ${p.jarak_km} km` : ""}</p>
                     </div>
