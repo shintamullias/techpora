@@ -194,7 +194,7 @@ export const Route = createFileRoute("/")({
             closes: "21:00",
           }],
           priceRange: "Rp79.000 - Rp4.500.000",
-          aggregateRating: { "@type": "AggregateRating", ratingValue: "4.9", reviewCount: "128" },
+          aggregateRating: { "@type": "AggregateRating", ratingValue: "5.0", reviewCount: "47" },
           sameAs: ["https://www.instagram.com/sewalaptopjakarta.co"],
           hasMap: MAPS_URL,
         }),

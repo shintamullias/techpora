@@ -55,8 +55,8 @@ export const Route = createFileRoute("/sewa-laptop-jakarta")({
           },
           aggregateRating: {
             "@type": "AggregateRating",
-            ratingValue: "4.9",
-            reviewCount: "128",
+            ratingValue: "5.0",
+            reviewCount: "47",
           },
         }),
       },
