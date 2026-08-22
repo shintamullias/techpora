@@ -60,6 +60,7 @@ export type Pengeluaran = {
   keterangan: string;
   jumlah: number;
   unit_id: string | null;
+  kategori_bisnis?: "laptop" | "sepatu" | "umum";
 };
 
 export const KATEGORI_BIAYA = [

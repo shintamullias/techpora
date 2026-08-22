@@ -27,7 +27,7 @@ export default function TabKeuangan({
   const kini = new Date().toISOString().slice(0, 7);
   const [bulan, setBulan] = useState(kini);
   const [buka, setBuka] = useState(false);
-  const kosong = { tanggal: new Date().toISOString().slice(0, 10), kategori: "operasional", keterangan: "", jumlah: "", unit_id: "" };
+  const kosong = { tanggal: new Date().toISOString().slice(0, 10), kategori: "operasional", keterangan: "", jumlah: "", unit_id: "", kategori_bisnis: "umum" };
   const [f, setF] = useState(kosong);
   const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
 
@@ -88,6 +88,7 @@ export default function TabKeuangan({
     const { error } = await supabase.from("pengeluaran").insert({
       tanggal: f.tanggal, kategori: f.kategori, keterangan: f.keterangan.trim(),
       jumlah: jml, unit_id: f.unit_id || null,
+      kategori_bisnis: f.kategori_bisnis || "umum",
     });
     if (error) return setGalat(error.message);
     setF(kosong); setBuka(false); muat();
@@ -126,6 +127,7 @@ export default function TabKeuangan({
             <span className={"font-serif text-3xl " + (laba >= 0 ? "text-foreground" : "text-red-700")}>{rp(laba)}</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">{masukBln.length} transaksi sewa bulan ini</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">Saat difilter Laptop/Sepatu, biaya berkategori "Umum" (mis. bunga, pemasaran) tidak ikut ditampilkan karena merupakan biaya bersama.</p>
         </div>
 
         {laba > 0 && (
@@ -171,10 +173,23 @@ export default function TabKeuangan({
                 {KATEGORI_BIAYA.map((k) => <option key={k.key} value={k.key}>{k.label}</option>)}
               </select>
             </Kol>
+            <Kol label="Untuk bisnis">
+              <select value={f.kategori_bisnis} onChange={(e) => s("kategori_bisnis", e.target.value)} className={inp}>
+                <option value="umum">Umum (biaya bersama)</option>
+                <option value="laptop">Laptop</option>
+                <option value="sepatu">Sepatu</option>
+              </select>
+            </Kol>
             <Kol label="Keterangan"><input value={f.keterangan} onChange={(e) => s("keterangan", e.target.value)} placeholder="mis. bensin antar Kelapa Gading" className={inp} /></Kol>
             <Kol label="Terkait unit (opsional)">
-              <select value={f.unit_id} onChange={(e) => s("unit_id", e.target.value)} className={inp}>
-                <option value="">— umum —</option>
+              <select value={f.unit_id} onChange={(e) => {
+                const uid = e.target.value;
+                s("unit_id", uid);
+                // kalau pilih unit, kategori bisnis ikut kategori unit
+                const u = unit.find((x) => x.id === uid);
+                if (u?.kategori) s("kategori_bisnis", u.kategori);
+              }} className={inp}>
+                <option value="">— tidak terkait unit —</option>
                 {unit.map((u) => <option key={u.id} value={u.id}>{u.id} · {u.nama}</option>)}
               </select>
             </Kol>

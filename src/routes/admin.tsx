@@ -79,8 +79,8 @@ function Dashboard() {
     return pelanggan.filter((p) => ada.has(p.id));
   }, [pelanggan, pesananTampil, kat]);
   const biayaTampil = useMemo(
-    () => (kat === "semua" ? biaya : biaya.filter((b) => cocok(b.unit_id))),
-    [biaya, kat, katUnit],
+    () => (kat === "semua" ? biaya : biaya.filter((b) => (b.kategori_bisnis || "umum") === kat)),
+    [biaya, kat],
   );
 
   if (!siap) return <Pusat>Memuat…</Pusat>;
