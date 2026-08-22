@@ -32,8 +32,8 @@
     "heading": "Cek Unit Hari Ini",
     "body": "Chat via WhatsApp 6282177984041 untuk cek stok MacBook, jadwal antar area Jakarta Timur, dan rekomendasi unit yang pas sebelum Anda bayar.",
     "waMessage": "Halo Techpora, saya mau tanya sewa macbook harian Jakarta Timur. Saya lihat dari techpora.id, mohon info stok dan harga untuk tanggal terdekat.",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Halaman lengkap sewa laptop harian Jakarta"
   },
   "related": [
     "rental-macbook-harian-jakarta-timur",

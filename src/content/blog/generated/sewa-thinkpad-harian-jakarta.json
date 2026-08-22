@@ -32,8 +32,8 @@
     "heading": "Butuh ThinkPad Hari Ini?",
     "body": "Chat WhatsApp Techpora di 6282177984041, kirim jumlah unit, tanggal pakai, lokasi, dan aplikasi yang dibutuhkan agar tim bisa cek stok cepat.",
     "waMessage": "Halo Techpora, saya mau tanya sewa thinkpad harian Jakarta. Saya lihat dari techpora.id, bisa dibantu cek stok dan estimasi biayanya?",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek paket sewa laptop Jakarta"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
     "sewa-thinkpad-harian-jakarta-selatan",

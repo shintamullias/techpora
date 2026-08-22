@@ -24,8 +24,8 @@
     "heading": "Cek Unit Redmibook Hari Ini",
     "body": "Kirim kebutuhan tanggal, lokasi, dan jumlah unit ke WhatsApp 6282177984041 agar tim Techpora cek stok serta opsi antar di Jakarta Selatan.",
     "waMessage": "Halo Techpora, saya butuh info sewa redmibook harian Jakarta Selatan. Saya lihat dari techpora.id dan ingin cek stok untuk tanggal terdekat.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Cek unit sewa laptop Jakarta Selatan"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Sewa laptop harian mulai Rp79rb — cek di sini"
   },
   "related": [
     "rental-redmibook-harian-jakarta-selatan",

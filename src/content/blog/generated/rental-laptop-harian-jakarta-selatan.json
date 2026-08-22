@@ -32,8 +32,8 @@
     "heading": "Cek Stok Hari Ini",
     "body": "Kirim kebutuhan unit, tanggal, lokasi, dan aplikasi yang dipakai ke 6282177984041 agar tim Techpora cek stok serta opsi antar hari yang sama.",
     "waMessage": "Halo Techpora, saya butuh rental laptop harian Jakarta Selatan. Saya lihat dari techpora.id, mohon info stok dan biaya kirim.",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Cek paket sewa laptop Jakarta Timur"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
     "rental-macbook-harian-jakarta-selatan",

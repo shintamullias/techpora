@@ -24,8 +24,8 @@
     "heading": "Cek Stok Acer Hari Ini",
     "body": "Kirim kebutuhan unit, tanggal pakai, dan lokasi acara lewat chat via WhatsApp agar tim Techpora bisa bantu cek stok serta estimasi biaya.",
     "waMessage": "Halo Techpora, saya butuh info sewa acer harian Jakarta. Saya lihat dari techpora.id dan ingin cek stok serta harga.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Cek paket sewa laptop Jakarta"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Sewa laptop harian mulai Rp79rb — cek di sini"
   },
   "related": [
     "sewa-acer-harian-jakarta-timur",

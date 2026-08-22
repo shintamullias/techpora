@@ -22,6 +22,7 @@ import { Route as SewaLaptopJakartaSelatanRouteImport } from './routes/sewa-lapt
 import { Route as SewaLaptopJakartaPusatRouteImport } from './routes/sewa-laptop-jakarta-pusat'
 import { Route as SewaLaptopJakartaBaratRouteImport } from './routes/sewa-laptop-jakarta-barat'
 import { Route as SewaLaptopJakartaRouteImport } from './routes/sewa-laptop-jakarta'
+import { Route as SewaLaptopHarianJakartaRouteImport } from './routes/sewa-laptop-harian-jakarta'
 import { Route as SewaLaptopEventJakartaRouteImport } from './routes/sewa-laptop-event-jakarta'
 import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
 import { Route as SewaLaptopCempakaPutihRouteImport } from './routes/sewa-laptop-cempaka-putih'
@@ -104,6 +105,11 @@ const SewaLaptopJakartaRoute = SewaLaptopJakartaRouteImport.update({
   path: '/sewa-laptop-jakarta',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SewaLaptopHarianJakartaRoute = SewaLaptopHarianJakartaRouteImport.update({
+  id: '/sewa-laptop-harian-jakarta',
+  path: '/sewa-laptop-harian-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SewaLaptopEventJakartaRoute = SewaLaptopEventJakartaRouteImport.update({
   id: '/sewa-laptop-event-jakarta',
   path: '/sewa-laptop-event-jakarta',
@@ -184,6 +190,7 @@ export interface FileRoutesByFullPath {
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
   '/sewa-laptop-event-jakarta': typeof SewaLaptopEventJakartaRoute
+  '/sewa-laptop-harian-jakarta': typeof SewaLaptopHarianJakartaRoute
   '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
@@ -213,6 +220,7 @@ export interface FileRoutesByTo {
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
   '/sewa-laptop-event-jakarta': typeof SewaLaptopEventJakartaRoute
+  '/sewa-laptop-harian-jakarta': typeof SewaLaptopHarianJakartaRoute
   '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
@@ -243,6 +251,7 @@ export interface FileRoutesById {
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
   '/sewa-laptop-depok': typeof SewaLaptopDepokRoute
   '/sewa-laptop-event-jakarta': typeof SewaLaptopEventJakartaRoute
+  '/sewa-laptop-harian-jakarta': typeof SewaLaptopHarianJakartaRoute
   '/sewa-laptop-jakarta': typeof SewaLaptopJakartaRoute
   '/sewa-laptop-jakarta-barat': typeof SewaLaptopJakartaBaratRoute
   '/sewa-laptop-jakarta-pusat': typeof SewaLaptopJakartaPusatRoute
@@ -274,6 +283,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-cempaka-putih'
     | '/sewa-laptop-depok'
     | '/sewa-laptop-event-jakarta'
+    | '/sewa-laptop-harian-jakarta'
     | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-cempaka-putih'
     | '/sewa-laptop-depok'
     | '/sewa-laptop-event-jakarta'
+    | '/sewa-laptop-harian-jakarta'
     | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
@@ -332,6 +343,7 @@ export interface FileRouteTypes {
     | '/sewa-laptop-cempaka-putih'
     | '/sewa-laptop-depok'
     | '/sewa-laptop-event-jakarta'
+    | '/sewa-laptop-harian-jakarta'
     | '/sewa-laptop-jakarta'
     | '/sewa-laptop-jakarta-barat'
     | '/sewa-laptop-jakarta-pusat'
@@ -362,6 +374,7 @@ export interface RootRouteChildren {
   SewaLaptopCempakaPutihRoute: typeof SewaLaptopCempakaPutihRoute
   SewaLaptopDepokRoute: typeof SewaLaptopDepokRoute
   SewaLaptopEventJakartaRoute: typeof SewaLaptopEventJakartaRoute
+  SewaLaptopHarianJakartaRoute: typeof SewaLaptopHarianJakartaRoute
   SewaLaptopJakartaRoute: typeof SewaLaptopJakartaRoute
   SewaLaptopJakartaBaratRoute: typeof SewaLaptopJakartaBaratRoute
   SewaLaptopJakartaPusatRoute: typeof SewaLaptopJakartaPusatRoute
@@ -476,6 +489,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SewaLaptopJakartaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sewa-laptop-harian-jakarta': {
+      id: '/sewa-laptop-harian-jakarta'
+      path: '/sewa-laptop-harian-jakarta'
+      fullPath: '/sewa-laptop-harian-jakarta'
+      preLoaderRoute: typeof SewaLaptopHarianJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sewa-laptop-event-jakarta': {
       id: '/sewa-laptop-event-jakarta'
       path: '/sewa-laptop-event-jakarta'
@@ -586,6 +606,7 @@ const rootRouteChildren: RootRouteChildren = {
   SewaLaptopCempakaPutihRoute: SewaLaptopCempakaPutihRoute,
   SewaLaptopDepokRoute: SewaLaptopDepokRoute,
   SewaLaptopEventJakartaRoute: SewaLaptopEventJakartaRoute,
+  SewaLaptopHarianJakartaRoute: SewaLaptopHarianJakartaRoute,
   SewaLaptopJakartaRoute: SewaLaptopJakartaRoute,
   SewaLaptopJakartaBaratRoute: SewaLaptopJakartaBaratRoute,
   SewaLaptopJakartaPusatRoute: SewaLaptopJakartaPusatRoute,

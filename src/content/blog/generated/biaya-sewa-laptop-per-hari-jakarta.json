@@ -31,13 +31,13 @@
     "heading": "Cek Biaya Sewa untuk Kebutuhanmu",
     "body": "Sebutkan kebutuhan dan durasimu lewat WhatsApp 6282177984041. Admin Techpora akan hitungkan opsi paling hemat. Harian mulai Rp79.000, tanpa deposit.",
     "waMessage": "Halo Techpora, saya mau tanya biaya sewa laptop untuk kebutuhan saya. Berikut detailnya:",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Lihat harga sewa laptop Jakarta"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Lihat halaman sewa laptop harian Jakarta"
   },
   "related": [
+    "sewa-laptop-harian-jakarta",
     "panduan-sewa-laptop-pertama-kali",
-    "laptop-bekas-atau-sewa-jakarta",
-    "sewa-laptop-harian-jakarta"
+    "sewa-laptop-harian-vs-bulanan-jakarta"
   ],
   "keywords": "biaya sewa laptop per hari, harga sewa laptop jakarta, berapa harga sewa laptop, tarif rental laptop harian",
   "date": "2026-07-21"

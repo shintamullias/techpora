@@ -112,6 +112,7 @@ const areaLayanan = [
   { area: "Bekasi", slug: "sewa-laptop-bekasi", desc: "Bekasi Kota, Summarecon, Harapan Indah — antar unit untuk training & kebutuhan bulanan." },
   { area: "Depok", slug: "sewa-laptop-depok", desc: "Margonda, UI, Cinere — favorit mahasiswa untuk sewa laptop skripsi dan tugas kuliah." },
   { area: "Untuk Event", slug: "sewa-laptop-event-jakarta", desc: "Seminar, workshop, ujian serentak, pameran, lomba — unit seragam, diantar & disiapkan di venue." },
+  { area: "Sewa Harian", slug: "sewa-laptop-harian-jakarta", desc: "Butuh sehari-dua hari? Sewa laptop harian mulai Rp79rb, tanpa deposit — untuk kebutuhan mendadak, event sehari, atau coba dulu." },
   { area: "Untuk Mahasiswa", slug: "sewa-laptop-mahasiswa-jakarta", desc: "Skripsi, sidang, ujian online — tanpa deposit, harian mulai Rp79rb, ada opsi bulanan hemat." },
 ];
 

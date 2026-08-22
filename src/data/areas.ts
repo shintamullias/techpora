@@ -129,19 +129,21 @@ export const areas: AreaData[] = [
     keywords: "sewa laptop jakarta utara, rental laptop jakut, sewa laptop kelapa gading, sewa laptop pik, sewa laptop pluit, sewa laptop event ancol",
     h1: "Sewa Laptop Jakarta Utara — Techpora",
     intro:
-      "Jakarta Utara adalah kawasan MICE (Meeting, Incentive, Convention, Exhibition) — dan Techpora sudah biasa melayani sewa laptop volume banyak untuk event di JIExpo Kemayoran, Ancol, hingga PIK. Selain itu, kami juga sering kirim unit ke perkantoran di Sunter, Kelapa Gading, dan Pluit untuk kebutuhan training staff atau replace laptop rusak dadakan.",
+      "Jakarta Utara adalah kawasan MICE (Meeting, Incentive, Convention, Exhibition) — dan Techpora sudah biasa melayani sewa laptop volume banyak untuk event di JIExpo Kemayoran, Ancol, hingga ICE PIK. Selain itu, kami juga sering kirim unit ke perkantoran di Sunter, Kelapa Gading, dan Pluit untuk kebutuhan training staff atau mengganti laptop rusak dadakan. Untuk perorangan di Jakarta Utara yang butuh laptop harian atau bulanan — mahasiswa, freelancer, atau pekerja remote — kami juga melayani dengan syarat cukup dokumen tanpa deposit uang. Meski basis kami di Rawamangun, pengiriman ke Jakarta Utara dijadwalkan dengan baik supaya unit sampai tepat waktu, terutama untuk event yang tidak bisa ditunda.",
     highlights: [
-      { title: "Ready untuk Event Besar", desc: "Sewa 20–50+ unit sekaligus untuk registrasi event, booth, dan pameran di JIExpo/Ancol." },
+      { title: "Ready untuk Event Besar", desc: "Sewa 20–50+ unit sekaligus untuk registrasi event, booth, dan pameran di JIExpo/Ancol/ICE PIK." },
       { title: "Antar-Jemput di Venue", desc: "Tim kami antar sekaligus jemput di lokasi acara, hemat waktu panitia." },
       { title: "Unit Seragam", desc: "Untuk event, semua unit spek seragam — tampilan booth rapi dan profesional." },
+      { title: "Juga Melayani Perorangan", desc: "Bukan cuma event — mahasiswa, freelancer, dan kantor kecil di Jakut juga kami layani, tanpa deposit." },
     ],
-    landmarks: ["Kelapa Gading", "Sunter", "PIK", "Pluit", "Ancol", "JIExpo Kemayoran", "Muara Karang"],
-    eta: "Pengiriman event bisa dijadwalkan H-1. Standar 2–3 jam.",
+    landmarks: ["Kelapa Gading", "Sunter", "PIK", "Pluit", "Ancol", "JIExpo Kemayoran", "Muara Karang", "Kemayoran", "ICE PIK", "Penjaringan"],
+    eta: "Pengiriman event bisa dijadwalkan H-1. Standar 2–3 jam ke area Jakarta Utara.",
     useCases: [
       "Event & pameran di JIExpo, Ancol, ICE PIK",
       "Training kantor di Sunter & Kelapa Gading",
       "Booth registrasi (bulk 20–50 unit)",
       "Replace laptop rusak dadakan di kantor Pluit",
+      "Kebutuhan perorangan: mahasiswa, freelancer, WFH",
     ],
     units: [laptops.vivobook, laptops.thinkpad, laptops.redmibook, laptops.acer, laptops.epsonProj, laptops.viewsonic],
   },
@@ -326,6 +328,32 @@ export const areas: AreaData[] = [
       "Pengganti sementara saat laptop diperbaiki",
     ],
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook],
+  },
+  {
+    slug: "sewa-laptop-harian-jakarta",
+    area: "Harian",
+    areaShort: "Harian",
+    title: "Sewa Laptop Harian Jakarta — Mulai Rp79rb/Hari",
+    metaDescription:
+      "Sewa laptop harian di Jakarta mulai Rp79.000/hari, tanpa deposit. Cocok untuk kebutuhan mendadak, event sehari, atau coba dulu sebelum sewa bulanan. Bisa diantar.",
+    keywords: "sewa laptop harian, sewa laptop harian jakarta, rental laptop harian, sewa laptop per hari jakarta, sewa laptop 1 hari",
+    h1: "Sewa Laptop Harian di Jakarta",
+    intro:
+      "Sewa laptop harian adalah pilihan paling fleksibel saat kamu butuh perangkat untuk waktu singkat — rapat sehari, ujian online, presentasi, atau sekadar mengganti laptop yang sedang diperbaiki. Di Techpora, sewa harian dimulai dari Rp79.000 per hari untuk HP 14s, tanpa deposit uang, cukup dengan dokumen identitas. Perhitungannya sederhana: satu hari dihitung per 24 jam sejak unit kamu terima, jadi kamu tahu persis biayanya sejak awal. Untuk kebutuhan yang lebih panjang, tersedia juga paket mingguan dan bulanan yang lebih hemat per harinya.",
+    highlights: [
+      { title: "Mulai Rp79.000/Hari", desc: "Tarif harian paling terjangkau untuk HP 14s. Pilihan unit lain tersedia sesuai kebutuhan." },
+      { title: "Tanpa Deposit Uang", desc: "Cukup foto dokumen identitas. Tidak perlu menahan uang jaminan." },
+      { title: "Bisa Ambil atau Diantar", desc: "Ambil langsung di Rawamangun tanpa ongkir, atau diantar ke lokasimu." },
+    ],
+    landmarks: ["Rawamangun", "Jakarta Timur", "Jakarta Pusat", "Jakarta Selatan", "UNJ", "Kawasan Industri Pulogadung"],
+    eta: "Untuk kebutuhan harian mendadak, unit bisa disiapkan cepat. Ambil sendiri atau diantar.",
+    useCases: [
+      "Kebutuhan mendadak (rapat, ujian, presentasi sehari)",
+      "Event atau acara sehari",
+      "Pengganti sementara laptop yang diperbaiki",
+      "Coba dulu sebelum memutuskan sewa bulanan",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.redmibook, laptops.macbook],
   },
   {
     slug: "sewa-laptop-pulogadung",

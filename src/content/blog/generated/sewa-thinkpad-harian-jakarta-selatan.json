@@ -32,8 +32,8 @@
     "heading": "Siap Pakai Hari Ini?",
     "body": "Butuh unit hari ini? Chat via WhatsApp 6282177984041, kirim tanggal pakai, jumlah laptop, lokasi, dan aplikasi yang harus siap dipakai.",
     "waMessage": "Halo Techpora, saya mau cek sewa thinkpad harian Jakarta Selatan. Saya lihat dari techpora.id, mohon info stok dan biaya.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Lihat layanan sewa laptop Jakarta Selatan"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Lihat semua pilihan sewa laptop harian Jakarta"
   },
   "related": [
     "rental-thinkpad-harian-jakarta-selatan",

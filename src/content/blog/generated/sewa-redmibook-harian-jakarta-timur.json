@@ -24,8 +24,8 @@
     "heading": "Cek Unit RedmiBook Hari Ini",
     "body": "Kirim kebutuhan unit, tanggal pakai, dan lokasi Jakarta Timur, lalu chat via WhatsApp agar Techpora bisa cek stok serta estimasi biaya tercepat.",
     "waMessage": "Halo Techpora, saya butuh sewa redmibook harian Jakarta Timur. Saya lihat dari techpora.id, mohon info stok dan harganya.",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Sewa laptop harian mulai Rp79rb — cek di sini"
   },
   "related": [
     "rental-redmibook-harian-jakarta-timur",

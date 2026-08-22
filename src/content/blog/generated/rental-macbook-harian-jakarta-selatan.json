@@ -32,8 +32,8 @@
     "heading": "Cek MacBook Untuk Jadwal Dekat",
     "body": "Kalau jadwal sudah dekat, chat via WhatsApp 6282177984041 agar Techpora bisa cek stok MacBook, harga harian, dan pengiriman ke lokasi Anda.",
     "waMessage": "Halo Techpora, saya butuh rental macbook harian Jakarta Selatan. Saya lihat dari techpora.id, boleh dibantu cek stok dan harga untuk tanggal terdekat?",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
     "sewa-macbook-harian-jakarta-selatan",

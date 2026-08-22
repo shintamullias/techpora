@@ -32,8 +32,8 @@
     "heading": "Cek Stok MacBook Hari Ini",
     "body": "Untuk memastikan tipe, durasi, dan jadwal kirim di Jakarta Selatan, chat via WhatsApp agar tim Techpora bisa mengunci unit yang masih tersedia.",
     "waMessage": "Halo Techpora, saya mau tanya sewa macbook harian Jakarta Selatan. Saya lihat dari techpora.id, mohon info stok, harga, dan jadwal pengantaran.",
-    "internalPath": "/sewa-laptop-jakarta-selatan",
-    "internalLabel": "Selengkapnya: sewa laptop Jakarta Selatan"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Lihat semua pilihan sewa laptop harian Jakarta"
   },
   "related": [
     "rental-macbook-harian-jakarta-selatan",

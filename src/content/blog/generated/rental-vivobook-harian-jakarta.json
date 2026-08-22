@@ -32,8 +32,8 @@
     "heading": "Cek Stok Vivobook Hari Ini",
     "body": "Kirim kebutuhan unit, tanggal, lokasi, dan durasi ke 6282177984041; tim Techpora akan bantu cek stok Vivobook serta opsi paket paling efisien.",
     "waMessage": "Halo Techpora, saya butuh rental vivobook harian Jakarta dan lihat dari techpora.id. Mohon info stok, harga, serta opsi antar untuk tanggal yang saya butuhkan.",
-    "internalPath": "/sewa-laptop-jakarta",
-    "internalLabel": "Lihat layanan sewa laptop Jakarta"
+    "internalPath": "/sewa-laptop-harian-jakarta",
+    "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
     "rental-vivobook-harian-jakarta-timur",
