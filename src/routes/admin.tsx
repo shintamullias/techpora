@@ -78,10 +78,22 @@ function Dashboard() {
     const ada = new Set(pesananTampil.map((p) => p.pelanggan_id));
     return pelanggan.filter((p) => ada.has(p.id));
   }, [pelanggan, pesananTampil, kat]);
-  const biayaTampil = useMemo(
-    () => (kat === "semua" ? biaya : biaya.filter((b) => (b.kategori_bisnis || "umum") === kat)),
-    [biaya, kat],
-  );
+  const biayaTampil = useMemo(() => {
+    if (kat === "semua") return biaya;
+    // Biaya kategori terpilih tampil penuh; biaya "umum" dibagi 50:50
+    // (separuh dibebankan ke tiap kategori) supaya total tetap terbaca utuh.
+    return biaya
+      .filter((b) => {
+        const kb = b.kategori_bisnis || "umum";
+        return kb === kat || kb === "umum";
+      })
+      .map((b) => {
+        const kb = b.kategori_bisnis || "umum";
+        return kb === "umum"
+          ? { ...b, jumlah: Math.round(b.jumlah / 2), keterangan: (b.keterangan ? b.keterangan + " " : "") + "(½ biaya umum)" }
+          : b;
+      });
+  }, [biaya, kat]);
 
   if (!siap) return <Pusat>Memuat…</Pusat>;
   if (!boleh)

@@ -127,7 +127,7 @@ export default function TabKeuangan({
             <span className={"font-serif text-3xl " + (laba >= 0 ? "text-foreground" : "text-red-700")}>{rp(laba)}</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">{masukBln.length} transaksi sewa bulan ini</p>
-          <p className="mt-1 text-[11px] text-muted-foreground">Saat difilter Laptop/Sepatu, biaya berkategori "Umum" (mis. bunga, pemasaran) tidak ikut ditampilkan karena merupakan biaya bersama.</p>
+          <p className="mt-1 text-[11px] text-muted-foreground">Saat difilter Laptop/Sepatu, biaya "Umum" (mis. bunga, pemasaran) dibagi rata 50:50 ke kedua kategori, jadi Laptop + Sepatu tetap sama dengan total Semua.</p>
         </div>
 
         {laba > 0 && (
