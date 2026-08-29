@@ -40,8 +40,21 @@
     "internalLabel": "Cek unit sewa laptop Jakarta Pusat"
   },
   "related": [
-    "sewa-laptop-depok-kerja-wfh",
-    "sewa-laptop-jakarta-barat-kerja-wfh",
-    "sewa-laptop-jakarta-selatan-kerja-wfh"
+    "sewa-laptop-jakarta-pusat-content-creator",
+    "sewa-laptop-jakarta-pusat-developer",
+    "sewa-laptop-bekasi-kerja-wfh",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Pusat",
+      "to": "/sewa-laptop-jakarta-pusat"
+    },
+    {
+      "section": 5,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
   ]
 }

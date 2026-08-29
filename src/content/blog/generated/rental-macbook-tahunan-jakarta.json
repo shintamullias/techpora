@@ -36,9 +36,22 @@
     "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
   },
   "related": [
+    "sewa-macbook-tahunan-jakarta",
+    "sewa-macbook-tahunan-jakarta-selatan",
     "rental-macbook-tahunan-jakarta-selatan",
-    "rental-macbook-tahunan-jakarta-timur",
-    "sewa-macbook-tahunan-jakarta-selatan"
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental macbook tahunan Jakarta"
+  "keywords": "rental macbook tahunan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa MacBook",
+      "to": "/sewa-macbook"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

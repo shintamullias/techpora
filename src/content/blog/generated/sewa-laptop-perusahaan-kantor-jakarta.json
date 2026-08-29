@@ -39,10 +39,23 @@
     "internalLabel": "Lihat layanan untuk kebutuhan besar"
   },
   "related": [
-    "sewa-laptop-proyektor-presentasi-jakarta",
-    "sewa-laptop-umkm-usaha-kecil-jakarta-timur",
-    "sewa-laptop-tahunan-jakarta"
+    "kenapa-startup-jakarta-pilih-sewa-laptop",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
   "keywords": "sewa laptop perusahaan, rental laptop kantor jakarta, sewa laptop korporat, sewa laptop untuk staff kantor",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

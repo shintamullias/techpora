@@ -32,9 +32,22 @@
     "internalLabel": "Solusi rental laptop murah dan cepat di Jakarta Timur"
   },
   "related": [
-    "kenapa-ktp-ditahan-sewa-laptop",
-    "beli-atau-sewa-laptop-jakarta",
-    "sewa-laptop-harian-vs-bulanan-jakarta"
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "sewa-laptop-harian-vs-bulanan-jakarta",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "simulasi-hitung-biaya-sewa-laptop-harian-vs-bulanan"
   ],
-  "keywords": "sewa laptop murah jakarta, sewa laptop harian jakarta, rental laptop jakarta tanpa deposit"
+  "keywords": "sewa laptop murah jakarta, sewa laptop harian jakarta, rental laptop jakarta tanpa deposit",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 3,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

@@ -35,10 +35,23 @@
     "internalLabel": "Lihat pilihan sewa MacBook Jakarta"
   },
   "related": [
-    "laptop-bekas-atau-sewa-jakarta",
     "sewa-laptop-content-creator-editing-jakarta",
-    "panduan-sewa-laptop-pertama-kali"
+    "rental-macbook-3-hari-jakarta",
+    "rental-macbook-mingguan-jakarta",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
   ],
   "keywords": "sewa macbook jakarta, rental macbook editing, sewa macbook desain, sewa laptop editing video jakarta",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa MacBook",
+      "to": "/sewa-macbook"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

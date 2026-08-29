@@ -35,10 +35,23 @@
     "internalLabel": "Lihat halaman sewa laptop harian Jakarta"
   },
   "related": [
-    "sewa-laptop-harian-jakarta",
-    "panduan-sewa-laptop-pertama-kali",
-    "sewa-laptop-harian-vs-bulanan-jakarta"
+    "sewa-laptop-jakarta-murah",
+    "sewa-laptop-harian-vs-bulanan-jakarta",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "simulasi-hitung-biaya-sewa-laptop-harian-vs-bulanan"
   ],
   "keywords": "biaya sewa laptop per hari, harga sewa laptop jakarta, berapa harga sewa laptop, tarif rental laptop harian",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

@@ -41,7 +41,20 @@
   },
   "related": [
     "sewa-laptop-depok-mahasiswa",
-    "sewa-laptop-jakarta-barat-mahasiswa",
-    "sewa-laptop-jakarta-pusat-mahasiswa"
+    "sewa-laptop-tugas-akhir-skripsi-jakarta",
+    "panduan-sewa-laptop-untuk-tugas-kelompok-mahasiswa",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Bekasi",
+      "to": "/sewa-laptop-bekasi"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

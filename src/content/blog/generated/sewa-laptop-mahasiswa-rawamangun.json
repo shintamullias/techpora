@@ -36,9 +36,22 @@
     "internalLabel": "Sewa laptop Matraman — cepat untuk pelajar"
   },
   "related": [
-    "sewa-laptop-tugas-akhir-skripsi-jakarta",
-    "sewa-laptop-jakarta-pusat-mahasiswa",
-    "sewa-laptop-jakarta-selatan-mahasiswa"
+    "sewa-laptop-jakarta-timur-mahasiswa",
+    "panduan-sewa-laptop-untuk-tugas-kelompok-mahasiswa",
+    "sewa-laptop-vs-pinjam-kampus-untuk-mahasiswa-baru",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
   ],
-  "keywords": "sewa laptop rawamangun, sewa laptop mahasiswa unj, sewa laptop murah jakarta timur"
+  "keywords": "sewa laptop rawamangun, sewa laptop mahasiswa unj, sewa laptop murah jakarta timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Rawamangun",
+      "to": "/sewa-laptop-rawamangun"
+    },
+    {
+      "section": 4,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
+  ]
 }

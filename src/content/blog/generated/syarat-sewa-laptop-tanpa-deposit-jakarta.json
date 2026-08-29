@@ -36,9 +36,22 @@
     "internalLabel": "Sewa laptop Jakarta — cek unit & harga"
   },
   "related": [
-    "cara-merawat-laptop-sewaan",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
     "kenapa-ktp-ditahan-sewa-laptop",
-    "sewa-laptop-jakarta-murah"
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "sewa laptop tanpa deposit jakarta, syarat sewa laptop, sewa laptop cukup ktp"
+  "keywords": "sewa laptop tanpa deposit jakarta, syarat sewa laptop, sewa laptop cukup ktp",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

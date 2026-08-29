@@ -37,8 +37,21 @@
   },
   "related": [
     "rental-vivobook-bulanan-jakarta-timur",
-    "rental-vivobook-bulanan-jakarta",
-    "sewa-acer-bulanan-jakarta-timur"
+    "rental-macbook-bulanan-jakarta-timur",
+    "rental-redmibook-bulanan-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa vivobook bulanan Jakarta Timur"
+  "keywords": "sewa vivobook bulanan Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

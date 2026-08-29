@@ -37,8 +37,21 @@
   },
   "related": [
     "sewa-vivobook-3-hari-jakarta-selatan",
-    "rental-vivobook-3-hari-jakarta",
-    "sewa-vivobook-3-hari-jakarta"
+    "rental-vivobook-bulanan-jakarta-selatan",
+    "rental-vivobook-harian-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental vivobook 3 hari Jakarta Selatan"
+  "keywords": "rental vivobook 3 hari Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

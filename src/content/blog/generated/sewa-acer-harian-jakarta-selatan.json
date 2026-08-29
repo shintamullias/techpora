@@ -29,8 +29,21 @@
   },
   "related": [
     "rental-acer-harian-jakarta-selatan",
-    "rental-acer-harian-jakarta",
-    "rental-laptop-harian-jakarta-selatan"
+    "rental-acer-3-hari-jakarta-selatan",
+    "rental-acer-bulanan-jakarta-selatan",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "sewa acer harian Jakarta Selatan"
+  "keywords": "sewa acer harian Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 2,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

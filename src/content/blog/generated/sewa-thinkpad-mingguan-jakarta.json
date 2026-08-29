@@ -36,9 +36,22 @@
     "internalLabel": "Halaman sewa laptop Jakarta"
   },
   "related": [
-    "sewa-thinkpad-mingguan-jakarta-selatan",
+    "rental-thinkpad-mingguan-jakarta",
+    "rental-thinkpad-mingguan-jakarta-timur",
     "sewa-thinkpad-mingguan-jakarta-timur",
-    "rental-thinkpad-mingguan-jakarta-selatan"
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "sewa thinkpad mingguan Jakarta"
+  "keywords": "sewa thinkpad mingguan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

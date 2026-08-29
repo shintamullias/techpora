@@ -40,8 +40,21 @@
     "internalLabel": "Lihat layanan rental laptop Jakarta"
   },
   "related": [
-    "sewa-laptop-hackathon-lomba-coding-jakarta",
-    "sewa-laptop-jakarta-selatan-developer",
-    "sewa-laptop-jakarta-utara-developer"
+    "sewa-laptop-jakarta-timur-content-creator",
+    "sewa-laptop-jakarta-timur-kerja-wfh",
+    "sewa-laptop-umkm-usaha-kecil-jakarta-timur",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

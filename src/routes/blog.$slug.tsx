@@ -183,6 +183,19 @@ function BlogPostPage() {
               <section key={s.h}>
                 <h2 className="text-xl font-semibold text-foreground">{s.h}</h2>
                 <p className="mt-2 leading-relaxed text-muted-foreground">{s.p}</p>
+                {post.contextLinks
+                  ?.filter((c) => c.section === i)
+                  .map((c) => (
+                    <p key={c.to} className="mt-3 text-sm">
+                      <span className="text-muted-foreground">Baca juga: </span>
+                      <a
+                        href={c.to}
+                        className="font-medium text-primary underline underline-offset-2 hover:text-primary/80"
+                      >
+                        {c.anchor}
+                      </a>
+                    </p>
+                  ))}
                 {i === midIndex && (
                   <img
                     src={SECTION_IMAGES[i % SECTION_IMAGES.length]}

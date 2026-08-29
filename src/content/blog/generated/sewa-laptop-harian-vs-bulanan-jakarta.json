@@ -37,8 +37,21 @@
   },
   "related": [
     "biaya-sewa-laptop-per-hari-jakarta",
-    "sewa-laptop-umkm-usaha-kecil-jakarta-timur",
-    "laptop-bekas-atau-sewa-jakarta"
+    "simulasi-hitung-biaya-sewa-laptop-harian-vs-bulanan",
+    "sewa-laptop-jakarta-murah",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
   ],
-  "keywords": "sewa laptop harian vs bulanan, sewa laptop bulanan jakarta, sewa laptop harian jakarta"
+  "keywords": "sewa laptop harian vs bulanan, sewa laptop bulanan jakarta, sewa laptop harian jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

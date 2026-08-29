@@ -40,8 +40,21 @@
     "internalLabel": "Cek paket rental laptop Jakarta"
   },
   "related": [
+    "sewa-laptop-jakarta-timur-content-creator",
+    "sewa-laptop-jakarta-timur-developer",
     "sewa-laptop-umkm-usaha-kecil-jakarta-timur",
-    "sewa-laptop-tangerang-kerja-wfh",
-    "sewa-laptop-wfh-kerja-remote-jakarta"
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 5,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
   ]
 }

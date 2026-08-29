@@ -28,9 +28,22 @@
     "internalLabel": "Sewa laptop Jakarta Timur — cek unit & harga"
   },
   "related": [
-    "rental-macbook-tahunan-jakarta-timur",
     "rental-macbook-tahunan-jakarta",
-    "rental-redmibook-tahunan-jakarta"
+    "rental-redmibook-tahunan-jakarta",
+    "rental-vivobook-tahunan-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental laptop tahunan Jakarta"
+  "keywords": "rental laptop tahunan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

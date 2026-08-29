@@ -39,10 +39,23 @@
     "internalLabel": "Sewa laptop Pulogadung — dekat kawasan industri"
   },
   "related": [
-    "sewa-laptop-perusahaan-kantor-jakarta",
-    "sewa-laptop-harian-vs-bulanan-jakarta",
-    "laptop-bekas-atau-sewa-jakarta"
+    "sewa-laptop-jakarta-timur-content-creator",
+    "sewa-laptop-jakarta-timur-developer",
+    "sewa-laptop-jakarta-timur-kerja-wfh",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
   ],
   "keywords": "sewa laptop umkm, rental laptop usaha kecil jakarta timur, sewa laptop jakarta timur, laptop untuk umkm",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
+  ]
 }

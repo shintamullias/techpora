@@ -40,8 +40,21 @@
     "internalLabel": "Sewa laptop Bekasi — cek unit & harga"
   },
   "related": [
-    "sewa-laptop-jakarta-timur-ujian-online",
-    "sewa-laptop-jakarta-utara-ujian-online",
-    "sewa-laptop-tangerang-ujian-online"
+    "sewa-laptop-depok-ujian-online",
+    "sewa-laptop-tangerang-ujian-online",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "sewa-laptop-jakarta-barat-ujian-online"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Bekasi",
+      "to": "/sewa-laptop-bekasi"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

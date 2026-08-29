@@ -48,9 +48,22 @@
     "internalLabel": "Cek paket sewa laptop Jakarta"
   },
   "related": [
-    "sewa-acer-seminggu-jakarta-timur",
     "rental-acer-seminggu-jakarta",
-    "sewa-acer-seminggu-jakarta-selatan"
+    "rental-acer-seminggu-jakarta-selatan",
+    "sewa-acer-3-hari-jakarta",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "sewa acer seminggu Jakarta"
+  "keywords": "sewa acer seminggu Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop event Jakarta",
+      "to": "/sewa-laptop-event-jakarta"
+    },
+    {
+      "section": 7,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

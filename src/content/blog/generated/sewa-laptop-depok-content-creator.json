@@ -40,8 +40,21 @@
     "internalLabel": "Sewa laptop Depok — cek unit & harga"
   },
   "related": [
-    "sewa-laptop-jakarta-utara-content-creator",
-    "sewa-laptop-tangerang-content-creator",
-    "sewa-laptop-bekasi-content-creator"
+    "sewa-laptop-depok-developer",
+    "sewa-laptop-depok-kerja-wfh",
+    "sewa-laptop-bekasi-content-creator",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Depok",
+      "to": "/sewa-laptop-depok"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

@@ -41,8 +41,21 @@
   "keywords": "sewa laptop mendadak jakarta, laptop rusak sebelum sidang, sewa laptop malam hari, rental laptop cepat jakarta timur",
   "date": "2026-07-21",
   "related": [
-    "sewa-laptop-cpns-tes-online-jakarta",
-    "sewa-laptop-sidang-skripsi-jakarta",
-    "cara-sewa-laptop-online-jakarta"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "cara-merawat-laptop-sewaan"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
   ]
 }

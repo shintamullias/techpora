@@ -39,10 +39,23 @@
     "internalLabel": "Rental laptop Jakarta Timur, siap antar"
   },
   "related": [
-    "cara-cek-laptop-sewaan-saat-serah-terima",
-    "syarat-sewa-laptop-tanpa-deposit-jakarta",
-    "kenapa-ktp-ditahan-sewa-laptop"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "cara-merawat-laptop-sewaan"
   ],
   "keywords": "laptop sewaan rusak, tanggung jawab sewa laptop, ganti rugi laptop sewa, rental laptop jakarta timur",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

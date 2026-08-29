@@ -49,8 +49,21 @@
   },
   "related": [
     "sewa-redmibook-3-hari-jakarta-timur",
-    "sewa-thinkpad-3-hari-jakarta-timur",
-    "sewa-vivobook-3-hari-jakarta-timur"
+    "rental-redmibook-mingguan-jakarta-timur",
+    "rental-redmibook-seminggu-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental redmibook 3 hari Jakarta Timur"
+  "keywords": "rental redmibook 3 hari Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 7,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

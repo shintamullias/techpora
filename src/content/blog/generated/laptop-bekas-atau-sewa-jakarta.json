@@ -41,8 +41,21 @@
   "keywords": "beli laptop bekas atau sewa, sewa laptop vs beli, laptop bekas jakarta, hitungan sewa laptop",
   "date": "2026-07-21",
   "related": [
-    "sewa-macbook-jakarta-editing-desain",
-    "sewa-laptop-cpns-tes-online-jakarta",
-    "sewa-laptop-seminggu-jakarta"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
   ]
 }

@@ -40,9 +40,22 @@
     "internalLabel": "Sewa laptop Rawamangun — ambil langsung di toko"
   },
   "related": [
-    "panduan-sewa-laptop-pertama-kali",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
     "syarat-sewa-laptop-tanpa-deposit-jakarta",
-    "cara-cek-laptop-sewaan-saat-serah-terima"
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
   ],
-  "keywords": "syarat sewa laptop jakarta, ktp ditahan sewa laptop, sewa laptop tanpa deposit, rental laptop jakarta timur"
+  "keywords": "syarat sewa laptop jakarta, ktp ditahan sewa laptop, sewa laptop tanpa deposit, rental laptop jakarta timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

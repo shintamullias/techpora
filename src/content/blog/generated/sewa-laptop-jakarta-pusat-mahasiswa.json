@@ -40,8 +40,21 @@
     "internalLabel": "Cek unit sewa laptop Jakarta Pusat"
   },
   "related": [
-    "sewa-laptop-bekasi-mahasiswa",
-    "sewa-laptop-depok-mahasiswa",
-    "sewa-laptop-jakarta-barat-mahasiswa"
+    "sewa-laptop-jakarta-barat-mahasiswa",
+    "sewa-laptop-jakarta-selatan-mahasiswa",
+    "sewa-laptop-jakarta-timur-mahasiswa",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Pusat",
+      "to": "/sewa-laptop-jakarta-pusat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

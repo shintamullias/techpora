@@ -41,8 +41,21 @@
   "keywords": "sewa laptop bootcamp coding, rental laptop programmer jakarta, sewa laptop belajar coding, laptop untuk bootcamp",
   "date": "2026-07-21",
   "related": [
-    "sewa-laptop-tugas-akhir-skripsi-jakarta",
-    "sewa-laptop-hackathon-lomba-coding-jakarta",
-    "sewa-laptop-harian-vs-bulanan-jakarta"
+    "sewa-laptop-bekasi-developer",
+    "sewa-laptop-depok-developer",
+    "sewa-laptop-jakarta-barat-developer",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
   ]
 }

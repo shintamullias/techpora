@@ -35,10 +35,23 @@
     "internalLabel": "Cek unit sewa laptop Jakarta Timur"
   },
   "related": [
-    "sewa-laptop-zoom-meeting-online-jakarta",
-    "sewa-laptop-mendadak-malam-hari-jakarta",
-    "sewa-laptop-ujian-cpns-jakarta"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "sewa-laptop-jakarta-barat-ujian-online"
   ],
   "keywords": "sewa laptop cpns, sewa laptop tes online, rental laptop seleksi kerja, sewa laptop ujian online jakarta",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

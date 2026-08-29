@@ -36,9 +36,22 @@
     "internalLabel": "Halaman rental laptop Jakarta"
   },
   "related": [
-    "rental-laptop-bulanan-jakarta-selatan",
-    "rental-laptop-bulanan-jakarta-timur",
-    "rental-macbook-bulanan-jakarta"
+    "sewa-laptop-bulanan-jakarta",
+    "rental-acer-bulanan-jakarta",
+    "rental-macbook-bulanan-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental laptop bulanan Jakarta"
+  "keywords": "rental laptop bulanan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop event Jakarta",
+      "to": "/sewa-laptop-event-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

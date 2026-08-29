@@ -37,8 +37,21 @@
   },
   "related": [
     "rental-vivobook-3-hari-jakarta-timur",
-    "sewa-acer-3-hari-jakarta-timur",
-    "sewa-laptop-3-hari-jakarta-timur"
+    "rental-vivobook-bulanan-jakarta-timur",
+    "rental-vivobook-harian-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa vivobook 3 hari Jakarta Timur"
+  "keywords": "sewa vivobook 3 hari Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

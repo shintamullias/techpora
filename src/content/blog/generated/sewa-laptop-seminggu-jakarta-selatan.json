@@ -28,9 +28,22 @@
     "internalLabel": "Cek unit sewa laptop Jakarta Selatan"
   },
   "related": [
-    "rental-laptop-seminggu-jakarta-selatan",
     "rental-macbook-seminggu-jakarta-selatan",
-    "rental-redmibook-seminggu-jakarta-selatan"
+    "sewa-macbook-seminggu-jakarta-selatan",
+    "sewa-thinkpad-seminggu-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa laptop seminggu Jakarta Selatan"
+  "keywords": "sewa laptop seminggu Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

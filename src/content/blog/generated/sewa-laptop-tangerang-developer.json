@@ -40,8 +40,21 @@
     "internalLabel": "Lihat layanan sewa laptop Tangerang"
   },
   "related": [
-    "sewa-laptop-jakarta-pusat-developer",
-    "sewa-laptop-jakarta-selatan-developer",
-    "sewa-laptop-jakarta-timur-developer"
+    "sewa-laptop-tangerang-content-creator",
+    "sewa-laptop-tangerang-kerja-wfh",
+    "sewa-laptop-bekasi-developer",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Tangerang",
+      "to": "/sewa-laptop-tangerang"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

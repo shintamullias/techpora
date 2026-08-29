@@ -40,8 +40,21 @@
     "internalLabel": "Selengkapnya soal rental laptop Jakarta"
   },
   "related": [
-    "sewa-laptop-tangerang-event-pameran",
-    "sewa-laptop-bekasi-event-pameran",
-    "sewa-laptop-depok-event-pameran"
+    "rental-acer-harian-jakarta-selatan",
+    "panduan-sewa-laptop-untuk-pameran-booth-jakarta",
+    "sewa-laptop-jakarta-barat-event-pameran",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

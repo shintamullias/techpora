@@ -40,8 +40,21 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta Barat"
   },
   "related": [
-    "sewa-laptop-bootcamp-coding-jakarta",
-    "sewa-laptop-jakarta-selatan-developer",
-    "sewa-laptop-jakarta-timur-developer"
+    "sewa-laptop-jakarta-barat-content-creator",
+    "sewa-laptop-jakarta-barat-kerja-wfh",
+    "sewa-laptop-bekasi-developer",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Barat",
+      "to": "/sewa-laptop-jakarta-barat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

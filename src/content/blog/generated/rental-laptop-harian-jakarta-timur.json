@@ -36,9 +36,22 @@
     "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
-    "rental-macbook-harian-jakarta-timur",
+    "sewa-laptop-harian-jakarta-timur",
     "rental-redmibook-harian-jakarta-timur",
-    "rental-thinkpad-harian-jakarta-timur"
+    "rental-thinkpad-harian-jakarta-timur",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "rental laptop harian Jakarta Timur"
+  "keywords": "rental laptop harian Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

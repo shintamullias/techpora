@@ -29,8 +29,21 @@
   },
   "related": [
     "rental-acer-seminggu-jakarta-selatan",
-    "rental-acer-seminggu-jakarta",
-    "rental-laptop-seminggu-jakarta-selatan"
+    "rental-acer-seminggu-jakarta-timur",
+    "sewa-acer-seminggu-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa acer seminggu Jakarta Selatan"
+  "keywords": "sewa acer seminggu Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

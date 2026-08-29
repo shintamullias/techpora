@@ -40,8 +40,21 @@
     "internalLabel": "Rental laptop Jakarta untuk kantor & event"
   },
   "related": [
-    "sewa-laptop-jakarta-utara-content-creator",
-    "sewa-laptop-tangerang-content-creator",
-    "sewa-laptop-bekasi-content-creator"
+    "sewa-laptop-jakarta-selatan-developer",
+    "sewa-laptop-jakarta-selatan-kerja-wfh",
+    "sewa-laptop-bekasi-content-creator",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }
