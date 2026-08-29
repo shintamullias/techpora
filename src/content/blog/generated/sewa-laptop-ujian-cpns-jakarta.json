@@ -36,9 +36,22 @@
     "internalLabel": "Solusi rental laptop murah dan cepat di Jakarta Timur"
   },
   "related": [
-    "sewa-laptop-jakarta-timur-ujian-online",
-    "sewa-laptop-jakarta-utara-ujian-online",
-    "sewa-laptop-tangerang-ujian-online"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "sewa-laptop-cpns-tes-online-jakarta"
   ],
-  "keywords": "sewa laptop ujian cpns jakarta, sewa laptop cat, sewa laptop tryout"
+  "keywords": "sewa laptop ujian cpns jakarta, sewa laptop cat, sewa laptop tryout",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

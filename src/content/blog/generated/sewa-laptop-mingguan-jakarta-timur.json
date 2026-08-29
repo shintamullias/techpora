@@ -36,9 +36,22 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
   },
   "related": [
-    "sewa-macbook-mingguan-jakarta-timur",
+    "sewa-redmibook-mingguan-jakarta-timur",
     "rental-laptop-mingguan-jakarta-timur",
-    "rental-macbook-mingguan-jakarta-timur"
+    "rental-redmibook-mingguan-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa laptop mingguan Jakarta Timur"
+  "keywords": "sewa laptop mingguan Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

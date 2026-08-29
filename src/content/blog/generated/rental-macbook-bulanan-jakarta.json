@@ -38,7 +38,20 @@
   "related": [
     "sewa-macbook-bulanan-jakarta",
     "rental-macbook-bulanan-jakarta-selatan",
-    "rental-macbook-bulanan-jakarta-timur"
+    "sewa-macbook-tahunan-jakarta",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "rental macbook bulanan Jakarta"
+  "keywords": "rental macbook bulanan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa MacBook",
+      "to": "/sewa-macbook"
+    },
+    {
+      "section": 4,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

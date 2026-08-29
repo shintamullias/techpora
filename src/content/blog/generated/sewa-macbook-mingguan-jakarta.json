@@ -36,9 +36,22 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta"
   },
   "related": [
-    "sewa-macbook-mingguan-jakarta-selatan",
-    "sewa-macbook-mingguan-jakarta-timur",
-    "rental-macbook-mingguan-jakarta"
+    "rental-macbook-mingguan-jakarta",
+    "rental-macbook-mingguan-jakarta-selatan",
+    "rental-macbook-mingguan-jakarta-timur",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "sewa macbook mingguan Jakarta"
+  "keywords": "sewa macbook mingguan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa MacBook",
+      "to": "/sewa-macbook"
+    },
+    {
+      "section": 4,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

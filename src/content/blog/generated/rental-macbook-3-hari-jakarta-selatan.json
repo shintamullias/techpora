@@ -29,8 +29,21 @@
   },
   "related": [
     "sewa-macbook-3-hari-jakarta-selatan",
-    "rental-vivobook-3-hari-jakarta-selatan",
-    "sewa-laptop-3-hari-jakarta-selatan"
+    "rental-macbook-bulanan-jakarta-selatan",
+    "rental-macbook-mingguan-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental macbook 3 hari Jakarta Selatan"
+  "keywords": "rental macbook 3 hari Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

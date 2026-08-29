@@ -39,10 +39,23 @@
     "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
   },
   "related": [
-    "cara-cek-laptop-sewaan-saat-serah-terima",
-    "laptop-sewaan-rusak-siapa-tanggung-jawab",
-    "syarat-sewa-laptop-tanpa-deposit-jakarta"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "laptop-sewaan-rusak-siapa-tanggung-jawab"
   ],
   "keywords": "cara merawat laptop sewaan, tips sewa laptop, laptop sewa rusak, rental laptop jakarta timur",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

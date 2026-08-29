@@ -28,9 +28,22 @@
     "internalLabel": "Halaman sewa laptop Jakarta"
   },
   "related": [
-    "sewa-acer-mingguan-jakarta-timur",
     "rental-acer-mingguan-jakarta",
-    "sewa-acer-mingguan-jakarta-selatan"
+    "rental-acer-mingguan-jakarta-selatan",
+    "rental-acer-mingguan-jakarta-timur",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "sewa acer mingguan Jakarta"
+  "keywords": "sewa acer mingguan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 2,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

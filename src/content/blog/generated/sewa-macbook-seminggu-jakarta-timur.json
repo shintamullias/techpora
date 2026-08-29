@@ -37,8 +37,21 @@
   },
   "related": [
     "rental-macbook-seminggu-jakarta-timur",
-    "sewa-laptop-seminggu-jakarta-timur",
-    "rental-macbook-seminggu-jakarta"
+    "rental-macbook-3-hari-jakarta-timur",
+    "sewa-macbook-3-hari-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa macbook seminggu Jakarta Timur"
+  "keywords": "sewa macbook seminggu Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

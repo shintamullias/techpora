@@ -40,8 +40,21 @@
     "internalLabel": "Lihat halaman sewa laptop Jakarta Utara"
   },
   "related": [
-    "sewa-laptop-jakarta-pusat-content-creator",
-    "sewa-laptop-jakarta-selatan-content-creator",
-    "sewa-laptop-jakarta-timur-content-creator"
+    "sewa-laptop-jakarta-utara-developer",
+    "sewa-laptop-jakarta-utara-kerja-wfh",
+    "sewa-laptop-bekasi-content-creator",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Utara",
+      "to": "/sewa-laptop-jakarta-utara"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

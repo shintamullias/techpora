@@ -48,9 +48,22 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
   },
   "related": [
-    "rental-macbook-3-hari-jakarta-selatan",
-    "rental-redmibook-3-hari-jakarta-selatan",
-    "rental-thinkpad-3-hari-jakarta-selatan"
+    "sewa-laptop-3-hari-jakarta-selatan",
+    "rental-acer-3-hari-jakarta-selatan",
+    "rental-vivobook-3-hari-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental laptop 3 hari Jakarta Selatan"
+  "keywords": "rental laptop 3 hari Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 7,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

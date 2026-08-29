@@ -42,6 +42,19 @@
   "related": [
     "sewa-laptop-bekasi-content-creator",
     "sewa-laptop-bekasi-kerja-wfh",
-    "sewa-laptop-depok-developer"
+    "sewa-laptop-depok-developer",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Bekasi",
+      "to": "/sewa-laptop-bekasi"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

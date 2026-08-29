@@ -38,7 +38,20 @@
   "related": [
     "sewa-acer-harian-jakarta-timur",
     "rental-acer-harian-jakarta-selatan",
-    "rental-acer-mingguan-jakarta-timur"
+    "sewa-acer-harian-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "rental acer harian Jakarta Timur"
+  "keywords": "rental acer harian Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 4,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

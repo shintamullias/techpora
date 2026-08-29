@@ -28,9 +28,22 @@
     "internalLabel": "Selengkapnya soal sewa laptop Jakarta"
   },
   "related": [
-    "sewa-redmibook-mingguan-jakarta-selatan",
-    "sewa-redmibook-mingguan-jakarta-timur",
-    "rental-redmibook-mingguan-jakarta-selatan"
+    "rental-redmibook-mingguan-jakarta-selatan",
+    "rental-redmibook-mingguan-jakarta",
+    "rental-redmibook-mingguan-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa redmibook mingguan Jakarta"
+  "keywords": "sewa redmibook mingguan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

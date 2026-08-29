@@ -40,8 +40,21 @@
     "internalLabel": "Lihat layanan sewa laptop Bekasi"
   },
   "related": [
-    "sewa-laptop-depok-kerja-wfh",
-    "sewa-laptop-jakarta-barat-kerja-wfh",
-    "sewa-laptop-jakarta-pusat-kerja-wfh"
+    "sewa-laptop-bekasi-content-creator",
+    "sewa-laptop-bekasi-developer",
+    "panduan-sewa-laptop-untuk-warga-bekasi-depok",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Bekasi",
+      "to": "/sewa-laptop-bekasi"
+    },
+    {
+      "section": 5,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
   ]
 }

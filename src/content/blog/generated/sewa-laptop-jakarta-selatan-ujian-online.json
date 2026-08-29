@@ -40,8 +40,21 @@
     "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
   },
   "related": [
-    "sewa-laptop-depok-ujian-online",
     "sewa-laptop-jakarta-barat-ujian-online",
-    "sewa-laptop-jakarta-pusat-ujian-online"
+    "sewa-laptop-jakarta-pusat-ujian-online",
+    "sewa-laptop-jakarta-timur-ujian-online",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

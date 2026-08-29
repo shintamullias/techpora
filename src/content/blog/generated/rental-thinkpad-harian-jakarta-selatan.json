@@ -37,8 +37,21 @@
   },
   "related": [
     "sewa-thinkpad-harian-jakarta-selatan",
-    "rental-thinkpad-harian-jakarta",
-    "sewa-thinkpad-harian-jakarta"
+    "rental-thinkpad-bulanan-jakarta-selatan",
+    "sewa-thinkpad-bulanan-jakarta-selatan",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "rental thinkpad harian Jakarta Selatan"
+  "keywords": "rental thinkpad harian Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 4,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

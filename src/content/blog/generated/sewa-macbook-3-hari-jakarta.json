@@ -48,9 +48,22 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta"
   },
   "related": [
-    "sewa-macbook-3-hari-jakarta-selatan",
-    "sewa-macbook-3-hari-jakarta-timur",
-    "rental-macbook-3-hari-jakarta"
+    "rental-macbook-3-hari-jakarta",
+    "rental-macbook-3-hari-jakarta-selatan",
+    "rental-macbook-3-hari-jakarta-timur",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
-  "keywords": "sewa macbook 3 hari Jakarta"
+  "keywords": "sewa macbook 3 hari Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa MacBook",
+      "to": "/sewa-macbook"
+    },
+    {
+      "section": 7,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
+  ]
 }

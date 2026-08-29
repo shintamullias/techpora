@@ -35,10 +35,23 @@
     "internalLabel": "Cek unit untuk kebutuhanmu"
   },
   "related": [
-    "sewa-laptop-cpns-tes-online-jakarta",
-    "sewa-laptop-setelah-resign-masa-transisi",
-    "sewa-laptop-wfh-kerja-remote-jakarta"
+    "sewa-macbook-jakarta-editing-desain",
+    "kenapa-startup-jakarta-pilih-sewa-laptop",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
   "keywords": "sewa laptop zoom, sewa laptop meeting online, rental laptop rapat daring, laptop untuk video call jakarta",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

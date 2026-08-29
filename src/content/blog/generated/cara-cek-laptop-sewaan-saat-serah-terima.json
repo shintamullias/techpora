@@ -41,8 +41,21 @@
   "keywords": "cek laptop sewaan, serah terima laptop sewa, tips sewa laptop aman, panduan sewa laptop jakarta",
   "date": "2026-07-21",
   "related": [
-    "sewa-laptop-proyektor-presentasi-jakarta",
-    "laptop-sewaan-rusak-siapa-tanggung-jawab",
-    "syarat-sewa-laptop-tanpa-deposit-jakarta"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
   ]
 }

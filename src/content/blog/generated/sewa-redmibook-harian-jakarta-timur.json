@@ -29,8 +29,21 @@
   },
   "related": [
     "rental-redmibook-harian-jakarta-timur",
+    "rental-redmibook-3-hari-jakarta-timur",
     "rental-redmibook-mingguan-jakarta-timur",
-    "rental-redmibook-seminggu-jakarta-timur"
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "sewa redmibook harian Jakarta Timur"
+  "keywords": "sewa redmibook harian Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 2,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

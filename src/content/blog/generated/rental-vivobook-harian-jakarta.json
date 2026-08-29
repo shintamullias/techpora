@@ -36,9 +36,22 @@
     "internalLabel": "Cek tarif & unit sewa laptop harian"
   },
   "related": [
+    "rental-vivobook-harian-jakarta-selatan",
     "rental-vivobook-harian-jakarta-timur",
     "sewa-vivobook-harian-jakarta-selatan",
-    "sewa-vivobook-harian-jakarta"
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "rental vivobook harian Jakarta"
+  "keywords": "rental vivobook harian Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

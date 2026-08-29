@@ -28,9 +28,22 @@
     "internalLabel": "Lihat semua pilihan sewa laptop harian Jakarta"
   },
   "related": [
+    "rental-macbook-harian-jakarta",
+    "rental-macbook-harian-jakarta-selatan",
     "sewa-macbook-harian-jakarta-selatan",
-    "sewa-macbook-harian-jakarta-timur",
-    "rental-macbook-harian-jakarta"
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "sewa macbook harian Jakarta"
+  "keywords": "sewa macbook harian Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 2,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

@@ -30,7 +30,20 @@
   "related": [
     "sewa-acer-tahunan-jakarta",
     "rental-acer-tahunan-jakarta-selatan",
-    "sewa-acer-tahunan-jakarta-selatan"
+    "sewa-acer-tahunan-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental acer tahunan Jakarta"
+  "keywords": "rental acer tahunan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

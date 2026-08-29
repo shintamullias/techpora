@@ -40,8 +40,21 @@
     "internalLabel": "Sewa laptop Jakarta Barat — cek unit & harga"
   },
   "related": [
-    "sewa-laptop-depok-ujian-online",
+    "sewa-laptop-jakarta-pusat-ujian-online",
     "sewa-laptop-jakarta-selatan-ujian-online",
-    "sewa-laptop-jakarta-timur-ujian-online"
+    "sewa-laptop-jakarta-timur-ujian-online",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Barat",
+      "to": "/sewa-laptop-jakarta-barat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

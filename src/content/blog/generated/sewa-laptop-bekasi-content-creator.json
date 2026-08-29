@@ -40,8 +40,21 @@
     "internalLabel": "Sewa laptop Bekasi — cek unit & harga"
   },
   "related": [
-    "sewa-laptop-content-creator-editing-jakarta",
+    "sewa-laptop-bekasi-developer",
+    "sewa-laptop-bekasi-kerja-wfh",
     "sewa-laptop-depok-content-creator",
-    "sewa-laptop-jakarta-barat-content-creator"
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Bekasi",
+      "to": "/sewa-laptop-bekasi"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

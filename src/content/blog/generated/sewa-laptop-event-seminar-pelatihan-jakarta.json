@@ -36,9 +36,22 @@
     "internalLabel": "Selengkapnya soal rental laptop Jakarta"
   },
   "related": [
-    "laptop-sewaan-rusak-siapa-tanggung-jawab",
-    "sewa-laptop-jakarta-utara-event-pameran",
-    "sewa-laptop-tangerang-event-pameran"
+    "panduan-sewa-laptop-untuk-pameran-booth-jakarta",
+    "sewa-laptop-proyektor-presentasi-jakarta",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa laptop event jakarta, sewa laptop seminar, rental laptop pelatihan jakarta"
+  "keywords": "sewa laptop event jakarta, sewa laptop seminar, rental laptop pelatihan jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop event Jakarta",
+      "to": "/sewa-laptop-event-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

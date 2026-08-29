@@ -36,9 +36,22 @@
     "internalLabel": "Cek paket sewa laptop Jakarta"
   },
   "related": [
+    "sewa-redmibook-seminggu-jakarta",
     "rental-redmibook-seminggu-jakarta-selatan",
     "rental-redmibook-seminggu-jakarta-timur",
-    "sewa-redmibook-seminggu-jakarta"
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental redmibook seminggu Jakarta"
+  "keywords": "rental redmibook seminggu Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

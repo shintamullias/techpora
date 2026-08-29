@@ -29,8 +29,21 @@
   },
   "related": [
     "rental-thinkpad-mingguan-jakarta-timur",
-    "rental-thinkpad-mingguan-jakarta",
-    "sewa-acer-mingguan-jakarta-timur"
+    "rental-thinkpad-seminggu-jakarta-timur",
+    "sewa-thinkpad-seminggu-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa thinkpad mingguan Jakarta Timur"
+  "keywords": "sewa thinkpad mingguan Jakarta Timur",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Timur",
+      "to": "/sewa-laptop-jakarta-timur"
+    },
+    {
+      "section": 2,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

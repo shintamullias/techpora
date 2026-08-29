@@ -49,8 +49,21 @@
   },
   "related": [
     "rental-redmibook-seminggu-jakarta-selatan",
-    "rental-redmibook-seminggu-jakarta",
-    "rental-thinkpad-seminggu-jakarta-selatan"
+    "rental-redmibook-3-hari-jakarta-selatan",
+    "rental-redmibook-tahunan-jakarta-selatan",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa redmibook seminggu Jakarta Selatan"
+  "keywords": "sewa redmibook seminggu Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 7,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

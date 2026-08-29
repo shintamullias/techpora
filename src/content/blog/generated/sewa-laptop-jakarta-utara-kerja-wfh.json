@@ -40,8 +40,21 @@
     "internalLabel": "Lihat halaman sewa laptop Jakarta Utara"
   },
   "related": [
-    "sewa-laptop-depok-kerja-wfh",
-    "sewa-laptop-jakarta-barat-kerja-wfh",
-    "sewa-laptop-jakarta-pusat-kerja-wfh"
+    "sewa-laptop-jakarta-utara-content-creator",
+    "sewa-laptop-jakarta-utara-developer",
+    "sewa-laptop-bekasi-kerja-wfh",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Utara",
+      "to": "/sewa-laptop-jakarta-utara"
+    },
+    {
+      "section": 5,
+      "anchor": "perbandingan sewa vs beli laptop",
+      "to": "/blog/perbandingan-sewa-vs-beli-laptop-jakarta"
+    }
   ]
 }

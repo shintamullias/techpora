@@ -40,8 +40,21 @@
     "internalLabel": "Selengkapnya: sewa laptop Jakarta Pusat"
   },
   "related": [
-    "sewa-laptop-jakarta-utara-ujian-online",
-    "sewa-laptop-tangerang-ujian-online",
-    "sewa-laptop-bekasi-ujian-online"
+    "sewa-laptop-jakarta-barat-ujian-online",
+    "sewa-laptop-jakarta-selatan-ujian-online",
+    "sewa-laptop-jakarta-timur-ujian-online",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Pusat",
+      "to": "/sewa-laptop-jakarta-pusat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

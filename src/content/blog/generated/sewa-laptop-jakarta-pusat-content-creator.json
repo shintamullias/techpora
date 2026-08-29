@@ -40,8 +40,21 @@
     "internalLabel": "Selengkapnya: sewa laptop Jakarta Pusat"
   },
   "related": [
-    "sewa-laptop-jakarta-barat-content-creator",
-    "sewa-laptop-jakarta-selatan-content-creator",
-    "sewa-laptop-jakarta-timur-content-creator"
+    "sewa-laptop-jakarta-pusat-developer",
+    "sewa-laptop-jakarta-pusat-kerja-wfh",
+    "sewa-laptop-bekasi-content-creator",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Pusat",
+      "to": "/sewa-laptop-jakarta-pusat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

@@ -36,9 +36,22 @@
     "internalLabel": "Cek paket rental laptop Jakarta"
   },
   "related": [
-    "sewa-acer-bulanan-jakarta-timur",
     "rental-acer-bulanan-jakarta",
-    "sewa-acer-bulanan-jakarta-selatan"
+    "rental-acer-mingguan-jakarta",
+    "sewa-laptop-bulanan-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "sewa acer bulanan Jakarta"
+  "keywords": "sewa acer bulanan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

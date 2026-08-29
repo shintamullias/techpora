@@ -40,8 +40,21 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
   },
   "related": [
+    "cerita-sewa-laptop-cepat-untuk-mahasiswa-jakarta-selatan",
+    "sewa-laptop-jakarta-barat-mahasiswa",
     "sewa-laptop-jakarta-pusat-mahasiswa",
-    "sewa-laptop-jakarta-timur-mahasiswa",
-    "sewa-laptop-jakarta-utara-mahasiswa"
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

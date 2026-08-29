@@ -40,8 +40,21 @@
     "internalLabel": "Sewa laptop Jakarta Barat — cek unit & harga"
   },
   "related": [
-    "sewa-laptop-depok-event-pameran",
+    "panduan-sewa-laptop-untuk-pameran-booth-jakarta",
     "sewa-laptop-jakarta-pusat-event-pameran",
-    "sewa-laptop-jakarta-selatan-event-pameran"
+    "sewa-laptop-jakarta-selatan-event-pameran",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+  ],
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Barat",
+      "to": "/sewa-laptop-jakarta-barat"
+    },
+    {
+      "section": 5,
+      "anchor": "syarat & proses sewa laptop",
+      "to": "/blog/panduan-syarat-dan-proses-sewa-laptop-techpora"
+    }
   ]
 }

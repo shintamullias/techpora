@@ -39,10 +39,23 @@
     "internalLabel": "Sewa laptop event Jakarta — seminar, ujian, pameran"
   },
   "related": [
-    "sewa-laptop-proyektor-presentasi-jakarta",
-    "sewa-laptop-bootcamp-coding-jakarta",
-    "sewa-laptop-3-hari-jakarta"
+    "panduan-sewa-laptop-untuk-pameran-booth-jakarta",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026",
+    "perbandingan-sewa-vs-beli-laptop-jakarta"
   ],
   "keywords": "sewa laptop hackathon, rental laptop lomba coding, sewa laptop jakarta timur, laptop untuk kompetisi programming",
-  "date": "2026-07-21"
+  "date": "2026-07-21",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 5,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

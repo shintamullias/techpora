@@ -36,9 +36,22 @@
     "internalLabel": "Rental laptop Jakarta Timur — ambil di Rawamangun"
   },
   "related": [
+    "rental-acer-mingguan-jakarta-timur",
     "sewa-acer-mingguan-jakarta",
-    "rental-acer-mingguan-jakarta-selatan",
-    "rental-acer-mingguan-jakarta-timur"
+    "rental-acer-bulanan-jakarta",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental acer mingguan Jakarta"
+  "keywords": "rental acer mingguan Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

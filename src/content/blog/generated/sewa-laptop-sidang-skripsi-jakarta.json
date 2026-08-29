@@ -36,9 +36,22 @@
     "internalLabel": "Cek paket sewa laptop Jakarta Timur"
   },
   "related": [
-    "sewa-laptop-mendadak-malam-hari-jakarta",
-    "sewa-laptop-jakarta-utara-mahasiswa",
-    "sewa-laptop-mahasiswa-rawamangun"
+    "sewa-laptop-tugas-akhir-skripsi-jakarta",
+    "sewa-laptop-jakarta-barat-mahasiswa",
+    "sewa-laptop-jakarta-pusat-mahasiswa",
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
   ],
-  "keywords": "sewa laptop sidang skripsi, sewa laptop mahasiswa jakarta, rental laptop skripsi"
+  "keywords": "sewa laptop sidang skripsi, sewa laptop mahasiswa jakarta, rental laptop skripsi",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop mahasiswa Jakarta",
+      "to": "/sewa-laptop-mahasiswa-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }

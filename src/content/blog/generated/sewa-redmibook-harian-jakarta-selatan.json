@@ -29,8 +29,21 @@
   },
   "related": [
     "rental-redmibook-harian-jakarta-selatan",
-    "sewa-redmibook-harian-jakarta",
-    "rental-redmibook-harian-jakarta"
+    "rental-redmibook-3-hari-jakarta-selatan",
+    "rental-redmibook-seminggu-jakarta-selatan",
+    "biaya-sewa-laptop-per-hari-jakarta"
   ],
-  "keywords": "sewa redmibook harian Jakarta Selatan"
+  "keywords": "sewa redmibook harian Jakarta Selatan",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop Jakarta Selatan",
+      "to": "/sewa-laptop-jakarta-selatan"
+    },
+    {
+      "section": 2,
+      "anchor": "biaya sewa laptop per hari",
+      "to": "/blog/biaya-sewa-laptop-per-hari-jakarta"
+    }
+  ]
 }

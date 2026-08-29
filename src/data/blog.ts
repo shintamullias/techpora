@@ -27,6 +27,9 @@ export type BlogPost = {
   sections: BlogSection[];
   cta: BlogCTA;
   related: string[]; // curated internal linking (slug list)
+  // In-body contextual internal links (anchor kaya keyword → money page / hub).
+  // Di-generate oleh scripts/internal-links.mjs (idempoten).
+  contextLinks?: { section: number; anchor: string; to: string }[];
 };
 
 export { waLinkFor } from "@/lib/wa-link";

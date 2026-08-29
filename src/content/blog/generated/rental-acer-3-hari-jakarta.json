@@ -38,7 +38,20 @@
   "related": [
     "sewa-acer-3-hari-jakarta",
     "rental-acer-3-hari-jakarta-selatan",
-    "rental-acer-3-hari-jakarta-timur"
+    "rental-acer-3-hari-jakarta-timur",
+    "sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
   ],
-  "keywords": "rental acer 3 hari Jakarta"
+  "keywords": "rental acer 3 hari Jakarta",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop event Jakarta",
+      "to": "/sewa-laptop-event-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "panduan lengkap sewa laptop Jakarta",
+      "to": "/blog/sewa-laptop-jakarta-panduan-lengkap-harga-syarat-2026"
+    }
+  ]
 }

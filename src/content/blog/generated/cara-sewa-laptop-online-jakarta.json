@@ -36,9 +36,22 @@
     "internalLabel": "Lihat layanan sewa laptop Jakarta Timur"
   },
   "related": [
-    "cara-merawat-laptop-sewaan",
-    "cara-cek-laptop-sewaan-saat-serah-terima",
-    "sewa-laptop-jakarta-barat-ujian-online"
+    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "biaya-sewa-laptop-per-hari-jakarta",
+    "panduan-syarat-dan-proses-sewa-laptop-techpora",
+    "sewa-laptop-cpns-tes-online-jakarta"
   ],
-  "keywords": "cara sewa laptop online jakarta, sewa laptop antar lokasi, rental laptop online"
+  "keywords": "cara sewa laptop online jakarta, sewa laptop antar lokasi, rental laptop online",
+  "contextLinks": [
+    {
+      "section": 1,
+      "anchor": "sewa laptop harian Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 4,
+      "anchor": "antar-jemput laptop sewaan",
+      "to": "/blog/faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta"
+    }
+  ]
 }
