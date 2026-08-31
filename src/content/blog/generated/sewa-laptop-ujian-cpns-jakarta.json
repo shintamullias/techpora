@@ -32,14 +32,13 @@
     "heading": "Amankan Laptop untuk Ujianmu",
     "body": "Kirim tanggal ujian, lokasi, dan durasi sewa ke WhatsApp 6282177984041. Admin Techpora bantu siapkan unit yang stabil untuk tryout dan CAT.",
     "waMessage": "Halo Techpora, saya butuh sewa laptop untuk ujian CPNS/CAT di Jakarta. Berikut detailnya:",
-    "internalPath": "/sewa-laptop-jakarta-timur",
-    "internalLabel": "Solusi rental laptop murah dan cepat di Jakarta Timur"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Sewa laptop mahasiswa Jakarta — harian & bulanan"
   },
   "related": [
-    "faq-antar-jemput-laptop-sewaan-ke-lokasi-jakarta",
+    "panduan-sewa-laptop-pertama-kali",
     "biaya-sewa-laptop-per-hari-jakarta",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora",
-    "sewa-laptop-cpns-tes-online-jakarta"
+    "sewa-laptop-zoom-meeting-online-jakarta"
   ],
   "keywords": "sewa laptop ujian cpns jakarta, sewa laptop cat, sewa laptop tryout",
   "contextLinks": [

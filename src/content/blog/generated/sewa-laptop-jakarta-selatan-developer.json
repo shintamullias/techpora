@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Developer & Coding Bootcamp di Jakarta Selatan?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Jakarta Selatan.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Jakarta Selatan untuk coding, hackathon, dan bootcamp programming",
-    "internalPath": "/rental-laptop-jakarta",
-    "internalLabel": "Cek paket rental laptop Jakarta"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Halaman lengkap sewa laptop mahasiswa Jakarta"
   },
   "related": [
     "sewa-laptop-jakarta-selatan-content-creator",
     "sewa-laptop-jakarta-selatan-kerja-wfh",
-    "cerita-sewa-laptop-cepat-untuk-mahasiswa-jakarta-selatan",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "panduan-sewa-laptop-pertama-kali"
   ],
   "contextLinks": [
     {

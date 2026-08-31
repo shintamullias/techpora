@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Mahasiswa (Skripsi & Tugas Akhir) di Bekasi?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Bekasi.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Bekasi untuk skripsi, tugas akhir, sidang, dan kuliah online",
-    "internalPath": "/sewa-laptop-bekasi",
-    "internalLabel": "Lihat layanan sewa laptop Bekasi"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Lihat rental laptop mahasiswa Jakarta"
   },
   "related": [
     "sewa-laptop-depok-mahasiswa",
     "sewa-laptop-tugas-akhir-skripsi-jakarta",
-    "panduan-sewa-laptop-untuk-tugas-kelompok-mahasiswa",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "panduan-sewa-laptop-pertama-kali"
   ],
   "contextLinks": [
     {

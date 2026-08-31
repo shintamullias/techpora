@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Developer & Coding Bootcamp di Bekasi?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Bekasi.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Bekasi untuk coding, hackathon, dan bootcamp programming",
-    "internalPath": "/sewa-laptop-bekasi",
-    "internalLabel": "Cek unit sewa laptop Bekasi"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Cek paket sewa laptop untuk mahasiswa"
   },
   "related": [
     "sewa-laptop-bekasi-content-creator",
     "sewa-laptop-bekasi-kerja-wfh",
-    "sewa-laptop-depok-developer",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "sewa-laptop-depok-developer"
   ],
   "contextLinks": [
     {

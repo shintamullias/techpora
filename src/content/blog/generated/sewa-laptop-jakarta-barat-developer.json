@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Developer & Coding Bootcamp di Jakarta Barat?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Jakarta Barat.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Jakarta Barat untuk coding, hackathon, dan bootcamp programming",
-    "internalPath": "/sewa-laptop-jakarta-barat",
-    "internalLabel": "Lihat layanan sewa laptop Jakarta Barat"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Sewa laptop mahasiswa Jakarta — harian & bulanan"
   },
   "related": [
     "sewa-laptop-jakarta-barat-content-creator",
     "sewa-laptop-jakarta-barat-kerja-wfh",
-    "sewa-laptop-bekasi-developer",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "sewa-laptop-bekasi-developer"
   ],
   "contextLinks": [
     {

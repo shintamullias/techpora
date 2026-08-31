@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Mahasiswa (Skripsi & Tugas Akhir) di Jakarta Utara?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Jakarta Utara.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Jakarta Utara untuk skripsi, tugas akhir, sidang, dan kuliah online",
-    "internalPath": "/sewa-laptop-jakarta-utara",
-    "internalLabel": "Lihat halaman sewa laptop Jakarta Utara"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Halaman lengkap sewa laptop mahasiswa Jakarta"
   },
   "related": [
     "sewa-laptop-jakarta-barat-mahasiswa",
     "sewa-laptop-jakarta-pusat-mahasiswa",
-    "sewa-laptop-jakarta-selatan-mahasiswa",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "sewa-laptop-jakarta-selatan-mahasiswa"
   ],
   "contextLinks": [
     {

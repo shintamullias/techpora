@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Mahasiswa (Skripsi & Tugas Akhir) di Depok?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Depok.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Depok untuk skripsi, tugas akhir, sidang, dan kuliah online",
-    "internalPath": "/sewa-laptop-depok",
-    "internalLabel": "Cek unit sewa laptop Depok"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Cek paket sewa laptop untuk mahasiswa"
   },
   "related": [
     "sewa-laptop-bekasi-mahasiswa",
     "sewa-laptop-tugas-akhir-skripsi-jakarta",
-    "panduan-sewa-laptop-untuk-tugas-kelompok-mahasiswa",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "panduan-sewa-laptop-pertama-kali"
   ],
   "contextLinks": [
     {

@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Developer & Coding Bootcamp di Jakarta Timur?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Jakarta Timur.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Jakarta Timur untuk coding, hackathon, dan bootcamp programming",
-    "internalPath": "/rental-laptop-jakarta",
-    "internalLabel": "Lihat layanan rental laptop Jakarta"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Sewa laptop mahasiswa Jakarta — harian & bulanan"
   },
   "related": [
     "sewa-laptop-jakarta-timur-content-creator",
     "sewa-laptop-jakarta-timur-kerja-wfh",
-    "sewa-laptop-umkm-usaha-kecil-jakarta-timur",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "sewa-laptop-umkm-usaha-kecil-jakarta-timur"
   ],
   "contextLinks": [
     {

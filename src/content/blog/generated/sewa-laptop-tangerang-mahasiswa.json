@@ -36,14 +36,13 @@
     "heading": "Butuh Laptop untuk Mahasiswa (Skripsi & Tugas Akhir) di Tangerang?",
     "body": "Tim Techpora.id siap bantu rekomendasi unit sesuai kebutuhan dan budget kamu di Tangerang.",
     "waMessage": "Halo Techpora, saya mau tanya sewa laptop di Tangerang untuk skripsi, tugas akhir, sidang, dan kuliah online",
-    "internalPath": "/sewa-laptop-tangerang",
-    "internalLabel": "Sewa laptop Tangerang — cek unit & harga"
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Cek paket sewa laptop untuk mahasiswa"
   },
   "related": [
     "sewa-laptop-jakarta-barat-mahasiswa",
     "sewa-laptop-jakarta-pusat-mahasiswa",
-    "sewa-laptop-jakarta-selatan-mahasiswa",
-    "panduan-syarat-dan-proses-sewa-laptop-techpora"
+    "sewa-laptop-jakarta-selatan-mahasiswa"
   ],
   "contextLinks": [
     {
