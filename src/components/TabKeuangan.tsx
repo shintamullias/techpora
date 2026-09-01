@@ -46,6 +46,13 @@ export default function TabKeuangan({
   const totalKeluar = keluarBln.reduce((a, b) => a + b.jumlah, 0);
   const laba = totalMasuk - totalKeluar;
 
+  /* ---------- saldo AKTUAL kumulatif (semua bulan) — untuk samakan dgn rekening ---------- */
+  const masukSemua = pesanan
+    .filter((p) => DIAKUI.includes(p.status))
+    .reduce((a, p) => a + p.total, 0);
+  const keluarSemua = biaya.reduce((a, b) => a + b.jumlah, 0);
+  const saldoAktual = masukSemua - keluarSemua;
+
   /* ---------- bagi hasil per unit (porsi pemilik : sisanya untuk sistem) ---------- */
   const bagi = useMemo(() => {
     let pemilik = 0, sistem = 0;
@@ -107,8 +114,24 @@ export default function TabKeuangan({
 
   return (
     <>
+      {/* Saldo AKTUAL kumulatif — untuk disamakan dengan saldo rekening */}
+      <section className="rounded-2xl border border-primary/30 bg-primary/5 p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-sm font-semibold text-muted-foreground">Saldo Aktual (semua waktu)</p>
+            <p className="mt-0.5 text-[11px] text-muted-foreground">Total pemasukan − total pengeluaran, sejak awal. Samakan dengan rekening.</p>
+          </div>
+          <button onClick={muat} title="Perbarui data" className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-semibold">↻ Refresh</button>
+        </div>
+        <p className={"mt-2 font-serif text-4xl " + (saldoAktual >= 0 ? "text-foreground" : "text-red-700")}>{rp(saldoAktual)}</p>
+        <div className="mt-2 flex gap-4 text-xs text-muted-foreground">
+          <span>Masuk: <b className="text-emerald-700">{rp(masukSemua)}</b></span>
+          <span>Keluar: <b className="text-red-700">{rp(keluarSemua)}</b></span>
+        </div>
+      </section>
+
       {/* Ringkasan bulan */}
-      <section className="rounded-2xl border border-border bg-background p-4">
+      <section className="mt-3 rounded-2xl border border-border bg-background p-4">
         <div className="mb-3 flex items-center justify-between">
           <h2 className="font-serif text-xl text-foreground">Keuangan</h2>
           <select value={bulan} onChange={(e) => setBulan(e.target.value)} className="rounded-lg border border-border bg-background px-2 py-1.5 text-sm">

@@ -53,6 +53,18 @@ function Dashboard() {
 
   useEffect(() => { muat(); }, []);
 
+  // Auto-refresh saat kembali ke halaman (mis. habis input dari perangkat lain)
+  // supaya data keuangan & pesanan selalu sinkron tanpa reload manual.
+  useEffect(() => {
+    const segarkan = () => { if (document.visibilityState === "visible") muat(); };
+    window.addEventListener("focus", segarkan);
+    document.addEventListener("visibilitychange", segarkan);
+    return () => {
+      window.removeEventListener("focus", segarkan);
+      document.removeEventListener("visibilitychange", segarkan);
+    };
+  }, []);
+
   /* ---------- saringan kategori ----------
      Satu unit selalu milik tepat satu kategori, jadi seluruh tab cukup
      disaring lewat unit_id-nya. Pelanggan ikut tersaring dari pesanan. */
