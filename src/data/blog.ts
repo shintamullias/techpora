@@ -1077,7 +1077,10 @@ export const posts: BlogPost[] = [
   },
 ];
 
-// Merge generated articles (500 SEO artikel dari scripts/generate-articles.ts)
+// Merge metadata artikel generated (isi penuh di-lazy-load via loadPost()).
+// generatedPosts kini RINGAN (metadata saja) demi performa; `posts` dipakai
+// untuk daftar/lookup slug, bukan render isi. Halaman artikel memuat isi
+// penuh lewat loadPost(slug) di blog.$slug.tsx.
 const _existingSlugs = new Set(posts.map((p) => p.slug));
 for (const gp of generatedPosts) {
   if (!_existingSlugs.has(gp.slug)) {

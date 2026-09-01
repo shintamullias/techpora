@@ -9,16 +9,37 @@ import type { BlogPost, BlogSection } from "@/data/blog";
 const fetchBlogPostData = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => slug)
   .handler(async ({ data: slug }) => {
+    // Artikel pilar (kecil, ~30) tetap eager; artikel generated (284) di-load
+    // LAZY per-slug supaya tidak memuat semua ke memori tiap render.
     const { posts } = await import("@/data/blog");
-    const post = posts.find((p) => p.slug === slug);
+    const { postMeta, loadPost } = await import("@/content/blog");
+
+    // Cari post: pilar dulu, lalu lazy-load dari generated.
+    let post: BlogPost | undefined = posts.find((p) => p.slug === slug);
+    if (!post) post = await loadPost(slug);
     if (!post) return null;
-    const curated = post.related
-      .map((s) => posts.find((p) => p.slug === s))
-      .filter((p): p is BlogPost => Boolean(p) && p!.slug !== post.slug);
-    const fillers = posts.filter(
-      (p) => p.slug !== post.slug && p.category === post.category && !curated.find((c) => c.slug === p.slug),
-    );
-    const related = [...curated, ...fillers].slice(0, 3);
+
+    // Related: pakai metadata RINGAN (tanpa sections) untuk memilih,
+    // lalu lazy-load isi penuh hanya 3 artikel terpilih.
+    const pilarMeta = posts.map((p) => ({
+      slug: p.slug, title: p.title, description: p.description,
+      category: p.category, date: p.date, readMinutes: p.readMinutes, related: p.related,
+    }));
+    const allMeta = [...pilarMeta, ...postMeta];
+
+    const curatedSlugs = (post.related || [])
+      .filter((s) => s !== post!.slug && allMeta.some((m) => m.slug === s));
+    const fillerSlugs = allMeta
+      .filter((m) => m.slug !== post!.slug && m.category === post!.category && !curatedSlugs.includes(m.slug))
+      .map((m) => m.slug);
+    const chosen = [...curatedSlugs, ...fillerSlugs].slice(0, 3);
+
+    const related = (
+      await Promise.all(
+        chosen.map(async (s) => posts.find((p) => p.slug === s) ?? (await loadPost(s))),
+      )
+    ).filter((p): p is BlogPost => Boolean(p));
+
     return { post, related };
   });
 
