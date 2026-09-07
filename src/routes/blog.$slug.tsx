@@ -49,19 +49,19 @@ const WA_GENERIC = waLinkFor(
 );
 
 const CATEGORY_IMAGES: Record<string, string> = {
-  Mahasiswa: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=1200&q=70",
-  Profesional: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=1200&q=70",
-  Event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1200&q=70",
-  Panduan: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1200&q=70",
-  Lokasi: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=1200&q=70",
+  Mahasiswa: "https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=60",
+  Profesional: "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=60",
+  Event: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=60",
+  Panduan: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=60",
+  Lokasi: "https://images.unsplash.com/photo-1519501025264-65ba15a82390?auto=format&fit=crop&w=800&q=60",
 };
 const DEFAULT_IMAGE =
-  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=1200&q=70";
+  "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=800&q=60";
 
 const SECTION_IMAGES = [
-  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=1200&q=70",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1200&q=70",
-  "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=1200&q=70",
+  "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=60",
+  "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=60",
 ];
 
 function coverFor(category: string) {
@@ -194,6 +194,9 @@ function BlogPostPage() {
             src={cover}
             alt={post.title}
             loading="eager"
+            decoding="async"
+            width={800}
+            height={450}
             className="mt-8 aspect-[16/9] w-full rounded-2xl border border-border object-cover"
           />
 
@@ -222,6 +225,9 @@ function BlogPostPage() {
                     src={SECTION_IMAGES[i % SECTION_IMAGES.length]}
                     alt={`Ilustrasi ${post.category.toLowerCase()} sewa laptop`}
                     loading="lazy"
+                    decoding="async"
+                    width={800}
+                    height={450}
                     className="mt-6 aspect-[16/9] w-full rounded-xl border border-border object-cover"
                   />
                 )}

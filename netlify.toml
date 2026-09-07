@@ -15,3 +15,21 @@
   to = "/blog/sewa-laptop-jakarta-murah"
   status = 301
   force = true
+
+# Aset ber-hash (JS/CSS/font) — nama file berubah kalau kontennya berubah,
+# jadi aman di-cache lama. Mempercepat kunjungan berulang drastis.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/_build/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Favicon & gambar statis — cache sedang (boleh berubah sesekali)
+[[headers]]
+  for = "/*.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
