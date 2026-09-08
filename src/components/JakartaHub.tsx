@@ -19,6 +19,9 @@ import { buildWaSimple, waLink } from "@/lib/wa";
 export type JakartaHubVariant = "sewa" | "rental";
 
 const jakartaAreas = areas.filter((a) => a.area.toLowerCase().startsWith("jakarta"));
+const satelliteAreas = areas.filter((a) =>
+  ["sewa-laptop-tangerang", "sewa-laptop-bekasi", "sewa-laptop-depok", "sewa-laptop-bogor", "sewa-laptop-jogja"].includes(a.slug),
+);
 
 // Semua unit (dari areas data, dedup by name)
 const allUnits = (() => {
@@ -388,6 +391,38 @@ export function JakartaHub({ variant }: { variant: JakartaHubVariant }) {
             </p>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {jakartaAreas.map((a) => (
+                <a
+                  key={a.slug}
+                  href={`/${a.slug}`}
+                  className="group rounded-2xl border border-border bg-card p-5 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-md"
+                >
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-primary" />
+                    <h3 className="text-base font-semibold text-foreground group-hover:text-primary">
+                      {c.Term} Laptop {a.area}
+                    </h3>
+                  </div>
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                    {a.landmarks.slice(0, 4).join(", ")}, dan sekitarnya.
+                  </p>
+                  <span className="mt-3 inline-flex items-center gap-1 text-xs font-semibold text-primary">
+                    Detail area {a.areaShort} →
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* LUAR JAKARTA */}
+        <section className="border-b border-border py-14">
+          <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+            <h2 className="text-2xl font-bold sm:text-3xl">{c.Term} laptop luar Jakarta</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Melayani kota penyangga dan sekitarnya — pilih halaman kotamu untuk detail patokan lokasi dan cara sewa.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {satelliteAreas.map((a) => (
                 <a
                   key={a.slug}
                   href={`/${a.slug}`}

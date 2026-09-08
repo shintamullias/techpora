@@ -433,6 +433,60 @@ export const areas: AreaData[] = [
     ],
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer],
   },
+  {
+    slug: "sewa-laptop-bogor",
+    area: "Bogor",
+    areaShort: "Bogor",
+    title: "Sewa Laptop Bogor — Harian, Mingguan, Bulanan | Techpora",
+    metaDescription:
+      "Sewa laptop Bogor dekat Stasiun Bogor. HP, ThinkPad, VivoBook, hingga i5 siap antar ke Kota Bogor, Baranangsiang, Dramaga, sampai Cibinong. Mulai Rp79rb/hari, tanpa deposit, fast response WA.",
+    keywords:
+      "sewa laptop bogor, rental laptop bogor, sewa laptop dekat stasiun bogor, sewa laptop dramaga, sewa laptop cibinong, rental laptop bogor harian",
+    h1: "Sewa Laptop Bogor — Techpora",
+    intro:
+      "Cari sewa laptop di Bogor? Techpora melayani area Kota Bogor dan sekitarnya dengan patokan Stasiun Bogor — memudahkan kamu yang mau ambil sendiri sepulang kerja atau minta antar ke lokasi. Dari Baranangsiang, Kebun Raya, sampai kawasan kampus IPB Dramaga dan Cibinong, unit bisa disiapkan sesuai kebutuhan. Kota hujan bikin rencana sering berubah mendadak; kalau laptop pribadi lagi rusak atau butuh unit tambahan untuk kerja, kami bantu cepat. Sampaikan lokasi dan durasinya, kami arahkan unit yang paling pas.",
+    highlights: [
+      { title: "Patokan Stasiun Bogor", desc: "Gampang untuk ambil sendiri atau titik temu antar di sekitar Stasiun Bogor dan Baranangsiang." },
+      { title: "Dekat Kampus IPB", desc: "Sering dipakai mahasiswa Dramaga untuk tugas, sidang, dan olah data penelitian." },
+      { title: "Harian sampai Bulanan", desc: "Fleksibel — dari sewa 1 hari untuk acara sampai bulanan untuk kerja proyek." },
+    ],
+    landmarks: ["Stasiun Bogor", "Baranangsiang", "Kebun Raya Bogor", "IPB Dramaga", "Cibinong", "Sentul", "Tajur", "Jl. Pajajaran"],
+    eta: "Ambil sendiri di titik sekitar Stasiun Bogor, atau minta antar ke lokasimu di area Bogor.",
+    useCases: [
+      "Mahasiswa IPB untuk tugas & sidang",
+      "Kerja remote / WFH sementara",
+      "Acara, seminar, & pelatihan",
+      "Pengganti laptop pribadi yang rusak",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer],
+  },
+  {
+    slug: "sewa-laptop-jogja",
+    area: "Yogyakarta",
+    areaShort: "Jogja",
+    title: "Sewa Laptop Jogja — Harian, Mingguan, Bulanan | Techpora",
+    metaDescription:
+      "Sewa laptop Jogja di pusat kota. HP, ThinkPad, VivoBook, sampai MacBook siap antar ke Malioboro, UGM, Tugu, hingga Sleman. Mulai Rp79rb/hari, tanpa deposit, fast response WA.",
+    keywords:
+      "sewa laptop jogja, rental laptop jogja, sewa laptop yogyakarta, sewa laptop dekat ugm, sewa laptop malioboro, sewa macbook jogja",
+    h1: "Sewa Laptop Jogja — Techpora",
+    intro:
+      "Butuh sewa laptop di Jogja? Techpora hadir di pusat kota Yogyakarta, jadi unit gampang dijangkau dari Malioboro, Tugu, sampai kawasan kampus UGM dan UNY. Sebagai kota pelajar sekaligus kota kreatif, kebutuhannya beragam — mahasiswa yang butuh laptop untuk skripsi dan sidang, konten kreator dan desainer yang cari MacBook untuk editing, sampai peserta workshop dan wisatawan yang tetap harus kerja remote sambil di Jogja. Unit ready di lokasi, tinggal sesuaikan durasi dan spesifikasi. Kabari kebutuhanmu lewat WA, kami siapkan yang paling cocok.",
+    highlights: [
+      { title: "Di Pusat Kota", desc: "Mudah dijangkau dari Malioboro, Tugu, dan kawasan kampus UGM–UNY." },
+      { title: "MacBook untuk Kreator", desc: "MacBook Air M1 ready — favorit desainer dan editor di kota kreatif ini." },
+      { title: "Cocok untuk Mahasiswa", desc: "Skripsi, sidang, olah data, sampai kebutuhan kepanitiaan kampus." },
+    ],
+    landmarks: ["Malioboro", "Tugu Jogja", "UGM", "UNY", "Sleman", "Bantul", "Prawirotaman", "Condongcatur"],
+    eta: "Unit ready di pusat kota Jogja — bisa ambil sendiri atau minta antar ke lokasimu di area Yogyakarta.",
+    useCases: [
+      "Mahasiswa untuk skripsi & sidang",
+      "Konten kreator & desainer (MacBook)",
+      "Workshop, pelatihan, & event",
+      "Wisatawan yang kerja remote",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.macbook],
+  },
 ];
 
 export const areaBySlug = (slug: string) => areas.find((a) => a.slug === slug);
