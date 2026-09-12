@@ -350,23 +350,8 @@ function Index() {
       </header>
 
       <main>
-        {/* HERO — deep navy premium band */}
+        {/* HERO — grounded brand band */}
         <section id="beranda" className="relative overflow-hidden bg-ink text-white">
-          {/* Ambient glows */}
-          <div className="pointer-events-none absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-sky/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-52 -left-24 h-[460px] w-[460px] rounded-full bg-primary/50 blur-3xl" />
-          {/* Grid texture */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-[0.12]"
-            style={{
-              backgroundImage:
-                "linear-gradient(to right, rgba(255,255,255,.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.4) 1px, transparent 1px)",
-              backgroundSize: "56px 56px",
-              maskImage:
-                "radial-gradient(ellipse at 50% 20%, black 30%, transparent 75%)",
-            }}
-          />
           <div className="relative mx-auto grid max-w-7xl gap-12 px-4 py-20 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-10 lg:py-28 lg:px-8">
             <div>
               <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-xs font-medium text-white/80 backdrop-blur">
@@ -375,7 +360,7 @@ function Index() {
               </div>
               <h1 className="mt-6 font-serif text-5xl leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-7xl">
                 Sewa Laptop Jakarta
-                <span className="block italic text-gradient-sky">— Techpora</span>
+                <span className="block italic text-sky">— Techpora</span>
               </h1>
               <p className="mt-5 text-lg font-medium text-white/90">
                 Laptop, Printer & Proyektor siap pakai. Harian, mingguan, bulanan.
@@ -427,10 +412,9 @@ function Index() {
               </div>
             </div>
 
-            {/* Hero visual — layered glass card */}
+            {/* Hero visual */}
             <div className="relative">
-              <div className="absolute -inset-4 rounded-[2rem] bg-gradient-to-br from-sky/25 via-white/5 to-transparent blur-2xl" />
-              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-xl sm:p-10">
+              <div className="relative overflow-hidden rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 shadow-sm sm:p-10">
                 <div className="absolute right-6 top-6 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold text-white/90 backdrop-blur">
                   <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
                   Available now
@@ -442,7 +426,7 @@ function Index() {
                   height={1024}
                   fetchPriority="high"
                   decoding="async"
-                  className="mx-auto h-auto w-full max-w-md drop-shadow-[0_30px_60px_rgba(123,179,255,0.25)]"
+                  className="mx-auto h-auto w-full max-w-md drop-shadow-md"
                 />
                 <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/10 pt-6 text-white">
                   <div>
@@ -463,7 +447,7 @@ function Index() {
           </div>
         </section>
 
-        {/* WHY — Bento grid */}
+        {/* WHY — consistent card grid */}
         <section id="kenapa-kami" className="relative bg-background py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-2xl text-center">
@@ -476,25 +460,23 @@ function Index() {
               </p>
             </div>
 
-            <div className="mt-14 grid gap-4 sm:grid-cols-6 sm:gap-5">
-              {/* Big feature card */}
-              <div className="relative overflow-hidden rounded-3xl bg-ink p-8 text-white shadow-[0_30px_80px_-30px_rgba(15,36,71,0.6)] sm:col-span-4 sm:row-span-2 sm:p-10">
-                <div className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-sky/30 blur-3xl" />
-                <div className="pointer-events-none absolute -bottom-24 -left-10 h-64 w-64 rounded-full bg-primary/40 blur-3xl" />
-                <div className="relative">
-                  <div className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-sky">
+            <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Quality card */}
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
+                <div>
+                  <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                     <ShieldCheck className="h-6 w-6" />
                   </div>
-                  <h3 className="mt-6 font-serif text-3xl leading-tight sm:text-4xl">
-                    Unit dicek, dibersihkan, <span className="italic text-sky">siap pakai</span>
+                  <h3 className="mt-5 font-serif text-2xl leading-tight text-foreground">
+                    Unit dicek, dibersihkan, <span className="italic text-primary">siap pakai</span>
                   </h3>
-                  <p className="mt-4 max-w-md text-white/70">
+                  <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
                     Semua laptop, printer, dan proyektor melewati QC internal sebelum dikirim. Tidak perlu setup, tinggal colok dan pakai.
                   </p>
-                  <div className="mt-8 grid grid-cols-2 gap-4 text-sm">
+                  <div className="mt-5 grid grid-cols-2 gap-3 text-sm">
                     {["OS terupdate", "Baterai prima", "Sudah terinstal", "Bergaransi masa sewa"].map((t) => (
-                      <div key={t} className="flex items-center gap-2 text-white/85">
-                        <Check className="h-4 w-4 text-sky" />
+                      <div key={t} className="flex items-center gap-2 text-foreground">
+                        <Check className="h-4 w-4 text-primary" />
                         {t}
                       </div>
                     ))}
@@ -503,7 +485,7 @@ function Index() {
               </div>
 
               {/* Fast response */}
-              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-2">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Zap className="h-5 w-5" />
                 </div>
@@ -514,7 +496,7 @@ function Index() {
               </div>
 
               {/* Pengiriman */}
-              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-2">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Truck className="h-5 w-5" />
                 </div>
@@ -525,7 +507,7 @@ function Index() {
               </div>
 
               {/* Rating card */}
-              <div className="relative overflow-hidden rounded-3xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-background p-6 sm:col-span-3">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm">
                 <div className="flex items-center gap-1 text-amber-500">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star key={i} className="h-5 w-5 fill-amber-400 text-amber-400" />
@@ -539,7 +521,7 @@ function Index() {
               </div>
 
               {/* Booking */}
-              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-3">
+              <div className="rounded-3xl border border-border bg-card p-6 shadow-sm sm:col-span-2 lg:col-span-1">
                 <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/10 text-primary">
                   <Clock className="h-5 w-5" />
                 </div>
@@ -579,11 +561,11 @@ function Index() {
                     return (
                     <article
                       key={u.name}
-                      className={`relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl ${
-                        u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"
+                      className={`relative flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm transition-shadow hover:shadow-md ${
+                        u.featured ? "border-primary/40" : "border-border"
                       }`}
                     >
-                      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-secondary/70 via-secondary/30 to-background p-6">
+                      <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-secondary p-6">
                         <div className="absolute left-4 top-4 z-10 inline-flex items-center gap-1.5 rounded-full bg-background/80 px-2.5 py-1 text-[11px] font-semibold text-primary shadow-sm backdrop-blur">
                           <cat.icon className="h-3.5 w-3.5" />
                           {u.category}
@@ -895,9 +877,7 @@ function Index() {
 
         {/* FINAL CTA */}
         <section id="kontak" className="px-4 pb-16 sm:px-6 sm:pb-24 lg:px-8">
-          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-gradient-to-br from-primary to-primary-glow p-10 text-center shadow-[0_30px_80px_-20px_rgba(37,99,235,0.45)] sm:p-16">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
-            <div className="pointer-events-none absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-white/10 blur-3xl" />
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-3xl bg-primary p-10 text-center shadow-sm sm:p-16">
             <div className="relative">
               <h2 className="text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl">Masih bingung pilih unit?</h2>
               <p className="mx-auto mt-4 max-w-xl text-base text-primary-foreground/85">

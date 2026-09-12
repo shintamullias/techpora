@@ -251,7 +251,6 @@ export function JakartaHub({ variant }: { variant: JakartaHubVariant }) {
       <main>
         {/* HERO */}
         <section className="relative overflow-hidden border-b border-border">
-          <div className="pointer-events-none absolute -top-24 right-0 h-[500px] w-[500px] rounded-full bg-primary/10 blur-3xl" />
           <div className="relative mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:py-20 lg:px-8">
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground">
               <MapPin className="h-3 w-3 text-primary" />
@@ -345,10 +344,10 @@ export function JakartaHub({ variant }: { variant: JakartaHubVariant }) {
                     return (
                       <article
                         key={u.name}
-                        className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"}`}
+                        className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40" : "border-border"}`}
                       >
                         {img && (
-                          <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-secondary/70 via-secondary/30 to-background p-6">
+                          <div className="flex aspect-[4/3] items-center justify-center bg-secondary p-6">
                             <img src={img} alt={`${c.Term} ${u.name} Jakarta`} width={800} height={600} loading="lazy" className={`max-h-full w-auto object-contain ${hasWhiteBackdrop(u.name) ? "mix-blend-multiply" : "drop-shadow-lg"}`} />
                           </div>
                         )}
