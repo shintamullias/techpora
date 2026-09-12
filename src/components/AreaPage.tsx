@@ -31,7 +31,6 @@ export function AreaPage({ area }: { area: AreaData }) {
       <main>
         {/* HERO */}
         <section className="relative overflow-hidden border-b border-border">
-          <div className="pointer-events-none absolute -top-24 right-0 h-[400px] w-[400px] rounded-full bg-primary/10 blur-3xl" />
           <div className="relative mx-auto max-w-4xl px-4 py-14 sm:px-6 lg:py-20 lg:px-8">
             <Link to="/" className="inline-flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground">
               <ArrowLeft className="h-3.5 w-3.5" />
@@ -118,9 +117,9 @@ export function AreaPage({ area }: { area: AreaData }) {
               {area.units.map((u) => {
                 const img = getUnitImage(u.name);
                 return (
-                <article key={u.name} className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40 ring-1 ring-primary/20" : "border-border"}`}>
+                <article key={u.name} className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40" : "border-border"}`}>
                   {img && (
-                    <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-secondary/60 to-secondary/20 p-6">
+                    <div className="flex aspect-[4/3] items-center justify-center bg-secondary p-6">
                       <img src={img} alt={u.name} width={800} height={600} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-md" />
                     </div>
                   )}

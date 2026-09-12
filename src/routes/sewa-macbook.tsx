@@ -149,7 +149,7 @@ function MacbookPage() {
       </header>
 
       <main>
-        <section className="border-b border-border bg-gradient-to-b from-secondary/30 to-background">
+        <section className="border-b border-border bg-secondary/30">
           <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
             <Link to="/" className="mb-6 inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
               <ArrowLeft className="h-4 w-4" /> Kembali ke beranda
