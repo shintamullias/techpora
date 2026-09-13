@@ -64,8 +64,8 @@ const SECTION_IMAGES = [
   "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&w=800&q=60",
 ];
 
-function coverFor(category: string) {
-  return CATEGORY_IMAGES[category] ?? DEFAULT_IMAGE;
+function coverFor(category: string, coverImage?: string) {
+  return coverImage || CATEGORY_IMAGES[category] || DEFAULT_IMAGE;
 }
 
 export const Route = createFileRoute("/blog/$slug")({
@@ -78,7 +78,7 @@ export const Route = createFileRoute("/blog/$slug")({
     const post = loaderData?.post;
     if (!post) return { meta: [{ title: "Artikel tidak ditemukan" }] };
     const url = `${SITE_URL}/blog/${post.slug}`;
-    const cover = coverFor(post.category);
+    const cover = coverFor(post.category, (post as any).coverImage);
     return {
       meta: [
         { title: `${post.title} — Techpora.id` },
@@ -149,7 +149,7 @@ export const Route = createFileRoute("/blog/$slug")({
 function BlogPostPage() {
   const { post, related } = Route.useLoaderData();
 
-  const cover = coverFor(post.category);
+  const cover = coverFor(post.category, (post as any).coverImage);
   const midIndex = Math.floor(post.sections.length / 2);
   const ctaWaLink = waLinkFor(post.cta.waMessage);
 
