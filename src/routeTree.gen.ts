@@ -29,6 +29,7 @@ import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
 import { Route as SewaLaptopCempakaPutihRouteImport } from './routes/sewa-laptop-cempaka-putih'
 import { Route as SewaLaptopBogorRouteImport } from './routes/sewa-laptop-bogor'
 import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
+import { Route as SewaLaptopBandungRouteImport } from './routes/sewa-laptop-bandung'
 import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-jakarta'
 import { Route as MasukRouteImport } from './routes/masuk'
 import { Route as AdminRouteImport } from './routes/admin'
@@ -142,6 +143,11 @@ const SewaLaptopBekasiRoute = SewaLaptopBekasiRouteImport.update({
   path: '/sewa-laptop-bekasi',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SewaLaptopBandungRoute = SewaLaptopBandungRouteImport.update({
+  id: '/sewa-laptop-bandung',
+  path: '/sewa-laptop-bandung',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RentalLaptopJakartaRoute = RentalLaptopJakartaRouteImport.update({
   id: '/rental-laptop-jakarta',
   path: '/rental-laptop-jakarta',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/admin': typeof AdminRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
+  '/sewa-laptop-bandung': typeof SewaLaptopBandungRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-bogor': typeof SewaLaptopBogorRoute
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
@@ -230,6 +237,7 @@ export interface FileRoutesByTo {
   '/admin': typeof AdminRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
+  '/sewa-laptop-bandung': typeof SewaLaptopBandungRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-bogor': typeof SewaLaptopBogorRoute
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
@@ -263,6 +271,7 @@ export interface FileRoutesById {
   '/admin': typeof AdminRoute
   '/masuk': typeof MasukRoute
   '/rental-laptop-jakarta': typeof RentalLaptopJakartaRoute
+  '/sewa-laptop-bandung': typeof SewaLaptopBandungRoute
   '/sewa-laptop-bekasi': typeof SewaLaptopBekasiRoute
   '/sewa-laptop-bogor': typeof SewaLaptopBogorRoute
   '/sewa-laptop-cempaka-putih': typeof SewaLaptopCempakaPutihRoute
@@ -297,6 +306,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/masuk'
     | '/rental-laptop-jakarta'
+    | '/sewa-laptop-bandung'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-bogor'
     | '/sewa-laptop-cempaka-putih'
@@ -329,6 +339,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/masuk'
     | '/rental-laptop-jakarta'
+    | '/sewa-laptop-bandung'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-bogor'
     | '/sewa-laptop-cempaka-putih'
@@ -361,6 +372,7 @@ export interface FileRouteTypes {
     | '/admin'
     | '/masuk'
     | '/rental-laptop-jakarta'
+    | '/sewa-laptop-bandung'
     | '/sewa-laptop-bekasi'
     | '/sewa-laptop-bogor'
     | '/sewa-laptop-cempaka-putih'
@@ -394,6 +406,7 @@ export interface RootRouteChildren {
   AdminRoute: typeof AdminRoute
   MasukRoute: typeof MasukRoute
   RentalLaptopJakartaRoute: typeof RentalLaptopJakartaRoute
+  SewaLaptopBandungRoute: typeof SewaLaptopBandungRoute
   SewaLaptopBekasiRoute: typeof SewaLaptopBekasiRoute
   SewaLaptopBogorRoute: typeof SewaLaptopBogorRoute
   SewaLaptopCempakaPutihRoute: typeof SewaLaptopCempakaPutihRoute
@@ -564,6 +577,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SewaLaptopBekasiRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sewa-laptop-bandung': {
+      id: '/sewa-laptop-bandung'
+      path: '/sewa-laptop-bandung'
+      fullPath: '/sewa-laptop-bandung'
+      preLoaderRoute: typeof SewaLaptopBandungRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/rental-laptop-jakarta': {
       id: '/rental-laptop-jakarta'
       path: '/rental-laptop-jakarta'
@@ -642,6 +662,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRoute: AdminRoute,
   MasukRoute: MasukRoute,
   RentalLaptopJakartaRoute: RentalLaptopJakartaRoute,
+  SewaLaptopBandungRoute: SewaLaptopBandungRoute,
   SewaLaptopBekasiRoute: SewaLaptopBekasiRoute,
   SewaLaptopBogorRoute: SewaLaptopBogorRoute,
   SewaLaptopCempakaPutihRoute: SewaLaptopCempakaPutihRoute,

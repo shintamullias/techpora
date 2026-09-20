@@ -461,6 +461,33 @@ export const areas: AreaData[] = [
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer],
   },
   {
+    slug: "sewa-laptop-bandung",
+    area: "Bandung",
+    areaShort: "Bandung",
+    title: "Sewa Laptop Bandung — Harian, Mingguan, Bulanan | Techpora",
+    metaDescription:
+      "Sewa laptop Bandung dekat Stasiun Bandung. HP, ThinkPad, VivoBook siap antar ke Kota Bandung, Dago, Dipatiukur, sampai area kampus ITB & Unpad. Mulai Rp79rb/hari, tanpa deposit.",
+    keywords:
+      "sewa laptop bandung, rental laptop bandung, sewa laptop dekat stasiun bandung, sewa laptop mahasiswa bandung, rental laptop bandung harian, sewa laptop itb unpad",
+    h1: "Sewa Laptop Bandung — Techpora",
+    intro:
+      "Cari sewa laptop di Bandung? Techpora melayani Kota Bandung dan sekitarnya dengan patokan Stasiun Bandung, memudahkan kamu yang mau ambil sendiri atau minta antar ke lokasi. Bandung padat dengan mahasiswa dan pekerja kreatif — dari kawasan kampus seperti ITB, Unpad Dipatiukur, dan Telkom, sampai area kerja dan coworking di Dago dan sekitarnya. Untuk mahasiswa yang butuh laptop skripsi atau ujian, pekerja WFH yang perangkatnya bermasalah, atau panitia acara yang butuh beberapa unit, kami bantu siapkan cepat. Sampaikan lokasi dan durasimu, kami arahkan unit yang paling sesuai.",
+    highlights: [
+      { title: "Patokan Stasiun Bandung", desc: "Gampang untuk ambil sendiri atau titik temu antar di sekitar Stasiun Bandung dan pusat kota." },
+      { title: "Dekat Kampus", desc: "Sering dipakai mahasiswa ITB, Unpad, dan Telkom untuk tugas, sidang, dan ujian online." },
+      { title: "Untuk Kerja & Event", desc: "Pekerja WFH, meeting, sampai acara — unit siap pakai, harian sampai bulanan." },
+    ],
+    landmarks: ["Stasiun Bandung", "Dago", "Dipatiukur", "ITB", "Unpad", "Telkom University", "Alun-alun Bandung", "Jl. Braga"],
+    eta: "Ambil sendiri di titik sekitar Stasiun Bandung, atau minta antar ke lokasimu di area Bandung.",
+    useCases: [
+      "Mahasiswa ITB/Unpad/Telkom untuk tugas & sidang",
+      "Kerja remote / WFH sementara",
+      "Meeting & event di Bandung",
+      "Pengganti laptop yang sedang diperbaiki",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer],
+  },
+  {
     slug: "sewa-laptop-jogja",
     area: "Yogyakarta",
     areaShort: "Jogja",
