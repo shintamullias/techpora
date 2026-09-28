@@ -14,6 +14,6 @@ export default defineConfig({
     router: { autoCodeSplitting: true },
   },
   nitro: {
-    preset: "netlify",
+    preset: "node-server",
   },
 });
