@@ -1,0 +1,1 @@
+function book(unit,price){const msg="Halo Techpora, saya mau sewa "+unit+" ("+price+").\nTanggal sewa: \nDurasi: \nLokasi pengiriman/pickup: ";window.open("https://wa.me/6282177984041?text="+encodeURIComponent(msg),"_blank")} 
