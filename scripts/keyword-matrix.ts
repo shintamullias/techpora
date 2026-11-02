@@ -7,6 +7,8 @@
  * - Existing blog post slug (di data/blog.ts)
  */
 
+import { isArchivedBlogSlug } from "../src/content/blog/redirects";
+
 export type SlugSpec = {
   slug: string;                // e.g. "sewa-laptop-harian-jakarta-selatan"
   primaryKeyword: string;      // "sewa laptop harian jakarta selatan"
@@ -158,14 +160,14 @@ function makeSpec(args: {
   }
 
   const slug = parts.join("-").toLowerCase();
-  if (RESERVED_SLUGS.has(slug)) return null;
+  // Exclude archived A/B combinations: duplicate/thin content causes cannibalization.
+  if (RESERVED_SLUGS.has(slug) || isArchivedBlogSlug(slug)) return null;
 
   const primaryKeyword = kwParts.join(" ");
 
   // Title < 60 chars. Format: "<Keyword> — Techpora" or singkat.
   const kwTitle = titleCase(kwParts.join(" "));
-  let title = `${kwTitle} | Techpora`;
-  if (title.length > 60) title = kwTitle.slice(0, 60);
+  const title = kwTitle.slice(0, 60);
 
   return {
     slug,
