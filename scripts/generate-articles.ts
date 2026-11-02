@@ -14,6 +14,8 @@ import { mkdir, writeFile, readdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { buildMatrix, type SlugSpec } from "./keyword-matrix";
+import { isArchivedBlogSlug } from "../src/content/blog/redirects";
+import { RENTAL_PRICES, formatRupiah } from "../src/data/rental-prices";
 
 const OUT_DIR = "src/content/blog/generated";
 const GATEWAY_URL = "https://ai.gateway.lovable.dev/v1/chat/completions";
@@ -97,7 +99,8 @@ Aturan wajib:
 - JANGAN pakai frasa klise ("dalam era digital", "seiring perkembangan zaman", "di zaman sekarang ini").
 - JANGAN mengulang keyword utama lebih dari 4x di seluruh artikel.
 - Wajib menyebut nomor WhatsApp Techpora: 6282177984041 (atau frasa "chat via WhatsApp") minimal 1x di intro dan 1x di CTA.
-- Harga referensi (jangan di-invent): laptop mulai Rp100.000/hari, MacBook mulai Rp250.000/hari, sewa bulanan mulai Rp1.500.000.
+- Harga referensi (jangan di-invent): laptop mulai ${formatRupiah(RENTAL_PRICES.laptop.daily)}/hari, laptop bulanan mulai ${formatRupiah(RENTAL_PRICES.laptop.monthly)}; MacBook Air M1 ${formatRupiah(RENTAL_PRICES.macbook.daily)}/hari, ${formatRupiah(RENTAL_PRICES.macbook.weekly)}/minggu, ${formatRupiah(RENTAL_PRICES.macbook.monthly)}/bulan.
+- Judul tanpa akhiran "| Techpora" atau "| Techpora.id", huruf pertama kapital.
 - Struktur H2 mengikuti outline yang diberikan.
 - Setiap paragraf punya opening yang berbeda (variasi kalimat pembuka).`;
 
@@ -171,7 +174,7 @@ async function callAI(spec: SlugSpec, apiKey: string): Promise<GeneratedPost> {
 
   const post: GeneratedPost = {
     slug: spec.slug,
-    title: ((parsed.title as string) || spec.title).slice(0, 60),
+    title: ((parsed.title as string) || spec.title).replace(/\s*\|\s*Techpora(?:\.id)?\s*$/i, "").replace(/^\p{L}/u, (letter) => letter.toUpperCase()).slice(0, 60),
     description: ((parsed.description as string) || "").slice(0, 155),
     category: categoryFor(spec),
     date: "2026-07-10",
@@ -202,7 +205,8 @@ async function runBatch(specs: SlugSpec[], apiKey: string) {
     existing = new Set(files.filter((f) => f.endsWith(".json")).map((f) => f.replace(/\.json$/, "")));
   }
 
-  const todo = specs.filter((s) => !existing.has(s.slug));
+  // Defense in depth: never regenerate archived duplicate/thin-content A/B combinations.
+  const todo = specs.filter((s) => !isArchivedBlogSlug(s.slug) && !existing.has(s.slug));
   console.log(`Total: ${specs.length}, sudah ada: ${existing.size}, akan generate: ${todo.length}`);
 
   let done = 0;

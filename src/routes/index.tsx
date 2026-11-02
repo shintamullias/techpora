@@ -3,6 +3,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { getUnitImage, hasWhiteBackdrop } from "@/assets/units";
+import { RENTAL_PRICES, formatRupiah } from "@/data/rental-prices";
 
 import {
   Check,
@@ -62,12 +63,12 @@ type Product = {
 };
 
 const products: Product[] = [
-  { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: "Rp79.000", weekly: "Rp450.000", monthly: "Rp1.400.000" },
+  { name: "HP 14s", category: "Laptop", specs: "AMD A9 · 8GB · SSD 512GB + HDD 1TB", daily: formatRupiah(RENTAL_PRICES.laptop.daily), weekly: formatRupiah(RENTAL_PRICES.laptop.weekly), monthly: formatRupiah(RENTAL_PRICES.laptop.monthly) },
   { name: "Lenovo ThinkPad", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp100.000", weekly: "Rp650.000", monthly: "Rp1.500.000" },
   { name: "ASUS VivoBook", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   { name: "Acer Aspire 5", category: "Laptop", specs: "i5 · 8GB · SSD 256GB", daily: "Rp175.000", weekly: "Rp1.100.000", monthly: "Rp3.000.000" },
-  { name: "MacBook Air M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: "Rp250.000", weekly: "Rp1.500.000", monthly: "Rp4.500.000", featured: true },
+  { name: "MacBook Air M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: formatRupiah(RENTAL_PRICES.macbook.daily), weekly: formatRupiah(RENTAL_PRICES.macbook.weekly), monthly: formatRupiah(RENTAL_PRICES.macbook.monthly), featured: true },
   { name: "Epson L3210", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp100.000", weekly: "Rp500.000", monthly: "Rp1.500.000" },
   { name: "HP Smart Tank 215", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp125.000", weekly: "Rp650.000", monthly: "Rp2.000.000" },
   { name: "ViewSonic SP3", category: "Proyektor", specs: "Portable · HD", daily: "Rp150.000", weekly: "Rp850.000", monthly: "Rp2.500.000" },

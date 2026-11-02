@@ -1,10 +1,11 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Calendar, Clock, MessageCircle } from "lucide-react";
 import { createServerFn } from "@tanstack/react-start";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { waLinkFor } from "@/lib/wa-link";
 import type { BlogPost, BlogSection } from "@/data/blog";
+import { getBlogRedirect } from "@/content/blog/redirects";
 
 const fetchBlogPostData = createServerFn({ method: "GET" })
   .inputValidator((slug: string) => slug)
@@ -27,10 +28,11 @@ const fetchBlogPostData = createServerFn({ method: "GET" })
     }));
     const allMeta = [...pilarMeta, ...postMeta];
 
-    const curatedSlugs = (post.related || [])
-      .filter((s) => s !== post!.slug && allMeta.some((m) => m.slug === s));
+    const currentPost = post;
+    const curatedSlugs = (currentPost.related || [])
+      .filter((s) => s !== currentPost.slug && allMeta.some((m) => m.slug === s));
     const fillerSlugs = allMeta
-      .filter((m) => m.slug !== post!.slug && m.category === post!.category && !curatedSlugs.includes(m.slug))
+      .filter((m) => m.slug !== currentPost.slug && m.category === currentPost.category && !curatedSlugs.includes(m.slug))
       .map((m) => m.slug);
     const chosen = [...curatedSlugs, ...fillerSlugs].slice(0, 3);
 
@@ -70,6 +72,8 @@ function coverFor(category: string, coverImage?: string) {
 
 export const Route = createFileRoute("/blog/$slug")({
   loader: async ({ params }) => {
+    const target = getBlogRedirect(params.slug);
+    if (target) throw redirect({ href: target, statusCode: 301 });
     const result = await fetchBlogPostData({ data: params.slug });
     if (!result) throw notFound();
     return result;
