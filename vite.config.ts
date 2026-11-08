@@ -14,6 +14,8 @@ export default defineConfig({
     router: { autoCodeSplitting: true },
   },
   nitro: {
-    preset: "node-server",
+    // Default to node-server (Netlify/self-host). On Vercel, set NITRO_PRESET=vercel
+    // so nitro emits the Vercel build output. Keeps non-Vercel builds unchanged.
+    preset: process.env.NITRO_PRESET || "node-server",
   },
 });
