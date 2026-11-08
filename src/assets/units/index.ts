@@ -1,28 +1,37 @@
-import thinkpad from "./thinkpad.png.asset.json";
-import vivobook from "./vivobook.png.asset.json";
-import redmibook from "./redmibook.png.asset.json";
-import acer from "./acer.png.asset.json";
-import macbook from "./macbook.png.asset.json";
-import epsonPrinter from "./epson-printer.png.asset.json";
-import hpPrinter from "./hp-printer.png.asset.json";
-import viewsonic from "./viewsonic.png.asset.json";
-import epsonProjE600 from "./epson-projector-e600.png.asset.json";
-import epsonProjX600 from "./epson-projector-x600.png.asset.json";
-
 // Map unit name -> product photo URL
+//
+// Foto stok bebas-pakai (Unsplash License, boleh komersial) dipakai sementara
+// menggantikan foto unit asli yang sebelumnya tersimpan di aset Lovable dan
+// tidak ikut terbawa ke hosting lain. Untuk mengembalikan foto unit asli,
+// taruh file-nya di /public/units dan ganti URL di bawah ke path lokal
+// (contoh: "/units/thinkpad.png"), seperti "HP 14s".
+
+const LAPTOP_A =
+  "https://images.unsplash.com/photo-1603056359772-8803d3eae79a?w=800&q=80&auto=format&fit=crop";
+const LAPTOP_B =
+  "https://images.unsplash.com/photo-1709721835709-a7440f7f99e6?w=800&q=80&auto=format&fit=crop";
+const LAPTOP_C =
+  "https://images.unsplash.com/photo-1709721821603-8f0f11ce3e0d?w=800&q=80&auto=format&fit=crop";
+const MACBOOK =
+  "https://images.unsplash.com/photo-1607603289612-71ae134aa577?w=800&q=80&auto=format&fit=crop";
+const PRINTER =
+  "https://images.unsplash.com/photo-1710857679450-ecd7945dd4bd?w=800&q=80&auto=format&fit=crop";
+const PROJECTOR =
+  "https://images.unsplash.com/photo-1728771175581-3cb1e21fac92?w=800&q=80&auto=format&fit=crop";
+
 export const unitImages: Record<string, string> = {
   // Foto milik sendiri, latar sudah dihapus (disimpan di /public/units)
   "HP 14s": "/units/hp-14s.png",
-  "Lenovo ThinkPad": thinkpad.url,
-  "ASUS VivoBook": vivobook.url,
-  "RedmiBook 15": redmibook.url,
-  "Acer Aspire 5": acer.url,
-  "MacBook Air M1": macbook.url,
-  "Epson L3210": epsonPrinter.url,
-  "HP Smart Tank 215": hpPrinter.url,
-  "ViewSonic SP3": viewsonic.url,
-  "Epson EB-E600": epsonProjE600.url,
-  "Epson EB-X600": epsonProjX600.url,
+  "Lenovo ThinkPad": LAPTOP_A,
+  "ASUS VivoBook": LAPTOP_B,
+  "RedmiBook 15": LAPTOP_C,
+  "Acer Aspire 5": LAPTOP_B,
+  "MacBook Air M1": MACBOOK,
+  "Epson L3210": PRINTER,
+  "HP Smart Tank 215": PRINTER,
+  "ViewSonic SP3": PROJECTOR,
+  "Epson EB-E600": PROJECTOR,
+  "Epson EB-X600": PROJECTOR,
 };
 
 export const getUnitImage = (name: string): string | undefined => unitImages[name];
