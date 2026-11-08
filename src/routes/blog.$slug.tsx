@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect, type ErrorComponentProps } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight, Calendar, Clock, MessageCircle } from "lucide-react";
 import { createServerFn } from "@tanstack/react-start";
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
@@ -141,10 +141,10 @@ export const Route = createFileRoute("/blog/$slug")({
       </Link>
     </div>
   ),
-  errorComponent: ({ error }) => (
+  errorComponent: ({ error }: ErrorComponentProps) => (
     <div className="mx-auto max-w-2xl px-6 py-24 text-center">
       <h1 className="text-3xl font-bold">Terjadi kesalahan</h1>
-      <p className="mt-2 text-muted-foreground">{error.message}</p>
+      <p className="mt-2 text-muted-foreground">{error instanceof Error ? error.message : String(error)}</p>
     </div>
   ),
   component: BlogPostPage,
