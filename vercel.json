@@ -1,0 +1,20 @@
+{
+  "redirects": [
+    { "source": "/blog/sewa-laptop-jakarta-40-ribu", "destination": "/blog/sewa-laptop-jakarta-murah", "permanent": true },
+    { "source": "/blog/sewa-laptop-jakarta-49-ribu", "destination": "/blog/sewa-laptop-jakarta-murah", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/_build/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(.*)\\.ico",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+    }
+  ]
+}
