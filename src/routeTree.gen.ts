@@ -9,87 +9,106 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
-import { Route as SewaMacbookRouteImport } from './routes/sewa-macbook'
-import { Route as SewaLaptopTangerangRouteImport } from './routes/sewa-laptop-tangerang'
-import { Route as SewaLaptopRawamangunRouteImport } from './routes/sewa-laptop-rawamangun'
-import { Route as SewaLaptopPulogadungRouteImport } from './routes/sewa-laptop-pulogadung'
-import { Route as SewaLaptopMatramanRouteImport } from './routes/sewa-laptop-matraman'
-import { Route as SewaLaptopMahasiswaJakartaRouteImport } from './routes/sewa-laptop-mahasiswa-jakarta'
-import { Route as SewaLaptopJogjaRouteImport } from './routes/sewa-laptop-jogja'
-import { Route as SewaLaptopJakartaUtaraRouteImport } from './routes/sewa-laptop-jakarta-utara'
-import { Route as SewaLaptopJakartaTimurRouteImport } from './routes/sewa-laptop-jakarta-timur'
-import { Route as SewaLaptopJakartaSelatanRouteImport } from './routes/sewa-laptop-jakarta-selatan'
-import { Route as SewaLaptopJakartaPusatRouteImport } from './routes/sewa-laptop-jakarta-pusat'
-import { Route as SewaLaptopJakartaBaratRouteImport } from './routes/sewa-laptop-jakarta-barat'
-import { Route as SewaLaptopJakartaRouteImport } from './routes/sewa-laptop-jakarta'
-import { Route as SewaLaptopHarianJakartaRouteImport } from './routes/sewa-laptop-harian-jakarta'
-import { Route as SewaLaptopEventJakartaRouteImport } from './routes/sewa-laptop-event-jakarta'
-import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
-import { Route as SewaLaptopCempakaPutihRouteImport } from './routes/sewa-laptop-cempaka-putih'
-import { Route as SewaLaptopBogorRouteImport } from './routes/sewa-laptop-bogor'
-import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
-import { Route as SewaLaptopBandungRouteImport } from './routes/sewa-laptop-bandung'
-import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-jakarta'
-import { Route as MasukRouteImport } from './routes/masuk'
-import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as MasukRouteImport } from './routes/masuk'
+import { Route as RentalLaptopJakartaRouteImport } from './routes/rental-laptop-jakarta'
+import { Route as SewaLaptopBandungRouteImport } from './routes/sewa-laptop-bandung'
+import { Route as SewaLaptopBekasiRouteImport } from './routes/sewa-laptop-bekasi'
+import { Route as SewaLaptopBogorRouteImport } from './routes/sewa-laptop-bogor'
+import { Route as SewaLaptopCempakaPutihRouteImport } from './routes/sewa-laptop-cempaka-putih'
+import { Route as SewaLaptopDepokRouteImport } from './routes/sewa-laptop-depok'
+import { Route as SewaLaptopEventJakartaRouteImport } from './routes/sewa-laptop-event-jakarta'
+import { Route as SewaLaptopHarianJakartaRouteImport } from './routes/sewa-laptop-harian-jakarta'
+import { Route as SewaLaptopJakartaRouteImport } from './routes/sewa-laptop-jakarta'
+import { Route as SewaLaptopJakartaBaratRouteImport } from './routes/sewa-laptop-jakarta-barat'
+import { Route as SewaLaptopJakartaPusatRouteImport } from './routes/sewa-laptop-jakarta-pusat'
+import { Route as SewaLaptopJakartaSelatanRouteImport } from './routes/sewa-laptop-jakarta-selatan'
+import { Route as SewaLaptopJakartaTimurRouteImport } from './routes/sewa-laptop-jakarta-timur'
+import { Route as SewaLaptopJakartaUtaraRouteImport } from './routes/sewa-laptop-jakarta-utara'
+import { Route as SewaLaptopJogjaRouteImport } from './routes/sewa-laptop-jogja'
+import { Route as SewaLaptopMahasiswaJakartaRouteImport } from './routes/sewa-laptop-mahasiswa-jakarta'
+import { Route as SewaLaptopMatramanRouteImport } from './routes/sewa-laptop-matraman'
+import { Route as SewaLaptopPulogadungRouteImport } from './routes/sewa-laptop-pulogadung'
+import { Route as SewaLaptopRawamangunRouteImport } from './routes/sewa-laptop-rawamangun'
+import { Route as SewaLaptopTangerangRouteImport } from './routes/sewa-laptop-tangerang'
+import { Route as SewaMacbookRouteImport } from './routes/sewa-macbook'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as TtdTokenRouteImport } from './routes/ttd.$token'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as ApiPublicPingSitemapRouteImport } from './routes/api/public/ping-sitemap'
-import { Route as ApiPublicIndexnowAllRouteImport } from './routes/api/public/indexnow-all'
+import { Route as TtdTokenRouteImport } from './routes/ttd.$token'
 import { Route as ApiPublicIndexnowRouteImport } from './routes/api/public/indexnow'
+import { Route as ApiPublicIndexnowAllRouteImport } from './routes/api/public/indexnow-all'
+import { Route as ApiPublicPingSitemapRouteImport } from './routes/api/public/ping-sitemap'
 
-const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
-  id: '/sitemap.xml',
-  path: '/sitemap.xml',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaMacbookRoute = SewaMacbookRouteImport.update({
-  id: '/sewa-macbook',
-  path: '/sewa-macbook',
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopTangerangRoute = SewaLaptopTangerangRouteImport.update({
-  id: '/sewa-laptop-tangerang',
-  path: '/sewa-laptop-tangerang',
+const MasukRoute = MasukRouteImport.update({
+  id: '/masuk',
+  path: '/masuk',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopRawamangunRoute = SewaLaptopRawamangunRouteImport.update({
-  id: '/sewa-laptop-rawamangun',
-  path: '/sewa-laptop-rawamangun',
+const RentalLaptopJakartaRoute = RentalLaptopJakartaRouteImport.update({
+  id: '/rental-laptop-jakarta',
+  path: '/rental-laptop-jakarta',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopPulogadungRoute = SewaLaptopPulogadungRouteImport.update({
-  id: '/sewa-laptop-pulogadung',
-  path: '/sewa-laptop-pulogadung',
+const SewaLaptopBandungRoute = SewaLaptopBandungRouteImport.update({
+  id: '/sewa-laptop-bandung',
+  path: '/sewa-laptop-bandung',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopMatramanRoute = SewaLaptopMatramanRouteImport.update({
-  id: '/sewa-laptop-matraman',
-  path: '/sewa-laptop-matraman',
+const SewaLaptopBekasiRoute = SewaLaptopBekasiRouteImport.update({
+  id: '/sewa-laptop-bekasi',
+  path: '/sewa-laptop-bekasi',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopMahasiswaJakartaRoute =
-  SewaLaptopMahasiswaJakartaRouteImport.update({
-    id: '/sewa-laptop-mahasiswa-jakarta',
-    path: '/sewa-laptop-mahasiswa-jakarta',
-    getParentRoute: () => rootRouteImport,
-  } as any)
-const SewaLaptopJogjaRoute = SewaLaptopJogjaRouteImport.update({
-  id: '/sewa-laptop-jogja',
-  path: '/sewa-laptop-jogja',
+const SewaLaptopBogorRoute = SewaLaptopBogorRouteImport.update({
+  id: '/sewa-laptop-bogor',
+  path: '/sewa-laptop-bogor',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopJakartaUtaraRoute = SewaLaptopJakartaUtaraRouteImport.update({
-  id: '/sewa-laptop-jakarta-utara',
-  path: '/sewa-laptop-jakarta-utara',
+const SewaLaptopCempakaPutihRoute = SewaLaptopCempakaPutihRouteImport.update({
+  id: '/sewa-laptop-cempaka-putih',
+  path: '/sewa-laptop-cempaka-putih',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopJakartaTimurRoute = SewaLaptopJakartaTimurRouteImport.update({
-  id: '/sewa-laptop-jakarta-timur',
-  path: '/sewa-laptop-jakarta-timur',
+const SewaLaptopDepokRoute = SewaLaptopDepokRouteImport.update({
+  id: '/sewa-laptop-depok',
+  path: '/sewa-laptop-depok',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopEventJakartaRoute = SewaLaptopEventJakartaRouteImport.update({
+  id: '/sewa-laptop-event-jakarta',
+  path: '/sewa-laptop-event-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopHarianJakartaRoute = SewaLaptopHarianJakartaRouteImport.update({
+  id: '/sewa-laptop-harian-jakarta',
+  path: '/sewa-laptop-harian-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaRoute = SewaLaptopJakartaRouteImport.update({
+  id: '/sewa-laptop-jakarta',
+  path: '/sewa-laptop-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaBaratRoute = SewaLaptopJakartaBaratRouteImport.update({
+  id: '/sewa-laptop-jakarta-barat',
+  path: '/sewa-laptop-jakarta-barat',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaLaptopJakartaPusatRoute = SewaLaptopJakartaPusatRouteImport.update({
+  id: '/sewa-laptop-jakarta-pusat',
+  path: '/sewa-laptop-jakarta-pusat',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SewaLaptopJakartaSelatanRoute =
@@ -98,74 +117,55 @@ const SewaLaptopJakartaSelatanRoute =
     path: '/sewa-laptop-jakarta-selatan',
     getParentRoute: () => rootRouteImport,
   } as any)
-const SewaLaptopJakartaPusatRoute = SewaLaptopJakartaPusatRouteImport.update({
-  id: '/sewa-laptop-jakarta-pusat',
-  path: '/sewa-laptop-jakarta-pusat',
+const SewaLaptopJakartaTimurRoute = SewaLaptopJakartaTimurRouteImport.update({
+  id: '/sewa-laptop-jakarta-timur',
+  path: '/sewa-laptop-jakarta-timur',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopJakartaBaratRoute = SewaLaptopJakartaBaratRouteImport.update({
-  id: '/sewa-laptop-jakarta-barat',
-  path: '/sewa-laptop-jakarta-barat',
+const SewaLaptopJakartaUtaraRoute = SewaLaptopJakartaUtaraRouteImport.update({
+  id: '/sewa-laptop-jakarta-utara',
+  path: '/sewa-laptop-jakarta-utara',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopJakartaRoute = SewaLaptopJakartaRouteImport.update({
-  id: '/sewa-laptop-jakarta',
-  path: '/sewa-laptop-jakarta',
+const SewaLaptopJogjaRoute = SewaLaptopJogjaRouteImport.update({
+  id: '/sewa-laptop-jogja',
+  path: '/sewa-laptop-jogja',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopHarianJakartaRoute = SewaLaptopHarianJakartaRouteImport.update({
-  id: '/sewa-laptop-harian-jakarta',
-  path: '/sewa-laptop-harian-jakarta',
+const SewaLaptopMahasiswaJakartaRoute =
+  SewaLaptopMahasiswaJakartaRouteImport.update({
+    id: '/sewa-laptop-mahasiswa-jakarta',
+    path: '/sewa-laptop-mahasiswa-jakarta',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const SewaLaptopMatramanRoute = SewaLaptopMatramanRouteImport.update({
+  id: '/sewa-laptop-matraman',
+  path: '/sewa-laptop-matraman',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopEventJakartaRoute = SewaLaptopEventJakartaRouteImport.update({
-  id: '/sewa-laptop-event-jakarta',
-  path: '/sewa-laptop-event-jakarta',
+const SewaLaptopPulogadungRoute = SewaLaptopPulogadungRouteImport.update({
+  id: '/sewa-laptop-pulogadung',
+  path: '/sewa-laptop-pulogadung',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopDepokRoute = SewaLaptopDepokRouteImport.update({
-  id: '/sewa-laptop-depok',
-  path: '/sewa-laptop-depok',
+const SewaLaptopRawamangunRoute = SewaLaptopRawamangunRouteImport.update({
+  id: '/sewa-laptop-rawamangun',
+  path: '/sewa-laptop-rawamangun',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopCempakaPutihRoute = SewaLaptopCempakaPutihRouteImport.update({
-  id: '/sewa-laptop-cempaka-putih',
-  path: '/sewa-laptop-cempaka-putih',
+const SewaLaptopTangerangRoute = SewaLaptopTangerangRouteImport.update({
+  id: '/sewa-laptop-tangerang',
+  path: '/sewa-laptop-tangerang',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopBogorRoute = SewaLaptopBogorRouteImport.update({
-  id: '/sewa-laptop-bogor',
-  path: '/sewa-laptop-bogor',
+const SewaMacbookRoute = SewaMacbookRouteImport.update({
+  id: '/sewa-macbook',
+  path: '/sewa-macbook',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SewaLaptopBekasiRoute = SewaLaptopBekasiRouteImport.update({
-  id: '/sewa-laptop-bekasi',
-  path: '/sewa-laptop-bekasi',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SewaLaptopBandungRoute = SewaLaptopBandungRouteImport.update({
-  id: '/sewa-laptop-bandung',
-  path: '/sewa-laptop-bandung',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RentalLaptopJakartaRoute = RentalLaptopJakartaRouteImport.update({
-  id: '/rental-laptop-jakarta',
-  path: '/rental-laptop-jakarta',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const MasukRoute = MasukRouteImport.update({
-  id: '/masuk',
-  path: '/masuk',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminRoute = AdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -173,19 +173,19 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const TtdTokenRoute = TtdTokenRouteImport.update({
-  id: '/ttd/$token',
-  path: '/ttd/$token',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicPingSitemapRoute = ApiPublicPingSitemapRouteImport.update({
-  id: '/api/public/ping-sitemap',
-  path: '/api/public/ping-sitemap',
+const TtdTokenRoute = TtdTokenRouteImport.update({
+  id: '/ttd/$token',
+  path: '/ttd/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicIndexnowRoute = ApiPublicIndexnowRouteImport.update({
+  id: '/api/public/indexnow',
+  path: '/api/public/indexnow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicIndexnowAllRoute = ApiPublicIndexnowAllRouteImport.update({
@@ -193,9 +193,9 @@ const ApiPublicIndexnowAllRoute = ApiPublicIndexnowAllRouteImport.update({
   path: '/api/public/indexnow-all',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicIndexnowRoute = ApiPublicIndexnowRouteImport.update({
-  id: '/api/public/indexnow',
-  path: '/api/public/indexnow',
+const ApiPublicPingSitemapRoute = ApiPublicPingSitemapRouteImport.update({
+  id: '/api/public/ping-sitemap',
+  path: '/api/public/ping-sitemap',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -437,165 +437,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/sitemap.xml': {
-      id: '/sitemap.xml'
-      path: '/sitemap.xml'
-      fullPath: '/sitemap.xml'
-      preLoaderRoute: typeof SitemapDotxmlRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-macbook': {
-      id: '/sewa-macbook'
-      path: '/sewa-macbook'
-      fullPath: '/sewa-macbook'
-      preLoaderRoute: typeof SewaMacbookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-tangerang': {
-      id: '/sewa-laptop-tangerang'
-      path: '/sewa-laptop-tangerang'
-      fullPath: '/sewa-laptop-tangerang'
-      preLoaderRoute: typeof SewaLaptopTangerangRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-rawamangun': {
-      id: '/sewa-laptop-rawamangun'
-      path: '/sewa-laptop-rawamangun'
-      fullPath: '/sewa-laptop-rawamangun'
-      preLoaderRoute: typeof SewaLaptopRawamangunRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-pulogadung': {
-      id: '/sewa-laptop-pulogadung'
-      path: '/sewa-laptop-pulogadung'
-      fullPath: '/sewa-laptop-pulogadung'
-      preLoaderRoute: typeof SewaLaptopPulogadungRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-matraman': {
-      id: '/sewa-laptop-matraman'
-      path: '/sewa-laptop-matraman'
-      fullPath: '/sewa-laptop-matraman'
-      preLoaderRoute: typeof SewaLaptopMatramanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-mahasiswa-jakarta': {
-      id: '/sewa-laptop-mahasiswa-jakarta'
-      path: '/sewa-laptop-mahasiswa-jakarta'
-      fullPath: '/sewa-laptop-mahasiswa-jakarta'
-      preLoaderRoute: typeof SewaLaptopMahasiswaJakartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jogja': {
-      id: '/sewa-laptop-jogja'
-      path: '/sewa-laptop-jogja'
-      fullPath: '/sewa-laptop-jogja'
-      preLoaderRoute: typeof SewaLaptopJogjaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta-utara': {
-      id: '/sewa-laptop-jakarta-utara'
-      path: '/sewa-laptop-jakarta-utara'
-      fullPath: '/sewa-laptop-jakarta-utara'
-      preLoaderRoute: typeof SewaLaptopJakartaUtaraRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta-timur': {
-      id: '/sewa-laptop-jakarta-timur'
-      path: '/sewa-laptop-jakarta-timur'
-      fullPath: '/sewa-laptop-jakarta-timur'
-      preLoaderRoute: typeof SewaLaptopJakartaTimurRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta-selatan': {
-      id: '/sewa-laptop-jakarta-selatan'
-      path: '/sewa-laptop-jakarta-selatan'
-      fullPath: '/sewa-laptop-jakarta-selatan'
-      preLoaderRoute: typeof SewaLaptopJakartaSelatanRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta-pusat': {
-      id: '/sewa-laptop-jakarta-pusat'
-      path: '/sewa-laptop-jakarta-pusat'
-      fullPath: '/sewa-laptop-jakarta-pusat'
-      preLoaderRoute: typeof SewaLaptopJakartaPusatRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta-barat': {
-      id: '/sewa-laptop-jakarta-barat'
-      path: '/sewa-laptop-jakarta-barat'
-      fullPath: '/sewa-laptop-jakarta-barat'
-      preLoaderRoute: typeof SewaLaptopJakartaBaratRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-jakarta': {
-      id: '/sewa-laptop-jakarta'
-      path: '/sewa-laptop-jakarta'
-      fullPath: '/sewa-laptop-jakarta'
-      preLoaderRoute: typeof SewaLaptopJakartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-harian-jakarta': {
-      id: '/sewa-laptop-harian-jakarta'
-      path: '/sewa-laptop-harian-jakarta'
-      fullPath: '/sewa-laptop-harian-jakarta'
-      preLoaderRoute: typeof SewaLaptopHarianJakartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-event-jakarta': {
-      id: '/sewa-laptop-event-jakarta'
-      path: '/sewa-laptop-event-jakarta'
-      fullPath: '/sewa-laptop-event-jakarta'
-      preLoaderRoute: typeof SewaLaptopEventJakartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-depok': {
-      id: '/sewa-laptop-depok'
-      path: '/sewa-laptop-depok'
-      fullPath: '/sewa-laptop-depok'
-      preLoaderRoute: typeof SewaLaptopDepokRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-cempaka-putih': {
-      id: '/sewa-laptop-cempaka-putih'
-      path: '/sewa-laptop-cempaka-putih'
-      fullPath: '/sewa-laptop-cempaka-putih'
-      preLoaderRoute: typeof SewaLaptopCempakaPutihRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-bogor': {
-      id: '/sewa-laptop-bogor'
-      path: '/sewa-laptop-bogor'
-      fullPath: '/sewa-laptop-bogor'
-      preLoaderRoute: typeof SewaLaptopBogorRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-bekasi': {
-      id: '/sewa-laptop-bekasi'
-      path: '/sewa-laptop-bekasi'
-      fullPath: '/sewa-laptop-bekasi'
-      preLoaderRoute: typeof SewaLaptopBekasiRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sewa-laptop-bandung': {
-      id: '/sewa-laptop-bandung'
-      path: '/sewa-laptop-bandung'
-      fullPath: '/sewa-laptop-bandung'
-      preLoaderRoute: typeof SewaLaptopBandungRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/rental-laptop-jakarta': {
-      id: '/rental-laptop-jakarta'
-      path: '/rental-laptop-jakarta'
-      fullPath: '/rental-laptop-jakarta'
-      preLoaderRoute: typeof RentalLaptopJakartaRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/masuk': {
-      id: '/masuk'
-      path: '/masuk'
-      fullPath: '/masuk'
-      preLoaderRoute: typeof MasukRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -605,11 +451,165 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/masuk': {
+      id: '/masuk'
+      path: '/masuk'
+      fullPath: '/masuk'
+      preLoaderRoute: typeof MasukRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rental-laptop-jakarta': {
+      id: '/rental-laptop-jakarta'
+      path: '/rental-laptop-jakarta'
+      fullPath: '/rental-laptop-jakarta'
+      preLoaderRoute: typeof RentalLaptopJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-bandung': {
+      id: '/sewa-laptop-bandung'
+      path: '/sewa-laptop-bandung'
+      fullPath: '/sewa-laptop-bandung'
+      preLoaderRoute: typeof SewaLaptopBandungRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-bekasi': {
+      id: '/sewa-laptop-bekasi'
+      path: '/sewa-laptop-bekasi'
+      fullPath: '/sewa-laptop-bekasi'
+      preLoaderRoute: typeof SewaLaptopBekasiRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-bogor': {
+      id: '/sewa-laptop-bogor'
+      path: '/sewa-laptop-bogor'
+      fullPath: '/sewa-laptop-bogor'
+      preLoaderRoute: typeof SewaLaptopBogorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-cempaka-putih': {
+      id: '/sewa-laptop-cempaka-putih'
+      path: '/sewa-laptop-cempaka-putih'
+      fullPath: '/sewa-laptop-cempaka-putih'
+      preLoaderRoute: typeof SewaLaptopCempakaPutihRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-depok': {
+      id: '/sewa-laptop-depok'
+      path: '/sewa-laptop-depok'
+      fullPath: '/sewa-laptop-depok'
+      preLoaderRoute: typeof SewaLaptopDepokRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-event-jakarta': {
+      id: '/sewa-laptop-event-jakarta'
+      path: '/sewa-laptop-event-jakarta'
+      fullPath: '/sewa-laptop-event-jakarta'
+      preLoaderRoute: typeof SewaLaptopEventJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-harian-jakarta': {
+      id: '/sewa-laptop-harian-jakarta'
+      path: '/sewa-laptop-harian-jakarta'
+      fullPath: '/sewa-laptop-harian-jakarta'
+      preLoaderRoute: typeof SewaLaptopHarianJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta': {
+      id: '/sewa-laptop-jakarta'
+      path: '/sewa-laptop-jakarta'
+      fullPath: '/sewa-laptop-jakarta'
+      preLoaderRoute: typeof SewaLaptopJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-barat': {
+      id: '/sewa-laptop-jakarta-barat'
+      path: '/sewa-laptop-jakarta-barat'
+      fullPath: '/sewa-laptop-jakarta-barat'
+      preLoaderRoute: typeof SewaLaptopJakartaBaratRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-pusat': {
+      id: '/sewa-laptop-jakarta-pusat'
+      path: '/sewa-laptop-jakarta-pusat'
+      fullPath: '/sewa-laptop-jakarta-pusat'
+      preLoaderRoute: typeof SewaLaptopJakartaPusatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-selatan': {
+      id: '/sewa-laptop-jakarta-selatan'
+      path: '/sewa-laptop-jakarta-selatan'
+      fullPath: '/sewa-laptop-jakarta-selatan'
+      preLoaderRoute: typeof SewaLaptopJakartaSelatanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-timur': {
+      id: '/sewa-laptop-jakarta-timur'
+      path: '/sewa-laptop-jakarta-timur'
+      fullPath: '/sewa-laptop-jakarta-timur'
+      preLoaderRoute: typeof SewaLaptopJakartaTimurRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jakarta-utara': {
+      id: '/sewa-laptop-jakarta-utara'
+      path: '/sewa-laptop-jakarta-utara'
+      fullPath: '/sewa-laptop-jakarta-utara'
+      preLoaderRoute: typeof SewaLaptopJakartaUtaraRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-jogja': {
+      id: '/sewa-laptop-jogja'
+      path: '/sewa-laptop-jogja'
+      fullPath: '/sewa-laptop-jogja'
+      preLoaderRoute: typeof SewaLaptopJogjaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-mahasiswa-jakarta': {
+      id: '/sewa-laptop-mahasiswa-jakarta'
+      path: '/sewa-laptop-mahasiswa-jakarta'
+      fullPath: '/sewa-laptop-mahasiswa-jakarta'
+      preLoaderRoute: typeof SewaLaptopMahasiswaJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-matraman': {
+      id: '/sewa-laptop-matraman'
+      path: '/sewa-laptop-matraman'
+      fullPath: '/sewa-laptop-matraman'
+      preLoaderRoute: typeof SewaLaptopMatramanRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-pulogadung': {
+      id: '/sewa-laptop-pulogadung'
+      path: '/sewa-laptop-pulogadung'
+      fullPath: '/sewa-laptop-pulogadung'
+      preLoaderRoute: typeof SewaLaptopPulogadungRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-rawamangun': {
+      id: '/sewa-laptop-rawamangun'
+      path: '/sewa-laptop-rawamangun'
+      fullPath: '/sewa-laptop-rawamangun'
+      preLoaderRoute: typeof SewaLaptopRawamangunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-laptop-tangerang': {
+      id: '/sewa-laptop-tangerang'
+      path: '/sewa-laptop-tangerang'
+      fullPath: '/sewa-laptop-tangerang'
+      preLoaderRoute: typeof SewaLaptopTangerangRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-macbook': {
+      id: '/sewa-macbook'
+      path: '/sewa-macbook'
+      fullPath: '/sewa-macbook'
+      preLoaderRoute: typeof SewaMacbookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -619,13 +619,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ttd/$token': {
-      id: '/ttd/$token'
-      path: '/ttd/$token'
-      fullPath: '/ttd/$token'
-      preLoaderRoute: typeof TtdTokenRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -633,11 +626,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/ping-sitemap': {
-      id: '/api/public/ping-sitemap'
-      path: '/api/public/ping-sitemap'
-      fullPath: '/api/public/ping-sitemap'
-      preLoaderRoute: typeof ApiPublicPingSitemapRouteImport
+    '/ttd/$token': {
+      id: '/ttd/$token'
+      path: '/ttd/$token'
+      fullPath: '/ttd/$token'
+      preLoaderRoute: typeof TtdTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/indexnow': {
+      id: '/api/public/indexnow'
+      path: '/api/public/indexnow'
+      fullPath: '/api/public/indexnow'
+      preLoaderRoute: typeof ApiPublicIndexnowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/indexnow-all': {
@@ -647,11 +647,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicIndexnowAllRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/indexnow': {
-      id: '/api/public/indexnow'
-      path: '/api/public/indexnow'
-      fullPath: '/api/public/indexnow'
-      preLoaderRoute: typeof ApiPublicIndexnowRouteImport
+    '/api/public/ping-sitemap': {
+      id: '/api/public/ping-sitemap'
+      path: '/api/public/ping-sitemap'
+      fullPath: '/api/public/ping-sitemap'
+      preLoaderRoute: typeof ApiPublicPingSitemapRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
