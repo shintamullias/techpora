@@ -69,6 +69,8 @@ const products: Product[] = [
   { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   { name: "Acer Aspire 5", category: "Laptop", specs: "i5 · 8GB · SSD 256GB", daily: "Rp175.000", weekly: "Rp1.100.000", monthly: "Rp3.000.000" },
   { name: "MacBook Air M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: formatRupiah(RENTAL_PRICES.macbook.daily), weekly: formatRupiah(RENTAL_PRICES.macbook.weekly), monthly: formatRupiah(RENTAL_PRICES.macbook.monthly), featured: true },
+  { name: "MacBook Pro M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: formatRupiah(RENTAL_PRICES.macbookProM1.daily), weekly: formatRupiah(RENTAL_PRICES.macbookProM1.weekly), monthly: formatRupiah(RENTAL_PRICES.macbookProM1.monthly) },
+  { name: "MacBook Neo", category: "Laptop", specs: "A18 Pro · 8GB · SSD 256GB", daily: formatRupiah(RENTAL_PRICES.macbookNeo.daily), weekly: formatRupiah(RENTAL_PRICES.macbookNeo.weekly), monthly: formatRupiah(RENTAL_PRICES.macbookNeo.monthly) },
   { name: "Epson L3210", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp100.000", weekly: "Rp500.000", monthly: "Rp1.500.000" },
   { name: "HP Smart Tank 215", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp125.000", weekly: "Rp650.000", monthly: "Rp2.000.000" },
   { name: "ViewSonic SP3", category: "Proyektor", specs: "Portable · HD", daily: "Rp150.000", weekly: "Rp850.000", monthly: "Rp2.500.000" },

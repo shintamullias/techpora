@@ -3,12 +3,13 @@ import { MessageCircle, Check, ArrowLeft, Palette, Code2, Video, Sparkles } from
 import logoAsset from "@/assets/techpora-logo.png.asset.json";
 import { Button } from "@/components/ui/button";
 import { buildWaSimple, waLink } from "@/lib/wa";
+import { RENTAL_PRICES, formatRupiah } from "@/data/rental-prices";
 
 const SITE_URL = "https://techpora.id";
 const SLUG = "sewa-macbook";
-const TITLE = "Sewa MacBook Jakarta — Air M1 Harian & Bulanan";
+const TITLE = "Sewa MacBook Jakarta — Air M1, Pro M1 & Neo";
 const DESC =
-  "Sewa MacBook di Jakarta untuk desainer, developer, dan pekerja kreatif. MacBook Air M1 ready — harian, mingguan, bulanan. Antar-jemput area Jabodetabek.";
+  "Sewa MacBook di Jakarta untuk desainer, developer, dan pekerja kreatif. MacBook Air M1, MacBook Pro M1, dan MacBook Neo ready — harian, mingguan, bulanan. Antar-jemput area Jabodetabek.";
 
 const useCases = [
   {
@@ -44,8 +45,8 @@ const specs = [
 
 const faqs = [
   {
-    q: "Berapa harga sewa MacBook Air M1 di Techpora?",
-    a: "Rp250.000 per hari, Rp1.500.000 per minggu, Rp4.500.000 per bulan. Semakin panjang durasi semakin hemat.",
+    q: "Berapa harga sewa MacBook di Techpora?",
+    a: `MacBook Air M1 ${formatRupiah(RENTAL_PRICES.macbook.daily)}/hari, MacBook Pro M1 ${formatRupiah(RENTAL_PRICES.macbookProM1.daily)}/hari, MacBook Neo ${formatRupiah(RENTAL_PRICES.macbookNeo.daily)}/hari. Paket mingguan dan bulanan lebih hemat, lihat tabel harga di atas.`,
   },
   {
     q: "Apa syarat sewa MacBook?",
@@ -61,7 +62,13 @@ const faqs = [
   },
 ];
 
-const waMacbook = buildWaSimple("MacBook Air M1");
+const waMacbook = buildWaSimple("MacBook");
+
+const models = [
+  { name: "MacBook Air M1", spec: "M1 · 8GB · SSD 256GB", note: "Ringan dan hemat baterai, favorit freelancer dan meeting klien.", p: RENTAL_PRICES.macbook },
+  { name: "MacBook Pro M1", spec: "M1 · 8GB · SSD 256GB", note: "Pendingin aktif dan layar lebih terang, nyaman untuk render dan coding lama.", p: RENTAL_PRICES.macbookProM1 },
+  { name: "MacBook Neo", spec: "A18 Pro · 8GB · SSD 256GB", note: "MacBook generasi baru yang paling terjangkau, cukup untuk kerja harian dan presentasi.", p: RENTAL_PRICES.macbookNeo },
+];
 
 export const Route = createFileRoute("/sewa-macbook")({
   head: () => ({
@@ -71,7 +78,7 @@ export const Route = createFileRoute("/sewa-macbook")({
       {
         name: "keywords",
         content:
-          "sewa macbook, sewa macbook jakarta, rental macbook, sewa macbook air m1, sewa laptop apple, rental macbook harian, sewa macbook bulanan",
+          "sewa macbook, sewa macbook jakarta, rental macbook, sewa macbook air m1, sewa macbook pro m1, sewa macbook neo, sewa laptop apple, rental macbook harian, sewa macbook bulanan",
       },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { property: "og:title", content: TITLE },
@@ -89,16 +96,16 @@ export const Route = createFileRoute("/sewa-macbook")({
         children: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Product",
-          name: "Sewa MacBook Air M1 — Techpora",
+          name: "Sewa MacBook Jakarta — Techpora",
           description: DESC,
           brand: { "@type": "Brand", name: "Apple" },
           category: "Laptop Rental",
           offers: {
             "@type": "AggregateOffer",
             priceCurrency: "IDR",
-            lowPrice: "250000",
-            highPrice: "4500000",
-            offerCount: 3,
+            lowPrice: String(RENTAL_PRICES.macbookNeo.daily),
+            highPrice: String(RENTAL_PRICES.macbookProM1.monthly),
+            offerCount: 9,
             availability: "https://schema.org/InStock",
             seller: {
               "@type": "LocalBusiness",
@@ -156,12 +163,12 @@ function MacbookPage() {
             </Link>
             <p className="text-sm font-semibold text-primary">Rental MacBook — Jakarta & Jabodetabek</p>
             <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">
-              Sewa MacBook Jakarta — MacBook Air M1 Ready Pakai
+              Sewa MacBook Jakarta — Air M1, Pro M1 & Neo Ready Pakai
             </h1>
             <p className="mt-4 max-w-3xl text-lg text-muted-foreground">
               Kebutuhan MacBook untuk proyek desain, coding di Apple Silicon, editing
-              video, atau presentasi klien? Techpora menyediakan MacBook Air M1
-              untuk sewa harian, mingguan, dan bulanan di Jakarta dan sekitarnya —
+              video, atau presentasi klien? Techpora menyediakan MacBook Air M1,
+              MacBook Pro M1, dan MacBook Neo untuk sewa harian, mingguan, dan bulanan di Jakarta dan sekitarnya —
               tanpa perlu commit beli unit baru.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
@@ -220,23 +227,28 @@ function MacbookPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-6">
-              <p className="text-sm font-semibold text-primary">Harga sewa</p>
-              <h3 className="mt-1 text-2xl font-bold">MacBook Air M1</h3>
-              <div className="mt-5 space-y-3">
-                <PriceRow label="Harian" price="Rp250.000" />
-                <PriceRow label="Mingguan" price="Rp1.500.000" hint="Hemat vs harian" />
-                <PriceRow label="Bulanan" price="Rp4.500.000" hint="Paling hemat" highlight />
-              </div>
-              <a href={waLink(waMacbook)} target="_blank" rel="noopener noreferrer" className="mt-6 block">
-                <Button className="w-full gap-2 rounded-full bg-primary hover:bg-primary/90">
-                  <MessageCircle className="h-4 w-4" />
-                  Pesan MacBook via WhatsApp
-                </Button>
-              </a>
-              <p className="mt-3 text-xs text-muted-foreground">
-                Ketersediaan dinamis — konfirmasi via WhatsApp untuk memastikan
-                unit ready pada tanggal yang Anda butuhkan.
+            <div className="space-y-4">
+              {models.map((m) => (
+                <div key={m.name} className="rounded-2xl border border-border bg-card p-6">
+                  <p className="text-sm font-semibold text-primary">Harga sewa</p>
+                  <h3 className="mt-1 text-2xl font-bold">{m.name}</h3>
+                  <p className="text-xs text-muted-foreground">{m.spec}</p>
+                  <p className="mt-2 text-sm text-muted-foreground">{m.note}</p>
+                  <div className="mt-4 space-y-3">
+                    <PriceRow label="Harian" price={formatRupiah(m.p.daily)} />
+                    <PriceRow label="Mingguan" price={formatRupiah(m.p.weekly)} hint="Hemat vs harian" />
+                    <PriceRow label="Bulanan" price={formatRupiah(m.p.monthly)} hint="Paling hemat" highlight />
+                  </div>
+                  <a href={waLink(buildWaSimple(m.name))} target="_blank" rel="noopener noreferrer" className="mt-5 block">
+                    <Button className="w-full gap-2 rounded-full bg-primary hover:bg-primary/90">
+                      <MessageCircle className="h-4 w-4" />
+                      Pesan {m.name}
+                    </Button>
+                  </a>
+                </div>
+              ))}
+              <p className="text-xs text-muted-foreground">
+                Ketersediaan dinamis — konfirmasi via WhatsApp untuk memastikan unit ready pada tanggal yang Anda butuhkan.
               </p>
             </div>
           </div>
