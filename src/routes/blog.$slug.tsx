@@ -16,8 +16,10 @@ const fetchBlogPostData = createServerFn({ method: "GET" })
     const { postMeta, loadPost } = await import("@/content/blog");
 
     // Cari post: pilar dulu, lalu lazy-load dari generated.
+    // `posts` juga berisi entri generated versi RINGAN (tanpa sections), jadi
+    // hanya dipakai bila isi lengkapnya ada; selain itu muat lewat loadPost().
     let post: BlogPost | undefined = posts.find((p) => p.slug === slug);
-    if (!post) post = await loadPost(slug);
+    if (!post || !Array.isArray(post.sections)) post = await loadPost(slug);
     if (!post) return null;
 
     // Related: pakai metadata RINGAN (tanpa sections) untuk memilih,
@@ -38,7 +40,10 @@ const fetchBlogPostData = createServerFn({ method: "GET" })
 
     const related = (
       await Promise.all(
-        chosen.map(async (s) => posts.find((p) => p.slug === s) ?? (await loadPost(s))),
+        chosen.map(async (s) => {
+          const p = posts.find((x) => x.slug === s);
+          return p && Array.isArray(p.sections) ? p : await loadPost(s);
+        }),
       )
     ).filter((p): p is BlogPost => Boolean(p));
 
