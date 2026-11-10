@@ -22,6 +22,8 @@ export const Route = createFileRoute("/sitemap.xml")({
           { path: "/sewa-laptop-jakarta", changefreq: "weekly", priority: "0.95" },
           { path: "/rental-laptop-jakarta", changefreq: "weekly", priority: "0.9" },
           { path: "/sewa-macbook", changefreq: "monthly", priority: "0.8" },
+          { path: "/sewa-printer-jakarta", changefreq: "monthly", priority: "0.8" },
+          { path: "/sewa-proyektor-jakarta", changefreq: "monthly", priority: "0.8" },
           { path: "/blog", changefreq: "weekly", priority: "0.8" },
           ...areas.map<SitemapEntry>((a) => ({
             path: `/${a.slug}`,

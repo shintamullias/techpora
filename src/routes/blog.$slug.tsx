@@ -267,6 +267,24 @@ function BlogPostPage() {
               </a>
             </div>
           </div>
+
+          <nav aria-label="Layanan Techpora" className="mt-8 rounded-2xl border border-border bg-card p-6">
+            <h3 className="text-lg font-semibold">Layanan Techpora</h3>
+            <div className="mt-3 flex flex-wrap gap-2 text-sm">
+              {[
+                ["/sewa-laptop-jakarta", "Sewa Laptop Jakarta"],
+                ["/sewa-laptop-harian-jakarta", "Sewa Laptop Harian"],
+                ["/sewa-laptop-jakarta-timur", "Sewa Laptop Jakarta Timur"],
+                ["/sewa-macbook", "Sewa MacBook"],
+                ["/sewa-printer-jakarta", "Sewa Printer"],
+                ["/sewa-proyektor-jakarta", "Sewa Proyektor"],
+              ].map(([to, label]) => (
+                <a key={to} href={to} className="rounded-full border border-border px-4 py-2 hover:border-primary/50 hover:text-primary">
+                  {label}
+                </a>
+              ))}
+            </div>
+          </nav>
         </article>
 
         {related.length > 0 && (

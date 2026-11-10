@@ -71,7 +71,7 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-jakarta-timur",
     area: "Jakarta Timur",
     areaShort: "Jaktim",
-    title: "Sewa & Rental Laptop Jakarta Timur — Murah, Cepat",
+    title: "Sewa Laptop Jakarta Timur Harian — Murah, Cepat | Techpora",
     metaDescription:
       "Solusi rental laptop murah dan cepat di Jakarta Timur. Basis di Rawamangun, ambil langsung tanpa ongkir atau kirim <1 jam. Mulai Rp79rb, tanpa deposit.",
     keywords: "sewa laptop jakarta timur, rental laptop jakarta timur, solusi rental laptop murah dan cepat, sewa laptop rawamangun, rental laptop jaktim, sewa laptop cakung, sewa laptop pulogadung, sewa laptop duren sawit",

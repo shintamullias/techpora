@@ -143,23 +143,23 @@ export const Route = createFileRoute("/")({
   loader: () => fetchLatestPosts(),
   head: () => ({
     meta: [
-      { title: "Sewa / Rental Laptop Jakarta - Techpora.id" },
+      { title: "Sewa Laptop Jakarta Harian, Tanpa Deposit | Techpora.id" },
       {
         name: "description",
         content:
-          "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event.",
+          "Sewa laptop Jakarta harian mulai Rp79rb, tanpa deposit. Laptop, printer & proyektor siap pakai, antar cepat dari Rawamangun untuk mahasiswa, kantor, dan event.",
       },
       { name: "keywords", content: "sewa laptop jakarta, rental laptop jakarta, sewa laptop harian, sewa laptop bulanan, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
-      { property: "og:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
-      { property: "og:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
+      { property: "og:title", content: "Sewa Laptop Jakarta Harian, Tanpa Deposit | Techpora.id" },
+      { property: "og:description", content: "Sewa laptop Jakarta harian mulai Rp79rb, tanpa deposit. Laptop, printer & proyektor siap pakai, antar cepat dari Rawamangun untuk mahasiswa, kantor, dan event." },
       { property: "og:url", content: `${SITE_URL}/` },
       { property: "og:type", content: "website" },
       { property: "og:image", content: `${SITE_URL}/og-image.jpg` },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
-      { name: "twitter:title", content: "Sewa / Rental Laptop Jakarta - Techpora.id" },
-      { name: "twitter:description", content: "Sewa laptop, printer & proyektor di Jakarta. Harian, mingguan, bulanan. Unit siap pakai, pengiriman cepat untuk mahasiswa, kantor, dan event." },
+      { name: "twitter:title", content: "Sewa Laptop Jakarta Harian, Tanpa Deposit | Techpora.id" },
+      { name: "twitter:description", content: "Sewa laptop Jakarta harian mulai Rp79rb, tanpa deposit. Laptop, printer & proyektor siap pakai, antar cepat dari Rawamangun untuk mahasiswa, kantor, dan event." },
       { name: "twitter:image", content: `${SITE_URL}/og-image.jpg` },
     ],
 
@@ -926,6 +926,15 @@ function Index() {
               {navLinks.map((l) => (
                 <li key={l.href}><a href={l.href} className="hover:text-foreground">{l.label}</a></li>
               ))}
+            </ul>
+            <h4 className="mt-6 text-sm font-semibold text-foreground">Layanan</h4>
+            <ul className="mt-4 grid grid-cols-2 gap-2 text-sm text-muted-foreground">
+              <li><a href="/sewa-laptop-jakarta" className="hover:text-foreground">Sewa Laptop Jakarta</a></li>
+              <li><a href="/sewa-laptop-jakarta-timur" className="hover:text-foreground">Laptop Jakarta Timur</a></li>
+              <li><a href="/sewa-macbook" className="hover:text-foreground">Sewa MacBook</a></li>
+              <li><a href="/sewa-printer-jakarta" className="hover:text-foreground">Sewa Printer</a></li>
+              <li><a href="/sewa-proyektor-jakarta" className="hover:text-foreground">Sewa Proyektor</a></li>
+              <li><a href="/sewa-laptop-harian-jakarta" className="hover:text-foreground">Sewa Laptop Harian</a></li>
             </ul>
           </div>
         </div>
