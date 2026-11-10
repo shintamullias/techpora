@@ -317,7 +317,7 @@ function Index() {
       <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <a href="#beranda" className="flex items-center gap-2">
-            <img src={logoAsset.url} alt="Techpora.id" className="h-11 w-auto" />
+            <img src={logoAsset.url} alt="Techpora.id" className="h-14 w-auto" />
           </a>
           <nav className="hidden items-center gap-7 lg:flex">
             {navLinks.map((l) => (
@@ -900,7 +900,7 @@ function Index() {
       <footer className="border-t border-border bg-background">
         <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 lg:grid-cols-3 lg:px-8">
           <div>
-            <img src={logoAsset.url} alt="Techpora.id" className="h-11 w-auto" />
+            <img src={logoAsset.url} alt="Techpora.id" className="h-14 w-auto" />
             <p className="mt-4 max-w-xs text-sm text-muted-foreground">Sewa Laptop, Printer & Proyektor • Mudah • Cepat • Terpercaya</p>
           </div>
           <div>

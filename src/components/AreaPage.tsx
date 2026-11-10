@@ -13,7 +13,7 @@ export function AreaPage({ area }: { area: AreaData }) {
       <header className="sticky top-0 z-50 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <Link to="/" className="flex items-center gap-2">
-            <img src={logoAsset.url} alt="Techpora.id" className="h-11 w-auto" />
+            <img src={logoAsset.url} alt="Techpora.id" className="h-14 w-auto" />
           </Link>
           <nav className="hidden items-center gap-6 lg:flex text-sm font-medium text-muted-foreground">
             <Link to="/" className="hover:text-foreground">Beranda</Link>
