@@ -8,6 +8,8 @@ export const unitImages: Record<string, string> = {
   "RedmiBook 15": "/units/redmibook.png",
   "Acer Aspire 5": "/units/acer.png",
   "MacBook Air M1": "/units/macbook.png",
+  "MacBook Pro M1": "/units/macbook-pro-m1.png",
+  "MacBook Neo": "/units/macbook-neo.png",
   "Epson L3210": "/units/epson-l3210.png",
   "HP Smart Tank 215": "/units/hp-smarttank.png",
   "ViewSonic SP3": "/units/viewsonic.png",
