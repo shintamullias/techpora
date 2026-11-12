@@ -18,13 +18,14 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "uang";
+type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "uang";
 
 function Dashboard() {
   const nav = useNavigate();
   const [siap, setSiap] = useState(false);
   const [boleh, setBoleh] = useState(false);
-  const [tab, setTab] = useState<Tab>("kalender");
+  const [tab, setTab] = useState<Tab>("beranda");
+  const [namaku, setNamaku] = useState("");
   const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
   const [unit, setUnit] = useState<Unit[]>([]);
@@ -40,8 +41,9 @@ function Dashboard() {
   const muat = async () => {
     const { data: sesi } = await supabase.auth.getSession();
     if (!sesi.session) return nav({ to: "/masuk" });
-    const { data: me } = await supabase.from("profil").select("is_admin").eq("id", sesi.session.user.id).maybeSingle();
+    const { data: me } = await supabase.from("profil").select("is_admin, nama").eq("id", sesi.session.user.id).maybeSingle();
     if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
+    setNamaku((me.nama || "").split(" ")[0]);
     setBoleh(true);
     const [p, u, o, s, b, tg, pc, vc, by] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
@@ -134,29 +136,38 @@ function Dashboard() {
 
   const aktif = pesananTampil.filter((p) => p.status === "berjalan").length;
   const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
+  const hariIniIso = new Date().toISOString().slice(0, 10);
+  const tugasHariIni = tugas.filter((t) =>
+    (t.status === "menunggu" || t.status === "dikerjakan") && t.jatuh_tempo <= hariIniIso).length;
+  const salam = (() => {
+    const j = new Date().getHours();
+    return j < 11 ? "Selamat pagi" : j < 15 ? "Selamat siang" : j < 19 ? "Selamat sore" : "Selamat malam";
+  })();
 
   return (
-    <div className="min-h-screen bg-[#F4F6FA] pb-24">
-      <header className="bg-slate-900">
-        <div className="mx-auto max-w-3xl px-4 pb-5 pt-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary font-serif text-lg font-bold text-white">T</div>
-              <div>
-                <p className="text-base font-bold leading-none text-white">TECHPORA</p>
-                <p className="mt-1 text-[11px] tracking-widest text-slate-400">DASHBOARD SEWA</p>
-              </div>
+    <div className="min-h-screen bg-[#F6F8FD] pb-24">
+      <header className="border-b border-slate-200/70 bg-white">
+        <div className="mx-auto max-w-3xl px-4 pb-4 pt-5">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <h1 className="font-serif text-[26px] leading-tight text-slate-900">
+                {salam}{namaku ? `, ${namaku}` : ""} 👋
+              </h1>
+              <p className="mt-1 text-sm text-slate-500">{tglHariIndo(hariIniIso)}</p>
             </div>
             <button
               onClick={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
-              className="rounded-lg border border-white/15 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:bg-white/10"
+              className="mt-1 shrink-0 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50"
             >Keluar</button>
           </div>
 
-          <div className="mt-4 grid grid-cols-3 gap-2.5">
-            <StatKartu warna="#3B82F6" nilai={aktif} label="Unit keluar" />
-            <StatKartu warna="#F59E0B" nilai={akanDatang} label="Akan datang" />
-            <StatKartu warna="#10B981" nilai={unitTampil.filter((u) => u.aktif).length} label="Unit aktif" />
+          {/* Ringkasan hari ini dalam bahasa sehari-hari */}
+          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+            <span className="text-slate-700"><b className="text-primary">{aktif}</b> unit di luar</span>
+            <span className="text-slate-700"><b className="text-amber-600">{akanDatang}</b> akan datang</span>
+            <button onClick={() => setTab("tugas")} className="text-slate-700 underline-offset-4 hover:underline">
+              <b className={tugasHariIni > 0 ? "text-red-600" : "text-emerald-600"}>{tugasHariIni}</b> tugas hari ini
+            </button>
           </div>
 
           {/* Saringan kategori (Semua / Laptop / Sepatu) */}
@@ -166,8 +177,8 @@ function Dashboard() {
               return (
                 <button key={k} onClick={() => setKat(k)}
                   className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition " +
-                    (kat===k ? "bg-white text-slate-900" : "bg-white/10 text-slate-300")}>
-                  {t}<span className={kat===k ? "text-slate-400" : "text-slate-500"}>{n}</span>
+                    (kat===k ? "bg-primary text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200/70")}>
+                  {t}<span className={kat===k ? "text-white/70" : "text-slate-400"}>{n}</span>
                 </button>
               );
             })}
@@ -177,6 +188,20 @@ function Dashboard() {
 
       <main className="mx-auto max-w-3xl space-y-4 px-4 py-4">
         {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
+        {tab === "beranda" && (
+          <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} keTab={setTab} />
+        )}
+        {(tab === "pelanggan" || tab === "unit") && (
+          <div className="flex rounded-full bg-slate-200/60 p-1">
+            {([["pelanggan", "Pelanggan"], ["unit", "Unit"]] as [Tab, string][]).map(([k, t]) => (
+              <button key={k} onClick={() => setTab(k)}
+                className={"flex-1 rounded-full py-2 text-sm font-semibold transition " +
+                  (tab === k ? "bg-white text-slate-900 shadow-sm" : "text-slate-500")}>
+                {t}
+              </button>
+            ))}
+          </div>
+        )}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
@@ -195,20 +220,22 @@ function Dashboard() {
       <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-3xl">
           {([
-            ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
+            ["beranda", "Beranda", "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5"],
             ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
+            ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
             ["tugas", "Tugas", "M3 3h14v14H3V3Zm3.5 7 2.5 2.5L14 7.5"],
-            ["pelanggan", "Pelanggan", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
-            ["unit", "Unit", "M3 5h14v8H3V5Zm-1 11h16M8 16v1.5m4-1.5v1.5"],
             ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
+            ["pelanggan", "Data", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
           ] as [Tab,string,string][]).map(([k, label, d]) => {
-            const on = tab === k;
+            const on = tab === k || (k === "pelanggan" && tab === "unit");
             return (
               <button key={k} onClick={() => setTab(k)}
-                className={"flex flex-1 flex-col items-center gap-1 py-2.5 text-[10px] font-semibold transition " + (on ? "text-primary" : "text-slate-400")}>
-                <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
-                  <path d={d} />
-                </svg>
+                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition " + (on ? "text-primary" : "text-slate-400")}>
+                <span className={"flex h-7 w-11 items-center justify-center rounded-full transition " + (on ? "bg-primary/10" : "")}>
+                  <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
+                    <path d={d} />
+                  </svg>
+                </span>
                 {label}
               </button>
             );
@@ -223,13 +250,115 @@ const Pusat = ({ children }: { children: React.ReactNode }) => (
   <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center text-muted-foreground">{children}</div>
 );
 
-function StatKartu({ warna, nilai, label }: { warna: string; nilai: number; label: string }) {
+/* ============ TAB 0: BERANDA (hari ini) ============ */
+function TabBeranda({ tugas, pesanan, pembayaran, keTab }: {
+  tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[]; keTab: (t: Tab) => void;
+}) {
+  const hariIni = new Date().toISOString().slice(0, 10);
+  const besok = tambahHari(hariIni, 1);
+
+  type Acara = { kunci: string; jam: string; judul: string; ket: string; warna: string; telat?: boolean };
+  const buatAgenda = (tgl: string): Acara[] => {
+    const a: Acara[] = [];
+    const tugasAktif = tugas.filter((t) => t.status === "menunggu" || t.status === "dikerjakan");
+    tugasAktif
+      .filter((t) => (tgl === hariIni ? t.jatuh_tempo <= tgl : t.jatuh_tempo === tgl))
+      .forEach((t) => a.push({
+        kunci: "t" + t.id,
+        jam: (t.jam || "09:00").slice(0, 5),
+        judul: t.judul,
+        ket: t.pic?.nama ? "PIC " + t.pic.nama : "Tugas",
+        warna: "#1e6feb",
+        telat: t.jatuh_tempo < hariIni,
+      }));
+    const adaTugas = new Set(tugasAktif.map((t) => t.pesanan_id).filter(Boolean));
+    pesanan
+      .filter((p) => p.status === "dipesan" && p.mulai === tgl && !adaTugas.has(p.id))
+      .forEach((p) => a.push({
+        kunci: "m" + p.id,
+        jam: (p.jam || "08:00").slice(0, 5),
+        judul: `Antar ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
+        ket: p.antar === "tidak" ? "Diambil di tempat" : "Diantar",
+        warna: "#F59E0B",
+      }));
+    pesanan
+      .filter((p) => p.status === "berjalan" && p.selesai === tgl)
+      .forEach((p) => a.push({
+        kunci: "k" + p.id,
+        jam: "17:00",
+        judul: `Kembali ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
+        ket: "Unit harus balik",
+        warna: "#10B981",
+      }));
+    return a.sort((x, y) => (Number(x.telat ? 0 : 1) - Number(y.telat ? 0 : 1)) || x.jam.localeCompare(y.jam));
+  };
+
+  const agendaIni = buatAgenda(hariIni);
+  const agendaBesok = buatAgenda(besok);
+
+  const dibayar: Record<string, number> = {};
+  pembayaran.forEach((b) => { dibayar[b.pesanan_id] = (dibayar[b.pesanan_id] || 0) + (b.jumlah || 0); });
+  const piutang = pesanan.filter((p) => p.status !== "batal")
+    .reduce((s, p) => s + Math.max(0, (p.total || 0) - (dibayar[p.id] || 0)), 0);
+
+  const Baris = ({ a }: { a: Acara }) => (
+    <li className="flex gap-3">
+      <div className="w-12 shrink-0 pt-0.5 text-right">
+        <p className={"text-sm font-bold tabular-nums " + (a.telat ? "text-red-600" : "text-slate-900")}>{a.jam}</p>
+        {a.telat && <p className="text-[10px] font-bold text-red-600">TELAT</p>}
+      </div>
+      <div className="relative flex flex-col items-center">
+        <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: a.telat ? "#DC2626" : a.warna }} />
+        <span className="w-px flex-1 bg-slate-200" />
+      </div>
+      <div className="min-w-0 pb-4">
+        <p className="text-[15px] font-semibold leading-snug text-slate-900">{a.judul}</p>
+        <p className="mt-0.5 text-xs text-slate-500">{a.ket}</p>
+      </div>
+    </li>
+  );
+
   return (
-    <div className="rounded-2xl bg-white/5 p-3 ring-1 ring-white/10">
-      <span className="mb-1.5 block h-2 w-2 rounded-full" style={{ background: warna, boxShadow: `0 0 10px ${warna}` }} />
-      <p className="text-2xl font-bold leading-none tracking-tight text-white">{nilai}</p>
-      <p className="mt-1 text-[11px] text-slate-400">{label}</p>
-    </div>
+    <>
+      <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
+        <div className="mb-4 flex items-center justify-between">
+          <h2 className="font-serif text-xl text-slate-900">Hari ini</h2>
+          <button onClick={() => keTab("tugas")} className="text-xs font-semibold text-primary">Semua tugas →</button>
+        </div>
+        {agendaIni.length === 0 ? (
+          <p className="rounded-xl bg-emerald-50 px-4 py-6 text-center text-sm text-emerald-800">
+            Tidak ada jadwal hari ini. Santai dulu ✨
+          </p>
+        ) : (
+          <ul>{agendaIni.map((a) => <Baris key={a.kunci} a={a} />)}</ul>
+        )}
+
+        {agendaBesok.length > 0 && (
+          <div className="mt-2 border-t border-slate-100 pt-4">
+            <p className="mb-3 text-sm font-semibold text-slate-400">Besok</p>
+            <ul className="opacity-70">{agendaBesok.slice(0, 4).map((a) => <Baris key={a.kunci} a={a} />)}</ul>
+          </div>
+        )}
+      </section>
+
+      {piutang > 0 && (
+        <button onClick={() => keTab("uang")}
+          className="flex w-full items-center justify-between rounded-2xl border border-red-200/70 bg-red-50/70 px-4 py-3.5 text-left">
+          <div>
+            <p className="text-sm font-semibold text-red-800">Belum dibayar {rp(piutang)}</p>
+            <p className="mt-0.5 text-xs text-red-600/80">Ketuk untuk lihat siapa saja dan kirim pengingat</p>
+          </div>
+          <span className="text-red-400">→</span>
+        </button>
+      )}
+
+      <div className="grid grid-cols-2 gap-3">
+        <button onClick={() => keTab("pesanan")}
+          className="rounded-2xl bg-primary px-4 py-3.5 text-sm font-semibold text-white shadow-sm">+ Pesanan baru</button>
+        <button onClick={() => keTab("tugas")}
+          className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700">+ Tugas baru</button>
+      </div>
+    </>
   );
 }
 
@@ -248,7 +377,7 @@ function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: st
   return (
     <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-900">{judul}</h2>
+        <h2 className="font-serif text-xl text-slate-900">{judul}</h2>
         {aksi}
       </div>
       {children}
@@ -268,6 +397,10 @@ const warnaStatus: Record<StatusPesanan, string> = {
   berjalan: "bg-blue-50 text-blue-800 border-blue-200",
   selesai: "bg-emerald-50 text-emerald-800 border-emerald-200",
   batal: "bg-slate-100 text-slate-600 border-slate-200",
+};
+
+const labelStatus: Record<StatusPesanan, string> = {
+  dipesan: "Dipesan", berjalan: "Keluar", selesai: "Selesai", batal: "Batal",
 };
 
 /* ============ TAB 1: KALENDER ============ */
@@ -377,7 +510,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
                     <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam}` : ""} → {tglHariIndo(p.selesai)}
                   </p>
                 </div>
-                <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{p.status}</span>
+                <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
               </li>
             ))}
           </ul>
@@ -605,7 +738,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                           {(p.item || []).map((it) => `${it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} ${it.jumlah < 0 ? "−" : "+"}${rp(Math.abs(it.jumlah))}`).join(" · ")}
                         </p>
                       )}
-                      <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold capitalize " + warnaStatus[p.status]}>{p.status}</span>
+                      <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
                     </div>
                   </div>
 

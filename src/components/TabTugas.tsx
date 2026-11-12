@@ -88,7 +88,7 @@ export default function TabTugas({
       {/* ---------- daftar tugas ---------- */}
       <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold text-slate-900">Tugas <span className="text-sm font-normal text-muted-foreground">({nAktif} aktif)</span></h2>
+          <h2 className="font-serif text-xl text-slate-900">Tugas <span className="text-sm font-normal text-muted-foreground">({nAktif} aktif)</span></h2>
           <button onClick={() => setBuka((b) => !b)}
             className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">
             {buka ? "Tutup" : "+ Tugas"}
@@ -223,7 +223,7 @@ function DaftarPic({ pic, muat, setGalat }: { pic: Pic[]; muat: () => void; setG
   return (
     <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-900">PIC</h2>
+        <h2 className="font-serif text-xl text-slate-900">PIC</h2>
         <button onClick={() => setBuka((b) => !b)} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">
           {buka ? "Tutup" : "+ PIC"}
         </button>

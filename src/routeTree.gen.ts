@@ -33,6 +33,8 @@ import { Route as SewaLaptopPulogadungRouteImport } from './routes/sewa-laptop-p
 import { Route as SewaLaptopRawamangunRouteImport } from './routes/sewa-laptop-rawamangun'
 import { Route as SewaLaptopTangerangRouteImport } from './routes/sewa-laptop-tangerang'
 import { Route as SewaMacbookRouteImport } from './routes/sewa-macbook'
+import { Route as SewaPrinterJakartaRouteImport } from './routes/sewa-printer-jakarta'
+import { Route as SewaProyektorJakartaRouteImport } from './routes/sewa-proyektor-jakarta'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -163,6 +165,16 @@ const SewaMacbookRoute = SewaMacbookRouteImport.update({
   path: '/sewa-macbook',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SewaPrinterJakartaRoute = SewaPrinterJakartaRouteImport.update({
+  id: '/sewa-printer-jakarta',
+  path: '/sewa-printer-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SewaProyektorJakartaRoute = SewaProyektorJakartaRouteImport.update({
+  id: '/sewa-proyektor-jakarta',
+  path: '/sewa-proyektor-jakarta',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
   id: '/sitemap.xml',
   path: '/sitemap.xml',
@@ -224,6 +236,8 @@ export interface FileRoutesByFullPath {
   '/sewa-laptop-rawamangun': typeof SewaLaptopRawamangunRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sewa-macbook': typeof SewaMacbookRoute
+  '/sewa-printer-jakarta': typeof SewaPrinterJakartaRoute
+  '/sewa-proyektor-jakarta': typeof SewaProyektorJakartaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/ttd/$token': typeof TtdTokenRoute
@@ -257,6 +271,8 @@ export interface FileRoutesByTo {
   '/sewa-laptop-rawamangun': typeof SewaLaptopRawamangunRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sewa-macbook': typeof SewaMacbookRoute
+  '/sewa-printer-jakarta': typeof SewaPrinterJakartaRoute
+  '/sewa-proyektor-jakarta': typeof SewaProyektorJakartaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/ttd/$token': typeof TtdTokenRoute
@@ -291,6 +307,8 @@ export interface FileRoutesById {
   '/sewa-laptop-rawamangun': typeof SewaLaptopRawamangunRoute
   '/sewa-laptop-tangerang': typeof SewaLaptopTangerangRoute
   '/sewa-macbook': typeof SewaMacbookRoute
+  '/sewa-printer-jakarta': typeof SewaPrinterJakartaRoute
+  '/sewa-proyektor-jakarta': typeof SewaProyektorJakartaRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/ttd/$token': typeof TtdTokenRoute
@@ -326,6 +344,8 @@ export interface FileRouteTypes {
     | '/sewa-laptop-rawamangun'
     | '/sewa-laptop-tangerang'
     | '/sewa-macbook'
+    | '/sewa-printer-jakarta'
+    | '/sewa-proyektor-jakarta'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/ttd/$token'
@@ -359,6 +379,8 @@ export interface FileRouteTypes {
     | '/sewa-laptop-rawamangun'
     | '/sewa-laptop-tangerang'
     | '/sewa-macbook'
+    | '/sewa-printer-jakarta'
+    | '/sewa-proyektor-jakarta'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/ttd/$token'
@@ -392,6 +414,8 @@ export interface FileRouteTypes {
     | '/sewa-laptop-rawamangun'
     | '/sewa-laptop-tangerang'
     | '/sewa-macbook'
+    | '/sewa-printer-jakarta'
+    | '/sewa-proyektor-jakarta'
     | '/sitemap.xml'
     | '/blog/$slug'
     | '/ttd/$token'
@@ -426,6 +450,8 @@ export interface RootRouteChildren {
   SewaLaptopRawamangunRoute: typeof SewaLaptopRawamangunRoute
   SewaLaptopTangerangRoute: typeof SewaLaptopTangerangRoute
   SewaMacbookRoute: typeof SewaMacbookRoute
+  SewaPrinterJakartaRoute: typeof SewaPrinterJakartaRoute
+  SewaProyektorJakartaRoute: typeof SewaProyektorJakartaRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   BlogSlugRoute: typeof BlogSlugRoute
   TtdTokenRoute: typeof TtdTokenRoute
@@ -605,6 +631,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SewaMacbookRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sewa-printer-jakarta': {
+      id: '/sewa-printer-jakarta'
+      path: '/sewa-printer-jakarta'
+      fullPath: '/sewa-printer-jakarta'
+      preLoaderRoute: typeof SewaPrinterJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sewa-proyektor-jakarta': {
+      id: '/sewa-proyektor-jakarta'
+      path: '/sewa-proyektor-jakarta'
+      fullPath: '/sewa-proyektor-jakarta'
+      preLoaderRoute: typeof SewaProyektorJakartaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sitemap.xml': {
       id: '/sitemap.xml'
       path: '/sitemap.xml'
@@ -682,6 +722,8 @@ const rootRouteChildren: RootRouteChildren = {
   SewaLaptopRawamangunRoute: SewaLaptopRawamangunRoute,
   SewaLaptopTangerangRoute: SewaLaptopTangerangRoute,
   SewaMacbookRoute: SewaMacbookRoute,
+  SewaPrinterJakartaRoute: SewaPrinterJakartaRoute,
+  SewaProyektorJakartaRoute: SewaProyektorJakartaRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   BlogSlugRoute: BlogSlugRoute,
   TtdTokenRoute: TtdTokenRoute,

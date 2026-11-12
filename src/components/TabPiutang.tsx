@@ -45,7 +45,7 @@ export default function TabPiutang({
   return (
     <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
       <div className="mb-1 flex items-center justify-between">
-        <h2 className="text-lg font-bold text-slate-900">Piutang</h2>
+        <h2 className="font-serif text-xl text-slate-900">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
       <p className="mb-3 text-xs text-muted-foreground">Tagihan yang belum lunas, dihitung dari total pesanan dikurangi pembayaran tercatat.</p>
