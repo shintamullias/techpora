@@ -4,8 +4,12 @@ import {
   supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
+  type Pic, type Tugas, type Voucher, type Pembayaran,
 } from "@/lib/supabase";
 import TabKeuangan from "@/components/TabKeuangan";
+import TabTugas from "@/components/TabTugas";
+import TabPiutang from "@/components/TabPiutang";
+import TabVoucher from "@/components/TabVoucher";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -14,7 +18,7 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "kalender" | "pesanan" | "pelanggan" | "unit" | "uang";
+type Tab = "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "uang";
 
 function Dashboard() {
   const nav = useNavigate();
@@ -27,6 +31,10 @@ function Dashboard() {
   const [pesanan, setPesanan] = useState<Pesanan[]>([]);
   const [set, setSet] = useState<Pengaturan>({ ongkir_per_km: 10000, ongkir_minimum: 50000 });
   const [biaya, setBiaya] = useState<Pengeluaran[]>([]);
+  const [tugas, setTugas] = useState<Tugas[]>([]);
+  const [pic, setPic] = useState<Pic[]>([]);
+  const [voucher, setVoucher] = useState<Voucher[]>([]);
+  const [pembayaran, setPembayaran] = useState<Pembayaran[]>([]);
   const [galat, setGalat] = useState("");
 
   const muat = async () => {
@@ -35,13 +43,21 @@ function Dashboard() {
     const { data: me } = await supabase.from("profil").select("is_admin").eq("id", sesi.session.user.id).maybeSingle();
     if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
     setBoleh(true);
-    const [p, u, o, s, b] = await Promise.all([
+    const [p, u, o, s, b, tg, pc, vc, by] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
       supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
+      supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
+      supabase.from("pic").select("*").order("nama"),
+      supabase.from("voucher").select("*").order("dibuat_pada", { ascending: false }),
+      supabase.from("pembayaran").select("*").order("tanggal", { ascending: false }),
     ]);
+    setTugas((tg.data as unknown as Tugas[]) || []);
+    setPic((pc.data as Pic[]) || []);
+    setVoucher((vc.data as Voucher[]) || []);
+    setPembayaran((by.data as Pembayaran[]) || []);
     setBiaya((b.data as Pengeluaran[]) || []);
     setPelanggan((p.data as Pelanggan[]) || []);
     setUnit((u.data as Unit[]) || []);
@@ -165,7 +181,14 @@ function Dashboard() {
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "uang" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
+        {tab === "uang" && (
+          <>
+            <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />
+            <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />
+            <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />
+          </>
+        )}
       </main>
 
       {/* Navigasi bawah — mudah dijangkau jempol di HP */}
@@ -174,6 +197,7 @@ function Dashboard() {
           {([
             ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
             ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
+            ["tugas", "Tugas", "M3 3h14v14H3V3Zm3.5 7 2.5 2.5L14 7.5"],
             ["pelanggan", "Pelanggan", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
             ["unit", "Unit", "M3 5h14v8H3V5Zm-1 11h16M8 16v1.5m4-1.5v1.5"],
             ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],

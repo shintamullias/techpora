@@ -191,3 +191,85 @@ export const JENIS_DOKUMEN = [
   { key: "getcontact", label: "GetContact", wajib: false },
   { key: "lainnya", label: "Lainnya", wajib: false },
 ] as const;
+
+/* ---------- operasional (tugas, PIC, voucher, pembayaran) ---------- */
+
+export type Pic = {
+  id: string;
+  nama: string;
+  email: string | null;
+  wa: string | null;
+  aktif: boolean;
+  dibuat_pada?: string;
+};
+
+export type JenisTugas = "serah_terima" | "pengembalian" | "pengingat_bayar" | "lainnya";
+export type StatusTugas = "menunggu" | "dikerjakan" | "selesai" | "batal";
+
+export const JENIS_TUGAS: { key: JenisTugas; label: string }[] = [
+  { key: "serah_terima", label: "Serah terima" },
+  { key: "pengembalian", label: "Pengembalian" },
+  { key: "pengingat_bayar", label: "Pengingat bayar" },
+  { key: "lainnya", label: "Lainnya" },
+];
+
+export type Tugas = {
+  id: string;
+  judul: string;
+  deskripsi: string | null;
+  jenis: JenisTugas;
+  pic_id: string | null;
+  pesanan_id: string | null;
+  pelanggan_id: string | null;
+  unit_id: string | null;
+  jatuh_tempo: string;
+  jam: string | null;
+  status: StatusTugas;
+  prioritas: "tinggi" | "normal" | "rendah";
+  gcal_event_id: string | null;
+  dibuat_pada?: string;
+  pic?: { nama: string; email: string | null } | null;
+  pelanggan?: { nama: string; wa: string } | null;
+  unit?: { nama: string } | null;
+};
+
+export type Voucher = {
+  id: string;
+  kode: string;
+  nama: string;
+  tipe: "persen" | "nominal";
+  nilai: number;
+  periode: "semua" | "harian" | "mingguan" | "bulanan";
+  mulai: string | null;
+  selesai: string | null;
+  maks_pakai: number;
+  terpakai: number;
+  aktif: boolean;
+  dibuat_pada?: string;
+};
+
+export type Pembayaran = {
+  id: string;
+  pesanan_id: string;
+  tanggal: string;
+  jumlah: number;
+  metode: string | null;
+  catatan: string | null;
+  dibuat_pada?: string;
+};
+
+/** Link "simpan ke Google Calendar" untuk satu tugas; email PIC ikut diundang. */
+export const gcalLinkTugas = (t: Tugas) => {
+  const tgl = (t.jatuh_tempo || "").replaceAll("-", "");
+  const mulaiJam = (t.jam || "09:00:00").slice(0, 5).replace(":", "") + "00";
+  const akhir = String(Number(mulaiJam.slice(0, 2)) + 1).padStart(2, "0") + mulaiJam.slice(2);
+  const q = new URLSearchParams({
+    action: "TEMPLATE",
+    text: t.judul,
+    dates: `${tgl}T${mulaiJam}/${tgl}T${akhir}`,
+    details: t.deskripsi || "",
+    ctz: "Asia/Jakarta",
+  });
+  if (t.pic?.email) q.set("add", t.pic.email);
+  return "https://calendar.google.com/calendar/render?" + q.toString();
+};
