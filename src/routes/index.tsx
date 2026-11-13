@@ -119,6 +119,8 @@ const areaLayanan = [
   { area: "Jogja", slug: "sewa-laptop-jogja", desc: "Kota Yogyakarta & sekitarnya — sewa laptop harian sampai bulanan, tanpa deposit uang." },
   { area: "Untuk Event", slug: "sewa-laptop-event-jakarta", desc: "Seminar, workshop, ujian serentak, pameran, lomba — unit seragam, diantar & disiapkan di venue." },
   { area: "Sewa Harian", slug: "sewa-laptop-harian-jakarta", desc: "Butuh sehari-dua hari? Sewa laptop harian mulai Rp79rb, tanpa deposit — untuk kebutuhan mendadak, event sehari, atau coba dulu." },
+  { area: "Sewa Bulanan", slug: "sewa-laptop-jakarta-bulanan", desc: "Paket paling hemat — mulai Rp1,4jt/bulan, setengah harga tarif harian. Favorit untuk skripsi, WFH, dan staff kontrak." },
+  { area: "Untuk Pribadi", slug: "sewa-laptop-jakarta-pribadi", desc: "Sewa atas nama perorangan, satu unit pun dilayani — tanpa surat kantor, tanpa deposit, proses via WA." },
   { area: "Untuk Mahasiswa", slug: "sewa-laptop-mahasiswa-jakarta", desc: "Skripsi, sidang, ujian online — tanpa deposit, harian mulai Rp79rb, ada opsi bulanan hemat." },
 ];
 
@@ -151,7 +153,7 @@ export const Route = createFileRoute("/")({
         content:
           "Sewa laptop Jakarta harian mulai Rp79rb, tanpa deposit. Laptop, printer & proyektor siap pakai, antar cepat dari Rawamangun untuk mahasiswa, kantor, dan event.",
       },
-      { name: "keywords", content: "sewa laptop jakarta, rental laptop jakarta, sewa laptop harian, sewa laptop bulanan, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
+      { name: "keywords", content: "sewa laptop jakarta, sewa laptop jakarta harian, sewa laptop jakarta bulanan, sewa laptop jakarta pribadi, rental laptop jakarta, sewa macbook jakarta, sewa printer jakarta, sewa proyektor jakarta, rental laptop event" },
       { name: "robots", content: "index, follow, max-image-preview:large, max-snippet:-1" },
       { property: "og:title", content: "Sewa Laptop Jakarta Harian, Tanpa Deposit | Techpora.id" },
       { property: "og:description", content: "Sewa laptop Jakarta harian mulai Rp79rb, tanpa deposit. Laptop, printer & proyektor siap pakai, antar cepat dari Rawamangun untuk mahasiswa, kantor, dan event." },
@@ -937,6 +939,8 @@ function Index() {
               <li><a href="/sewa-printer-jakarta" className="hover:text-foreground">Sewa Printer</a></li>
               <li><a href="/sewa-proyektor-jakarta" className="hover:text-foreground">Sewa Proyektor</a></li>
               <li><a href="/sewa-laptop-harian-jakarta" className="hover:text-foreground">Sewa Laptop Harian</a></li>
+              <li><a href="/sewa-laptop-jakarta-bulanan" className="hover:text-foreground">Sewa Laptop Bulanan</a></li>
+              <li><a href="/sewa-laptop-jakarta-pribadi" className="hover:text-foreground">Sewa Laptop Pribadi</a></li>
             </ul>
           </div>
         </div>

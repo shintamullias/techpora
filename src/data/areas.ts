@@ -333,11 +333,11 @@ export const areas: AreaData[] = [
     slug: "sewa-laptop-harian-jakarta",
     area: "Harian",
     areaShort: "Harian",
-    title: "Sewa Laptop Harian Jakarta — Mulai Rp79rb/Hari",
+    title: "Sewa Laptop Jakarta Harian — Mulai Rp79rb/Hari",
     metaDescription:
-      "Sewa laptop harian di Jakarta mulai Rp79.000/hari, tanpa deposit. Cocok untuk kebutuhan mendadak, event sehari, atau coba dulu sebelum sewa bulanan. Bisa diantar.",
-    keywords: "sewa laptop harian, sewa laptop harian jakarta, rental laptop harian, sewa laptop per hari jakarta, sewa laptop 1 hari",
-    h1: "Sewa Laptop Harian di Jakarta",
+      "Sewa laptop Jakarta harian mulai Rp79.000/hari, tanpa deposit. Cocok untuk kebutuhan mendadak, event sehari, atau coba dulu sebelum sewa bulanan. Bisa diantar.",
+    keywords: "sewa laptop jakarta harian, sewa laptop harian jakarta, sewa laptop harian, rental laptop harian, sewa laptop per hari jakarta, sewa laptop 1 hari",
+    h1: "Sewa Laptop Jakarta Harian",
     intro:
       "Sewa laptop harian adalah pilihan paling fleksibel saat kamu butuh perangkat untuk waktu singkat — rapat sehari, ujian online, presentasi, atau sekadar mengganti laptop yang sedang diperbaiki. Di Techpora, sewa harian dimulai dari Rp79.000 per hari untuk HP 14s, tanpa deposit uang, cukup dengan dokumen identitas. Perhitungannya sederhana: satu hari dihitung per 24 jam sejak unit kamu terima, jadi kamu tahu persis biayanya sejak awal. Untuk kebutuhan yang lebih panjang, tersedia juga paket mingguan dan bulanan yang lebih hemat per harinya.",
     highlights: [
@@ -354,6 +354,58 @@ export const areas: AreaData[] = [
       "Coba dulu sebelum memutuskan sewa bulanan",
     ],
     units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.redmibook, laptops.macbook],
+  },
+  {
+    slug: "sewa-laptop-jakarta-bulanan",
+    area: "Bulanan",
+    areaShort: "Bulanan",
+    title: "Sewa Laptop Jakarta Bulanan — Mulai Rp1,4jt/Bulan",
+    metaDescription:
+      "Sewa laptop Jakarta bulanan mulai Rp1.400.000/bulan — jauh lebih hemat dari tarif harian. Favorit untuk skripsi, WFH, staff kontrak. Tanpa deposit, bisa diantar.",
+    keywords: "sewa laptop jakarta bulanan, sewa laptop bulanan jakarta, sewa laptop bulanan, rental laptop bulanan jakarta, sewa laptop per bulan, sewa laptop sebulan jakarta",
+    h1: "Sewa Laptop Jakarta Bulanan",
+    intro:
+      "Paket bulanan adalah cara paling hemat menyewa laptop di Jakarta. Hitungannya jelas: HP 14s yang harian Rp79.000 hanya Rp1.400.000 untuk sebulan penuh — setara Rp47.000 per hari, hampir setengah tarif harian. Karena itulah sewa bulanan jadi paket paling laris di Techpora: mahasiswa menjelang sidang skripsi, karyawan WFH yang laptopnya rusak, freelancer yang sedang pegang proyek, sampai kantor yang menambah staf kontrak. Perpanjangan juga gampang — kalau sebulan ternyata kurang, tinggal chat admin sebelum masa sewa habis dan unit tetap di tangan kamu tanpa proses ulang.",
+    highlights: [
+      { title: "Setengah Harga Tarif Harian", desc: "Bulanan Rp1,4–4,5 juta tergantung unit. Jauh lebih hemat dibanding harian × 30." },
+      { title: "Perpanjang Tanpa Ribet", desc: "Chat admin sebelum jatuh tempo, masa sewa lanjut tanpa unit ditarik dulu." },
+      { title: "Tanpa Deposit Uang", desc: "Cukup dokumen identitas. Uangmu tidak tertahan selama sebulan penuh." },
+    ],
+    landmarks: ["Rawamangun", "Jakarta Timur", "Jakarta Selatan", "UI", "UNJ", "Binus", "SCBD"],
+    eta: "Unit bulanan disiapkan dan dicek penuh sebelum diantar. Ambil sendiri di Rawamangun juga bisa.",
+    useCases: [
+      "Skripsi dan tugas akhir (1–3 bulan paling umum)",
+      "WFH atau pengganti laptop pribadi yang rusak lama",
+      "Staff kontrak dan proyek kantor jangka pendek",
+      "Freelancer yang butuh perangkat selama proyek berjalan",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.macbook],
+  },
+  {
+    slug: "sewa-laptop-jakarta-pribadi",
+    area: "Pribadi",
+    areaShort: "Pribadi",
+    title: "Sewa Laptop Jakarta untuk Pribadi — Tanpa Deposit",
+    metaDescription:
+      "Sewa laptop Jakarta untuk pribadi atas nama perorangan — tanpa perlu PT atau surat kantor. Harian mulai Rp79rb, bulanan mulai Rp1,4jt. Proses cepat via WA.",
+    keywords: "sewa laptop jakarta pribadi, sewa laptop pribadi, sewa laptop perorangan jakarta, sewa laptop untuk pribadi, sewa laptop personal jakarta, sewa laptop atas nama pribadi",
+    h1: "Sewa Laptop Jakarta untuk Kebutuhan Pribadi",
+    intro:
+      "Banyak tempat rental laptop di Jakarta hanya mau melayani perusahaan — minta surat kantor, NPWP badan, atau minimal order puluhan unit. Di Techpora, penyewa perorangan justru pelanggan utama kami. Kamu bisa sewa satu unit saja, atas nama pribadi, cukup dengan foto dokumen identitas — tanpa deposit uang, tanpa surat-surat kantor. Prosesnya sepenuhnya lewat WhatsApp: pilih unit, kirim dokumen, tanda tangan digital, unit diantar atau kamu ambil di Rawamangun. Mau sewa sehari untuk ujian online, seminggu untuk mudik kerja, atau bulanan untuk skripsi dan WFH — semuanya bisa.",
+    highlights: [
+      { title: "Atas Nama Perorangan", desc: "Tidak perlu PT, surat kantor, atau NPWP badan. Satu unit pun kami layani." },
+      { title: "Tanpa Deposit Uang", desc: "Jaminan cukup dokumen identitas — uangmu tidak tertahan." },
+      { title: "Proses via WhatsApp", desc: "Pilih unit, kirim dokumen, ttd digital — unit siap diantar ke rumah atau kos." },
+    ],
+    landmarks: ["Rawamangun", "Jakarta Timur", "Jakarta Selatan", "Jakarta Pusat", "Kos & apartemen area kampus"],
+    eta: "Diantar ke rumah, kos, atau apartemen — atau ambil sendiri di Rawamangun tanpa ongkir.",
+    useCases: [
+      "Ujian online, tugas kuliah, dan skripsi",
+      "Laptop pribadi rusak atau sedang diservis",
+      "WFH dan kerja freelance dari rumah",
+      "Kebutuhan hiburan atau belajar di rumah",
+    ],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.macbook],
   },
   {
     slug: "sewa-laptop-pulogadung",

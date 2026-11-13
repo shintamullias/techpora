@@ -61,17 +61,17 @@ const COPY: Record<JakartaHubVariant, Copy> = {
   sewa: {
     term: "sewa",
     Term: "Sewa",
-    title: "Sewa Laptop Jakarta — Harian, Mingguan, Bulanan | Techpora",
+    title: "Sewa Laptop Jakarta — Harian, Bulanan, Pribadi & Kantor | Techpora",
     h1: "Sewa Laptop Jakarta — Techpora",
     intro:
       "Techpora adalah layanan sewa laptop Jakarta yang berbasis di Rawamangun, Jakarta Timur. Kami melayani sewa laptop harian, mingguan, dan bulanan untuk seluruh area Jakarta — dari MacBook Air M1 untuk presentasi klien di SCBD, ThinkPad & VivoBook untuk mahasiswa UI/UNJ/Binus, hingga unit bulk 20–50 laptop untuk event registrasi di JIExpo. Semua unit dicek, dibersihkan, dan siap pakai sebelum dikirim ke lokasi kamu.",
     metaDescription:
       "Sewa laptop Jakarta harian, mingguan, bulanan. MacBook, ThinkPad, VivoBook, Acer i5 siap kirim ke Jakarta Selatan, Timur, Barat, Utara, Pusat. Fast response WA.",
-    ogTitle: "Sewa Laptop Jakarta — Harian, Mingguan, Bulanan | Techpora",
+    ogTitle: "Sewa Laptop Jakarta — Harian, Bulanan, Pribadi & Kantor | Techpora",
     ogDesc:
       "Sewa laptop Jakarta dengan pilihan lengkap MacBook, ThinkPad, VivoBook, Acer i5. Kirim ke seluruh Jakarta, unit dicek sebelum kirim.",
     keywords:
-      "sewa laptop jakarta, sewa laptop harian jakarta, sewa laptop bulanan jakarta, sewa laptop murah jakarta, sewa macbook jakarta, tempat sewa laptop jakarta",
+      "sewa laptop jakarta, sewa laptop jakarta harian, sewa laptop jakarta bulanan, sewa laptop jakarta pribadi, sewa laptop harian jakarta, sewa laptop bulanan jakarta, sewa laptop murah jakarta, sewa macbook jakarta, tempat sewa laptop jakarta",
     whyLead: "Kenapa penyewa Jakarta pilih Techpora?",
     whyPoints: [
       {
