@@ -1,20 +1,9 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { supabase, rp, hariIni, tambahHari, tglHariIndo, waLink, type Tugas, type Pesanan, type Pembayaran, type StatusTugas } from "@/lib/supabase";
 import { hitungBayar } from "@/lib/admin-data";
 import { Kartu, Kosong, Lencana, Tombol, TautanTombol } from "./ui";
 
 type Tab = "beranda" | "kalender" | "pesanan" | "uang" | "data" | "atur";
-
-/* ---------- penanda "WA sudah dikirim" ----------
- * Disimpan di perangkat ini dulu. Setelah migrasi otomasi diterapkan,
- * penanda pindah ke kolom tugas.wa_*_terkirim supaya ikut sinkron antar perangkat. */
-const kunciWa = (id: string, siapa: string) => `wa:${siapa}:${id}`;
-const sudahWa = (id: string, siapa: string) => {
-  try { return localStorage.getItem(kunciWa(id, siapa)) === "1"; } catch { return false; }
-};
-const tandaiWa = (id: string, siapa: string) => {
-  try { localStorage.setItem(kunciWa(id, siapa), "1"); } catch { /* mode privat: abaikan */ }
-};
 
 const jamTampil = (j?: string | null, bawaan = "09:00") => (j || bawaan).slice(0, 5);
 
@@ -41,7 +30,6 @@ export default function Beranda({ tugas, pesanan, pembayaran, muat, galat, keTab
   tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[];
   muat: () => void; galat: (s: string) => void; keTab: (t: Tab) => void;
 }) {
-  const [, paksa] = useState(0);
   const ini = hariIni();
   const besok = tambahHari(ini, 1);
   const pesananById = useMemo(() => Object.fromEntries(pesanan.map((p) => [p.id, p])), [pesanan]);
@@ -67,6 +55,12 @@ export default function Beranda({ tugas, pesanan, pembayaran, muat, galat, keTab
     muat();
   };
 
+  const tandaiWa = async (t: Tugas, siapa: "pel" | "pic") => {
+    const { error } = await supabase.from("tugas")
+      .update(siapa === "pel" ? { wa_pelanggan_terkirim: true } : { wa_pic_terkirim: true }).eq("id", t.id);
+    if (error) galat(error.message); else muat();
+  };
+
   const Baris = ({ t }: { t: Tugas }) => {
     const p = t.pesanan_id ? pesananById[t.pesanan_id] : undefined;
     const lewat = t.jatuh_tempo < ini;
@@ -90,17 +84,17 @@ export default function Beranda({ tugas, pesanan, pembayaran, muat, galat, keTab
             <div className="mt-2 flex flex-wrap gap-1.5">
               {waPel && (
                 <TautanTombol
-                  varian={sudahWa(t.id, "pel") ? "hantu" : "lembut"}
+                  varian={t.wa_pelanggan_terkirim ? "hantu" : "lembut"}
                   href={waLink(waPel, pesanPelanggan(t, p))}
-                  onClick={() => { tandaiWa(t.id, "pel"); paksa((n) => n + 1); }}
-                >{sudahWa(t.id, "pel") ? "✓ WA pelanggan terkirim" : "WA pelanggan"}</TautanTombol>
+                  onClick={() => tandaiWa(t, "pel")}
+                >{t.wa_pelanggan_terkirim ? "✓ WA pelanggan terkirim" : "WA pelanggan"}</TautanTombol>
               )}
               {waPic && (
                 <TautanTombol
-                  varian={sudahWa(t.id, "pic") ? "hantu" : "garis"}
+                  varian={t.wa_pic_terkirim ? "hantu" : "garis"}
                   href={waLink(waPic, pesanPic(t, p))}
-                  onClick={() => { tandaiWa(t.id, "pic"); paksa((n) => n + 1); }}
-                >{sudahWa(t.id, "pic") ? "✓ WA PIC terkirim" : "WA PIC"}</TautanTombol>
+                  onClick={() => tandaiWa(t, "pic")}
+                >{t.wa_pic_terkirim ? "✓ WA PIC terkirim" : "WA PIC"}</TautanTombol>
               )}
               {t.status === "menunggu" && <Tombol kecil varian="hantu" onClick={() => ubah(t, "dikerjakan")}>Mulai</Tombol>}
             </div>

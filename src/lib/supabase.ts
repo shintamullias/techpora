@@ -113,6 +113,7 @@ export type Pesanan = {
   ttd_nama: string | null;
   ttd_pada: string | null;
   ttd_setuju: boolean;
+  pic_id?: string | null;
   pelanggan?: { nama: string; wa: string } | null;
   unit?: { nama: string; kategori?: Kategori } | null;
 };
@@ -235,6 +236,8 @@ export type Tugas = {
   status: StatusTugas;
   prioritas: "tinggi" | "normal" | "rendah";
   gcal_event_id: string | null;
+  wa_pelanggan_terkirim?: boolean;
+  wa_pic_terkirim?: boolean;
   dibuat_pada?: string;
   pic?: { nama: string; email: string | null; wa?: string | null } | null;
   pelanggan?: { nama: string; wa: string } | null;

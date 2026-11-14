@@ -4,7 +4,7 @@ import { toast } from "sonner";
 import {
   hariIni, supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen,
-  type Kategori, type Saring, type ItemPesanan, type Pembayaran,
+  type Kategori, type Saring, type ItemPesanan, type Pembayaran, type Pic,
 } from "@/lib/supabase";
 import { useAdminData, useAksi, hitungBayar, type AdminData } from "@/lib/admin-data";
 import { Toaster } from "@/components/ui/sonner";
@@ -170,7 +170,7 @@ function Dashboard() {
         )}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
         {tab === "pesanan" && (
-          <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} pembayaran={pembayaran} muat={muat} setGalat={galat} />
+          <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} pembayaran={pembayaran} pic={pic} muat={muat} setGalat={galat} />
         )}
         {tab === "uang" && (
           <>
@@ -360,13 +360,13 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
 }
 
 /* ============ TAB 2: PESANAN ============ */
-function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, muat, setGalat }: {
-  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; pembayaran: Pembayaran[]; muat: () => void; setGalat: (s: string) => void;
+function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setGalat }: {
+  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; pembayaran: Pembayaran[]; pic: Pic[]; muat: () => void; setGalat: (s: string) => void;
 }) {
   const bayar = useMemo(() => hitungBayar(pesanan, pembayaran), [pesanan, pembayaran]);
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
-  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[] };
+  const kosong = { pelanggan_id: "", unit_id: "", pic_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[] };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
@@ -384,7 +384,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, muat, setGalat 
     if (edit === o.id) return tutup();
     setEdit(o.id);
     setF({
-      pelanggan_id: o.pelanggan_id, unit_id: o.unit_id,
+      pelanggan_id: o.pelanggan_id, unit_id: o.unit_id, pic_id: o.pic_id || "",
       durasi_tipe: o.durasi_tipe, durasi_jumlah: o.durasi_jumlah || 1,
       mulai: o.mulai, jam: (o.jam || "08:00").slice(0, 5), antar: o.antar || "tidak",
       alamat: o.alamat || "", jarak: String(o.jarak_km || ""), catatan: o.catatan || "",
@@ -427,7 +427,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, muat, setGalat 
       pelanggan_id: f.pelanggan_id, unit_id: f.unit_id, durasi_tipe: f.durasi_tipe, durasi_jumlah: n,
       mulai: f.mulai, jam: f.jam, selesai, total_hari: totalHari, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
-      item: itemBersih, total, catatan: f.catatan.trim(),
+      item: itemBersih, total, catatan: f.catatan.trim(), pic_id: f.pic_id || null,
     };
     if (edit) {
       const { error } = await supabase.from("pesanan").update(isi).eq("id", edit);
@@ -501,6 +501,12 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, muat, setGalat 
                   </Kol>
                   <Kol label="Jam ambil"><input type="time" value={f.jam} onChange={(e) => s("jam", e.target.value)} className={inp} /></Kol>
                 </div>
+                <Kol label="PIC serah terima" petunjuk="Kosongkan untuk memakai PIC aktif pertama. Tugas dan pengingat WA otomatis ke PIC ini.">
+                  <select value={f.pic_id} onChange={(e) => s("pic_id", e.target.value)} className={inp}>
+                    <option value="">Otomatis</option>
+                    {pic.filter((x) => x.aktif).map((x) => <option key={x.id} value={x.id}>{x.nama}</option>)}
+                  </select>
+                </Kol>
                 <Kol label="Tanggal mulai"><input type="date" value={f.mulai} onChange={(e) => s("mulai", e.target.value)} className={inp} /></Kol>
                 {f.mulai && <p className="text-xs text-muted-foreground">Kembali <b className="text-foreground">{tglIndo(selesai)}</b> pukul {f.jam} · {totalHari} × 24 jam</p>}
                 {bentrok && <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">

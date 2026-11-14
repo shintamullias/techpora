@@ -1,5 +1,5 @@
 -- Otomasi alur pesanan Techpora.
--- STATUS: DRAFT, belum diterapkan ke database. Tinjau dulu sebelum dijalankan.
+-- STATUS: sudah diterapkan ke project Supabase techpora (2026-11-14) sebagai migrasi "otomasi_pesanan".
 --
 -- Satu pesanan baru otomatis menghasilkan:
 --   1. tugas serah terima (tanggal mulai) dan tugas pengembalian (tanggal selesai)

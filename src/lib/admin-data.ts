@@ -28,7 +28,7 @@ export type AdminData = {
 export const KUNCI_ADMIN = ["admin"] as const;
 
 const KOLOM_PESANAN =
-  "id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)";
+  "id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pic_id, pelanggan(nama, wa), unit(nama, kategori)";
 
 async function ambil(): Promise<AdminData> {
   const { data: sesi } = await supabase.auth.getSession();
