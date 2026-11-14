@@ -144,6 +144,14 @@ export function tambahHari(tanggal: string, hari: number) {
   );
 }
 
+/** Tanggal hari ini (YYYY-MM-DD) menurut jam perangkat, bukan UTC.
+ *  toISOString() memakai UTC sehingga jam 00.00–07.00 WIB masih "kemarin". */
+export const hariIni = () => {
+  const d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+};
+export const bulanIni = () => hariIni().slice(0, 7);
+
 export const tglIndo = (iso?: string | null) =>
   iso
     ? new Date(iso.slice(0, 10) + "T00:00:00").toLocaleDateString("id-ID", {
@@ -228,7 +236,7 @@ export type Tugas = {
   prioritas: "tinggi" | "normal" | "rendah";
   gcal_event_id: string | null;
   dibuat_pada?: string;
-  pic?: { nama: string; email: string | null } | null;
+  pic?: { nama: string; email: string | null; wa?: string | null } | null;
   pelanggan?: { nama: string; wa: string } | null;
   unit?: { nama: string } | null;
 };

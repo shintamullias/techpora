@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import {
-  supabase, rp, tglIndo, bulanDari, namaBulan, KATEGORI_BIAYA,
+  hariIni, bulanIni, supabase, rp, tglIndo, bulanDari, namaBulan, KATEGORI_BIAYA,
   type Unit, type Pesanan, type Pengeluaran,
 } from "@/lib/supabase";
 
@@ -24,10 +24,10 @@ export default function TabKeuangan({
 }: {
   pesanan: Pesanan[]; unit: Unit[]; biaya: Pengeluaran[]; muat: () => void; setGalat: (s: string) => void;
 }) {
-  const kini = new Date().toISOString().slice(0, 7);
+  const kini = bulanIni();
   const [bulan, setBulan] = useState(kini);
   const [buka, setBuka] = useState(false);
-  const kosong = { tanggal: new Date().toISOString().slice(0, 10), kategori: "operasional", keterangan: "", jumlah: "", unit_id: "", kategori_bisnis: "umum" };
+  const kosong = { tanggal: hariIni(), kategori: "operasional", keterangan: "", jumlah: "", unit_id: "", kategori_bisnis: "umum" };
   const [f, setF] = useState(kosong);
   const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
 

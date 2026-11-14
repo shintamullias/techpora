@@ -1,15 +1,18 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
+import { toast } from "sonner";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
-  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
-  type Kategori, type Saring, type ItemPesanan,
-  type Pic, type Tugas, type Voucher, type Pembayaran,
+  hariIni, supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
+  type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen,
+  type Kategori, type Saring, type ItemPesanan, type Pembayaran,
 } from "@/lib/supabase";
+import { useAdminData, useAksi, hitungBayar, type AdminData } from "@/lib/admin-data";
+import { Toaster } from "@/components/ui/sonner";
+import { inp, Kol, Kartu, Lencana, Kerangka, labelBayar } from "@/components/admin/ui";
+import Beranda from "@/components/admin/Beranda";
+import Pengaturan_ from "@/components/admin/Pengaturan";
 import TabKeuangan from "@/components/TabKeuangan";
-import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
-import TabVoucher from "@/components/TabVoucher";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -18,70 +21,26 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "uang";
+type Tab = "beranda" | "kalender" | "pesanan" | "uang" | "data" | "atur";
+
+const KOSONG = { pelanggan: [], unit: [], pesanan: [], biaya: [], tugas: [], pic: [], voucher: [], pembayaran: [] } as unknown as Pick<
+  AdminData, "pelanggan" | "unit" | "pesanan" | "biaya" | "tugas" | "pic" | "voucher" | "pembayaran"
+>;
+const ONGKIR_AWAL: Pengaturan = { ongkir_per_km: 10000, ongkir_minimum: 50000 };
 
 function Dashboard() {
   const nav = useNavigate();
-  const [siap, setSiap] = useState(false);
-  const [boleh, setBoleh] = useState(false);
   const [tab, setTab] = useState<Tab>("beranda");
-  const [namaku, setNamaku] = useState("");
+  const [subData, setSubData] = useState<"pelanggan" | "unit">("pelanggan");
   const [kat, setKat] = useState<Saring>("semua");
-  const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
-  const [unit, setUnit] = useState<Unit[]>([]);
-  const [pesanan, setPesanan] = useState<Pesanan[]>([]);
-  const [set, setSet] = useState<Pengaturan>({ ongkir_per_km: 10000, ongkir_minimum: 50000 });
-  const [biaya, setBiaya] = useState<Pengeluaran[]>([]);
-  const [tugas, setTugas] = useState<Tugas[]>([]);
-  const [pic, setPic] = useState<Pic[]>([]);
-  const [voucher, setVoucher] = useState<Voucher[]>([]);
-  const [pembayaran, setPembayaran] = useState<Pembayaran[]>([]);
-  const [galat, setGalat] = useState("");
+  const { data, error, isLoading } = useAdminData();
+  const { muat, galat } = useAksi();
 
-  const muat = async () => {
-    const { data: sesi } = await supabase.auth.getSession();
-    if (!sesi.session) return nav({ to: "/masuk" });
-    const { data: me } = await supabase.from("profil").select("is_admin, nama").eq("id", sesi.session.user.id).maybeSingle();
-    if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
-    setNamaku((me.nama || "").split(" ")[0]);
-    setBoleh(true);
-    const [p, u, o, s, b, tg, pc, vc, by] = await Promise.all([
-      supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
-      supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
-      supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
-      supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
-      supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
-      supabase.from("pic").select("*").order("nama"),
-      supabase.from("voucher").select("*").order("dibuat_pada", { ascending: false }),
-      supabase.from("pembayaran").select("*").order("tanggal", { ascending: false }),
-    ]);
-    setTugas((tg.data as unknown as Tugas[]) || []);
-    setPic((pc.data as Pic[]) || []);
-    setVoucher((vc.data as Voucher[]) || []);
-    setPembayaran((by.data as Pembayaran[]) || []);
-    setBiaya((b.data as Pengeluaran[]) || []);
-    setPelanggan((p.data as Pelanggan[]) || []);
-    setUnit((u.data as Unit[]) || []);
-    // Kolom dipilih eksplisit, jadi bentuk relasi harus dilepas dulu ke unknown.
-    setPesanan((o.data as unknown as Pesanan[]) || []);
-    if (s.data) setSet(s.data as Pengaturan);
-    setSiap(true);
-  };
+  const { pelanggan, unit, pesanan, biaya, tugas, pic, pembayaran } = data ?? KOSONG;
+  const set = data?.pengaturan ?? ONGKIR_AWAL;
+  const namaku = data?.nama ?? "";
 
-  useEffect(() => { muat(); }, []);
-
-  // Auto-refresh saat kembali ke halaman (mis. habis input dari perangkat lain)
-  // supaya data keuangan & pesanan selalu sinkron tanpa reload manual.
-  useEffect(() => {
-    const segarkan = () => { if (document.visibilityState === "visible") muat(); };
-    window.addEventListener("focus", segarkan);
-    document.addEventListener("visibilitychange", segarkan);
-    return () => {
-      window.removeEventListener("focus", segarkan);
-      document.removeEventListener("visibilitychange", segarkan);
-    };
-  }, []);
+  useEffect(() => { if (error?.message === "BELUM_MASUK") nav({ to: "/masuk" }); }, [error, nav]);
 
   /* ---------- saringan kategori ----------
      Satu unit selalu milik tepat satu kategori, jadi seluruh tab cukup
@@ -92,15 +51,12 @@ function Dashboard() {
     return m;
   }, [unit]);
 
-  const cocok = (unitId?: string | null) =>
-    kat === "semua" || (!!unitId && katUnit[unitId] === kat);
-
   const unitTampil = useMemo(
     () => (kat === "semua" ? unit : unit.filter((u) => (u.kategori || "laptop") === kat)),
     [unit, kat],
   );
   const pesananTampil = useMemo(
-    () => (kat === "semua" ? pesanan : pesanan.filter((p) => cocok(p.unit_id))),
+    () => (kat === "semua" ? pesanan : pesanan.filter((p) => katUnit[p.unit_id] === kat)),
     [pesanan, kat, katUnit],
   );
   const pelangganTampil = useMemo(() => {
@@ -108,77 +64,98 @@ function Dashboard() {
     const ada = new Set(pesananTampil.map((p) => p.pelanggan_id));
     return pelanggan.filter((p) => ada.has(p.id));
   }, [pelanggan, pesananTampil, kat]);
+  const tugasTampil = useMemo(
+    () => (kat === "semua" ? tugas : tugas.filter((t) => !t.unit_id || katUnit[t.unit_id] === kat)),
+    [tugas, kat, katUnit],
+  );
   const biayaTampil = useMemo(() => {
     if (kat === "semua") return biaya;
-    // Biaya kategori terpilih tampil penuh; biaya "umum" dibagi 50:50
-    // (separuh dibebankan ke tiap kategori) supaya total tetap terbaca utuh.
+    // Biaya "umum" dibagi 50:50 ke tiap kategori supaya total tetap terbaca utuh.
     return biaya
-      .filter((b) => {
-        const kb = b.kategori_bisnis || "umum";
-        return kb === kat || kb === "umum";
-      })
-      .map((b) => {
-        const kb = b.kategori_bisnis || "umum";
-        return kb === "umum"
-          ? { ...b, jumlah: Math.round(b.jumlah / 2), keterangan: (b.keterangan ? b.keterangan + " " : "") + "(½ biaya umum)" }
-          : b;
-      });
+      .filter((b) => { const kb = b.kategori_bisnis || "umum"; return kb === kat || kb === "umum"; })
+      .map((b) => (b.kategori_bisnis || "umum") === "umum"
+        ? { ...b, jumlah: Math.round(b.jumlah / 2), keterangan: (b.keterangan ? b.keterangan + " " : "") + "(½ biaya umum)" }
+        : b);
   }, [biaya, kat]);
 
-  if (!siap) return <Pusat>Memuat…</Pusat>;
-  if (!boleh)
+  if (isLoading) {
+    return (
+      <div className="admin-ui min-h-screen px-4 py-6">
+        <div className="mx-auto max-w-3xl"><Kerangka baris={4} /></div>
+        <Toaster position="top-center" />
+      </div>
+    );
+  }
+
+  if (error && error.message !== "BELUM_MASUK") {
+    const bukanAdmin = error.message === "BUKAN_ADMIN";
     return (
       <Pusat>
-        <p className="mb-2 font-serif text-xl">Khusus admin</p>
-        <Link to="/masuk" className="text-primary underline underline-offset-4">Masuk dengan akun admin</Link>
+        {bukanAdmin ? (
+          <>
+            <p className="mb-2 text-xl font-semibold text-foreground">Khusus admin</p>
+            <Link to="/masuk" className="text-primary underline underline-offset-4">Masuk dengan akun admin</Link>
+          </>
+        ) : (
+          <>
+            <p className="mb-1 text-xl font-semibold text-foreground">Data gagal dimuat</p>
+            <p className="mb-4 max-w-sm text-sm">{error.message}</p>
+            <button onClick={muat} className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground">Coba lagi</button>
+          </>
+        )}
       </Pusat>
     );
+  }
+  if (!data) return <Pusat>Memuat…</Pusat>;
 
+  const ini = hariIni();
   const aktif = pesananTampil.filter((p) => p.status === "berjalan").length;
   const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
-  const hariIniIso = new Date().toISOString().slice(0, 10);
-  const tugasHariIni = tugas.filter((t) =>
-    (t.status === "menunggu" || t.status === "dikerjakan") && t.jatuh_tempo <= hariIniIso).length;
+  const tugasHariIni = tugasTampil.filter((t) =>
+    (t.status === "menunggu" || t.status === "dikerjakan") && t.jatuh_tempo <= ini).length;
   const salam = (() => {
     const j = new Date().getHours();
     return j < 11 ? "Selamat pagi" : j < 15 ? "Selamat siang" : j < 19 ? "Selamat sore" : "Selamat malam";
   })();
 
+  const NAV: [Tab, string, string][] = [
+    ["beranda", "Beranda", "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5"],
+    ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
+    ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
+    ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
+    ["data", "Data", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
+    ["atur", "Atur", "M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-11v2m0 12v2M2 10h2m12 0h2M4.5 4.5l1.4 1.4m8.2 8.2 1.4 1.4m0-11-1.4 1.4m-8.2 8.2-1.4 1.4"],
+  ];
+
   return (
-    <div className="min-h-screen bg-[#F6F8FD] pb-24">
-      <header className="border-b border-slate-200/70 bg-white">
-        <div className="mx-auto max-w-3xl px-4 pb-4 pt-5">
+    <div className="admin-ui min-h-screen pb-24">
+      <header className="border-b border-border bg-card">
+        <div className="mx-auto max-w-3xl px-4 pb-3 pt-5">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <h1 className="font-serif text-[26px] leading-tight text-slate-900">
-                {salam}{namaku ? `, ${namaku}` : ""} 👋
+              <h1 className="text-2xl leading-tight text-foreground">
+                {salam}{namaku ? `, ${namaku}` : ""}
               </h1>
-              <p className="mt-1 text-sm text-slate-500">{tglHariIndo(hariIniIso)}</p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {tglHariIndo(ini)} · {aktif} unit di luar · {akanDatang} akan datang
+                {tugasHariIni > 0 && <> · <b className="text-red-600">{tugasHariIni} tugas</b></>}
+              </p>
             </div>
             <button
               onClick={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
-              className="mt-1 shrink-0 rounded-full border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-500 hover:bg-slate-50"
+              className="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted"
             >Keluar</button>
-          </div>
-
-          {/* Ringkasan hari ini dalam bahasa sehari-hari */}
-          <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-            <span className="text-slate-700"><b className="text-primary">{aktif}</b> unit di luar</span>
-            <span className="text-slate-700"><b className="text-amber-600">{akanDatang}</b> akan datang</span>
-            <button onClick={() => setTab("tugas")} className="text-slate-700 underline-offset-4 hover:underline">
-              <b className={tugasHariIni > 0 ? "text-red-600" : "text-emerald-600"}>{tugasHariIni}</b> tugas hari ini
-            </button>
           </div>
 
           {/* Saringan kategori (Semua / Laptop / Sepatu) */}
           <div className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5">
-            {([["semua","Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring,string][]).map(([k,t]) => {
+            {([["semua", "Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring, string][]).map(([k, t]) => {
               const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
               return (
                 <button key={k} onClick={() => setKat(k)}
-                  className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition " +
-                    (kat===k ? "bg-primary text-white" : "bg-slate-100 text-slate-600 hover:bg-slate-200/70")}>
-                  {t}<span className={kat===k ? "text-white/70" : "text-slate-400"}>{n}</span>
+                  className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold " +
+                    (kat === k ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/70")}>
+                  {t}<span className={kat === k ? "text-primary-foreground/70" : "text-muted-foreground/70"}>{n}</span>
                 </button>
               );
             })}
@@ -186,52 +163,49 @@ function Dashboard() {
         </div>
       </header>
 
-      <main className="mx-auto max-w-3xl space-y-4 px-4 py-4">
-        {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
+      {/* key={tab}: tiap pindah tab konten masuk dengan animasi yang sama */}
+      <main key={tab} className="mx-auto max-w-3xl space-y-4 px-4 py-4">
         {tab === "beranda" && (
-          <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} keTab={setTab} />
-        )}
-        {(tab === "pelanggan" || tab === "unit") && (
-          <div className="flex rounded-full bg-slate-200/60 p-1">
-            {([["pelanggan", "Pelanggan"], ["unit", "Unit"]] as [Tab, string][]).map(([k, t]) => (
-              <button key={k} onClick={() => setTab(k)}
-                className={"flex-1 rounded-full py-2 text-sm font-semibold transition " +
-                  (tab === k ? "bg-white text-slate-900 shadow-sm" : "text-slate-500")}>
-                {t}
-              </button>
-            ))}
-          </div>
+          <Beranda tugas={tugasTampil} pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} galat={galat} keTab={setTab} />
         )}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
-        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
-        {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
+        {tab === "pesanan" && (
+          <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} pembayaran={pembayaran} muat={muat} setGalat={galat} />
+        )}
         {tab === "uang" && (
           <>
-            <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />
-            <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />
-            <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />
+            <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={galat} />
+            <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={galat} />
           </>
         )}
+        {tab === "data" && (
+          <>
+            <div className="flex rounded-full bg-muted p-1">
+              {([["pelanggan", "Pelanggan"], ["unit", "Unit"]] as const).map(([k, t]) => (
+                <button key={k} onClick={() => setSubData(k)}
+                  className={"flex-1 rounded-full py-2 text-sm font-semibold " +
+                    (subData === k ? "bg-card text-foreground shadow-sm" : "text-muted-foreground")}>
+                  {t}
+                </button>
+              ))}
+            </div>
+            {subData === "pelanggan"
+              ? <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={galat} />
+              : <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} muat={muat} setGalat={galat} />}
+          </>
+        )}
+        {tab === "atur" && <Pengaturan_ pic={pic} set={set} muat={muat} setGalat={galat} />}
       </main>
 
-      {/* Navigasi bawah — mudah dijangkau jempol di HP */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-slate-200 bg-white/95 backdrop-blur">
+      {/* Navigasi bawah, mudah dijangkau jempol di HP */}
+      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-card/95 backdrop-blur" aria-label="Menu utama">
         <div className="mx-auto flex max-w-3xl">
-          {([
-            ["beranda", "Beranda", "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5"],
-            ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
-            ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
-            ["tugas", "Tugas", "M3 3h14v14H3V3Zm3.5 7 2.5 2.5L14 7.5"],
-            ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
-            ["pelanggan", "Data", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
-          ] as [Tab,string,string][]).map(([k, label, d]) => {
-            const on = tab === k || (k === "pelanggan" && tab === "unit");
+          {NAV.map(([k, label, d]) => {
+            const on = tab === k;
             return (
-              <button key={k} onClick={() => setTab(k)}
-                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition " + (on ? "text-primary" : "text-slate-400")}>
-                <span className={"flex h-7 w-11 items-center justify-center rounded-full transition " + (on ? "bg-primary/10" : "")}>
+              <button key={k} onClick={() => setTab(k)} aria-current={on ? "page" : undefined}
+                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold " + (on ? "text-primary" : "text-muted-foreground")}>
+                <span className={"flex h-7 w-11 items-center justify-center rounded-full " + (on ? "bg-accent" : "")}>
                   <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
                     <path d={d} />
                   </svg>
@@ -242,148 +216,14 @@ function Dashboard() {
           })}
         </div>
       </nav>
+      <Toaster position="top-center" richColors />
     </div>
   );
 }
 
 const Pusat = ({ children }: { children: React.ReactNode }) => (
-  <div className="flex min-h-screen flex-col items-center justify-center px-6 text-center text-muted-foreground">{children}</div>
+  <div className="admin-ui flex min-h-screen flex-col items-center justify-center px-6 text-center text-muted-foreground">{children}</div>
 );
-
-/* ============ TAB 0: BERANDA (hari ini) ============ */
-function TabBeranda({ tugas, pesanan, pembayaran, keTab }: {
-  tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[]; keTab: (t: Tab) => void;
-}) {
-  const hariIni = new Date().toISOString().slice(0, 10);
-  const besok = tambahHari(hariIni, 1);
-
-  type Acara = { kunci: string; jam: string; judul: string; ket: string; warna: string; telat?: boolean };
-  const buatAgenda = (tgl: string): Acara[] => {
-    const a: Acara[] = [];
-    const tugasAktif = tugas.filter((t) => t.status === "menunggu" || t.status === "dikerjakan");
-    tugasAktif
-      .filter((t) => (tgl === hariIni ? t.jatuh_tempo <= tgl : t.jatuh_tempo === tgl))
-      .forEach((t) => a.push({
-        kunci: "t" + t.id,
-        jam: (t.jam || "09:00").slice(0, 5),
-        judul: t.judul,
-        ket: t.pic?.nama ? "PIC " + t.pic.nama : "Tugas",
-        warna: "#1e6feb",
-        telat: t.jatuh_tempo < hariIni,
-      }));
-    const adaTugas = new Set(tugasAktif.map((t) => t.pesanan_id).filter(Boolean));
-    pesanan
-      .filter((p) => p.status === "dipesan" && p.mulai === tgl && !adaTugas.has(p.id))
-      .forEach((p) => a.push({
-        kunci: "m" + p.id,
-        jam: (p.jam || "08:00").slice(0, 5),
-        judul: `Antar ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
-        ket: p.antar === "tidak" ? "Diambil di tempat" : "Diantar",
-        warna: "#F59E0B",
-      }));
-    pesanan
-      .filter((p) => p.status === "berjalan" && p.selesai === tgl)
-      .forEach((p) => a.push({
-        kunci: "k" + p.id,
-        jam: "17:00",
-        judul: `Kembali ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
-        ket: "Unit harus balik",
-        warna: "#10B981",
-      }));
-    return a.sort((x, y) => (Number(x.telat ? 0 : 1) - Number(y.telat ? 0 : 1)) || x.jam.localeCompare(y.jam));
-  };
-
-  const agendaIni = buatAgenda(hariIni);
-  const agendaBesok = buatAgenda(besok);
-
-  const dibayar: Record<string, number> = {};
-  pembayaran.forEach((b) => { dibayar[b.pesanan_id] = (dibayar[b.pesanan_id] || 0) + (b.jumlah || 0); });
-  const piutang = pesanan.filter((p) => p.status !== "batal")
-    .reduce((s, p) => s + Math.max(0, (p.total || 0) - (dibayar[p.id] || 0)), 0);
-
-  const Baris = ({ a }: { a: Acara }) => (
-    <li className="flex gap-3">
-      <div className="w-12 shrink-0 pt-0.5 text-right">
-        <p className={"text-sm font-bold tabular-nums " + (a.telat ? "text-red-600" : "text-slate-900")}>{a.jam}</p>
-        {a.telat && <p className="text-[10px] font-bold text-red-600">TELAT</p>}
-      </div>
-      <div className="relative flex flex-col items-center">
-        <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: a.telat ? "#DC2626" : a.warna }} />
-        <span className="w-px flex-1 bg-slate-200" />
-      </div>
-      <div className="min-w-0 pb-4">
-        <p className="text-[15px] font-semibold leading-snug text-slate-900">{a.judul}</p>
-        <p className="mt-0.5 text-xs text-slate-500">{a.ket}</p>
-      </div>
-    </li>
-  );
-
-  return (
-    <>
-      <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="font-serif text-xl text-slate-900">Hari ini</h2>
-          <button onClick={() => keTab("tugas")} className="text-xs font-semibold text-primary">Semua tugas →</button>
-        </div>
-        {agendaIni.length === 0 ? (
-          <p className="rounded-xl bg-emerald-50 px-4 py-6 text-center text-sm text-emerald-800">
-            Tidak ada jadwal hari ini. Santai dulu ✨
-          </p>
-        ) : (
-          <ul>{agendaIni.map((a) => <Baris key={a.kunci} a={a} />)}</ul>
-        )}
-
-        {agendaBesok.length > 0 && (
-          <div className="mt-2 border-t border-slate-100 pt-4">
-            <p className="mb-3 text-sm font-semibold text-slate-400">Besok</p>
-            <ul className="opacity-70">{agendaBesok.slice(0, 4).map((a) => <Baris key={a.kunci} a={a} />)}</ul>
-          </div>
-        )}
-      </section>
-
-      {piutang > 0 && (
-        <button onClick={() => keTab("uang")}
-          className="flex w-full items-center justify-between rounded-2xl border border-red-200/70 bg-red-50/70 px-4 py-3.5 text-left">
-          <div>
-            <p className="text-sm font-semibold text-red-800">Belum dibayar {rp(piutang)}</p>
-            <p className="mt-0.5 text-xs text-red-600/80">Ketuk untuk lihat siapa saja dan kirim pengingat</p>
-          </div>
-          <span className="text-red-400">→</span>
-        </button>
-      )}
-
-      <div className="grid grid-cols-2 gap-3">
-        <button onClick={() => keTab("pesanan")}
-          className="rounded-2xl bg-primary px-4 py-3.5 text-sm font-semibold text-white shadow-sm">+ Pesanan baru</button>
-        <button onClick={() => keTab("tugas")}
-          className="rounded-2xl border border-slate-200 bg-white px-4 py-3.5 text-sm font-semibold text-slate-700">+ Tugas baru</button>
-      </div>
-    </>
-  );
-}
-
-const inp = "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
-
-function Kol({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <label className="mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted-foreground">{label}</label>
-      {children}
-    </div>
-  );
-}
-
-function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: string; aksi?: React.ReactNode }) {
-  return (
-    <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
-      <div className="mb-3 flex items-center justify-between">
-        <h2 className="font-serif text-xl text-slate-900">{judul}</h2>
-        {aksi}
-      </div>
-      {children}
-    </section>
-  );
-}
 
 const warnaBar: Record<StatusPesanan, string> = {
   dipesan: "#F59E0B",
@@ -396,7 +236,7 @@ const warnaStatus: Record<StatusPesanan, string> = {
   dipesan: "bg-amber-50 text-amber-800 border-amber-200",
   berjalan: "bg-blue-50 text-blue-800 border-blue-200",
   selesai: "bg-emerald-50 text-emerald-800 border-emerald-200",
-  batal: "bg-slate-100 text-slate-600 border-slate-200",
+  batal: "bg-muted text-muted-foreground border-border",
 };
 
 const labelStatus: Record<StatusPesanan, string> = {
@@ -409,8 +249,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
   // di dalam blok, hari ini disorot. Navigasi per minggu (7 hari) — lebih pas
   // di layar HP daripada sebulan penuh.
   const [anchor, setAnchor] = useState(() => {
-    const d = new Date(); d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() - d.getDay()); // mulai dari Minggu
+    const d = new Date(); d.setHours(0, 0, 0, 0); // mulai dari hari ini, bukan Minggu
     return d;
   });
   const aktif = pesanan.filter((p) => p.status === "dipesan" || p.status === "berjalan");
@@ -437,15 +276,15 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
   return (
     <Kartu judul="Kalender"
       aksi={<div className="flex items-center gap-1">
-        <button onClick={() => geser(-7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">‹</button>
-        <button onClick={() => setAnchor(() => { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - d.getDay()); return d; })}
-          className="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold">Ini</button>
-        <button onClick={() => geser(7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">›</button>
+        <button onClick={() => geser(-7)} className="rounded-lg border border-border px-2.5 py-1 text-sm">‹</button>
+        <button onClick={() => setAnchor(() => { const d = new Date(); d.setHours(0,0,0,0); return d; })}
+          className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold">Ini</button>
+        <button onClick={() => geser(7)} className="rounded-lg border border-border px-2.5 py-1 text-sm">›</button>
       </div>}>
-      <p className="mb-3 text-xs font-medium text-slate-400">{rentang}</p>
+      <p className="mb-3 text-xs font-medium text-muted-foreground">{rentang}</p>
 
       {unitAktif.length === 0 ? (
-        <p className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-400">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
+        <p className="rounded-lg bg-muted px-3 py-2 text-sm text-muted-foreground">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
       ) : (
         <div className="overflow-x-auto">
           <div className="min-w-[560px]">
@@ -454,7 +293,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
               {hari.map((d) => {
                 const ini = isoOf(d) === hariIni;
                 return (
-                  <div key={d.toISOString()} className={"rounded-lg py-1.5 text-center " + (ini ? "bg-primary text-white" : "bg-slate-50 text-slate-500")}>
+                  <div key={d.toISOString()} className={"rounded-lg py-1.5 text-center " + (ini ? "bg-primary text-white" : "bg-muted text-muted-foreground")}>
                     <p className="text-[10px] leading-none">{namaHari[d.getDay()]}</p>
                     <p className="mt-0.5 text-base font-bold leading-none">{d.getDate()}</p>
                   </div>
@@ -466,7 +305,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
             <div className="mt-1 space-y-1">
               {unitAktif.map((u) => (
                 <div key={u.id}>
-                  <p className="mb-0.5 mt-2 text-[11px] font-semibold text-slate-500">
+                  <p className="mb-0.5 mt-2 text-[11px] font-semibold text-muted-foreground">
                     <span className="font-mono">{u.id}</span> · {u.nama}
                   </p>
                   <div className="grid grid-cols-7 gap-1">
@@ -477,7 +316,7 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
                       const ini = t === hariIni;
                       return (
                         <div key={t} className={"min-h-[38px] rounded-md p-1 text-[11px] leading-tight " +
-                          (isi ? warnaBlok[isi.status] || "bg-slate-100" : ini ? "bg-primary/5" : "bg-slate-50")}>
+                          (isi ? warnaBlok[isi.status] || "bg-muted" : ini ? "bg-primary/5" : "bg-muted")}>
                           {isi && (mulaiHari
                             ? <span className="line-clamp-2 font-semibold">{isi.pelanggan?.nama}</span>
                             : <span className="text-current/50">·</span>)}
@@ -492,22 +331,22 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
         </div>
       )}
 
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-400">
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-amber-400 bg-amber-100" /> Dipesan</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-blue-500 bg-blue-100" /> Sedang keluar</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-emerald-300 bg-emerald-50" /> Selesai</span>
+      <div className="mt-4 flex flex-wrap gap-3 text-xs text-muted-foreground">
+        <span className="flex items-center gap-1.5"><i className="inline-block h-3 w-3 rounded-sm border-l-4 border-amber-400 bg-amber-100" /> Dipesan</span>
+        <span className="flex items-center gap-1.5"><i className="inline-block h-3 w-3 rounded-sm border-l-4 border-blue-500 bg-blue-100" /> Sedang keluar</span>
+        <span className="flex items-center gap-1.5"><i className="inline-block h-3 w-3 rounded-sm border-l-4 border-emerald-300 bg-emerald-50" /> Selesai</span>
       </div>
 
-      <div className="mt-5 border-t border-slate-200 pt-4">
-        <p className="mb-2 text-sm font-semibold text-slate-900">Jadwal terdekat</p>
-        {aktif.length === 0 ? <p className="text-sm text-slate-400">Belum ada sewa terjadwal.</p> : (
+      <div className="mt-5 border-t border-border pt-4">
+        <p className="mb-2 text-sm font-semibold text-foreground">Jadwal terdekat</p>
+        {aktif.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada sewa terjadwal.</p> : (
           <ul className="space-y-2">
             {[...aktif].sort((a, b) => (a.mulai < b.mulai ? -1 : 1)).slice(0, 6).map((p) => (
-              <li key={p.id} className="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2">
+              <li key={p.id} className="flex items-center justify-between rounded-lg border border-border px-3 py-2">
                 <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-slate-900">{p.pelanggan?.nama}</p>
-                  <p className="text-xs text-slate-400">
-                    <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam}` : ""} → {tglHariIndo(p.selesai)}
+                  <p className="truncate text-sm font-semibold text-foreground">{p.pelanggan?.nama}</p>
+                  <p className="text-xs text-muted-foreground">
+                    <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam.slice(0, 5)}` : ""} → {tglHariIndo(p.selesai)}
                   </p>
                 </div>
                 <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
@@ -521,9 +360,10 @@ function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
 }
 
 /* ============ TAB 2: PESANAN ============ */
-function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
-  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, muat, setGalat }: {
+  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; pembayaran: Pembayaran[]; muat: () => void; setGalat: (s: string) => void;
 }) {
+  const bayar = useMemo(() => hitungBayar(pesanan, pembayaran), [pesanan, pembayaran]);
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
   const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[] };
@@ -589,11 +429,25 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
       item: itemBersih, total, catatan: f.catatan.trim(),
     };
-    const { error } = edit
-      ? await supabase.from("pesanan").update(isi).eq("id", edit)
-      : await supabase.from("pesanan").insert(isi);
-    setSibuk(false);
-    if (error) return setGalat(error.message);
+    if (edit) {
+      const { error } = await supabase.from("pesanan").update(isi).eq("id", edit);
+      setSibuk(false);
+      if (error) return setGalat(error.message);
+      toast.success("Perubahan pesanan tersimpan");
+    } else {
+      const { data: baru, error } = await supabase.from("pesanan").insert(isi).select("token").single();
+      setSibuk(false);
+      if (error) return setGalat(error.message);
+      const pel = pelanggan.find((x) => x.id === f.pelanggan_id);
+      toast.success("Pesanan tersimpan", {
+        description: "Masuk kalender, tagihan, dan keuangan. Perjanjian siap ditandatangani.",
+        duration: 9000,
+        action: pel?.wa && baru?.token ? {
+          label: "Kirim link TTD",
+          onClick: () => window.open(waLink(pel.wa, `Halo kak ${pel.nama}, ini perjanjian sewa ${u?.nama} untuk ${tglIndo(f.mulai)}. Mohon dibaca lalu tanda tangan langsung di halaman ini ya:\n\n${window.location.origin}/ttd/${baru.token}\n\nNanti saat serah terima tinggal cek unit, tidak perlu tanda tangan lagi 🙏`), "_blank"),
+        } : undefined,
+      });
+    }
     tutup(); muat();
   };
 
@@ -717,28 +571,32 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
           </div>
         )}
 
-        {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-slate-400">Belum ada pesanan.</p> : (
+        {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-muted-foreground">Belum ada pesanan.</p> : (
           <ul className="space-y-2.5">
             {pesanan.map((p) => (
-              <li key={p.id} className="overflow-hidden rounded-2xl border border-slate-200/70 bg-white shadow-sm">
+              <li key={p.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
                 <div className="h-1" style={{ background: warnaBar[p.status] }} />
                 <div className="p-3.5">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="truncate font-bold text-slate-900">{p.pelanggan?.nama}</p>
-                      <p className="mt-0.5 truncate text-xs text-slate-500">
-                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglHariIndo(p.mulai)} → {tglHariIndo(p.selesai)}
+                      <p className="truncate font-bold text-foreground">{p.pelanggan?.nama}</p>
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                        <span className="font-mono font-semibold text-muted-foreground">{p.unit_id}</span> · {tglHariIndo(p.mulai)} → {tglHariIndo(p.selesai)}
                       </p>
-                      <p className="text-xs text-slate-400">{p.durasi_jumlah} {p.durasi_tipe}{p.antar !== "tidak" ? ` · antar ${p.jarak_km} km` : ""}</p>
+                      <p className="text-xs text-muted-foreground">{p.durasi_jumlah} {p.durasi_tipe}{p.antar !== "tidak" ? ` · antar ${p.jarak_km} km` : ""}</p>
                     </div>
                     <div className="shrink-0 text-right">
-                      <p className="text-lg font-bold text-slate-900">{rp(p.total)}</p>
+                      <p className="text-lg font-bold text-foreground">{rp(p.total)}</p>
                       {(p.item || []).length > 0 && (
-                        <p className="text-[11px] text-slate-400">
+                        <p className="text-[11px] text-muted-foreground">
                           {(p.item || []).map((it) => `${it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} ${it.jumlah < 0 ? "−" : "+"}${rp(Math.abs(it.jumlah))}`).join(" · ")}
                         </p>
                       )}
-                      <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
+                      <div className="mt-1 flex flex-wrap justify-end gap-1">
+                        <span className={"inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
+                        {bayar[p.id] && bayar[p.id].status !== "batal" && <Lencana nada={labelBayar[bayar[p.id].status].nada}>{labelBayar[bayar[p.id].status].teks}</Lencana>}
+                      </div>
+                      {bayar[p.id] && bayar[p.id].status === "sebagian" && <p className="mt-0.5 text-[11px] text-muted-foreground">sisa {rp(bayar[p.id].sisa)}</p>}
                     </div>
                   </div>
 
@@ -762,11 +620,11 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                     {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
                     <Aksi onClick={() => bukaEdit(p)}>{edit === p.id ? "Tutup edit" : "Edit"}</Aksi>
                     {p.pelanggan?.wa && (
-                      <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, konfirmasi sewa ${p.unit?.nama} ${tglIndo(p.mulai)} — ${tglIndo(p.selesai)} pukul ${p.jam}. Total ${rp(p.total)}. Terima kasih 🙏`)}
-                        target="_blank" rel="noreferrer" className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">WhatsApp</a>
+                      <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, konfirmasi sewa ${p.unit?.nama} ${tglIndo(p.mulai)} — ${tglIndo(p.selesai)} pukul ${p.jam?.slice(0, 5)}. Total ${rp(p.total)}. Terima kasih 🙏`)}
+                        target="_blank" rel="noreferrer" className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground">WhatsApp</a>
                     )}
                     <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
-                      className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">Perjanjian</a>
+                      className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground">Perjanjian</a>
                     <button onClick={() => hapusPesanan(p)}
                       className="ml-auto rounded-lg px-2 py-1.5 text-xs font-semibold text-red-400 hover:text-red-600">Hapus</button>
                   </div>
@@ -836,6 +694,7 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
   };
 
   const hapus = async (id: string) => {
+    if (!confirm("Hapus pelanggan ini beserta berkasnya? Tidak bisa dikembalikan.")) return;
     const { error } = await supabase.from("pelanggan").delete().eq("id", id);
     if (error) return setGalat("Tidak bisa dihapus, kemungkinan masih terpakai di pesanan.");
     if (edit === id) tutup();
@@ -919,6 +778,7 @@ function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
   };
 
   const hapusDok = async (d: Dokumen) => {
+    if (!confirm(`Hapus berkas "${d.nama_file || d.jenis}"? Tidak bisa dikembalikan.`)) return;
     await supabase.storage.from("dokumen").remove([d.path]);
     await supabase.from("dokumen").delete().eq("id", d.id);
     muatDok();
@@ -993,8 +853,8 @@ function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
 }
 
 /* ============ TAB 4: UNIT ============ */
-function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
-  unit: Unit[]; unitSemua: Unit[]; kat: Saring; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+function TabUnit({ unit, unitSemua, kat, muat, setGalat }: {
+  unit: Unit[]; unitSemua: Unit[]; kat: Saring; muat: () => void; setGalat: (s: string) => void;
 }) {
   /* Nilai awal ikut kategori yang sedang dipilih: sepatu memakai bagi hasil
      investor 40%, laptop memakai porsi Techpora 70%. */
@@ -1011,7 +871,6 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
   const [sibuk, setSibuk] = useState(false);
-  const [ongkir, setOngkir] = useState(set);
   const s = (k: string, v: string) => setF((p) => ({ ...p, [k]: v }));
 
   const tutup = () => { setBuka(false); setEdit(null); setF(bawaan(kat)); };
@@ -1145,22 +1004,6 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
             </li>
           ))}
         </ul>
-      </Kartu>
-
-      <Kartu judul="Ongkir">
-        <div className="grid grid-cols-2 gap-3">
-          <Kol label="Per km"><input type="number" value={ongkir.ongkir_per_km} onChange={(e) => setOngkir({ ...ongkir, ongkir_per_km: Number(e.target.value) || 0 })} className={inp} /></Kol>
-          <Kol label="Minimum"><input type="number" value={ongkir.ongkir_minimum} onChange={(e) => setOngkir({ ...ongkir, ongkir_minimum: Number(e.target.value) || 0 })} className={inp} /></Kol>
-        </div>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Contoh: 3 km → {rp(Math.max(ongkir.ongkir_minimum, 3 * ongkir.ongkir_per_km))} · 8 km → {rp(Math.max(ongkir.ongkir_minimum, 8 * ongkir.ongkir_per_km))}
-        </p>
-        <button
-          onClick={async () => {
-            const { error } = await supabase.from("pengaturan").update(ongkir).eq("id", true);
-            if (error) setGalat(error.message); else muat();
-          }}
-          className="mt-3 w-full rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground">Simpan ongkir</button>
       </Kartu>
     </>
   );

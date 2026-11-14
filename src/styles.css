@@ -192,3 +192,59 @@
 }
 
 
+
+/* ------------------------------------------------------------------
+ * Dashboard admin (/admin). Dibatasi lewat kelas .admin-ui supaya situs
+ * publik tidak ikut berubah. Palet cyan mengikuti versi Base44.
+ * ------------------------------------------------------------------ */
+.admin-ui {
+  --radius: 0.75rem;
+  --background: oklch(0.982 0.005 235);
+  --foreground: oklch(0.22 0.02 255);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.22 0.02 255);
+  --primary: oklch(0.58 0.11 220);
+  --primary-foreground: oklch(0.99 0.005 220);
+  --secondary: oklch(0.965 0.008 235);
+  --secondary-foreground: oklch(0.3 0.02 255);
+  --muted: oklch(0.965 0.008 235);
+  --muted-foreground: oklch(0.5 0.02 250);
+  --accent: oklch(0.955 0.03 210);
+  --accent-foreground: oklch(0.42 0.09 222);
+  --border: oklch(0.925 0.008 240);
+  --input: oklch(0.925 0.008 240);
+  --ring: oklch(0.58 0.11 220);
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+.admin-ui h1, .admin-ui h2, .admin-ui h3, .admin-ui h4, .admin-ui .font-serif {
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+@keyframes aui-naik {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes aui-kedip {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+.admin-ui .aui-masuk { animation: aui-naik 0.22s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.admin-ui .aui-kerangka { animation: aui-kedip 1.4s ease-in-out infinite; background: var(--muted); border-radius: var(--radius); }
+/* Buka-tutup formulir tanpa melompat: tinggi dianimasikan lewat grid. */
+.admin-ui .aui-buka { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.25s ease, opacity 0.2s ease; }
+.admin-ui .aui-buka[data-buka="true"] { grid-template-rows: 1fr; opacity: 1; }
+.admin-ui .aui-buka > div { overflow: hidden; min-height: 0; }
+.admin-ui button, .admin-ui a { -webkit-tap-highlight-color: transparent; }
+.admin-ui button:active:not(:disabled) { transform: scale(0.97); }
+.admin-ui button { transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.1s, opacity 0.15s; }
+.admin-ui :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .admin-ui .aui-masuk, .admin-ui .aui-kerangka { animation: none; }
+  .admin-ui .aui-buka { transition: none; }
+  .admin-ui button { transition: none; }
+}

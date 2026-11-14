@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { supabase, rp, tglIndo, waLink, type Pesanan, type Pembayaran } from "@/lib/supabase";
+import { hariIni, supabase, rp, tglIndo, waLink, type Pesanan, type Pembayaran } from "@/lib/supabase";
 
 const inp =
   "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
@@ -11,7 +11,7 @@ export default function TabPiutang({
   pesanan: Pesanan[]; pembayaran: Pembayaran[]; muat: () => void; setGalat: (s: string) => void;
 }) {
   const [bukaId, setBukaId] = useState("");
-  const [f, setF] = useState({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
+  const [f, setF] = useState({ jumlah: "", tanggal: hariIni(), metode: "transfer" });
 
   const dibayar = useMemo(() => {
     const m: Record<string, number> = {};
@@ -38,14 +38,14 @@ export default function TabPiutang({
       pesanan_id: pesananId, jumlah, tanggal: f.tanggal, metode: f.metode,
     });
     if (error) return setGalat(error.message);
-    setBukaId(""); setF({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
+    setBukaId(""); setF({ jumlah: "", tanggal: hariIni(), metode: "transfer" });
     muat();
   };
 
   return (
-    <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
+    <section className="aui-masuk rounded-2xl border border-border bg-card p-4 shadow-sm">
       <div className="mb-1 flex items-center justify-between">
-        <h2 className="font-serif text-xl text-slate-900">Piutang</h2>
+        <h2 className="font-serif text-xl text-foreground">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
       <p className="mb-3 text-xs text-muted-foreground">Tagihan yang belum lunas, dihitung dari total pesanan dikurangi pembayaran tercatat.</p>
@@ -54,10 +54,10 @@ export default function TabPiutang({
 
       <ul className="space-y-2.5">
         {daftar.map(({ p, bayar, sisa }) => (
-          <li key={p.id} className="rounded-xl border border-slate-200 p-3">
+          <li key={p.id} className="rounded-xl border border-border p-3">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="text-sm font-semibold text-slate-900">{p.pelanggan?.nama || "Pelanggan"}</p>
+                <p className="text-sm font-semibold text-foreground">{p.pelanggan?.nama || "Pelanggan"}</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
                   {p.unit?.nama || p.unit_id} · mulai {tglIndo(p.mulai)} · total {rp(p.total)}{bayar > 0 ? ` · dibayar ${rp(bayar)}` : ""}
                 </p>
@@ -74,7 +74,7 @@ export default function TabPiutang({
               )}
             </div>
             {bukaId === p.id && (
-              <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl border border-border bg-[#F8FAFC] p-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl border border-border bg-muted/50 p-3">
                 <input className={inp} inputMode="numeric" placeholder={"Jumlah (sisa " + rp(sisa) + ")"}
                   value={f.jumlah} onChange={(e) => setF((v) => ({ ...v, jumlah: e.target.value }))} />
                 <input type="date" className={inp} value={f.tanggal} onChange={(e) => setF((v) => ({ ...v, tanggal: e.target.value }))} />
