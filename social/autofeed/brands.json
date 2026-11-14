@@ -1,0 +1,381 @@
+{
+ "_catatan": "Konfigurasi akun Instagram laptop untuk autopost harian. WA & harga mengikuti keputusan pemilik (14 Nov 2026): WA 0821-7798-4041 untuk semua akun, harga = harga website techpora.id.",
+ "tema": {
+  "techpora": {
+   "hl": false,
+   "vars": {
+    "ink": "#0b1430",
+    "acc": "#1e6feb",
+    "accOn": "#ffffff",
+    "accTxt": "#1e6feb",
+    "accDark": "#ffd23f",
+    "sky1": "#c9dcf8",
+    "sky2": "#eef4fd",
+    "floor1": "#ffffff",
+    "floor2": "#e4ebf5",
+    "line": "#c9d6ea",
+    "icBg": "linear-gradient(160deg,#2a7bff,#0f4fc2)",
+    "icFg": "#ffffff",
+    "icShadow": "rgba(30,111,235,.35)",
+    "ctaBg": "linear-gradient(90deg,#1e6feb,#0f4fc2)",
+    "ctaFg": "#ffffff",
+    "priceC": "#1e6feb",
+    "scriptC": "#0b1430",
+    "panel": "linear-gradient(180deg,#1e6feb,#0f4fc2)",
+    "panelFg": "#ffffff",
+    "rowAlt": "#f5f8ff",
+    "darkGrad": "radial-gradient(circle at 50% 30%,#3d8bff 0%,#1e6feb 40%,#0c3a96 100%)",
+    "dark": "#0c3a96",
+    "logoH": "96px"
+   },
+   "sky1": "#c9dcf8",
+   "sky2": "#eef4fd",
+   "bFar": "#c8d8ef",
+   "bMid1": "#b3c8e8",
+   "bMid2": "#9fb7de",
+   "bNear1": "#a9c0e3",
+   "bNear2": "#d6e2f3",
+   "lm": "#93acd6"
+  },
+  "rentop": {
+   "hl": false,
+   "vars": {
+    "ink": "#151515",
+    "acc": "#ff5a1f",
+    "accOn": "#ffffff",
+    "accTxt": "#ff5a1f",
+    "accDark": "#ff5a1f",
+    "sky1": "#f6dcc4",
+    "sky2": "#fbf3ea",
+    "floor1": "#fffaf4",
+    "floor2": "#efe4d6",
+    "line": "#e2cdb6",
+    "icBg": "linear-gradient(160deg,#ff7a3d,#e2440f)",
+    "icFg": "#ffffff",
+    "icShadow": "rgba(255,90,31,.35)",
+    "ctaBg": "#151515",
+    "ctaFg": "#ffffff",
+    "priceC": "#ff5a1f",
+    "scriptC": "#151515",
+    "panel": "#151515",
+    "panelFg": "#ffffff",
+    "rowAlt": "#fff6ef",
+    "darkGrad": "radial-gradient(circle at 50% 30%,#3a2a22 0%,#1d1715 45%,#0e0c0b 100%)",
+    "dark": "#151515",
+    "logoH": "108px"
+   },
+   "sky1": "#f6dcc4",
+   "sky2": "#fbf3ea",
+   "bFar": "#ecd9c6",
+   "bMid1": "#e0c7ae",
+   "bMid2": "#d4b799",
+   "bNear1": "#d9c0a6",
+   "bNear2": "#efe2d3",
+   "lm": "#c9a988"
+  },
+  "laptora": {
+   "hl": true,
+   "vars": {
+    "ink": "#111111",
+    "acc": "#f5e100",
+    "accOn": "#111111",
+    "accTxt": "#111111",
+    "accDark": "#f5e100",
+    "sky1": "#dfe5ec",
+    "sky2": "#f6f7f9",
+    "floor1": "#ffffff",
+    "floor2": "#eceef1",
+    "line": "#d5dae1",
+    "icBg": "#111111",
+    "icFg": "#f5e100",
+    "icShadow": "rgba(0,0,0,.25)",
+    "ctaBg": "#111111",
+    "ctaFg": "#ffffff",
+    "priceC": "#111111",
+    "scriptC": "#111111",
+    "panel": "#111111",
+    "panelFg": "#f5e100",
+    "rowAlt": "#fafaf0",
+    "darkGrad": "radial-gradient(circle at 50% 30%,#2b2b2b 0%,#151515 50%,#000 100%)",
+    "dark": "#111111",
+    "logoH": "112px"
+   },
+   "sky1": "#dfe5ec",
+   "sky2": "#f6f7f9",
+   "bFar": "#dde2e8",
+   "bMid1": "#cdd4dd",
+   "bMid2": "#bcc5d0",
+   "bNear1": "#c3cbd6",
+   "bNear2": "#e8ebef",
+   "lm": "#aeb8c5"
+  }
+ },
+ "akun": [
+  {
+   "username": "sewalaptopjogjaa",
+   "accountId": "6ae1e831fc43f81b784065f8",
+   "brand": "laptora",
+   "kota": "Jogja",
+   "landmark": "tugu",
+   "landmarkX": 820,
+   "jam": "08:00",
+   "logo": "laptora.png",
+   "logoDark": "laptora-white.png",
+   "topText": [
+    "RENTAL LAPTOP",
+    "MODERN",
+    "JOGJA"
+   ],
+   "web": "Rental Laptop Modern",
+   "hashtag": [
+    "#SewaLaptopJogja",
+    "#RentalLaptopJogja"
+   ]
+  },
+  {
+   "username": "sewalaptopdepokk",
+   "accountId": "6ae1e7e3fc43f81b7840657d",
+   "brand": "laptora",
+   "kota": "Depok",
+   "landmark": "",
+   "landmarkX": 0,
+   "jam": "09:00",
+   "logo": "laptora.png",
+   "logoDark": "laptora-white.png",
+   "topText": [
+    "RENTAL LAPTOP",
+    "MODERN",
+    "DEPOK"
+   ],
+   "web": "Rental Laptop Modern",
+   "hashtag": [
+    "#SewaLaptopDepok",
+    "#RentalLaptopDepok"
+   ]
+  },
+  {
+   "username": "sewalaptopbogor",
+   "accountId": "6ae1dd60fc43f81b78404b32",
+   "brand": "rentop",
+   "kota": "Bogor",
+   "landmark": "kujang",
+   "landmarkX": 820,
+   "jam": "10:00",
+   "logo": "rentop.png",
+   "logoDark": "rentop.png",
+   "topText": [
+    "TECHNOLOGY",
+    "RENTAL",
+    "BOGOR"
+   ],
+   "web": "Technology Rental",
+   "hashtag": [
+    "#SewaLaptopBogor",
+    "#RentalLaptopBogor"
+   ]
+  },
+  {
+   "username": "sewalaptopbekasii",
+   "accountId": "6ae1dd26fc43f81b7840487f",
+   "brand": "rentop",
+   "kota": "Bekasi",
+   "landmark": "",
+   "landmarkX": 0,
+   "jam": "11:00",
+   "logo": "rentop.png",
+   "logoDark": "rentop.png",
+   "topText": [
+    "TECHNOLOGY",
+    "RENTAL",
+    "BEKASI"
+   ],
+   "web": "Technology Rental",
+   "hashtag": [
+    "#SewaLaptopBekasi",
+    "#RentalLaptopBekasi"
+   ]
+  },
+  {
+   "username": "sewalaptopbandungg",
+   "accountId": "6ae1dce1fc43f81b784047fc",
+   "brand": "rentop",
+   "kota": "Bandung",
+   "landmark": "sate",
+   "landmarkX": 760,
+   "jam": "12:00",
+   "logo": "rentop.png",
+   "logoDark": "rentop.png",
+   "topText": [
+    "TECHNOLOGY",
+    "RENTAL",
+    "BANDUNG"
+   ],
+   "web": "Technology Rental",
+   "hashtag": [
+    "#SewaLaptopBandung",
+    "#RentalLaptopBandung"
+   ]
+  },
+  {
+   "username": "sewalaptopjakarta.co",
+   "accountId": "6ae0f480fc43f81b783e8fe6",
+   "brand": "techpora",
+   "kota": "Jakarta",
+   "landmark": "monas",
+   "landmarkX": 820,
+   "jam": "17:00",
+   "logo": "techpora.png",
+   "logoDark": "techpora-white.png",
+   "topText": [
+    "SEWA LAPTOP",
+    "UNTUK SETIAP",
+    "KEBUTUHAN"
+   ],
+   "web": "techpora.id",
+   "hashtag": [
+    "#SewaLaptopJakarta",
+    "#RentalLaptopJakarta"
+   ]
+  }
+ ],
+ "wa": "0821-7798-4041",
+ "harga": {
+  "HP 14s": [
+   "hp-14s.png",
+   "AMD A9 · 8GB · SSD 512GB",
+   "79.000",
+   "450.000",
+   "1.400.000"
+  ],
+  "Lenovo ThinkPad": [
+   "thinkpad.png",
+   "i3 · 8GB · SSD 256GB",
+   "100.000",
+   "650.000",
+   "1.500.000"
+  ],
+  "ASUS VivoBook": [
+   "vivobook.png",
+   "i3 · 8GB · SSD 256GB",
+   "135.000",
+   "850.000",
+   "2.000.000"
+  ],
+  "RedmiBook 15": [
+   "redmibook.png",
+   "i3 · 8GB · SSD 256GB",
+   "135.000",
+   "850.000",
+   "2.000.000"
+  ],
+  "Acer Aspire 5": [
+   "acer.png",
+   "i5 · 8GB · SSD 256GB",
+   "175.000",
+   "1.100.000",
+   "3.000.000"
+  ],
+  "MacBook Air M1": [
+   "macbook.png",
+   "M1 · 8GB · SSD 256GB",
+   "250.000",
+   "1.500.000",
+   "4.500.000"
+  ],
+  "MacBook Pro M1": [
+   "macbook-pro-m1.png",
+   "M1 · 8GB · SSD 256GB",
+   "250.000",
+   "1.500.000",
+   "4.500.000"
+  ],
+  "MacBook Neo": [
+   "macbook-neo.png",
+   "A18 Pro · 8GB · SSD 256GB",
+   "250.000",
+   "1.500.000",
+   "4.500.000"
+  ]
+ },
+ "fitur_default": [
+  [
+   "shield",
+   "Tanpa<br>Deposit"
+  ],
+  [
+   "check",
+   "Unit Ready<br>Pakai"
+  ],
+  [
+   "truck",
+   "Antar ke<br>Lokasi"
+  ],
+  [
+   "cal",
+   "Harian –<br>Bulanan"
+  ]
+ ],
+ "tiktok": [
+  {
+   "username": "sewalaptopbogorr",
+   "accountId": "6ae0fb25fc43f81b783e9197",
+   "brand": "rentop",
+   "kota": "Bogor",
+   "sumberIG": "sewalaptopbogor",
+   "jam": "15:00",
+   "hashtag": [
+    "#SewaLaptopBogor",
+    "#RentalLaptopBogor"
+   ]
+  },
+  {
+   "username": "sewalaptopjakartaa",
+   "accountId": "6ae0fab0fc43f81b783e917d",
+   "brand": "techpora",
+   "kota": "Jakarta",
+   "sumberIG": "sewalaptopjakarta.co",
+   "jam": "16:00",
+   "hashtag": [
+    "#SewaLaptopJakarta",
+    "#RentalLaptopJakarta"
+   ]
+  }
+ ],
+ "threads": [
+  {
+   "username": "sewalaptopbogor",
+   "accountId": "6ae875ddfc43f81b784e4243",
+   "brand": "rentop",
+   "kota": "Bogor",
+   "jam": "10:30"
+  },
+  {
+   "username": "sewalaptopbekasii",
+   "accountId": "6ae87639fc43f81b784e42d4",
+   "brand": "rentop",
+   "kota": "Bekasi",
+   "jam": "11:30"
+  },
+  {
+   "username": "sewalaptopbandungg",
+   "accountId": "6ae8749ffc43f81b784e4058",
+   "brand": "rentop",
+   "kota": "Bandung",
+   "jam": "12:30"
+  },
+  {
+   "username": "sewalaptopcikarang",
+   "accountId": "6ae8758afc43f81b784e41a0",
+   "brand": "rentop",
+   "kota": "Cikarang",
+   "jam": "13:00"
+  },
+  {
+   "username": "renttop.id",
+   "accountId": "6ae87603fc43f81b784e4277",
+   "brand": "rentop",
+   "kota": "Jakarta",
+   "jam": "17:30"
+  }
+ ]
+}
