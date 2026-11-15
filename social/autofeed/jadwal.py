@@ -59,10 +59,10 @@ def utc(t):
     return t.astimezone(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
 
 
-def upload(path: Path) -> str:
-    init = call("POST", "/public/storage/file/init", {"filename": f"autofeed_{path.name}", "size": path.stat().st_size, "mimetype": "image/jpeg"})
+def upload(path: Path, mime: str = "image/jpeg") -> str:
+    init = call("POST", "/public/storage/file/init", {"filename": f"autofeed_{path.name}", "size": path.stat().st_size, "mimetype": mime})
     urllib.request.urlopen(urllib.request.Request(init["upload"], data=path.read_bytes(), method="PUT",
-                                                  headers={"Content-Type": "image/jpeg"}), timeout=300).read()
+                                                  headers={"Content-Type": mime}), timeout=600).read()
     call("POST", f"/public/storage/file/{init['id']}/complete", {})
     return init["url"]
 

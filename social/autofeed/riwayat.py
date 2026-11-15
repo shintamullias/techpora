@@ -16,6 +16,6 @@ for platform, daftar in (("INSTAGRAM", conf["akun"]), ("TIKTOK", conf.get("tikto
         if platform == "INSTAGRAM":
             print("   layout terakhir:", [(s["scheduleAt"][:10], s["title"].replace("autofeed:", "")) for s in mine if (s.get("title") or "").startswith("autofeed:")][-6:])
         else:
-            print("   teks terakhir:", [(s["scheduleAt"][:10], (s.get("description") or "")[:70].replace("\n", " ")) for s in mine][-5:])
+            print("   terakhir:", [(s["scheduleAt"][:10], (s.get("title") or "").replace("autofeed:", ""), (s.get("description") or "")[:60].replace("\n", " ")) for s in mine][-5:])
         gagal = [(s["scheduleAt"][:16], s.get("errorMessage")) for s in mine if s.get("status") in ("failed", "error")][-3:]
         if gagal: print("   GAGAL:", gagal)

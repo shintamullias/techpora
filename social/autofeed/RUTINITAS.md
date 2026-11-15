@@ -1,4 +1,4 @@
-# Autofeed harian: 6 Instagram + 2 TikTok + 5 Threads sewa laptop
+# Autofeed harian: 6 Instagram + 2 video TikTok + 5 Threads sewa laptop
 
 Tujuan: setiap hari 1 feed (gambar 1080×1350) di tiap akun, gaya clean & profesional dengan kiblat feeds **@transgo.id**: produk besar di tengah, judul tebal miring dua warna, logo kiri atas, baris 4 ikon keunggulan, tombol WhatsApp di bawah. Satu sesi menyiapkan feeds untuk **BESOK** (6 akun).
 
@@ -21,14 +21,24 @@ Tujuan: setiap hari 1 feed (gambar 1080×1350) di tiap akun, gaya clean & profes
 - DILARANG mengarang: harga lain, promo/diskon, testimoni, jumlah pelanggan, unit yang tidak ada (tidak ada laptop gaming), janji waktu antar di luar daftar ini. Jangan menyebut TransGo atau pesaing.
 
 
-## TikTok (foto 9:16) — brands.json > tiktok
-| Akun | Brand | Desain diambil dari IG | Jam |
+## TikTok (VIDEO animasi 9:16, ±15 detik) — brands.json > tiktok
+| Akun | Brand (tema video) | Kota | Jam |
 |---|---|---|---|
-| @sewalaptopbogorr | RENTOP Bogor | @sewalaptopbogor | 15:00 |
-| @sewalaptopjakartaa | Techpora Jakarta | @sewalaptopjakarta.co | 16:00 |
-- Pakai PNG desain IG hari itu dari akun sumber; `tiktok.py` mengubahnya jadi JPG 1080×1920 (TikTok menolak PNG).
-- Caption TikTok BEDA dari caption IG: pendek (250–500 karakter), kalimat pembuka yang memancing (pertanyaan/situasi relatable), poin singkat (✔), harga dari daftar fakta, "Chat WA 0821-7798-4041", 4–5 hashtag termasuk 2 hashtag kota + #fyp.
-- `python3 tiktok.py --akun <u> --png out/<tgl>/<akunIG>.png --caption out/<tgl>/tt_<u>.txt --tanggal <besok> --go`
+| @sewalaptopbogorr | RENTOP (gelap + oranye) | Bogor | 15:00 |
+| @sewalaptopjakartaa | Techpora (biru + kuning) | Jakarta | 16:00 |
+TikTok = VIDEO motion graphic (bukan foto), dibuat dengan `video.html` + `render_video.js`, musik orisinal 128 BPM dari `musik.py` (bebas hak cipta). Tanpa voice-over.
+
+Tiga PILAR, bergiliran per akun (hari ini Bogor & Jakarta harus beda pilar; jangan pilar yang sama 2 hari berturut-turut di satu akun):
+- **seo**: adegan pertama `cari` = animasi mengetik kata kunci di kolom pencarian, lalu jawabannya. Kata kunci yang SAMA dipakai di teks layar, kalimat pertama caption, dan hashtag. Bank kata kunci: sewa laptop <kota> (harian/murah/bulanan/terdekat/tanpa deposit/untuk skripsi/untuk event/untuk kerja), rental laptop <kota>, sewa macbook <kota>, sewa laptop per hari, harga sewa laptop.
+- **sales**: `hook` (pertanyaan/masalah) → `harga` (1 unit + paket) → `list` (keunggulan) → `cta`.
+- **evergreen**: edukasi yang berguna walau penonton tidak menyewa: `hook` → `banding` (beli vs sewa, HP 14s vs ThinkPad, harian vs bulanan) atau `poin`/`list` (tips baterai, spek skripsi, checklist sidang/presentasi, backup file, persiapan event) → `cta`.
+
+Adegan (`scenes`, total 32 beat = 15 detik; tiap adegan 6–10 beat, terakhir selalu `cta` 8 beat):
+`hook` {kicker, baris[], ukuran[], produk?} · `cari` {kata, jawab, judul?, produk?} · `poin` {nomor, judul, isi, produk?} · `harga` {label, unit, produk, harga, paket[[nama,nilai]]} · `list` {judul, item[], jeda?, produk?} · `banding` {judul, kiri{judul,item[]}, kanan{judul,item[]}} · `cta` {atas?, harga?, bawah?}. Kata di antara `*bintang*` = warna aksen. Ganti `seed` (1–16) tiap video supaya musiknya bervariasi.
+Contoh lengkap: `contoh/batch-2026-11-16/vid_*.json` dan `tt_*.txt`.
+
+Langkah: tulis `out/<tgl>/vid_<akun>.json` → `node render_video.js out/<tgl>/vid_<akun>.json` (±1 menit) → BUKA `vid_<akun>_cek.jpg` (1 frame per adegan) dan cek teks tidak terpotong/tumpang tindih, harga & WA benar → caption `out/<tgl>/tt_<akun>.txt` (200–450 karakter, kalimat pertama memuat kata kunci, harga dari daftar fakta, "Chat WA 0821-7798-4041", 4–5 hashtag huruf kecil termasuk #sewalaptop<kota> + #fyp) → `python3 tiktok.py --akun <akun> --video out/<tgl>/vid_<akun>.mp4 --caption out/<tgl>/tt_<akun>.txt --tanggal <besok> --tag <pilar>:<topik-singkat> --go` (tag dipakai riwayat.py untuk rotasi pilar).
+Jika render video gagal total, cadangannya foto: `--png out/<tgl>/<akunIG>.png` (laporkan ke pemilik).
 
 ## Threads (percakapan) — brands.json > threads
 | Akun | Brand | Kota | Jam |
@@ -55,14 +65,14 @@ Rotasi: setiap akun jangan memakai layout yang sama dengan 4 postingan autofeed 
 ## Langkah setiap sesi
 1. Siapkan alat (sekali per sesi):
    `mkdir -p ~/autofeed && cd ~/autofeed && curl -sfL <URL_TOOLKIT> | tar -xz`
-   Pastikan `node -e "require('playwright')"` jalan (Chromium sudah terpasang di container). `pip install -q pillow` bila perlu.
+   Pastikan `node -e "require('playwright')"` jalan (Chromium sudah terpasang di container). `pip install -q pillow numpy soundfile` (untuk musik video TikTok).
 2. `python3 riwayat.py` → lihat layout terakhir & hari kosong. Target = BESOK (WIB). Akun yang besok sudah terisi: lewati.
 3. Untuk tiap akun yang kosong, tulis `out/<tanggal>/<username>.json` (spec) dan `out/<tanggal>/<username>.txt` (caption).
 4. Render: `node render.js out/<tanggal>/*.json` lalu BUKA setiap PNG (Read) dan cek: teks tidak terpotong/tumpang tindih, logo jelas, harga sesuai daftar, tidak ada typo, kota benar. Perbaiki spec & render ulang bila perlu.
 5. Caption (Bahasa Indonesia, 500–1.000 karakter, beda tiap akun): kalimat pembuka yang relevan dengan gambar → 2–3 kalimat isi yang berguna (bukan pengulangan teks gambar) → CTA "Chat WhatsApp 0821-7798-4041 (https://wa.me/6282177984041)" → baris kosong → 4–6 hashtag (2 hashtag kota dari brands.json + yang relevan). Tanpa emoji berlebihan (maks 3).
 6. Jadwalkan tiap akun: `python3 jadwal.py --akun <u> --png <png> --caption <txt> --tanggal <besok> --tag <layout>:<unit> --go`
    (jam default dari brands.json; skrip menolak jika slot hari itu sudah terisi).
-7. Setelah IG terjadwal: buat 2 TikTok (lihat bagian TikTok) dan 5 Threads (lihat bagian Threads) untuk tanggal yang sama.
+7. Setelah IG terjadwal: buat 2 video TikTok (lihat bagian TikTok) dan 5 Threads (lihat bagian Threads) untuk tanggal yang sama.
 8. Buat kolase 6 gambar IG (PIL, 3×2) dan kirim ke pemilik lewat SendUserFile + ringkasan singkat: akun IG (jam, judul, unit), 2 TikTok (jam), dan kalimat utama 5 Threads. Sebutkan pemilik bisa membatalkan dari dashboard Repliz sebelum jam tayang.
 9. Cek juga jadwal kemarin & hari ini: kalau ada status `failed`/`error` di akun-akun ini, laporkan dan jadwalkan ulang bila masih masuk akal.
 

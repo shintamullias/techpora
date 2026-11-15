@@ -1,0 +1,128 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="assets/fonts.css">
+<style>
+/* TikTok video engine 1080x1920, 128 BPM (1 beat = .46875s). Safe zone: text within x 70..940, y 170..1520. */
+:root{--B:.46875s}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#000}
+body{font-family:"Fira Sans",sans-serif}
+#v{position:relative;width:1080px;height:1920px;overflow:hidden;background:var(--dark);color:#fff}
+.bump{position:absolute;inset:0}
+.sc{position:absolute;inset:0}
+.bg{position:absolute;inset:0;background:var(--darkGrad)}
+.grid{position:absolute;inset:-200px;background-image:linear-gradient(rgba(255,255,255,.06) 2px,transparent 2px),linear-gradient(90deg,rgba(255,255,255,.06) 2px,transparent 2px);background-size:90px 90px;animation:gridMove 4s linear infinite}
+.light{background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 55%,var(--floor2) 100%);color:var(--ink)}
+.h{font-family:"Anton",sans-serif;text-transform:uppercase;line-height:.95;transform:skewX(-7deg);letter-spacing:.005em}
+.acc{color:var(--accDark)}
+.light .acc{color:var(--accTxt)}
+.hlbox{display:inline-block;background:var(--acc);color:var(--accOn);padding:.04em .16em;transform:skewX(-7deg)}
+.kick{display:inline-block;font-weight:900;font-size:40px;letter-spacing:.18em;padding:12px 26px;border-radius:999px;background:var(--acc);color:var(--accOn)}
+.card{background:#fff;color:var(--ink);border-radius:36px;box-shadow:0 30px 60px rgba(0,0,0,.35)}
+.logo{position:absolute;left:70px;top:150px;height:110px}
+.wm{position:absolute;right:70px;top:170px;height:70px;opacity:.9}
+.vig{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 55%,rgba(0,0,0,.45) 100%);z-index:50}
+.prog{position:absolute;left:0;top:0;height:10px;background:var(--acc);z-index:60}
+@keyframes gridMove{from{transform:translate(0,0)}to{transform:translate(90px,90px)}}
+@keyframes punch{0%{opacity:0;transform:scale(2) skewX(-7deg)}55%{opacity:1;transform:scale(.94) skewX(-7deg)}100%{opacity:1;transform:skewX(-7deg)}}
+@keyframes pop{0%{opacity:0;transform:scale(.3)}65%{opacity:1;transform:scale(1.07)}100%{opacity:1;transform:none}}
+@keyframes up{from{opacity:0;transform:translateY(90px)}to{opacity:1;transform:none}}
+@keyframes inL{from{opacity:0;transform:translateX(-900px)}to{opacity:1;transform:none}}
+@keyframes inR{from{opacity:0;transform:translateX(900px)}to{opacity:1;transform:none}}
+@keyframes wipe{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+@keyframes flash{from{opacity:1}to{opacity:0}}
+@keyframes bump{0%{transform:scale(1.025)}35%{transform:scale(1)}100%{transform:scale(1)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-20px)}}
+@keyframes pulse{0%{transform:scale(1.06)}40%{transform:scale(1)}100%{transform:scale(1)}}
+@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.12)}}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes sweep{from{transform:translateX(-160%) skewX(-18deg)}to{transform:translateX(160%) skewX(-18deg)}}
+@keyframes prog{from{width:0}to{width:100%}}
+@keyframes ring{0%{opacity:.9;transform:scale(.6)}100%{opacity:0;transform:scale(1.8)}}
+.a{animation-fill-mode:both!important}
+</style></head>
+<body><div id="v"></div>
+<script>
+const Bs=0.46875;
+const I={
+ check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7"/></svg>',
+ x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>',
+ search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+};
+const waIcon='<svg viewBox="0 0 32 32" width="58" height="58"><path fill="#fff" d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.6c-2 0-3.9-.5-5.6-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.6 10.6 0 1 1 16 26.6zm5.8-7.9c-.3-.2-1.9-.9-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7.1a8.7 8.7 0 0 1-4.3-3.8c-.3-.6.3-.5.9-1.6.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 0 0-.9.4 3.6 3.6 0 0 0-1.1 2.7 6.3 6.3 0 0 0 1.3 3.3 14.4 14.4 0 0 0 5.5 4.9c2 .9 2.8.9 3.8.8a3.3 3.3 0 0 0 2.2-1.5 2.7 2.7 0 0 0 .2-1.5c-.1-.2-.3-.3-.6-.4z"/></svg>';
+const A=(name,dur,beat,ease='cubic-bezier(.2,.9,.2,1)')=>`animation:${name} ${dur}s calc(${beat}*var(--B)) ${ease} both`;
+const acc=s=>String(s).replace(/\*(.+?)\*/g,'<span class="acc">$1</span>');
+const img=f=>`assets/${f}`;
+const hooks=[];
+
+const S={
+ hook:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div style="position:absolute;left:70px;right:140px;top:330px">
+   ${s.kicker?`<div class="kick a" style="${A('pop',.35,b0)}">${s.kicker}</div>`:''}
+   <div style="margin-top:50px">${s.baris.map((l,i)=>`<div class="h a" style="font-size:${(s.ukuran||[])[i]||170}px;${A('punch',.4,b0+.5+i)}">${acc(l)}</div>`).join('')}</div>
+  </div>
+  ${s.produk?`<img class="a" src="${img(s.produk)}" style="position:absolute;left:150px;width:780px;top:1080px;filter:drop-shadow(0 40px 40px rgba(0,0,0,.5));${A('up',.5,b0+1.5)}">`:''}
+  <div class="a" style="position:absolute;inset:0;background:#fff;${A('flash',.3,b0,'linear')}"></div>`,
+ cari:(s,b0,n,B)=>{const id='kw'+b0; hooks.push(t=>{const st=(b0+.5)*Bs, k=s.kata, m=Math.max(0,Math.min(k.length,Math.floor((t-st)/0.055))); const e=document.getElementById(id); if(e) e.textContent=k.slice(0,m);});
+  return `<div class="bg"></div><div class="grid"></div>
+  <div style="position:absolute;left:70px;right:140px;top:300px;text-align:left">
+   <div class="a" style="font-weight:900;font-size:46px;letter-spacing:.06em;opacity:.85;${A('up',.35,b0)}">${s.judul||'LAGI NYARI INI?'}</div>
+   <div class="card a" style="margin-top:40px;display:flex;align-items:center;gap:24px;padding:34px 36px;border-radius:999px;${A('pop',.4,b0)}">
+     <div style="width:58px;height:58px;color:var(--ink)">${I.search}</div>
+     <div style="font-weight:800;font-size:44px;white-space:nowrap;overflow:hidden"><span id="${id}"></span><span class="a" style="display:inline-block;width:4px;height:48px;background:var(--ink);vertical-align:middle;margin-left:4px;animation:blink .8s steps(1) infinite"></span></div>
+   </div>
+   <div class="a" style="margin-top:110px;${A('up',.4,b0+n-2.2)}"><div style="font-weight:800;font-size:44px;opacity:.85">${s.jawabKecil||'Jawabannya:'}</div>
+    <div class="h" style="margin-top:14px;font-size:${s.ukuranJawab||150}px">${acc(s.jawab)}</div></div>
+  </div>${s.produk?`<img class="a" src="${img(s.produk)}" style="position:absolute;left:200px;width:680px;top:1080px;filter:drop-shadow(0 40px 40px rgba(0,0,0,.5));${A('up',.5,b0+n-1.6)}">`:''}`},
+ poin:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div style="position:absolute;left:70px;right:140px;top:300px">
+   <div class="a" style="display:inline-flex;width:170px;height:170px;border-radius:44px;background:var(--acc);color:var(--accOn);align-items:center;justify-content:center;font-family:Anton;font-size:120px;${A('pop',.35,b0)}">${s.nomor}</div>
+   <div class="h a" style="margin-top:50px;font-size:${s.ukuran||118}px;${A('up',.4,b0+.5)}">${acc(s.judul)}</div>
+   <div class="a" style="margin-top:36px;font-weight:700;font-size:50px;line-height:1.3;opacity:.92;${A('up',.4,b0+1.5)}">${s.isi}</div>
+  </div>
+  ${s.produk?`<img class="a" src="${img(s.produk)}" style="position:absolute;right:120px;width:540px;top:1120px;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5));${A('inR',.45,b0+1)}">`:''}`,
+ harga:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div class="a" style="position:absolute;left:0;right:0;top:290px;text-align:center;font-weight:900;font-size:52px;letter-spacing:.08em;${A('up',.35,b0)}">${s.label||'SEWA'}</div>
+  <div class="h a" style="position:absolute;left:0;right:0;top:360px;text-align:center;font-size:${s.ukuran||140}px;${A('punch',.4,b0+.5)}">${acc(s.unit)}</div>
+  <img class="a" src="${img(s.produk)}" style="position:absolute;left:170px;width:740px;top:${s.produkTop||560}px;filter:drop-shadow(0 40px 40px rgba(0,0,0,.5));${A('pop',.45,b0+1)}">
+  <div class="a" style="position:absolute;left:0;right:0;top:1060px;text-align:center;${A('punch',.4,b0+2)}"><span class="hlbox h" style="font-size:150px">${s.harga}</span></div>
+  <div style="position:absolute;left:90px;right:150px;top:1290px;display:flex;gap:22px;justify-content:center">${(s.paket||[]).map(([a,v],i)=>`<div class="card a" style="padding:20px 30px;text-align:center;${A('up',.35,b0+2.6+i*.4)}"><div style="font-weight:800;font-size:26px;letter-spacing:.16em;opacity:.6;text-transform:uppercase">${a}</div><div style="font-family:Anton;font-size:64px;color:var(--priceC)">${v}</div></div>`).join('')}</div>`,
+ list:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div style="position:absolute;left:70px;right:140px;top:300px">
+   <div class="h a" style="font-size:${s.ukuran||120}px;${A('punch',.4,b0)}">${acc(s.judul)}</div>
+   <div style="margin-top:60px;display:flex;flex-direction:column;gap:30px">${s.item.map((t,i)=>`<div class="card a" style="display:flex;align-items:center;gap:30px;padding:30px 34px;${A('inL',.4,b0+1+i*(s.jeda||1))}"><div style="flex:none;width:84px;height:84px;border-radius:50%;background:var(--acc);color:var(--accOn);display:flex;align-items:center;justify-content:center;padding:18px">${I[s.ikon||'check']}</div><div style="font-weight:800;font-size:46px;line-height:1.2">${t}</div></div>`).join('')}</div>
+  </div>${s.produk?`<img class="a" src="${img(s.produk)}" style="position:absolute;left:230px;width:620px;top:${s.produkTop||1080}px;filter:drop-shadow(0 40px 40px rgba(0,0,0,.5));${A('up',.5,b0+n-2.5)}">`:''}`,
+ banding:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div class="h a" style="position:absolute;left:70px;right:140px;top:280px;font-size:${s.ukuran||112}px;${A('punch',.4,b0)}">${acc(s.judul)}</div>
+  <div style="position:absolute;left:60px;right:60px;top:${s.top||600}px;display:flex;gap:26px">
+   ${[['kiri',s.kiri,'inL',1,false],['kanan',s.kanan,'inR',2,true]].map(([k,c,an,d,win])=>`<div class="card a" style="flex:1;padding:36px 32px;${win?'background:var(--accDark);color:var(--ink);box-shadow:0 0 0 8px rgba(255,255,255,.9),0 30px 60px rgba(0,0,0,.35)':''};${A(an,.45,b0+d)}"><div class="h" style="font-size:84px">${c.judul}</div><div style="margin-top:28px;display:flex;flex-direction:column;gap:26px">${c.item.map(t=>`<div style="display:flex;gap:14px;align-items:flex-start;font-weight:800;font-size:40px;line-height:1.2"><span style="flex:none;width:44px;height:44px;margin-top:2px">${win?I.check:I.x}</span>${t}</div>`).join('')}</div></div>`).join('')}
+  </div>
+  <div class="a" style="position:absolute;left:50%;top:${(s.top||600)-60}px;margin-left:-70px;width:140px;height:140px;border-radius:50%;background:#fff;color:var(--ink);font-family:Anton;font-size:64px;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(0,0,0,.4);${A('pop',.35,b0+1.5)}">VS</div>`,
+ cta:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div class="a" style="position:absolute;left:0;right:0;top:-10%;bottom:-10%;background:var(--acc);${A('sweep',.5,b0,'cubic-bezier(.6,0,.4,1)')}"></div>
+  <div class="a" style="position:absolute;left:50%;top:290px;transform:translateX(-50%);${A('pop',.5,b0+.5)}"><img src="${img(B.logoDark)}" style="height:${B.logoVidH||230}px;display:block"></div>
+  <div class="a" style="position:absolute;left:0;right:0;top:700px;text-align:center;font-weight:800;font-size:54px;${A('up',.35,b0+1.5)}">${s.atas||'Sewa laptop '+B.kota+' mulai'}</div>
+  <div class="a" style="position:absolute;left:0;right:0;top:780px;text-align:center;${A('punch',.4,b0+2)}"><span class="h" style="font-size:230px;color:var(--accDark)">${s.harga||'RP79RB'}</span><span class="h" style="font-size:80px">/hari</span></div>
+  <div class="a" style="position:absolute;left:0;right:0;top:1090px;text-align:center;font-weight:800;font-size:40px;letter-spacing:.06em;opacity:.9;${A('up',.35,b0+3)}">${s.bawah||'Tanpa deposit · Harian – Bulanan'}</div>
+  <div class="a" style="position:absolute;left:0;right:0;top:1220px;text-align:center;${A('pop',.45,b0+4)}"><div style="display:inline-flex;align-items:center;gap:22px;background:#25d366;color:#05361a;border-radius:999px;padding:22px 50px 22px 22px;box-shadow:0 20px 50px rgba(37,211,102,.35)"><div style="width:96px;height:96px;border-radius:50%;background:#128c4b;display:flex;align-items:center;justify-content:center">${waIcon}</div><div style="text-align:left"><div style="font-weight:800;font-size:26px;letter-spacing:.18em">CHAT WHATSAPP</div><div style="font-weight:900;font-size:62px;animation:pulse var(--B) calc(${b0+4}*var(--B)) infinite">${B.wa}</div></div></div></div>`,
+};
+
+window.render=function(spec,B){
+  const v=document.getElementById('v'); const T=B.tema;
+  for(const [k,val] of Object.entries(T.vars)) v.style.setProperty('--'+k,val);
+  hooks.length=0; let b=0, html='';
+  for(const s of spec.scenes){ const n=s.beats||8; html+=`<div class="sc${s.terang?' light':''}" data-bs="${b}" data-be="${b+n}">${S[s.tipe](s,b,n,B)}</div>`;
+    if(b>0) html+=`<div class="sc a" data-bs="${b}" data-be="${b+.6}" style="background:var(--acc);z-index:40;${A('flash',.28,b,'linear')}"></div>`; b+=n; }
+  const total=b;
+  v.innerHTML=`<div class="bump" style="animation:bump var(--B) calc(${spec.dropBeat||4}*var(--B)) infinite">${html}</div>
+   ${spec.scenes[0].tipe==='cta'?'':`<img class="wm" src="${img(B.logoDark)}" data-bs="0" data-be="${total-(spec.scenes.at(-1).beats||8)}" style="height:${B.logoWmH||70}px">`}
+   <div class="vig"></div><div class="prog" style="animation:prog ${total*Bs}s 0s linear both"></div>`;
+  window.TOTAL=total*Bs;
+  return document.fonts.ready.then(()=>total*Bs);
+};
+window.seek=function(t){
+  for(const n of document.querySelectorAll('[data-bs]')) n.style.visibility=(t>=n.dataset.bs*Bs&&t<n.dataset.be*Bs)?'':'hidden';
+  for(const a of document.getAnimations()){a.pause();a.currentTime=t*1000;}
+  for(const h of hooks) h(t);
+};
+</script></body></html>

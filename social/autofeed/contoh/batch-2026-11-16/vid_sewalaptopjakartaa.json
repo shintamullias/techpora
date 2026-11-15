@@ -1,0 +1,57 @@
+{
+ "akun": "sewalaptopjakartaa",
+ "pilar": "evergreen",
+ "seed": 2,
+ "dropBeat": 4,
+ "scenes": [
+  {
+   "tipe": "hook",
+   "beats": 6,
+   "kicker": "BELI ATAU SEWA?",
+   "baris": [
+    "Proyek",
+    "*3 Bulan*",
+    "Butuh Laptop?"
+   ],
+   "ukuran": [
+    170,
+    210,
+    130
+   ],
+   "produk": "macbook-pro-m1.png"
+  },
+  {
+   "tipe": "banding",
+   "beats": 10,
+   "judul": "Beli vs *Sewa*",
+   "kiri": {
+    "judul": "Beli",
+    "item": [
+     "Modal besar di awal",
+     "Nilai turun tiap bulan",
+     "Repot jual lagi"
+    ]
+   },
+   "kanan": {
+    "judul": "Sewa",
+    "item": [
+     "Bulanan mulai Rp1,4jt",
+     "Unit dicek & siap pakai",
+     "Balikin kalau selesai"
+    ]
+   }
+  },
+  {
+   "tipe": "poin",
+   "beats": 8,
+   "nomor": "!",
+   "judul": "Rumus *Gampangnya*",
+   "isi": "Dipakai lebih dari setahun? Beli.<br>Cuma untuk proyek atau sementara? Sewa lebih masuk akal.",
+   "produk": "macbook.png"
+  },
+  {
+   "tipe": "cta",
+   "beats": 8
+  }
+ ]
+}

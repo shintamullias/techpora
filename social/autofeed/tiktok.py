@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Jadwalkan postingan FOTO TikTok (JPG 1080x1920) dari desain feed IG hari itu.
+"""Jadwalkan postingan TikTok. Utama: VIDEO animasi (--video out/<tgl>/vid_<akun>.mp4, dari render_video.js).
+Cadangan: FOTO (JPG 1080x1920) dari desain feed IG hari itu (--png).
+
+  python3 tiktok.py --akun sewalaptopbogorr --video out/<tgl>/vid_sewalaptopbogorr.mp4 --caption out/<tgl>/tt_sewalaptopbogorr.txt \
+      --tanggal 2026-11-16 [--go]
 
   python3 tiktok.py --akun sewalaptopbogorr --png out/<tgl>/sewalaptopbogor.png --caption out/<tgl>/tt_sewalaptopbogorr.txt \
       --tanggal 2026-11-16 [--go]
@@ -36,7 +40,7 @@ def ke_916(png: Path) -> Path:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--akun", required=True); ap.add_argument("--png", required=True); ap.add_argument("--caption", required=True)
+    ap.add_argument("--akun", required=True); ap.add_argument("--png"); ap.add_argument("--video"); ap.add_argument("--caption", required=True)
     ap.add_argument("--tanggal", required=True); ap.add_argument("--jam"); ap.add_argument("--tag", default="")
     ap.add_argument("--go", action="store_true"); ap.add_argument("--paksa", action="store_true")
     a = ap.parse_args()
@@ -47,11 +51,16 @@ def main():
     if conf["wa"] not in cap: sys.exit(f"Caption wajib memuat WA {conf['wa']}")
     if len(cap) > 2000: sys.exit("Caption TikTok terlalu panjang (maks 2000)")
     t = waktu(a.tanggal, a.jam or akun["jam"]); cek_slot(akun["accountId"], t, a.paksa)
-    jpg = ke_916(Path(a.png))
-    print(f"Rencana TikTok: @{a.akun} {t:%Y-%m-%d %H:%M} WIB | {jpg.name} {jpg.stat().st_size//1024}KB")
+    if a.video:
+        f = Path(a.video); jenis, mime = "video", "video/mp4"
+    elif a.png:
+        f = ke_916(Path(a.png)); jenis, mime = "image", "image/jpeg"
+    else:
+        sys.exit("Isi --video (utama) atau --png (cadangan)")
+    print(f"Rencana TikTok ({jenis}): @{a.akun} {t:%Y-%m-%d %H:%M} WIB | {f.name} {f.stat().st_size//1024}KB")
     if not a.go: print("(simulasi, tambahkan --go)"); return
-    url = upload(jpg)
-    body = {"title": "", "description": cap, "type": "image", "medias": [{"type": "image", "url": url}],
+    url = upload(f, mime)
+    body = {"title": f"autofeed:{a.tag}"[:100] if a.tag else "", "description": cap, "type": jenis, "medias": [{"type": jenis, "url": url}],
             "additionalInfo": {"isDraft": False, "isAiGenerated": False}, "accountId": akun["accountId"], "scheduleAt": utc(t)}
     r = call("POST", "/public/schedule", body)
     print("✅ TikTok dijadwalkan:", a.akun, t.isoformat(), r.get("_id") or r)
