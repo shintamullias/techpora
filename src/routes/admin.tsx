@@ -8,7 +8,9 @@ import {
 } from "@/lib/supabase";
 import { useAdminData, useAksi, hitungBayar, type AdminData } from "@/lib/admin-data";
 import { Toaster } from "@/components/ui/sonner";
-import { inp, Kol, Kartu, Lencana, Kerangka, labelBayar } from "@/components/admin/ui";
+import { inp, Kol, Kartu, Judul, Lencana, Kerangka, Segmen, Kosong, Tombol, Modal, Konfirmasi, labelBayar } from "@/components/admin/ui";
+import { CalendarCheck, Plus, Search } from "lucide-react";
+import { Sidebar, NavBawah, Topbar, type Tab } from "@/components/admin/Shell";
 import Beranda from "@/components/admin/Beranda";
 import Pengaturan_ from "@/components/admin/Pengaturan";
 import TabKeuangan from "@/components/TabKeuangan";
@@ -20,8 +22,6 @@ export const Route = createFileRoute("/admin")({
   }),
   component: Dashboard,
 });
-
-type Tab = "beranda" | "kalender" | "pesanan" | "uang" | "data" | "atur";
 
 const KOSONG = { pelanggan: [], unit: [], pesanan: [], biaya: [], tugas: [], pic: [], voucher: [], pembayaran: [] } as unknown as Pick<
   AdminData, "pelanggan" | "unit" | "pesanan" | "biaya" | "tugas" | "pic" | "voucher" | "pembayaran"
@@ -109,113 +109,59 @@ function Dashboard() {
   if (!data) return <Pusat>Memuat…</Pusat>;
 
   const ini = hariIni();
-  const aktif = pesananTampil.filter((p) => p.status === "berjalan").length;
-  const akanDatang = pesananTampil.filter((p) => p.status === "dipesan").length;
-  const tugasHariIni = tugasTampil.filter((t) =>
-    (t.status === "menunggu" || t.status === "dikerjakan") && t.jatuh_tempo <= ini).length;
-  const salam = (() => {
-    const j = new Date().getHours();
-    return j < 11 ? "Selamat pagi" : j < 15 ? "Selamat siang" : j < 19 ? "Selamat sore" : "Selamat malam";
-  })();
 
-  const NAV: [Tab, string, string][] = [
-    ["beranda", "Beranda", "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5"],
-    ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
-    ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
-    ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
-    ["data", "Data", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
-    ["atur", "Atur", "M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm0-11v2m0 12v2M2 10h2m12 0h2M4.5 4.5l1.4 1.4m8.2 8.2 1.4 1.4m0-11-1.4 1.4m-8.2 8.2-1.4 1.4"],
-  ];
+  const kategoriFilter = (
+    <div className="flex gap-1.5 overflow-x-auto">
+      {([["semua", "Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring, string][]).map(([k, t]) => {
+        const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
+        return (
+          <button key={k} onClick={() => setKat(k)}
+            className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium " +
+              (kat === k ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/70")}>
+            {t}<span className={kat === k ? "text-primary-foreground/70" : "text-muted-foreground/70"}>{n}</span>
+          </button>
+        );
+      })}
+    </div>
+  );
 
   return (
-    <div className="admin-ui min-h-screen pb-24">
-      <header className="border-b border-border bg-card">
-        <div className="mx-auto max-w-3xl px-4 pb-3 pt-5">
-          <div className="flex items-start justify-between gap-3">
-            <div>
-              <h1 className="text-2xl leading-tight text-foreground">
-                {salam}{namaku ? `, ${namaku}` : ""}
-              </h1>
-              <p className="mt-1 text-sm text-muted-foreground">
-                {tglHariIndo(ini)} · {aktif} unit di luar · {akanDatang} akan datang
-                {tugasHariIni > 0 && <> · <b className="text-red-600">{tugasHariIni} tugas</b></>}
-              </p>
-            </div>
-            <button
-              onClick={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
-              className="shrink-0 rounded-full border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground hover:bg-muted"
-            >Keluar</button>
+    <div className="admin-ui flex h-screen overflow-hidden">
+      <Sidebar tab={tab} setTab={setTab} />
+      <div className="flex min-w-0 flex-1 flex-col">
+        <Topbar
+          tab={tab} tanggal={ini} nama={namaku} kategori={kategoriFilter}
+          onKeluar={async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); }}
+        />
+        <main className="scrollbar-thin flex-1 overflow-y-auto pb-24 lg:pb-8">
+          {/* key={tab}: tiap pindah tab konten masuk dengan animasi yang sama */}
+          <div key={tab} className="mx-auto max-w-5xl space-y-4 px-4 py-4 lg:space-y-6 lg:px-8 lg:py-8">
+            {tab === "beranda" && (
+              <Beranda tugas={tugasTampil} pesanan={pesananTampil} pembayaran={pembayaran} biaya={biayaTampil} unit={unitTampil} muat={muat} galat={galat} keTab={setTab} />
+            )}
+            {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
+            {tab === "pesanan" && (
+              <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} pembayaran={pembayaran} pic={pic} muat={muat} setGalat={galat} />
+            )}
+            {tab === "uang" && (
+              <>
+                <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={galat} />
+                <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={galat} />
+              </>
+            )}
+            {tab === "data" && (
+              <>
+                <Segmen nilai={subData} onChange={setSubData} pilihan={[["pelanggan", "Pelanggan"], ["unit", "Unit"]] as const} />
+                {subData === "pelanggan"
+                  ? <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={galat} />
+                  : <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} muat={muat} setGalat={galat} />}
+              </>
+            )}
+            {tab === "atur" && <Pengaturan_ pic={pic} set={set} muat={muat} setGalat={galat} />}
           </div>
-
-          {/* Saringan kategori (Semua / Laptop / Sepatu) */}
-          <div className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5">
-            {([["semua", "Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring, string][]).map(([k, t]) => {
-              const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
-              return (
-                <button key={k} onClick={() => setKat(k)}
-                  className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold " +
-                    (kat === k ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground hover:bg-muted/70")}>
-                  {t}<span className={kat === k ? "text-primary-foreground/70" : "text-muted-foreground/70"}>{n}</span>
-                </button>
-              );
-            })}
-          </div>
-        </div>
-      </header>
-
-      {/* key={tab}: tiap pindah tab konten masuk dengan animasi yang sama */}
-      <main key={tab} className="mx-auto max-w-3xl space-y-4 px-4 py-4">
-        {tab === "beranda" && (
-          <Beranda tugas={tugasTampil} pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} galat={galat} keTab={setTab} />
-        )}
-        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
-        {tab === "pesanan" && (
-          <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} pembayaran={pembayaran} pic={pic} muat={muat} setGalat={galat} />
-        )}
-        {tab === "uang" && (
-          <>
-            <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={galat} />
-            <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={galat} />
-          </>
-        )}
-        {tab === "data" && (
-          <>
-            <div className="flex rounded-full bg-muted p-1">
-              {([["pelanggan", "Pelanggan"], ["unit", "Unit"]] as const).map(([k, t]) => (
-                <button key={k} onClick={() => setSubData(k)}
-                  className={"flex-1 rounded-full py-2 text-sm font-semibold " +
-                    (subData === k ? "bg-card text-foreground shadow-sm" : "text-muted-foreground")}>
-                  {t}
-                </button>
-              ))}
-            </div>
-            {subData === "pelanggan"
-              ? <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={galat} />
-              : <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} muat={muat} setGalat={galat} />}
-          </>
-        )}
-        {tab === "atur" && <Pengaturan_ pic={pic} set={set} muat={muat} setGalat={galat} />}
-      </main>
-
-      {/* Navigasi bawah, mudah dijangkau jempol di HP */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-card/95 backdrop-blur" aria-label="Menu utama">
-        <div className="mx-auto flex max-w-3xl">
-          {NAV.map(([k, label, d]) => {
-            const on = tab === k;
-            return (
-              <button key={k} onClick={() => setTab(k)} aria-current={on ? "page" : undefined}
-                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold " + (on ? "text-primary" : "text-muted-foreground")}>
-                <span className={"flex h-7 w-11 items-center justify-center rounded-full " + (on ? "bg-accent" : "")}>
-                  <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
-                    <path d={d} />
-                  </svg>
-                </span>
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      </nav>
+        </main>
+      </div>
+      <NavBawah tab={tab} setTab={setTab} />
       <Toaster position="top-center" richColors />
     </div>
   );
@@ -237,6 +183,10 @@ const warnaStatus: Record<StatusPesanan, string> = {
   berjalan: "bg-blue-50 text-blue-800 border-blue-200",
   selesai: "bg-emerald-50 text-emerald-800 border-emerald-200",
   batal: "bg-muted text-muted-foreground border-border",
+};
+
+const nadaStatus: Record<StatusPesanan, "ungu" | "biru" | "hijau" | "abu"> = {
+  dipesan: "ungu", berjalan: "biru", selesai: "hijau", batal: "abu",
 };
 
 const labelStatus: Record<StatusPesanan, string> = {
@@ -369,7 +319,16 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
   const kosong = { pelanggan_id: "", unit_id: "", pic_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[] };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
+  const [cari, setCari] = useState("");
+  const [saringS, setSaringS] = useState<"semua" | StatusPesanan>("semua");
+  const [hapusId, setHapusId] = useState<string | null>(null);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
+  const tampil = useMemo(() => {
+    const q = cari.trim().toLowerCase();
+    return pesanan.filter((p) =>
+      (saringS === "semua" || p.status === saringS) &&
+      (!q || [p.pelanggan?.nama, p.unit?.nama, p.unit_id].some((v) => (v || "").toLowerCase().includes(q))));
+  }, [pesanan, cari, saringS]);
 
   const tutup = () => { setBuka(false); setEdit(null); setF(kosong); };
 
@@ -453,7 +412,6 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
 
   const hapusPesanan = async (o: Pesanan) => {
     const nama = o.pelanggan?.nama || "pelanggan ini";
-    if (!confirm(`Hapus permanen pesanan ${nama} · ${o.unit_id} (${tglIndo(o.mulai)})?\n\nData ini tidak bisa dikembalikan. Kalau sewanya cuma batal, pakai tombol Batal saja supaya riwayatnya tetap tersimpan.`)) return;
     const { error } = await supabase.from("pesanan").delete().eq("id", o.id);
     if (error) return setGalat(error.message);
     if (edit === o.id) tutup();
@@ -467,13 +425,24 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
 
   return (
     <>
-      <Kartu judul="Pesanan" aksi={
-        <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
-          {buka && !edit ? "Tutup" : "+ Tambah"}
-        </button>}>
-        {buka && (
-          <div className="mb-4 space-y-3 rounded-xl border border-border bg-secondary/40 p-3">
-            {edit && <p className="text-sm font-semibold text-foreground">Edit pesanan</p>}
+      <Judul judul="Pesanan" deskripsi="Satu pesanan otomatis masuk ke kalender, tugas, tagihan, dan keuangan" ikon={CalendarCheck}
+        aksi={<Tombol varian="utama" onClick={bukaTambah}><Plus className="h-4 w-4" /> Pesanan baru</Tombol>} />
+
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <Segmen nilai={saringS} onChange={setSaringS} pilihan={[["semua", "Semua"], ["dipesan", "Dipesan"], ["berjalan", "Keluar"], ["selesai", "Selesai"], ["batal", "Batal"]] as const} />
+        <div className="relative">
+          <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+          <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari pelanggan atau unit…" aria-label="Cari pesanan" className={inp + " pl-9 sm:w-64"} />
+        </div>
+      </div>
+
+      <Modal buka={buka} tutup={tutup} lebar="lg"
+        judul={edit ? "Edit pesanan" : "Pesanan baru"} deskripsi="Pilih pelanggan, unit, dan jadwal sewa"
+        kaki={<>
+          <Tombol onClick={tutup}>Batal</Tombol>
+          <Tombol varian="utama" onClick={simpan} disabled={sibuk || !u}>{sibuk ? "Menyimpan…" : edit ? "Simpan perubahan" : "Simpan pesanan"}</Tombol>
+        </>}>
+          <div className="space-y-3">
             {pelanggan.length === 0 && <p className="text-sm text-destructive">Tambahkan pelanggan dulu di tab Pelanggan.</p>}
             <Kol label="Pelanggan">
               <select value={f.pelanggan_id} onChange={(e) => s("pelanggan_id", e.target.value)} className={inp}>
@@ -566,21 +535,19 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
                     <span className="font-serif text-2xl text-foreground">{rp(total)}</span>
                   </div>
                 </div>
-                <div className="flex gap-2">
-                  <button onClick={simpan} disabled={sibuk} className="flex-1 rounded-lg bg-primary px-4 py-3 font-semibold text-primary-foreground disabled:opacity-60">
-                    {sibuk ? "Menyimpan…" : edit ? "Simpan perubahan" : "Simpan pesanan"}
-                  </button>
-                  <button onClick={tutup} className="rounded-lg border border-border px-4 py-3 text-sm font-semibold text-foreground">Batal</button>
-                </div>
               </>
             )}
           </div>
-        )}
+      </Modal>
 
-        {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-muted-foreground">Belum ada pesanan.</p> : (
-          <ul className="space-y-2.5">
-            {pesanan.map((p) => (
-              <li key={p.id} className="overflow-hidden rounded-2xl border border-border bg-card shadow-sm">
+      <Konfirmasi buka={!!hapusId} tutup={() => setHapusId(null)} judul="Hapus pesanan"
+        pesan="Pesanan ini dihapus permanen beserta pembayarannya dan tidak bisa dikembalikan. Kalau sewanya cuma batal, pakai tombol Batal supaya riwayatnya tetap tersimpan."
+        onYa={async () => { const o = pesanan.find((x) => x.id === hapusId); if (o) await hapusPesanan(o); }} />
+
+      {tampil.length === 0 ? <Kartu><Kosong ikon={CalendarCheck}>{pesanan.length === 0 ? "Belum ada pesanan. Buat pesanan baru untuk memulai." : "Tidak ada pesanan yang cocok."}</Kosong></Kartu> : (
+          <ul className="space-y-3">
+            {tampil.map((p) => (
+              <li key={p.id} className="aui-masuk overflow-hidden rounded-xl border border-border bg-card card-shadow">
                 <div className="h-1" style={{ background: warnaBar[p.status] }} />
                 <div className="p-3.5">
                   <div className="flex items-start justify-between gap-3">
@@ -599,7 +566,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
                         </p>
                       )}
                       <div className="mt-1 flex flex-wrap justify-end gap-1">
-                        <span className={"inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
+                        <Lencana nada={nadaStatus[p.status]}>{labelStatus[p.status]}</Lencana>
                         {bayar[p.id] && bayar[p.id].status !== "batal" && <Lencana nada={labelBayar[bayar[p.id].status].nada}>{labelBayar[bayar[p.id].status].teks}</Lencana>}
                       </div>
                       {bayar[p.id] && bayar[p.id].status === "sebagian" && <p className="mt-0.5 text-[11px] text-muted-foreground">sisa {rp(bayar[p.id].sisa)}</p>}
@@ -631,15 +598,14 @@ function TabPesanan({ pesanan, pelanggan, unit, set, pembayaran, pic, muat, setG
                     )}
                     <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
                       className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-muted-foreground">Perjanjian</a>
-                    <button onClick={() => hapusPesanan(p)}
+                    <button onClick={() => setHapusId(p.id)}
                       className="ml-auto rounded-lg px-2 py-1.5 text-xs font-semibold text-red-400 hover:text-red-600">Hapus</button>
                   </div>
                 </div>
               </li>
             ))}
           </ul>
-        )}
-      </Kartu>
+      )}
     </>
   );
 }

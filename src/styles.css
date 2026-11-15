@@ -248,3 +248,12 @@
   .admin-ui .aui-buka { transition: none; }
   .admin-ui button { transition: none; }
 }
+
+/* Bayangan kartu dan animasi modal (mengikuti Base44) */
+.admin-ui .card-shadow, .card-shadow { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03), 0 1px 6px -1px rgb(0 0 0 / 0.04); }
+.admin-ui .card-shadow-md, .card-shadow-md { box-shadow: 0 2px 8px -2px rgb(0 0 0 / 0.05), 0 4px 16px -4px rgb(0 0 0 / 0.06); }
+@keyframes aui-modal { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+.admin-ui .aui-modal { animation: aui-modal 0.22s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+@media (prefers-reduced-motion: reduce) { .admin-ui .aui-modal { animation: none; } }
+.admin-ui .scrollbar-thin::-webkit-scrollbar { width: 6px; height: 6px; }
+.admin-ui .scrollbar-thin::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9999px; }
