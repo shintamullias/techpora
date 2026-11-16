@@ -156,8 +156,7 @@ function Dashboard() {
   const keluar = async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); };
 
   return (
-    <div style={{ fontFamily: "'Space Grotesk','Fira Sans',sans-serif" }}
-      className="min-h-screen bg-[#EDEFF5] pb-28 text-[#16181D] md:pb-12">
+    <div className="adm min-h-screen bg-[#EDEFF5] pb-28 text-[#16181D] md:pb-12">
       <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 md:px-6 md:pt-8">
 
         {/* Sidebar — hanya laptop/desktop */}

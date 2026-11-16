@@ -192,3 +192,8 @@
 }
 
 
+
+/* Dashboard admin memakai Space Grotesk, termasuk judul (menimpa aturan serif global) */
+.adm, .adm h1, .adm h2, .adm h3, .adm h4 {
+  font-family: 'Space Grotesk', 'Fira Sans', system-ui, sans-serif;
+}
