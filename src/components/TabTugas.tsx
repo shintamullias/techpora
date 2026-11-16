@@ -5,7 +5,7 @@ import {
 } from "@/lib/supabase";
 
 const inp =
-  "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15";
+  "w-full rounded-xl border-2 border-[#16181D]/70 bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-[#16181D] focus:shadow-[3px_3px_0_#16181D]";
 
 function Kol({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -86,17 +86,17 @@ export default function TabTugas({
   return (
     <>
       {/* ---------- daftar tugas ---------- */}
-      <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
+      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-serif text-xl text-slate-900">Tugas <span className="text-sm font-normal text-muted-foreground">({nAktif} aktif)</span></h2>
+          <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Tugas <span className="text-sm font-normal text-muted-foreground">({nAktif} aktif)</span></h2>
           <button onClick={() => setBuka((b) => !b)}
-            className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">
+            className="rounded-xl border-2 border-[#16181D] bg-primary px-3 py-1.5 text-xs font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
             {buka ? "Tutup" : "+ Tugas"}
           </button>
         </div>
 
         {buka && (
-          <div className="mb-4 space-y-3 rounded-xl border border-border bg-[#F8FAFC] p-3">
+          <div className="mb-4 space-y-3 rounded-xl border-2 border-dashed border-[#16181D]/30 bg-[#F7F8FB] p-3">
             <Kol label="Judul"><input className={inp} value={f.judul} onChange={(e) => s("judul", e.target.value)} placeholder="mis. Serah terima MacBook — Budi" /></Kol>
             <div className="grid grid-cols-2 gap-3">
               <Kol label="Jenis">
@@ -124,7 +124,7 @@ export default function TabTugas({
               <Kol label="Jam"><input type="time" className={inp} value={f.jam} onChange={(e) => s("jam", e.target.value)} /></Kol>
             </div>
             <Kol label="Catatan (opsional)"><input className={inp} value={f.deskripsi} onChange={(e) => s("deskripsi", e.target.value)} /></Kol>
-            <button onClick={simpan} className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white">Simpan tugas</button>
+            <button onClick={simpan} className="w-full rounded-xl border-2 border-[#16181D] bg-primary py-2.5 text-sm font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">Simpan tugas</button>
           </div>
         )}
 
@@ -221,10 +221,10 @@ function DaftarPic({ pic, muat, setGalat }: { pic: Pic[]; muat: () => void; setG
   };
 
   return (
-    <section className="rounded-2xl border border-slate-200/70 bg-white p-4 shadow-sm">
+    <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="font-serif text-xl text-slate-900">PIC</h2>
-        <button onClick={() => setBuka((b) => !b)} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white">
+        <h2 className="text-lg font-bold tracking-tight text-[#16181D]">PIC</h2>
+        <button onClick={() => setBuka((b) => !b)} className="rounded-xl border-2 border-[#16181D] bg-primary px-3 py-1.5 text-xs font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
           {buka ? "Tutup" : "+ PIC"}
         </button>
       </div>
@@ -233,17 +233,17 @@ function DaftarPic({ pic, muat, setGalat }: { pic: Pic[]; muat: () => void; setG
       </p>
 
       {buka && (
-        <div className="mb-4 space-y-3 rounded-xl border border-border bg-[#F8FAFC] p-3">
+        <div className="mb-4 space-y-3 rounded-xl border-2 border-dashed border-[#16181D]/30 bg-[#F7F8FB] p-3">
           <Kol label="Nama"><input className={inp} value={f.nama} onChange={(e) => setF((p) => ({ ...p, nama: e.target.value }))} /></Kol>
           <Kol label="Email (untuk Google Calendar)"><input type="email" className={inp} value={f.email} onChange={(e) => setF((p) => ({ ...p, email: e.target.value }))} placeholder="nama@gmail.com" /></Kol>
           <Kol label="No. WA"><input className={inp} value={f.wa} onChange={(e) => setF((p) => ({ ...p, wa: e.target.value }))} /></Kol>
-          <button onClick={tambah} className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white">Simpan PIC</button>
+          <button onClick={tambah} className="w-full rounded-xl border-2 border-[#16181D] bg-primary py-2.5 text-sm font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">Simpan PIC</button>
         </div>
       )}
 
       <ul className="space-y-2.5">
         {pic.map((p) => (
-          <li key={p.id} className="rounded-xl border border-slate-200 p-3">
+          <li key={p.id} className="rounded-xl border-2 border-[#16181D]/15 bg-white p-3">
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-slate-900">{p.nama} {!p.aktif && <span className="text-xs font-normal text-slate-400">(nonaktif)</span>}</p>
