@@ -230,7 +230,7 @@ function Dashboard() {
           <main className="space-y-4 py-4">
         {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
         {tab === "beranda" && (
-          <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} keTab={setTab} />
+          <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} voucher={voucher} keTab={setTab} />
         )}
         {(tab === "pelanggan" || tab === "unit") && (
           <div className="flex rounded-full border-2 border-[#16181D] bg-white p-1 shadow-[3px_3px_0_#16181D]">
@@ -288,8 +288,8 @@ const Pusat = ({ children }: { children: React.ReactNode }) => (
 );
 
 /* ============ TAB 0: BERANDA (hari ini) ============ */
-function TabBeranda({ tugas, pesanan, pembayaran, keTab }: {
-  tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[]; keTab: (t: Tab) => void;
+function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
+  tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[]; unit: Unit[]; voucher: Voucher[]; keTab: (t: Tab) => void;
 }) {
   const hariIni = new Date().toISOString().slice(0, 10);
   const besok = tambahHari(hariIni, 1);
@@ -396,6 +396,24 @@ function TabBeranda({ tugas, pesanan, pembayaran, keTab }: {
         <button onClick={() => keTab("tugas")}
           className="rounded-2xl border-2 border-[#16181D] bg-[#FFE066] px-4 py-3.5 text-sm font-bold text-[#16181D] shadow-[4px_4px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">+ Tugas baru</button>
       </div>
+
+      {/* Angka ringkas — mengisi kolom kanan di layar lebar */}
+      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+        <h2 className="mb-3 text-lg font-bold tracking-tight text-[#16181D]">Sekilas</h2>
+        <div className="grid grid-cols-2 gap-2.5 text-center">
+          {([
+            [pesanan.filter((p) => p.status === "berjalan").length, "unit di luar", "#CDE1FF"],
+            [pesanan.filter((p) => p.status === "dipesan").length, "akan datang", "#FFE066"],
+            [unit.filter((u) => u.aktif).length, "unit siap sewa", "#D9FBE9"],
+            [voucher.filter((v) => v.aktif).length, "voucher aktif", "#FFD9EC"],
+          ] as [number, string, string][]).map(([n, label, warna]) => (
+            <div key={label} className="rounded-xl border-2 border-[#16181D]/15 p-3" style={{ background: warna }}>
+              <p className="text-2xl font-bold tabular-nums">{n}</p>
+              <p className="mt-0.5 text-[11px] font-semibold text-[#16181D]/70">{label}</p>
+            </div>
+          ))}
+        </div>
+      </section>
       </div>
     </div>
   );
@@ -757,7 +775,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
         )}
 
         {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-slate-400">Belum ada pesanan.</p> : (
-          <ul className="space-y-2.5">
+          <ul className="space-y-2.5 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
             {pesanan.map((p) => (
               <li key={p.id} className="overflow-hidden rounded-2xl border-2 border-[#16181D]/20 bg-white">
                 <div className="h-1" style={{ background: warnaBar[p.status] }} />
@@ -911,7 +929,7 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
       {pelanggan.length > 4 && <input value={cari} onChange={(e) => setCari(e.target.value)} placeholder="Cari nama / WA…" className={inp + " mb-3"} />}
 
       {daftar.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pelanggan.</p> : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {daftar.map((p) => (
             <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length}
               hapus={hapus} setGalat={setGalat} bukaEdit={bukaEdit} sedangEdit={edit === p.id} />
@@ -1156,7 +1174,7 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
           </p>
         )}
 
-        <ul className="space-y-2">
+        <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {unit.map((u) => (
             <li key={u.id} className={"rounded-xl border p-3 " + (u.aktif ? "border-border" : "border-dashed border-border opacity-60")}>
               <div className="flex items-start justify-between gap-3">

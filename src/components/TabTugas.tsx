@@ -141,7 +141,7 @@ export default function TabTugas({
 
         {tampil.length === 0 && <p className="py-6 text-center text-sm text-muted-foreground">Tidak ada tugas di saringan ini.</p>}
 
-        <ul className="space-y-2.5">
+        <ul className="space-y-2.5 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {tampil.map((t) => {
             const telat = t.status !== "selesai" && t.status !== "batal" && t.jatuh_tempo < new Date().toISOString().slice(0, 10);
             return (
