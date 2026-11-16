@@ -98,6 +98,14 @@ const S={
    ${[['kiri',s.kiri,'inL',1,false],['kanan',s.kanan,'inR',2,true]].map(([k,c,an,d,win])=>`<div class="card a" style="flex:1;padding:36px 32px;${win?'background:var(--accDark);color:var(--ink);box-shadow:0 0 0 8px rgba(255,255,255,.9),0 30px 60px rgba(0,0,0,.35)':''};${A(an,.45,b0+d)}"><div class="h" style="font-size:84px">${c.judul}</div><div style="margin-top:28px;display:flex;flex-direction:column;gap:26px">${c.item.map(t=>`<div style="display:flex;gap:14px;align-items:flex-start;font-weight:800;font-size:40px;line-height:1.2"><span style="flex:none;width:44px;height:44px;margin-top:2px">${win?I.check:I.x}</span>${t}</div>`).join('')}</div></div>`).join('')}
   </div>
   <div class="a" style="position:absolute;left:50%;top:${(s.top||600)-60}px;margin-left:-70px;width:140px;height:140px;border-radius:50%;background:#fff;color:var(--ink);font-family:Anton;font-size:64px;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(0,0,0,.4);${A('pop',.35,b0+1.5)}">VS</div>`,
+ tabel:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
+  <div class="a" style="position:absolute;left:70px;top:270px;font-weight:900;font-size:44px;letter-spacing:.12em;${A('up',.35,b0)}">${s.kicker||'PRICE LIST'}</div>
+  <div class="h a" style="position:absolute;left:70px;right:140px;top:330px;font-size:${s.ukuran||120}px;${A('punch',.4,b0+.3)}">${acc(s.judul||'Sewa *Laptop*')}</div>
+  <div class="card a" style="position:absolute;left:60px;right:60px;top:500px;overflow:hidden;${A('pop',.35,b0+.8)}">
+   <div style="display:flex;justify-content:space-between;padding:22px 34px;background:var(--acc);color:var(--accOn);font-weight:900;font-size:28px;letter-spacing:.14em"><span>UNIT</span><span>PER HARI</span></div>
+   ${s.baris.map(([f,nm,h],i)=>`<div class="a" style="display:flex;align-items:center;gap:22px;padding:14px 34px 14px 22px;border-top:3px solid #eef1f6;${A('inL',.3,b0+1.2+i*(s.jeda||.5))}"><img src="${img(f)}" style="width:120px;height:78px;object-fit:contain"><div style="flex:1;font-weight:900;font-size:40px">${nm}</div><div style="font-family:Anton;font-size:52px;color:var(--priceC)">${h}</div></div>`).join('')}
+  </div>
+  <div class="a" style="position:absolute;left:70px;right:140px;top:${s.catTop||1500}px;font-weight:800;font-size:34px;opacity:.85;${A('up',.35,b0+n-2)}">${s.catatan||'Mingguan & bulanan lebih hemat · Tanpa deposit'}</div>`,
  cta:(s,b0,n,B)=>`<div class="bg"></div><div class="grid"></div>
   <div class="a" style="position:absolute;left:0;right:0;top:-10%;bottom:-10%;background:var(--acc);${A('sweep',.5,b0,'cubic-bezier(.6,0,.4,1)')}"></div>
   <div class="a" style="position:absolute;left:50%;top:290px;transform:translateX(-50%);${A('pop',.5,b0+.5)}"><img src="${img(B.logoDark)}" style="height:${B.logoVidH||230}px;display:block"></div>

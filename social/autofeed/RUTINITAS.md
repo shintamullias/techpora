@@ -28,7 +28,7 @@ Tujuan: setiap hari 1 feed (gambar 1080×1350) di tiap akun, gaya clean & profes
 | @sewalaptopjakartaa | Techpora (biru + kuning) | Jakarta | 16:00 |
 TikTok = VIDEO motion graphic (bukan foto), dibuat dengan `video.html` + `render_video.js`, musik orisinal 128 BPM dari `musik.py` (bebas hak cipta). Tanpa voice-over.
 
-Tiga PILAR, bergiliran per akun (hari ini Bogor & Jakarta harus beda pilar; jangan pilar yang sama 2 hari berturut-turut di satu akun):
+**SENIN = video PRICELIST** di kedua akun TikTok (pilar sales, di luar rotasi): `hook` ("PRICE LIST MINGGU INI") → `tabel` (8 unit + harga per hari dari daftar fakta, 12 beat) → `harga` atau `list` (paket mingguan/bulanan) → `cta`; contoh `contoh/vid_pricelist.json`. Hari lain: tiga PILAR, bergiliran per akun (hari ini Bogor & Jakarta harus beda pilar; jangan pilar yang sama 2 hari berturut-turut di satu akun):
 - **seo**: adegan pertama `cari` = animasi mengetik kata kunci di kolom pencarian, lalu jawabannya. Kata kunci yang SAMA dipakai di teks layar, kalimat pertama caption, dan hashtag. Bank kata kunci: sewa laptop <kota> (harian/murah/bulanan/terdekat/tanpa deposit/untuk skripsi/untuk event/untuk kerja), rental laptop <kota>, sewa macbook <kota>, sewa laptop per hari, harga sewa laptop.
 - **sales**: `hook` (pertanyaan/masalah) → `harga` (1 unit + paket) → `list` (keunggulan) → `cta`.
 - **evergreen**: edukasi yang berguna walau penonton tidak menyewa: `hook` → `banding` (beli vs sewa, HP 14s vs ThinkPad, harian vs bulanan) atau `poin`/`list` (tips baterai, spek skripsi, checklist sidang/presentasi, backup file, persiapan event) → `cta`.
@@ -60,7 +60,7 @@ Tujuannya MEMANCING OBROLAN, bukan iklan. Format per akun: 1 postingan utama + 2
 `hero` (kota + stiker harga) · `produk` (1 unit + paket harian/mingguan/bulanan) · `pricelist` (tabel 8 laptop otomatis) · `persona` (mahasiswa/freelancer/kantor) · `siapkerja` (panel samping) · `hariini` (latar gelap, 3 laptop) · `angka` (event 20–50+ unit) · `tips` (3–4 langkah/checklist edukasi) · `kenapa` (4 kartu alasan).
 Contoh spec lengkap ada di folder `contoh/`. Kata di antara `*bintang*` = warna aksen brand.
 
-Rotasi: setiap akun jangan memakai layout yang sama dengan 4 postingan autofeed terakhirnya (lihat `python3 riwayat.py`), dan dalam satu hari 6 akun minimal memakai 4 layout berbeda. Ganti unit unggulan dan sudut pesan (mahasiswa/skripsi, kerja/WFH, event, bulanan hemat, harga, cara sewa, perawatan). Pricelist maksimal sekali per 7 hari per akun. Judul tiap akun BEDA (jangan copy-paste antar akun), sebut kota akun bila pas.
+Rotasi: setiap akun jangan memakai layout yang sama dengan 4 postingan autofeed terakhirnya (lihat `python3 riwayat.py`), dan dalam satu hari 6 akun minimal memakai 4 layout berbeda. Ganti unit unggulan dan sudut pesan (mahasiswa/skripsi, kerja/WFH, event, bulanan hemat, harga, cara sewa, perawatan). **HARI PRICELIST = setiap SENIN** (permintaan pemilik 16 Nov 2026): hari Senin keenam akun IG WAJIB memakai layout `pricelist` (tabel otomatis 8 laptop; variasikan `kecil`, `judul`, `sub`, `produk`, dan caption per akun, sebut kotanya), dan di hari lain layout `pricelist` TIDAK dipakai. Judul tiap akun BEDA (jangan copy-paste antar akun), sebut kota akun bila pas.
 
 ## Langkah setiap sesi
 1. Siapkan alat (sekali per sesi):
