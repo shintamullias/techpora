@@ -119,8 +119,8 @@ export function AreaPage({ area }: { area: AreaData }) {
                 return (
                 <article key={u.name} className={`flex flex-col overflow-hidden rounded-2xl border bg-card shadow-sm ${u.featured ? "border-primary/40" : "border-border"}`}>
                   {img && (
-                    <div className="flex aspect-[4/3] items-center justify-center bg-secondary p-6">
-                      <img src={img} alt={u.name} width={800} height={600} loading="lazy" className="max-h-full w-auto object-contain drop-shadow-md" />
+                    <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-secondary p-6">
+                      <img src={img} alt={u.name} width={800} height={600} loading="lazy" className="h-full w-full object-contain drop-shadow-md" />
                     </div>
                   )}
                   <div className="flex flex-1 flex-col p-6">
