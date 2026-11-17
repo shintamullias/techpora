@@ -2,6 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
+  kelompokkanBayar, sisaTagihan,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
   type Pic, type Tugas, type Voucher, type Pembayaran,
@@ -10,6 +11,10 @@ import TabKeuangan from "@/components/TabKeuangan";
 import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
+import TabLaporan from "@/components/TabLaporan";
+import TabWhatsApp from "@/components/TabWhatsApp";
+import TabAdmin from "@/components/TabAdmin";
+import TabPengaturan from "@/components/TabPengaturan";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -18,7 +23,7 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "keuangan" | "piutang" | "voucher";
+type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "keuangan" | "piutang" | "voucher" | "laporan" | "whatsapp" | "admin" | "pengaturan";
 
 function Dashboard() {
   const nav = useNavigate();
@@ -26,6 +31,7 @@ function Dashboard() {
   const [boleh, setBoleh] = useState(false);
   const [tab, setTab] = useState<Tab>("beranda");
   const [namaku, setNamaku] = useState("");
+  const [menuBuka, setMenuBuka] = useState(false);
   const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
   const [unit, setUnit] = useState<Unit[]>([]);
@@ -155,17 +161,23 @@ function Dashboard() {
     keuangan: "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6",
     piutang: "M5 2h10v16l-2.5-1.5L10 18l-2.5-1.5L5 18V2Zm3 5h4m-4 4h4",
     voucher: "M2 7a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v2a2 2 0 0 0 0 2v2a2 2 0 0 0-2 2H4a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-2V7Zm10-2v10",
+    laporan: "M3 17h14M5 14V9m4 5V5m4 9v-6m4 6V3",
+    whatsapp: "M3 17l1.2-3.6A7 7 0 1 1 7 16.6L3 17Z",
+    admin: "M10 2l6 2.5v5c0 4-2.7 7-6 8.5-3.3-1.5-6-4.5-6-8.5v-5L10 2Zm-2.5 8 2 2 3.5-3.5",
+    pengaturan: "M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm6.5-3a6.5 6.5 0 0 0-.1-1.2l1.6-1.3-1.5-2.6-2 .7a6.5 6.5 0 0 0-2-1.2L12 2H8l-.5 2.1a6.5 6.5 0 0 0-2 1.2l-2-.7L2 7.2l1.6 1.3a6.5 6.5 0 0 0 0 2.4L2 12.2l1.5 2.6 2-.7a6.5 6.5 0 0 0 2 1.2L8 17.4h4l.5-2.1a6.5 6.5 0 0 0 2-1.2l2 .7 1.5-2.6-1.6-1.3c.1-.4.1-.8.1-1.2Z",
   };
   const NAV_GRUP: [string, [Tab, string][]][] = [
     ["Harian", [["beranda", "Ringkasan"], ["kalender", "Kalender Sewa"], ["pesanan", "Pemesanan"], ["tugas", "Tugas & PIC"]]],
     ["Data", [["pelanggan", "Pelanggan"], ["unit", "Inventaris"]]],
-    ["Uang", [["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"]]],
+    ["Uang", [["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"], ["laporan", "Laporan"]]],
+    ["Lainnya", [["whatsapp", "Pusat WhatsApp"], ["admin", "Manajemen Admin"], ["pengaturan", "Pengaturan"]]],
   ];
   const JUDUL_TAB: Record<Tab, string> = {
     beranda: "Ringkasan", kalender: "Kalender Sewa", pesanan: "Pemesanan", tugas: "Tugas & PIC",
     pelanggan: "Pelanggan", unit: "Inventaris", keuangan: "Keuangan", piutang: "Piutang", voucher: "Voucher",
+    laporan: "Laporan & Analitik", whatsapp: "Pusat WhatsApp", admin: "Manajemen Admin", pengaturan: "Pengaturan",
   };
-  const grupUang = tab === "keuangan" || tab === "piutang" || tab === "voucher";
+  const grupUang = tab === "keuangan" || tab === "piutang" || tab === "voucher" || tab === "laporan";
   const grupData = tab === "pelanggan" || tab === "unit";
   const NAV_HP: [Tab, string, string][] = [
     ["beranda", "Beranda", IKON.beranda],
@@ -182,7 +194,9 @@ function Dashboard() {
     <div className="adm flex min-h-screen bg-[#F6F8FA] pb-24 text-slate-900 lg:pb-0">
 
       {/* Sidebar — gaya aplikasi operasional, hanya layar lebar */}
-      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-border bg-white lg:flex">
+      {menuBuka && <div className="fixed inset-0 z-40 bg-slate-900/40 backdrop-blur-sm lg:hidden" onClick={() => setMenuBuka(false)} />}
+      <aside className={"fixed inset-y-0 left-0 z-50 flex h-screen w-64 shrink-0 flex-col border-r border-border bg-white transition-transform lg:sticky lg:top-0 lg:w-60 lg:translate-x-0 " +
+        (menuBuka ? "translate-x-0" : "-translate-x-full")}>
         <div className="flex h-16 items-center gap-2.5 border-b border-border px-4">
           <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary font-bold text-white">T</div>
           <div className="min-w-0">
@@ -198,7 +212,7 @@ function Dashboard() {
                 {items.map(([k, label]) => {
                   const on = tab === k;
                   return (
-                    <button key={k} onClick={() => setTab(k)}
+                    <button key={k} onClick={() => { setTab(k); setMenuBuka(false); }}
                       className={"flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors " +
                         (on ? "bg-primary text-white shadow-sm" : "text-slate-600 hover:bg-slate-100")}>
                       <svg viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d={IKON[k]} /></svg>
@@ -220,6 +234,10 @@ function Dashboard() {
         {/* Bilah atas */}
         <header className="sticky top-0 z-20 border-b border-border bg-white/85 backdrop-blur-md">
           <div className="flex h-14 items-center gap-3 px-4 lg:h-16 lg:px-6">
+            <button onClick={() => setMenuBuka(true)} aria-label="Buka menu"
+              className="-ml-1 rounded-lg p-2 text-slate-500 hover:bg-slate-100 lg:hidden">
+              <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round"><path d="M3 5h14M3 10h14M3 15h14" /></svg>
+            </button>
             <div className="min-w-0">
               <h1 className="truncate text-sm font-semibold sm:text-base">{JUDUL_TAB[tab]}</h1>
               <p className="hidden text-xs text-muted-foreground sm:block">{tglHariIndo(hariIniIso)}</p>
@@ -279,7 +297,7 @@ function Dashboard() {
         )}
         {grupUang && (
           <div className="flex rounded-full border border-border bg-white p-1 shadow-sm lg:hidden">
-            {([["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"]] as [Tab, string][]).map(([k, t]) => (
+            {([["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"], ["laporan", "Laporan"]] as [Tab, string][]).map(([k, t]) => (
               <button key={k} onClick={() => setTab(k)}
                 className={"flex-1 rounded-full py-2 text-sm font-semibold transition " +
                   (tab === k ? "bg-primary text-white" : "text-slate-500")}>
@@ -296,6 +314,10 @@ function Dashboard() {
         {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
         {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
         {tab === "voucher" && <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />}
+        {tab === "laporan" && <TabLaporan pesanan={pesananTampil} pembayaran={pembayaran} biaya={biayaTampil} unit={unitTampil} pelanggan={pelanggan} />}
+        {tab === "whatsapp" && <TabWhatsApp pesanan={pesananTampil} pembayaran={pembayaran} tugas={tugas} pic={pic} muat={muat} />}
+        {tab === "admin" && <TabAdmin setGalat={setGalat} />}
+        {tab === "pengaturan" && <TabPengaturan set={set} muat={muat} setGalat={setGalat} />}
         </main>
       </div>
 
@@ -372,10 +394,8 @@ function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
   const agendaIni = buatAgenda(hariIni);
   const agendaBesok = buatAgenda(besok);
 
-  const dibayar: Record<string, number> = {};
-  pembayaran.forEach((b) => { dibayar[b.pesanan_id] = (dibayar[b.pesanan_id] || 0) + (b.jumlah || 0); });
-  const piutang = pesanan.filter((p) => p.status !== "batal")
-    .reduce((s, p) => s + Math.max(0, (p.total || 0) - (dibayar[p.id] || 0)), 0);
+  const dibayar = kelompokkanBayar(pembayaran);
+  const piutang = pesanan.reduce((s, p) => s + sisaTagihan(p, dibayar), 0);
 
   const Baris = ({ a }: { a: Acara }) => (
     <li className="flex gap-3">

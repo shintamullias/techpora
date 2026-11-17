@@ -107,6 +107,8 @@ export type Pesanan = {
   item: ItemPesanan[];
   total: number;
   status: StatusPesanan;
+  /** lunas / sebagian / belum — mengikuti status pembayaran di aplikasi operasional */
+  status_bayar?: "lunas" | "sebagian" | "belum";
   catatan: string;
   dibuat_pada: string;
   token: string;
@@ -272,4 +274,19 @@ export const gcalLinkTugas = (t: Tugas) => {
   });
   if (t.pic?.email) q.set("add", t.pic.email);
   return "https://calendar.google.com/calendar/render?" + q.toString();
+};
+
+
+/** Jumlah yang sudah dibayar untuk sebuah pesanan.
+ *  Pesanan berstatus lunas dianggap terbayar penuh walau pembayarannya tidak dicatat satu per satu. */
+export const sudahDibayar = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
+  p.status_bayar === "lunas" ? p.total || 0 : bayarPerPesanan[p.id] || 0;
+
+export const sisaTagihan = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
+  p.status === "batal" ? 0 : Math.max(0, (p.total || 0) - sudahDibayar(p, bayarPerPesanan));
+
+export const kelompokkanBayar = (pembayaran: { pesanan_id: string; jumlah: number }[]) => {
+  const m: Record<string, number> = {};
+  pembayaran.forEach((b) => { m[b.pesanan_id] = (m[b.pesanan_id] || 0) + (b.jumlah || 0); });
+  return m;
 };

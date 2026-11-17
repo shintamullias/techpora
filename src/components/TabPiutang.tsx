@@ -1,10 +1,10 @@
 import { useMemo, useState } from "react";
-import { supabase, rp, tglIndo, waLink, type Pesanan, type Pembayaran } from "@/lib/supabase";
+import { supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan, type Pesanan, type Pembayaran } from "@/lib/supabase";
 
 const inp =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
-/** Piutang dihitung dari pesanan aktif/selesai dikurangi pembayaran tercatat. */
+/** Piutang = pesanan yang belum lunas, dikurangi pembayaran yang sudah dicatat. */
 export default function TabPiutang({
   pesanan, pembayaran, muat, setGalat,
 }: {
@@ -13,16 +13,11 @@ export default function TabPiutang({
   const [bukaId, setBukaId] = useState("");
   const [f, setF] = useState({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
 
-  const dibayar = useMemo(() => {
-    const m: Record<string, number> = {};
-    pembayaran.forEach((b) => { m[b.pesanan_id] = (m[b.pesanan_id] || 0) + (b.jumlah || 0); });
-    return m;
-  }, [pembayaran]);
+  const dibayar = useMemo(() => kelompokkanBayar(pembayaran), [pembayaran]);
 
   const daftar = useMemo(
     () => pesanan
-      .filter((p) => p.status !== "batal")
-      .map((p) => ({ p, bayar: dibayar[p.id] || 0, sisa: (p.total || 0) - (dibayar[p.id] || 0) }))
+      .map((p) => ({ p, bayar: dibayar[p.id] || 0, sisa: sisaTagihan(p, dibayar) }))
       .filter((x) => x.sisa > 0)
       .sort((a, b) => (b.p.mulai || "").localeCompare(a.p.mulai || "")),
     [pesanan, dibayar],
@@ -38,7 +33,16 @@ export default function TabPiutang({
       pesanan_id: pesananId, jumlah, tanggal: f.tanggal, metode: f.metode,
     });
     if (error) return setGalat(error.message);
+    // Status bayar ikut berubah: lunas bila sisa habis, selain itu sebagian.
+    await supabase.from("pesanan").update({ status_bayar: jumlah >= sisa ? "lunas" : "sebagian" }).eq("id", pesananId);
     setBukaId(""); setF({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
+    muat();
+  };
+
+  const tandaiLunas = async (pesananId: string) => {
+    if (!confirm("Tandai pesanan ini sudah lunas?")) return;
+    const { error } = await supabase.from("pesanan").update({ status_bayar: "lunas" }).eq("id", pesananId);
+    if (error) return setGalat(error.message);
     muat();
   };
 
@@ -48,7 +52,7 @@ export default function TabPiutang({
         <h2 className="text-base font-semibold text-slate-900">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
-      <p className="mb-3 text-xs text-muted-foreground">Tagihan yang belum lunas, dihitung dari total pesanan dikurangi pembayaran tercatat.</p>
+      <p className="mb-3 text-xs text-muted-foreground">Pesanan berstatus belum bayar atau bayar sebagian, dikurangi pembayaran yang sudah dicatat.</p>
 
       {daftar.length === 0 && <p className="py-6 text-center text-sm text-muted-foreground">Semua pesanan sudah lunas. 🎉</p>}
 
@@ -72,6 +76,8 @@ export default function TabPiutang({
                   target="_blank" rel="noreferrer"
                   className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-emerald-700">Ingatkan via WA</a>
               )}
+              <button onClick={() => tandaiLunas(p.id)}
+                className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-slate-600">Tandai lunas</button>
             </div>
             {bukaId === p.id && (
               <div className="mt-3 grid grid-cols-2 gap-2 rounded-lg border border-border bg-slate-50 p-3">
