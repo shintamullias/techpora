@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { supabase, rp, tglIndo, waLink, type Pesanan, type Pembayaran } from "@/lib/supabase";
 
 const inp =
-  "w-full rounded-xl border-2 border-[#16181D]/70 bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-[#16181D] focus:shadow-[3px_3px_0_#16181D]";
+  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 /** Piutang dihitung dari pesanan aktif/selesai dikurangi pembayaran tercatat. */
 export default function TabPiutang({
@@ -43,9 +43,9 @@ export default function TabPiutang({
   };
 
   return (
-    <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+    <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
       <div className="mb-1 flex items-center justify-between">
-        <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Piutang</h2>
+        <h2 className="text-base font-semibold text-slate-900">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
       <p className="mb-3 text-xs text-muted-foreground">Tagihan yang belum lunas, dihitung dari total pesanan dikurangi pembayaran tercatat.</p>
@@ -54,7 +54,7 @@ export default function TabPiutang({
 
       <ul className="space-y-2.5">
         {daftar.map(({ p, bayar, sisa }) => (
-          <li key={p.id} className="rounded-xl border-2 border-[#16181D]/15 bg-white p-3">
+          <li key={p.id} className="rounded-lg border border-border bg-white p-3">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-slate-900">{p.pelanggan?.nama || "Pelanggan"}</p>
@@ -74,7 +74,7 @@ export default function TabPiutang({
               )}
             </div>
             {bukaId === p.id && (
-              <div className="mt-3 grid grid-cols-2 gap-2 rounded-xl border-2 border-dashed border-[#16181D]/30 bg-[#F7F8FB] p-3">
+              <div className="mt-3 grid grid-cols-2 gap-2 rounded-lg border border-border bg-slate-50 p-3">
                 <input className={inp} inputMode="numeric" placeholder={"Jumlah (sisa " + rp(sisa) + ")"}
                   value={f.jumlah} onChange={(e) => setF((v) => ({ ...v, jumlah: e.target.value }))} />
                 <input type="date" className={inp} value={f.tanggal} onChange={(e) => setF((v) => ({ ...v, tanggal: e.target.value }))} />

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { supabase, rp, tglIndo, type Voucher } from "@/lib/supabase";
 
 const inp =
-  "w-full rounded-xl border-2 border-[#16181D]/70 bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-[#16181D] focus:shadow-[3px_3px_0_#16181D]";
+  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 function Kol({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -49,16 +49,16 @@ export default function TabVoucher({
   };
 
   return (
-    <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+    <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Voucher</h2>
-        <button onClick={() => setBuka((b) => !b)} className="rounded-xl border-2 border-[#16181D] bg-primary px-3 py-1.5 text-xs font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
+        <h2 className="text-base font-semibold text-slate-900">Voucher</h2>
+        <button onClick={() => setBuka((b) => !b)} className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90">
           {buka ? "Tutup" : "+ Voucher"}
         </button>
       </div>
 
       {buka && (
-        <div className="mb-4 space-y-3 rounded-xl border-2 border-dashed border-[#16181D]/30 bg-[#F7F8FB] p-3">
+        <div className="mb-4 space-y-3 rounded-lg border border-border bg-slate-50 p-3">
           <div className="grid grid-cols-2 gap-3">
             <Kol label="Kode"><input className={inp} value={f.kode} onChange={(e) => s("kode", e.target.value)} placeholder="DISC25" /></Kol>
             <Kol label="Nama"><input className={inp} value={f.nama} onChange={(e) => s("nama", e.target.value)} placeholder="Promo mingguan" /></Kol>
@@ -80,7 +80,7 @@ export default function TabVoucher({
             <Kol label="Mulai (opsional)"><input type="date" className={inp} value={f.mulai} onChange={(e) => s("mulai", e.target.value)} /></Kol>
             <Kol label="Selesai (opsional)"><input type="date" className={inp} value={f.selesai} onChange={(e) => s("selesai", e.target.value)} /></Kol>
           </div>
-          <button onClick={tambah} className="w-full rounded-xl border-2 border-[#16181D] bg-primary py-2.5 text-sm font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">Simpan voucher</button>
+          <button onClick={tambah} className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white transition hover:opacity-90">Simpan voucher</button>
         </div>
       )}
 
@@ -88,7 +88,7 @@ export default function TabVoucher({
 
       <ul className="space-y-2.5">
         {voucher.map((v) => (
-          <li key={v.id} className="rounded-xl border-2 border-[#16181D]/15 bg-white p-3">
+          <li key={v.id} className="rounded-lg border border-border bg-white p-3">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-slate-900">

@@ -18,7 +18,7 @@ export const Route = createFileRoute("/admin")({
   component: Dashboard,
 });
 
-type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "uang";
+type Tab = "beranda" | "kalender" | "pesanan" | "tugas" | "pelanggan" | "unit" | "keuangan" | "piutang" | "voucher";
 
 function Dashboard() {
   const nav = useNavigate();
@@ -144,100 +144,145 @@ function Dashboard() {
     return j < 11 ? "Selamat pagi" : j < 15 ? "Selamat siang" : j < 19 ? "Selamat sore" : "Selamat malam";
   })();
 
-  const NAV: [Tab, string, string][] = [
-    ["beranda", "Beranda", "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5"],
-    ["kalender", "Kalender", "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4"],
-    ["pesanan", "Pesanan", "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5"],
-    ["tugas", "Tugas", "M3 3h14v14H3V3Zm3.5 7 2.5 2.5L14 7.5"],
-    ["uang", "Uang", "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6"],
-    ["pelanggan", "Data", "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9"],
+  // Menu mengikuti susunan aplikasi operasional: dikelompokkan Harian / Data / Uang.
+  const IKON: Record<string, string> = {
+    beranda: "M3 9.5 10 3l7 6.5M5 8.5V17h10V8.5",
+    kalender: "M3 4h14v13H3V4Zm0 4h14M7 2v4m6-4v4",
+    pesanan: "M4 4h10l1 3v9H4V4Zm0 4h11M7 12h5",
+    tugas: "M3 3h14v14H3V3Zm3.5 7 2.5 2.5L14 7.5",
+    pelanggan: "M7 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5 8a5 5 0 0 1 10 0M13 4a3 3 0 0 1 0 6m5 7a5 5 0 0 0-4-4.9",
+    unit: "M3 5h14v8H3V5Zm-1 11h16M8 16v1.5m4-1.5v1.5",
+    keuangan: "M10 2v16M6 5h6a2 2 0 0 1 0 4H8a2 2 0 0 0 0 4h6",
+    piutang: "M5 2h10v16l-2.5-1.5L10 18l-2.5-1.5L5 18V2Zm3 5h4m-4 4h4",
+    voucher: "M2 7a2 2 0 0 0 2-2h12a2 2 0 0 0 2 2v2a2 2 0 0 0 0 2v2a2 2 0 0 0-2 2H4a2 2 0 0 0-2-2v-2a2 2 0 0 0 0-2V7Zm10-2v10",
+  };
+  const NAV_GRUP: [string, [Tab, string][]][] = [
+    ["Harian", [["beranda", "Ringkasan"], ["kalender", "Kalender Sewa"], ["pesanan", "Pemesanan"], ["tugas", "Tugas & PIC"]]],
+    ["Data", [["pelanggan", "Pelanggan"], ["unit", "Inventaris"]]],
+    ["Uang", [["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"]]],
   ];
-  const navAktif = (k: Tab) => tab === k || (k === "pelanggan" && tab === "unit");
+  const JUDUL_TAB: Record<Tab, string> = {
+    beranda: "Ringkasan", kalender: "Kalender Sewa", pesanan: "Pemesanan", tugas: "Tugas & PIC",
+    pelanggan: "Pelanggan", unit: "Inventaris", keuangan: "Keuangan", piutang: "Piutang", voucher: "Voucher",
+  };
+  const grupUang = tab === "keuangan" || tab === "piutang" || tab === "voucher";
+  const grupData = tab === "pelanggan" || tab === "unit";
+  const NAV_HP: [Tab, string, string][] = [
+    ["beranda", "Beranda", IKON.beranda],
+    ["kalender", "Kalender", IKON.kalender],
+    ["pesanan", "Pesanan", IKON.pesanan],
+    ["tugas", "Tugas", IKON.tugas],
+    ["keuangan", "Uang", IKON.keuangan],
+    ["pelanggan", "Data", IKON.pelanggan],
+  ];
+  const navAktif = (k: Tab) => tab === k || (k === "pelanggan" && grupData) || (k === "keuangan" && grupUang);
   const keluar = async () => { await supabase.auth.signOut(); nav({ to: "/masuk" }); };
 
   return (
-    <div className="adm min-h-screen bg-[#EDEFF5] pb-28 text-[#16181D] md:pb-12">
-      <div className="mx-auto flex w-full max-w-6xl gap-6 px-4 md:px-6 md:pt-8">
+    <div className="adm flex min-h-screen bg-[#F6F8FA] pb-24 text-slate-900 lg:pb-0">
 
-        {/* Sidebar — hanya laptop/desktop */}
-        <aside className="sticky top-8 hidden h-fit w-56 shrink-0 md:block">
-          <div className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[6px_6px_0_#16181D]">
-            <p className="text-xl font-bold tracking-tight">techpora<span className="text-primary">*</span></p>
-            <p className="mt-0.5 text-xs font-medium text-slate-500">dashboard sewa</p>
-            <nav className="mt-5 space-y-2">
-              {NAV.map(([k, label, d]) => {
-                const on = navAktif(k);
-                return (
-                  <button key={k} onClick={() => setTab(k)}
-                    className={"flex w-full items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-bold transition " +
-                      (on
-                        ? "border-2 border-[#16181D] bg-primary text-white shadow-[3px_3px_0_#16181D]"
-                        : "border-2 border-transparent text-slate-600 hover:bg-[#EDEFF5]")}>
-                    <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d={d} /></svg>
-                    {label}
-                  </button>
-                );
-              })}
-            </nav>
-            <button onClick={keluar}
-              className="mt-5 w-full rounded-xl border-2 border-[#16181D] bg-white py-2 text-xs font-bold shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
-              Keluar
-            </button>
+      {/* Sidebar — gaya aplikasi operasional, hanya layar lebar */}
+      <aside className="sticky top-0 hidden h-screen w-60 shrink-0 flex-col border-r border-border bg-white lg:flex">
+        <div className="flex h-16 items-center gap-2.5 border-b border-border px-4">
+          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-primary font-bold text-white">T</div>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold">Techpora</p>
+            <p className="truncate text-[11px] text-muted-foreground">Operations Dashboard</p>
           </div>
-        </aside>
+        </div>
+        <nav className="flex-1 overflow-y-auto px-3 py-4">
+          {NAV_GRUP.map(([grup, items]) => (
+            <div key={grup} className="mb-4">
+              <p className="mb-1.5 px-3 text-[10px] font-semibold uppercase tracking-wider text-muted-foreground/70">{grup}</p>
+              <div className="space-y-0.5">
+                {items.map(([k, label]) => {
+                  const on = tab === k;
+                  return (
+                    <button key={k} onClick={() => setTab(k)}
+                      className={"flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors " +
+                        (on ? "bg-primary text-white shadow-sm" : "text-slate-600 hover:bg-slate-100")}>
+                      <svg viewBox="0 0 20 20" className="h-[18px] w-[18px] shrink-0" fill="none" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"><path d={IKON[k]} /></svg>
+                      <span className="truncate">{label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </nav>
+        <div className="border-t border-border p-3">
+          <button onClick={keluar} className="w-full rounded-lg px-3 py-2 text-left text-sm font-medium text-rose-600 hover:bg-rose-50">Keluar</button>
+        </div>
+      </aside>
 
-        {/* Kolom konten */}
-        <div className="min-w-0 flex-1">
-          <header className="pt-6 md:pt-1">
-            <div className="flex items-start justify-between gap-3">
-              <div>
-                <h1 className="text-[clamp(27px,6vw,38px)] font-bold leading-[1.05] tracking-tight">
-                  {salam}{namaku ? `, ${namaku}` : ""} 👋
-                </h1>
-                <p className="mt-1.5 text-sm font-medium text-slate-500">{tglHariIndo(hariIniIso)}</p>
+      {/* Kolom konten */}
+      <div className="min-w-0 flex-1">
+        {/* Bilah atas */}
+        <header className="sticky top-0 z-20 border-b border-border bg-white/85 backdrop-blur-md">
+          <div className="flex h-14 items-center gap-3 px-4 lg:h-16 lg:px-6">
+            <div className="min-w-0">
+              <h1 className="truncate text-sm font-semibold sm:text-base">{JUDUL_TAB[tab]}</h1>
+              <p className="hidden text-xs text-muted-foreground sm:block">{tglHariIndo(hariIniIso)}</p>
+            </div>
+            <div className="ml-auto flex items-center gap-2">
+              <div className="hidden items-center gap-2 sm:flex">
+                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-sm font-semibold text-white">
+                  {(namaku || "A").slice(0, 1).toUpperCase()}
+                </div>
+                <p className="text-sm font-medium">{namaku || "Admin"}</p>
               </div>
               <button onClick={keluar}
-                className="mt-1 shrink-0 rounded-full border-2 border-[#16181D] bg-white px-3 py-1.5 text-xs font-bold shadow-[2px_2px_0_#16181D] transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none md:hidden"
+                className="rounded-lg border border-border px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50"
               >Keluar</button>
             </div>
+          </div>
+        </header>
 
-            {/* Ringkasan hari ini sebagai stiker */}
-            <div className="mt-3.5 flex flex-wrap gap-2 text-xs font-bold">
-              <span className="rounded-full border-2 border-[#16181D] bg-[#CDE1FF] px-3 py-1.5">{aktif} unit di luar</span>
-              <span className="rounded-full border-2 border-[#16181D] bg-[#FFE066] px-3 py-1.5">{akanDatang} akan datang</span>
-              <button onClick={() => setTab("tugas")}
-                className={"-rotate-1 rounded-full border-2 border-[#16181D] px-3 py-1.5 shadow-[2px_2px_0_#16181D] transition active:translate-x-[1px] active:translate-y-[1px] active:shadow-none " +
-                  (tugasHariIni > 0 ? "bg-[#FFB3B3]" : "bg-[#9BEBC9]")}>
-                {tugasHariIni} tugas hari ini
-              </button>
-            </div>
+        <div className="px-4 pt-4 lg:px-6">
+          <p className="text-sm text-slate-600">
+            {salam}{namaku ? `, ${namaku}` : ""} 👋 — <b className="text-primary">{aktif}</b> unit di luar · <b className="text-amber-600">{akanDatang}</b> akan datang ·{" "}
+            <button onClick={() => setTab("tugas")} className="underline-offset-4 hover:underline">
+              <b className={tugasHariIni > 0 ? "text-rose-600" : "text-emerald-600"}>{tugasHariIni}</b> tugas hari ini
+            </button>
+          </p>
 
-            {/* Saringan kategori (Semua / Laptop / Sepatu) */}
-            <div className="mt-3.5 flex gap-2 overflow-x-auto pb-0.5">
-              {([["semua","Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring,string][]).map(([k,t]) => {
-                const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
-                return (
-                  <button key={k} onClick={() => setKat(k)}
-                    className={"flex shrink-0 items-center gap-1.5 rounded-full border-2 px-3 py-1.5 text-xs font-bold transition " +
-                      (kat===k ? "border-[#16181D] bg-[#16181D] text-white" : "border-[#16181D]/25 bg-white text-slate-600 hover:border-[#16181D]/60")}>
-                    {t}<span className={kat===k ? "text-white/60" : "text-slate-400"}>{n}</span>
-                  </button>
-                );
-              })}
-            </div>
-          </header>
+          {/* Saringan kategori (Semua / Laptop / Sepatu) */}
+          <div className="mt-3 flex gap-1.5 overflow-x-auto pb-0.5">
+            {([["semua","Semua"], ...KATEGORI.map((k) => [k.key, k.label])] as [Saring,string][]).map(([k,t]) => {
+              const n = k === "semua" ? unit.length : unit.filter((u) => (u.kategori || "laptop") === k).length;
+              return (
+                <button key={k} onClick={() => setKat(k)}
+                  className={"flex shrink-0 items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold transition " +
+                    (kat===k ? "bg-primary text-white" : "border border-border bg-white text-slate-600 hover:bg-slate-50")}>
+                  {t}<span className={kat===k ? "text-white/70" : "text-slate-400"}>{n}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
 
-          <main className="space-y-4 py-4">
+        <main className="space-y-4 px-4 py-4 lg:px-6">
         {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
         {tab === "beranda" && (
           <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} voucher={voucher} keTab={setTab} />
         )}
-        {(tab === "pelanggan" || tab === "unit") && (
-          <div className="flex rounded-full border-2 border-[#16181D] bg-white p-1 shadow-[3px_3px_0_#16181D]">
-            {([["pelanggan", "Pelanggan"], ["unit", "Unit"]] as [Tab, string][]).map(([k, t]) => (
+        {grupData && (
+          <div className="flex rounded-full border border-border bg-white p-1 shadow-sm lg:hidden">
+            {([["pelanggan", "Pelanggan"], ["unit", "Inventaris"]] as [Tab, string][]).map(([k, t]) => (
               <button key={k} onClick={() => setTab(k)}
-                className={"flex-1 rounded-full py-2 text-sm font-bold transition " +
-                  (tab === k ? "bg-[#16181D] text-white" : "text-slate-500")}>
+                className={"flex-1 rounded-full py-2 text-sm font-semibold transition " +
+                  (tab === k ? "bg-primary text-white" : "text-slate-500")}>
+                {t}
+              </button>
+            ))}
+          </div>
+        )}
+        {grupUang && (
+          <div className="flex rounded-full border border-border bg-white p-1 shadow-sm lg:hidden">
+            {([["keuangan", "Keuangan"], ["piutang", "Piutang"], ["voucher", "Voucher"]] as [Tab, string][]).map(([k, t]) => (
+              <button key={k} onClick={() => setTab(k)}
+                className={"flex-1 rounded-full py-2 text-sm font-semibold transition " +
+                  (tab === k ? "bg-primary text-white" : "text-slate-500")}>
                 {t}
               </button>
             ))}
@@ -248,27 +293,21 @@ function Dashboard() {
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
-        {tab === "uang" && (
-          <>
-            <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />
-            <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />
-            <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />
-          </>
-        )}
-          </main>
-        </div>
+        {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
+        {tab === "voucher" && <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />}
+        </main>
       </div>
 
       {/* Navigasi bawah — hanya HP, mudah dijangkau jempol */}
-      <nav className="fixed inset-x-0 bottom-0 z-20 border-t-2 border-[#16181D] bg-white md:hidden">
+      <nav className="fixed inset-x-0 bottom-0 z-20 border-t border-border bg-white/95 backdrop-blur lg:hidden">
         <div className="mx-auto flex max-w-3xl">
-          {NAV.map(([k, label, d]) => {
+          {NAV_HP.map(([k, label, d]) => {
             const on = navAktif(k);
             return (
               <button key={k} onClick={() => setTab(k)}
-                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-bold transition " + (on ? "text-[#16181D]" : "text-slate-400")}>
-                <span className={"flex h-7 w-11 items-center justify-center rounded-full transition " +
-                  (on ? "border-2 border-[#16181D] bg-primary text-white shadow-[2px_2px_0_#16181D]" : "")}>
+                className={"flex flex-1 flex-col items-center gap-0.5 py-2 text-[10px] font-semibold transition " + (on ? "text-primary" : "text-slate-400")}>
+                <span className={"flex h-7 w-11 items-center justify-center rounded-full transition " + (on ? "bg-primary/10" : "")}>
                   <svg viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={on ? 2 : 1.6} strokeLinecap="round" strokeLinejoin="round">
                     <path d={d} />
                   </svg>
@@ -357,9 +396,9 @@ function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
 
   return (
     <div className="grid gap-4 md:grid-cols-[1.55fr_1fr] md:items-start">
-      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Hari ini</h2>
+          <h2 className="text-base font-semibold text-slate-900">Hari ini</h2>
           <button onClick={() => keTab("tugas")} className="text-xs font-bold text-primary underline-offset-4 hover:underline">Semua tugas →</button>
         </div>
         {agendaIni.length === 0 ? (
@@ -380,36 +419,36 @@ function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
 
       <div className="grid gap-4">
       {piutang > 0 && (
-        <button onClick={() => keTab("uang")}
-          className="flex w-full items-center justify-between -rotate-[0.6deg] rounded-2xl border-2 border-[#16181D] bg-[#FFB3B3] px-4 py-3.5 text-left shadow-[5px_5px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
+        <button onClick={() => keTab("piutang")}
+          className="flex w-full items-center justify-between rounded-xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-left transition hover:bg-rose-100/70">
           <div>
-            <p className="text-sm font-bold text-[#16181D]">Belum dibayar {rp(piutang)}</p>
-            <p className="mt-0.5 text-xs font-medium text-[#16181D]/70">Ketuk untuk lihat siapa saja dan kirim pengingat</p>
+            <p className="text-sm font-semibold text-rose-800">Belum dibayar {rp(piutang)}</p>
+            <p className="mt-0.5 text-xs text-rose-600/80">Ketuk untuk lihat siapa saja dan kirim pengingat</p>
           </div>
-          <span className="text-xl font-bold">→</span>
+          <span className="text-rose-400">→</span>
         </button>
       )}
 
       <div className="grid grid-cols-2 gap-3">
         <button onClick={() => keTab("pesanan")}
-          className="rounded-2xl border-2 border-[#16181D] bg-primary px-4 py-3.5 text-sm font-bold text-white shadow-[4px_4px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">+ Pesanan baru</button>
+          className="rounded-xl bg-primary px-4 py-3.5 text-sm font-semibold text-white transition hover:opacity-90">+ Pesanan baru</button>
         <button onClick={() => keTab("tugas")}
-          className="rounded-2xl border-2 border-[#16181D] bg-[#FFE066] px-4 py-3.5 text-sm font-bold text-[#16181D] shadow-[4px_4px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">+ Tugas baru</button>
+          className="rounded-xl border border-border bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">+ Tugas baru</button>
       </div>
 
       {/* Angka ringkas — mengisi kolom kanan di layar lebar */}
-      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
-        <h2 className="mb-3 text-lg font-bold tracking-tight text-[#16181D]">Sekilas</h2>
+      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
+        <h2 className="mb-3 text-base font-semibold text-slate-900">Sekilas</h2>
         <div className="grid grid-cols-2 gap-2.5 text-center">
           {([
-            [pesanan.filter((p) => p.status === "berjalan").length, "unit di luar", "#CDE1FF"],
-            [pesanan.filter((p) => p.status === "dipesan").length, "akan datang", "#FFE066"],
-            [unit.filter((u) => u.aktif).length, "unit siap sewa", "#D9FBE9"],
-            [voucher.filter((v) => v.aktif).length, "voucher aktif", "#FFD9EC"],
+            [pesanan.filter((p) => p.status === "berjalan").length, "unit di luar", "#E8F3FB"],
+            [pesanan.filter((p) => p.status === "dipesan").length, "akan datang", "#FEF6E0"],
+            [unit.filter((u) => u.aktif).length, "unit siap sewa", "#E8F9F0"],
+            [voucher.filter((v) => v.aktif).length, "voucher aktif", "#FCEEF5"],
           ] as [number, string, string][]).map(([n, label, warna]) => (
-            <div key={label} className="rounded-xl border-2 border-[#16181D]/15 p-3" style={{ background: warna }}>
+            <div key={label} className="rounded-lg border border-border p-3" style={{ background: warna }}>
               <p className="text-2xl font-bold tabular-nums">{n}</p>
-              <p className="mt-0.5 text-[11px] font-semibold text-[#16181D]/70">{label}</p>
+              <p className="mt-0.5 text-[11px] font-medium text-slate-500">{label}</p>
             </div>
           ))}
         </div>
@@ -419,7 +458,7 @@ function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
   );
 }
 
-const inp = "w-full rounded-xl border-2 border-[#16181D]/70 bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-[#16181D] focus:shadow-[3px_3px_0_#16181D]";
+const inp = "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 function Kol({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -432,9 +471,9 @@ function Kol({ label, children }: { label: string; children: React.ReactNode }) 
 
 function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: string; aksi?: React.ReactNode }) {
   return (
-    <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+    <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-lg font-bold tracking-tight text-[#16181D]">{judul}</h2>
+        <h2 className="text-base font-semibold text-slate-900">{judul}</h2>
         {aksi}
       </div>
       {children}
@@ -777,7 +816,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
         {pesanan.length === 0 ? <p className="py-6 text-center text-sm text-slate-400">Belum ada pesanan.</p> : (
           <ul className="space-y-2.5 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
             {pesanan.map((p) => (
-              <li key={p.id} className="overflow-hidden rounded-2xl border-2 border-[#16181D]/20 bg-white">
+              <li key={p.id} className="overflow-hidden rounded-xl border border-border bg-white shadow-sm">
                 <div className="h-1" style={{ background: warnaBar[p.status] }} />
                 <div className="p-3.5">
                   <div className="flex items-start justify-between gap-3">
@@ -812,7 +851,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
                     {!p.ttd_setuju && p.pelanggan?.wa && (
                       <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan.nama}, ini perjanjian sewa ${p.unit?.nama} untuk ${tglIndo(p.mulai)}. Mohon dibaca lalu tanda tangan langsung di halaman ini ya:\n\n${typeof window !== "undefined" ? window.location.origin : "https://techpora.id"}/ttd/${p.token}\n\nNanti saat serah terima tinggal cek unit, tidak perlu tanda tangan lagi 🙏`)}
                         target="_blank" rel="noreferrer"
-                        className="rounded-xl border-2 border-[#16181D] bg-primary px-3 py-1.5 text-xs font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">Kirim link TTD</a>
+                        className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90">Kirim link TTD</a>
                     )}
                     {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
                     {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}

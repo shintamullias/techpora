@@ -5,7 +5,7 @@ import {
 } from "@/lib/supabase";
 
 const inp =
-  "w-full rounded-xl border-2 border-[#16181D]/70 bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-[#16181D] focus:shadow-[3px_3px_0_#16181D]";
+  "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 function Kol({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -115,7 +115,7 @@ export default function TabKeuangan({
   return (
     <>
       {/* Saldo AKTUAL kumulatif — untuk disamakan dengan saldo rekening */}
-      <section className="rounded-2xl border-2 border-[#16181D] bg-[#CDE1FF] p-4 shadow-[5px_5px_0_#16181D]">
+      <section className="rounded-xl border border-primary/30 bg-primary/5 p-5">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-semibold text-muted-foreground">Saldo Aktual (semua waktu)</p>
@@ -123,7 +123,7 @@ export default function TabKeuangan({
           </div>
           <button onClick={muat} title="Perbarui data" className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm font-semibold">↻ Refresh</button>
         </div>
-        <p className={"mt-2 text-4xl font-bold tracking-tight " + (saldoAktual >= 0 ? "text-foreground" : "text-red-700")}>{rp(saldoAktual)}</p>
+        <p className={"mt-2 text-3xl font-semibold tracking-tight " + (saldoAktual >= 0 ? "text-foreground" : "text-red-700")}>{rp(saldoAktual)}</p>
         <div className="mt-2 flex gap-4 text-xs text-muted-foreground">
           <span>Masuk: <b className="text-emerald-700">{rp(masukSemua)}</b></span>
           <span>Keluar: <b className="text-red-700">{rp(keluarSemua)}</b></span>
@@ -131,9 +131,9 @@ export default function TabKeuangan({
       </section>
 
       {/* Ringkasan bulan */}
-      <section className="mt-3 rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+      <section className="mt-3 rounded-xl border border-border bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Keuangan</h2>
+          <h2 className="text-base font-semibold text-slate-900">Keuangan</h2>
           <select value={bulan} onChange={(e) => setBulan(e.target.value)} className="rounded-lg border border-border bg-background px-2 py-1.5 text-sm">
             {bulanTersedia.map((b) => <option key={b} value={b}>{namaBulan(b)}</option>)}
           </select>
@@ -147,7 +147,7 @@ export default function TabKeuangan({
         <div className="mt-2 rounded-xl border border-border bg-secondary/40 p-3">
           <div className="flex items-baseline justify-between">
             <span className="text-sm font-semibold text-muted-foreground">Laba bersih</span>
-            <span className={"text-3xl font-bold tracking-tight " + (laba >= 0 ? "text-foreground" : "text-red-700")}>{rp(laba)}</span>
+            <span className={"text-2xl font-semibold tracking-tight " + (laba >= 0 ? "text-foreground" : "text-red-700")}>{rp(laba)}</span>
           </div>
           <p className="mt-1 text-xs text-muted-foreground">{masukBln.length} transaksi sewa bulan ini</p>
           <p className="mt-1 text-[11px] text-muted-foreground">Saat difilter Laptop/Sepatu, biaya "Umum" (mis. bunga, pemasaran) dibagi rata 50:50 ke kedua kategori, jadi Laptop + Sepatu tetap sama dengan total Semua.</p>
@@ -177,10 +177,10 @@ export default function TabKeuangan({
       </section>
 
       {/* Buku kas */}
-      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
+      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-lg font-bold tracking-tight text-[#16181D]">Buku kas</h2>
-          <button onClick={() => setBuka(!buka)} className="rounded-xl border-2 border-[#16181D] bg-primary px-3 py-1.5 text-sm font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">
+          <h2 className="text-base font-semibold text-slate-900">Buku kas</h2>
+          <button onClick={() => setBuka(!buka)} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-white transition hover:opacity-90">
             {buka ? "Tutup" : "+ Pengeluaran"}
           </button>
         </div>
@@ -216,7 +216,7 @@ export default function TabKeuangan({
                 {unit.map((u) => <option key={u.id} value={u.id}>{u.id} · {u.nama}</option>)}
               </select>
             </Kol>
-            <button onClick={simpanBiaya} className="w-full rounded-xl border-2 border-[#16181D] bg-primary px-4 py-3 font-bold text-white shadow-[3px_3px_0_#16181D] transition active:translate-x-[2px] active:translate-y-[2px] active:shadow-none">Simpan pengeluaran</button>
+            <button onClick={simpanBiaya} className="w-full rounded-lg bg-primary px-4 py-3 font-semibold text-white transition hover:opacity-90">Simpan pengeluaran</button>
           </div>
         )}
 
@@ -239,8 +239,8 @@ export default function TabKeuangan({
       </section>
 
       {/* ROI & BEP */}
-      <section className="rounded-2xl border-2 border-[#16181D] bg-white p-4 shadow-[5px_5px_0_#16181D]">
-        <h2 className="mb-1 text-lg font-bold tracking-tight text-[#16181D]">Modal &amp; balik modal</h2>
+      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
+        <h2 className="mb-1 text-base font-semibold text-slate-900">Modal &amp; balik modal</h2>
         <p className="mb-3 text-xs text-muted-foreground">Dihitung sejak unit mulai disewakan, bukan per bulan.</p>
         <div className="space-y-3">
           {perUnit.map(({ u, pendapatan, bersih, modal, roi, sisaBep, bulanLagi, jumlahSewa }) => {

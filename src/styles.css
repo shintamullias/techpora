@@ -193,7 +193,12 @@
 
 
 
-/* Dashboard admin memakai Space Grotesk, termasuk judul (menimpa aturan serif global) */
+/* Dashboard admin — tema mengikuti aplikasi operasional: font sistem, judul tanpa serif,
+   dan warna utama teal dioper lewat token agar semua kelas bg-primary/text-primary ikut. */
 .adm, .adm h1, .adm h2, .adm h3, .adm h4 {
-  font-family: 'Space Grotesk', 'Fira Sans', system-ui, sans-serif;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", 'Fira Sans', sans-serif;
+}
+.adm {
+  --primary: oklch(0.66 0.117 215.2); /* ~hsl(187 92% 43%) */
+  --ring: oklch(0.66 0.117 215.2);
 }
