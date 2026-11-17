@@ -34,6 +34,7 @@ const laptops: Record<string, AreaProduct> = {
   redmibook: { name: "RedmiBook 15", category: "Laptop", specs: "i3 · 8GB · SSD 256GB", daily: "Rp135.000", weekly: "Rp850.000", monthly: "Rp2.000.000" },
   acer: { name: "Acer Aspire 5", category: "Laptop", specs: "i5 · 8GB · SSD 256GB", daily: "Rp175.000", weekly: "Rp1.100.000", monthly: "Rp3.000.000" },
   macbook: { name: "MacBook Air M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: "Rp250.000", weekly: "Rp1.500.000", monthly: "Rp4.500.000", featured: true },
+  macbookPro: { name: "MacBook Pro M1", category: "Laptop", specs: "M1 · 8GB · SSD 256GB", daily: "Rp250.000", weekly: "Rp1.500.000", monthly: "Rp4.500.000" },
   epsonPrinter: { name: "Epson L3210", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp100.000", weekly: "Rp500.000", monthly: "Rp1.500.000" },
   hpPrinter: { name: "HP Smart Tank 215", category: "Printer", specs: "Print · Scan · Copy", daily: "Rp125.000", weekly: "Rp650.000", monthly: "Rp2.000.000" },
   viewsonic: { name: "ViewSonic SP3", category: "Proyektor", specs: "Portable · HD", daily: "Rp150.000", weekly: "Rp850.000", monthly: "Rp2.500.000" },
@@ -65,7 +66,7 @@ export const areas: AreaData[] = [
       "Mahasiswa Universitas Pancasila, Al-Azhar, London School",
       "Event / seminar di hotel kawasan Senayan & Kuningan",
     ],
-    units: [laptops.macbook, laptops.acer, laptops.vivobook, laptops.thinkpad, laptops.epsonProj],
+    units: [laptops.macbook, laptops.macbookPro, laptops.acer, laptops.vivobook, laptops.thinkpad, laptops.epsonProj],
   },
   {
     slug: "sewa-laptop-jakarta-timur",
@@ -117,7 +118,7 @@ export const areas: AreaData[] = [
       "Kerja freelance di co-working area Puri",
       "Kebutuhan tenant mall (event booth, launching)",
     ],
-    units: [laptops.vivobook, laptops.redmibook, laptops.thinkpad, laptops.macbook, laptops.viewsonic],
+    units: [laptops.vivobook, laptops.redmibook, laptops.thinkpad, laptops.macbook, laptops.macbookPro, laptops.viewsonic],
   },
   {
     slug: "sewa-laptop-jakarta-utara",
@@ -171,7 +172,7 @@ export const areas: AreaData[] = [
       "Event conference di JCC & Balai Kartini",
       "Media & agency kawasan Kebon Sirih",
     ],
-    units: [laptops.macbook, laptops.acer, laptops.vivobook, laptops.thinkpad, laptops.epsonProj],
+    units: [laptops.macbook, laptops.macbookPro, laptops.acer, laptops.vivobook, laptops.thinkpad, laptops.epsonProj],
   },
   {
     slug: "sewa-laptop-tangerang",
@@ -197,7 +198,7 @@ export const areas: AreaData[] = [
       "Bootcamp coding di co-working BSD",
       "Kantor kawasan Karawaci Office Park",
     ],
-    units: [laptops.acer, laptops.vivobook, laptops.macbook, laptops.thinkpad, laptops.epsonProj],
+    units: [laptops.acer, laptops.vivobook, laptops.macbook, laptops.macbookPro, laptops.thinkpad, laptops.epsonProj],
   },
   {
     slug: "sewa-laptop-bekasi",
@@ -249,7 +250,7 @@ export const areas: AreaData[] = [
       "Anak SMA les online (harian/mingguan)",
       "Freelance mahasiswa Depok",
     ],
-    units: [laptops.vivobook, laptops.acer, laptops.thinkpad, laptops.redmibook, laptops.macbook],
+    units: [laptops.vivobook, laptops.acer, laptops.thinkpad, laptops.redmibook, laptops.macbook, laptops.macbookPro],
   },
   {
     slug: "sewa-laptop-rawamangun",
@@ -353,7 +354,7 @@ export const areas: AreaData[] = [
       "Pengganti sementara laptop yang diperbaiki",
       "Coba dulu sebelum memutuskan sewa bulanan",
     ],
-    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.redmibook, laptops.macbook],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.redmibook, laptops.macbook, laptops.macbookPro],
   },
   {
     slug: "sewa-laptop-jakarta-bulanan",
@@ -379,7 +380,7 @@ export const areas: AreaData[] = [
       "Staff kontrak dan proyek kantor jangka pendek",
       "Freelancer yang butuh perangkat selama proyek berjalan",
     ],
-    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.macbook],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.acer, laptops.macbook, laptops.macbookPro],
   },
   {
     slug: "sewa-laptop-jakarta-pribadi",
@@ -405,7 +406,7 @@ export const areas: AreaData[] = [
       "WFH dan kerja freelance dari rumah",
       "Kebutuhan hiburan atau belajar di rumah",
     ],
-    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.macbook],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.redmibook, laptops.acer, laptops.macbook, laptops.macbookPro],
   },
   {
     slug: "sewa-laptop-pulogadung",
@@ -564,7 +565,7 @@ export const areas: AreaData[] = [
       "Workshop, pelatihan, & event",
       "Wisatawan yang kerja remote",
     ],
-    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.macbook],
+    units: [laptops.hp14s, laptops.thinkpad, laptops.vivobook, laptops.macbook, laptops.macbookPro],
   },
 ];
 
