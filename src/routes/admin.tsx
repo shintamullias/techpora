@@ -15,6 +15,7 @@ import TabLaporan from "@/components/TabLaporan";
 import TabWhatsApp from "@/components/TabWhatsApp";
 import TabAdmin from "@/components/TabAdmin";
 import TabPengaturan from "@/components/TabPengaturan";
+import TabKalender from "@/components/TabKalender";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -32,6 +33,8 @@ function Dashboard() {
   const [tab, setTab] = useState<Tab>("beranda");
   const [namaku, setNamaku] = useState("");
   const [menuBuka, setMenuBuka] = useState(false);
+  // Isian awal formulir pesanan saat sel kalender diketuk.
+  const [isiBaru, setIsiBaru] = useState<{ unit_id?: string; mulai?: string } | null>(null);
   const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
   const [unit, setUnit] = useState<Unit[]>([]);
@@ -306,8 +309,8 @@ function Dashboard() {
             ))}
           </div>
         )}
-        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} />}
-        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
+        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
@@ -520,125 +523,10 @@ const labelStatus: Record<StatusPesanan, string> = {
 };
 
 /* ============ TAB 1: KALENDER ============ */
-function TabKalender({ pesanan, unit }: { pesanan: Pesanan[]; unit: Unit[] }) {
-  // Grid harian bergaya Transgo: satu kolom per hari, nama pelanggan tertulis
-  // di dalam blok, hari ini disorot. Navigasi per minggu (7 hari) — lebih pas
-  // di layar HP daripada sebulan penuh.
-  const [anchor, setAnchor] = useState(() => {
-    const d = new Date(); d.setHours(0, 0, 0, 0);
-    d.setDate(d.getDate() - d.getDay()); // mulai dari Minggu
-    return d;
-  });
-  const aktif = pesanan.filter((p) => p.status === "dipesan" || p.status === "berjalan");
-  const terpakai = pesanan.filter((p) => p.status !== "batal");
-  const habis = (p: Pesanan) => (p.selesai > p.mulai ? p.selesai : tambahHari(p.mulai, 1));
-
-  const warnaBlok: Record<string, string> = {
-    berjalan: "bg-blue-100 text-blue-900 border-l-4 border-blue-500",
-    dipesan: "bg-amber-100 text-amber-900 border-l-4 border-amber-400",
-    selesai: "bg-emerald-50 text-emerald-800 border-l-4 border-emerald-300",
-  };
-
-  const hari = Array.from({ length: 7 }).map((_, i) => {
-    const d = new Date(anchor); d.setDate(anchor.getDate() + i); return d;
-  });
-  const isoOf = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-  const hariIni = isoOf(new Date());
-  const namaHari = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
-  const geser = (n: number) => setAnchor((a) => { const d = new Date(a); d.setDate(a.getDate() + n); return d; });
-
-  const unitAktif = unit.filter((u) => u.aktif);
-  const rentang = `${hari[0].toLocaleDateString("id-ID", { day: "numeric", month: "short" })} – ${hari[6].toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" })}`;
-
-  return (
-    <Kartu judul="Kalender"
-      aksi={<div className="flex items-center gap-1">
-        <button onClick={() => geser(-7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">‹</button>
-        <button onClick={() => setAnchor(() => { const d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() - d.getDay()); return d; })}
-          className="rounded-lg border border-slate-200 px-2.5 py-1 text-xs font-semibold">Ini</button>
-        <button onClick={() => geser(7)} className="rounded-lg border border-slate-200 px-2.5 py-1 text-sm">›</button>
-      </div>}>
-      <p className="mb-3 text-xs font-medium text-slate-400">{rentang}</p>
-
-      {unitAktif.length === 0 ? (
-        <p className="rounded-lg bg-slate-50 px-3 py-2 text-sm text-slate-400">Belum ada unit aktif. Tambahkan unit dulu di tab Unit.</p>
-      ) : (
-        <div className="overflow-x-auto">
-          <div className="min-w-[560px]">
-            {/* Header hari + tanggal */}
-            <div className="grid grid-cols-7 gap-1">
-              {hari.map((d) => {
-                const ini = isoOf(d) === hariIni;
-                return (
-                  <div key={d.toISOString()} className={"rounded-lg py-1.5 text-center " + (ini ? "bg-primary text-white" : "bg-slate-50 text-slate-500")}>
-                    <p className="text-[10px] leading-none">{namaHari[d.getDay()]}</p>
-                    <p className="mt-0.5 text-base font-bold leading-none">{d.getDate()}</p>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Baris per unit */}
-            <div className="mt-1 space-y-1">
-              {unitAktif.map((u) => (
-                <div key={u.id}>
-                  <p className="mb-0.5 mt-2 text-[11px] font-semibold text-slate-500">
-                    <span className="font-mono">{u.id}</span> · {u.nama}
-                  </p>
-                  <div className="grid grid-cols-7 gap-1">
-                    {hari.map((d) => {
-                      const t = isoOf(d);
-                      const isi = terpakai.find((p) => p.unit_id === u.id && t >= p.mulai && t < habis(p));
-                      const mulaiHari = isi && t === isi.mulai; // tampilkan nama hanya di hari pertama blok
-                      const ini = t === hariIni;
-                      return (
-                        <div key={t} className={"min-h-[38px] rounded-md p-1 text-[11px] leading-tight " +
-                          (isi ? warnaBlok[isi.status] || "bg-slate-100" : ini ? "bg-primary/5" : "bg-slate-50")}>
-                          {isi && (mulaiHari
-                            ? <span className="line-clamp-2 font-semibold">{isi.pelanggan?.nama}</span>
-                            : <span className="text-current/50">·</span>)}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      <div className="mt-4 flex flex-wrap gap-3 text-xs text-slate-400">
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-amber-400 bg-amber-100" /> Dipesan</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-blue-500 bg-blue-100" /> Sedang keluar</span>
-        <span className="flex items-center gap-1.5"><i className="h-3 w-3 rounded-sm border-l-4 border-emerald-300 bg-emerald-50" /> Selesai</span>
-      </div>
-
-      <div className="mt-5 border-t border-slate-200 pt-4">
-        <p className="mb-2 text-sm font-semibold text-slate-900">Jadwal terdekat</p>
-        {aktif.length === 0 ? <p className="text-sm text-slate-400">Belum ada sewa terjadwal.</p> : (
-          <ul className="space-y-2">
-            {[...aktif].sort((a, b) => (a.mulai < b.mulai ? -1 : 1)).slice(0, 6).map((p) => (
-              <li key={p.id} className="flex items-center justify-between rounded-lg border border-slate-200 px-3 py-2">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-slate-900">{p.pelanggan?.nama}</p>
-                  <p className="text-xs text-slate-400">
-                    <span className="font-mono">{p.unit_id}</span> · {tglHariIndo(p.mulai)}{p.jam ? ` ${p.jam}` : ""} → {tglHariIndo(p.selesai)}
-                  </p>
-                </div>
-                <span className={"shrink-0 rounded-full border px-2 py-0.5 text-xs font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </Kartu>
-  );
-}
-
 /* ============ TAB 2: PESANAN ============ */
-function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
+function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, habisPakai }: {
   pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+  isiBaru?: { unit_id?: string; mulai?: string } | null; habisPakai?: () => void;
 }) {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
@@ -648,6 +536,15 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat }: {
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
 
   const tutup = () => { setBuka(false); setEdit(null); setF(kosong); };
+
+  // Dibuka dari kalender: langsung tampilkan formulir dengan unit & tanggal terisi.
+  useEffect(() => {
+    if (!isiBaru) return;
+    setEdit(null);
+    setF({ ...kosong, unit_id: isiBaru.unit_id || "", mulai: isiBaru.mulai || "" });
+    setBuka(true);
+    habisPakai?.();
+  }, [isiBaru]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const bukaTambah = () => {
     if (buka && !edit) return tutup();
