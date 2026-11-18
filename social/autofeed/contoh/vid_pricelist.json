@@ -1,6 +1,92 @@
-{"akun":"sewalaptopbogorr","pilar":"sales","seed":9,"scenes":[
- {"tipe":"hook","beats":6,"kicker":"PRICE LIST MINGGU INI","baris":["Sewa Laptop","*Bogor*","Mulai 79rb"],"ukuran":[150,210,130],"produk":"macbook.png"},
- {"tipe":"tabel","beats":12,"judul":"Harga *Per Hari*","baris":[["hp-14s.png","HP 14s","79rb"],["thinkpad.png","Lenovo ThinkPad","100rb"],["vivobook.png","ASUS VivoBook","135rb"],["redmibook.png","RedmiBook 15","135rb"],["acer.png","Acer Aspire 5","175rb"],["macbook.png","MacBook Air M1","250rb"],["macbook-pro-m1.png","MacBook Pro M1","250rb"],["macbook-neo.png","MacBook Neo","250rb"]]},
- {"tipe":"harga","beats":6,"label":"PALING HEMAT","unit":"*Bulanan*","produk":"redmibook.png","harga":"MULAI 1,4JT","paket":[["HP 14s","1,4jt"],["ThinkPad","1,5jt"]]},
- {"tipe":"cta","beats":8}
-]}
+{
+ "akun": "sewalaptopbogorr",
+ "pilar": "sales",
+ "seed": 9,
+ "dropBeat": 4,
+ "scenes": [
+  {
+   "tipe": "hook",
+   "beats": 6,
+   "kicker": "Price list minggu ini",
+   "emoji": "🏷️",
+   "baris": [
+    "Sewa laptop *Bogor*",
+    "mulai 79rb aja"
+   ],
+   "stiker": "💸",
+   "produk": "macbook.png"
+  },
+  {
+   "tipe": "tabel",
+   "beats": 12,
+   "judul": "Harga *per hari*",
+   "baris": [
+    [
+     "hp-14s.png",
+     "HP 14s",
+     "79rb"
+    ],
+    [
+     "thinkpad.png",
+     "Lenovo ThinkPad",
+     "100rb"
+    ],
+    [
+     "vivobook.png",
+     "ASUS VivoBook",
+     "135rb"
+    ],
+    [
+     "redmibook.png",
+     "RedmiBook 15",
+     "135rb"
+    ],
+    [
+     "acer.png",
+     "Acer Aspire 5",
+     "175rb"
+    ],
+    [
+     "macbook.png",
+     "MacBook Air M1",
+     "250rb"
+    ],
+    [
+     "macbook-pro-m1.png",
+     "MacBook Pro M1",
+     "250rb"
+    ],
+    [
+     "macbook-neo.png",
+     "MacBook Neo",
+     "250rb"
+    ]
+   ],
+   "jeda": 0.6
+  },
+  {
+   "tipe": "harga",
+   "beats": 6,
+   "label": "Paling hemat",
+   "emoji": "🔥",
+   "unit": "Paket *bulanan*",
+   "produk": "redmibook.png",
+   "harga": "1,4jt",
+   "satuan": "/bulan",
+   "paket": [
+    [
+     "HP 14s",
+     "1,4jt"
+    ],
+    [
+     "ThinkPad",
+     "1,5jt"
+    ]
+   ]
+  },
+  {
+   "tipe": "cta",
+   "beats": 8
+  }
+ ]
+}

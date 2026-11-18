@@ -1,0 +1,95 @@
+{
+ "akun": "sewalaptopjakartaa",
+ "pilar": "seo",
+ "seed": 6,
+ "dropBeat": 4,
+ "scenes": [
+  {
+   "tipe": "cari",
+   "beats": 10,
+   "judul": "Lagi cari ini?",
+   "kata": "sewa laptop jakarta harian",
+   "saran": [
+    "sewa laptop jakarta harian",
+    "sewa laptop jakarta tanpa deposit",
+    "sewa laptop jakarta murah"
+   ],
+   "jawab": "Mulai *Rp79rb*/hari",
+   "produk": "macbook.png"
+  },
+  {
+   "tipe": "banding",
+   "beats": 8,
+   "judul": "Harian vs *Bulanan*",
+   "kiri": {
+    "judul": "Harian",
+    "item": [
+     "Rp79rb/hari",
+     "Cocok 1–5 hari",
+     "Buat yang mendadak"
+    ]
+   },
+   "kanan": {
+    "judul": "Bulanan",
+    "item": [
+     "Rp1,4jt/bulan",
+     "Setengah tarif harian",
+     "Skripsi & WFH"
+    ]
+   },
+   "produk": "redmibook.png"
+  },
+  {
+   "tipe": "tabel",
+   "beats": 8,
+   "judul": "Harga *per hari*",
+   "baris": [
+    [
+     "hp-14s.png",
+     "HP 14s",
+     "79rb"
+    ],
+    [
+     "thinkpad.png",
+     "Lenovo ThinkPad",
+     "100rb"
+    ],
+    [
+     "vivobook.png",
+     "ASUS VivoBook",
+     "135rb"
+    ],
+    [
+     "redmibook.png",
+     "RedmiBook 15",
+     "135rb"
+    ],
+    [
+     "acer.png",
+     "Acer Aspire 5",
+     "175rb"
+    ],
+    [
+     "macbook.png",
+     "MacBook Air M1",
+     "250rb"
+    ],
+    [
+     "macbook-pro-m1.png",
+     "MacBook Pro M1",
+     "250rb"
+    ],
+    [
+     "macbook-neo.png",
+     "MacBook Neo",
+     "250rb"
+    ]
+   ],
+   "jeda": 0.6
+  },
+  {
+   "tipe": "cta",
+   "beats": 8
+  }
+ ]
+}

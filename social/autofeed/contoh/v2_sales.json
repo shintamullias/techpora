@@ -1,0 +1,74 @@
+{
+ "akun": "sewalaptopbogorr",
+ "pilar": "sales",
+ "seed": 11,
+ "dropBeat": 4,
+ "scenes": [
+  {
+   "tipe": "hook",
+   "beats": 6,
+   "kicker": "Real talk",
+   "emoji": "😮‍💨",
+   "baris": [
+    "Laptop ngadat",
+    "pas *deadline*?"
+   ],
+   "stiker": "🫠",
+   "produk": "thinkpad.png"
+  },
+  {
+   "tipe": "chat",
+   "beats": 8,
+   "pesan": [
+    [
+     "kamu",
+     "Kak, butuh laptop buat besok bisa? 🙏"
+    ],
+    [
+     "admin",
+     "Bisa kak! Mau unit apa? HP 14s mulai 79rb/hari"
+    ],
+    [
+     "kamu",
+     "Wih, gas! 🔥"
+    ]
+   ],
+   "produk": "macbook.png"
+  },
+  {
+   "tipe": "harga",
+   "beats": 6,
+   "label": "Paling hemat",
+   "emoji": "🔥",
+   "unit": "Sewa *HP 14s*",
+   "produk": "hp-14s.png",
+   "harga": "79rb",
+   "paket": [
+    [
+     "Mingguan",
+     "450rb"
+    ],
+    [
+     "Bulanan",
+     "1,4jt"
+    ]
+   ]
+  },
+  {
+   "tipe": "list",
+   "beats": 6,
+   "judul": "Kenapa *RENTOP*?",
+   "item": [
+    "Tanpa deposit",
+    "Unit dicek & siap pakai",
+    "Antar atau ambil di Bogor"
+   ],
+   "jeda": 1,
+   "produk": "vivobook.png"
+  },
+  {
+   "tipe": "cta",
+   "beats": 8
+  }
+ ]
+}

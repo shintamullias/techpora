@@ -35,7 +35,18 @@
    "bMid2": "#9fb7de",
    "bNear1": "#a9c0e3",
    "bNear2": "#d6e2f3",
-   "lm": "#93acd6"
+   "lm": "#93acd6",
+   "vid": {
+    "bgA": "#e9f1ff",
+    "bgB": "#f8fbff",
+    "blob1": "#9cc2ff",
+    "blob2": "#ffe27a",
+    "mark": "#ffd84a",
+    "pop": "#1e6feb",
+    "popOn": "#ffffff",
+    "ink": "#0b1430",
+    "logoPillH": "58px"
+   }
   },
   "rentop": {
    "hl": false,
@@ -71,7 +82,18 @@
    "bMid2": "#d4b799",
    "bNear1": "#d9c0a6",
    "bNear2": "#efe2d3",
-   "lm": "#c9a988"
+   "lm": "#c9a988",
+   "vid": {
+    "bgA": "#fff0e6",
+    "bgB": "#fffaf6",
+    "blob1": "#ffb08a",
+    "blob2": "#ffd9c2",
+    "mark": "#ffa070",
+    "pop": "#ff5a1f",
+    "popOn": "#ffffff",
+    "ink": "#1a1410",
+    "logoPillH": "72px"
+   }
   },
   "laptora": {
    "hl": true,
@@ -107,7 +129,18 @@
    "bMid2": "#bcc5d0",
    "bNear1": "#c3cbd6",
    "bNear2": "#e8ebef",
-   "lm": "#aeb8c5"
+   "lm": "#aeb8c5",
+   "vid": {
+    "bgA": "#fbf9e6",
+    "bgB": "#ffffff",
+    "blob1": "#fff07a",
+    "blob2": "#e6e8ec",
+    "mark": "#f5e100",
+    "pop": "#111111",
+    "popOn": "#f5e100",
+    "ink": "#111111",
+    "logoPillH": "78px"
+   }
   }
  },
  "akun": [
@@ -326,7 +359,8 @@
    "hashtag": [
     "#SewaLaptopBogor",
     "#RentalLaptopBogor"
-   ]
+   ],
+   "brandNama": "RENTOP"
   },
   {
    "username": "sewalaptopjakartaa",
@@ -338,7 +372,8 @@
    "hashtag": [
     "#SewaLaptopJakarta",
     "#RentalLaptopJakarta"
-   ]
+   ],
+   "brandNama": "Techpora"
   }
  ],
  "threads": [

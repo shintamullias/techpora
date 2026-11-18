@@ -33,9 +33,20 @@ TikTok = VIDEO motion graphic (bukan foto), dibuat dengan `video.html` + `render
 - **sales**: `hook` (pertanyaan/masalah) → `harga` (1 unit + paket) → `list` (keunggulan) → `cta`.
 - **evergreen**: edukasi yang berguna walau penonton tidak menyewa: `hook` → `banding` (beli vs sewa, HP 14s vs ThinkPad, harian vs bulanan) atau `poin`/`list` (tips baterai, spek skripsi, checklist sidang/presentasi, backup file, persiapan event) → `cta`.
 
-Adegan (`scenes`, total 32 beat = 15 detik; tiap adegan 6–10 beat, terakhir selalu `cta` 8 beat):
-`hook` {kicker, baris[], ukuran[], produk?} · `cari` {kata, jawab, judul?, produk?} · `poin` {nomor, judul, isi, produk?} · `harga` {label, unit, produk, harga, paket[[nama,nilai]]} · `list` {judul, item[], jeda?, produk?} · `banding` {judul, kiri{judul,item[]}, kanan{judul,item[]}} · `cta` {atas?, harga?, bawah?}. Kata di antara `*bintang*` = warna aksen. Ganti `seed` (1–16) tiap video supaya musiknya bervariasi.
-Contoh lengkap: `contoh/batch-2026-11-16/vid_*.json` dan `tt_*.txt`.
+GAYA VIDEO (v2, 18 Nov 2026 — pemilik minta lebih fresh): latar pastel terang dengan blob warna brand yang bergerak, teks kalimat biasa (BUKAN huruf kapital semua) yang muncul kata per kata, kata penting diberi *bintang* = efek stabilo, emoji/stiker, chat WhatsApp, pencarian dengan saran, harga yang angkanya berputar, laptop melayang 3D. Tulis teks layar seperti caption TikTok: pendek, santai, relatable (contoh "Laptop ngadat pas *deadline*?"), maks ±8 kata per judul.
+
+Adegan (`scenes`, total 32–34 beat ≈ 15–16 detik; tiap adegan 6–10 beat, terakhir selalu `cta` 8 beat). Setiap adegan yang punya ruang kosong di bawah WAJIB diberi `produk` (foto laptop) supaya layar penuh:
+- `hook` {kicker, emoji?, baris[] (1–3 baris), stiker? (emoji besar), produk}
+- `chat` {pesan:[["kamu","..."],["admin","..."],...] (3 pesan ideal, admin otomatis muncul "mengetik…"), nama?, produk?, stiker?} — format UGC paling segar, pakai sering.
+- `cari` {judul?, kata (kata kunci SEO), saran[3]?, jawab, produk}
+- `poin` {nomor (angka/emoji), judul, isi, produk?}
+- `harga` {label, emoji?, unit, produk, harga ("79rb" → animasi Rp79.000; "1,4jt" tampil statis), satuan? ("/hari"|"/bulan"), paket[[nama,nilai]]}
+- `list` {judul, item[] (3), jeda?, produk}
+- `banding` {judul, kiri{judul,item[]}, kanan{judul,item[]} (kanan = pemenang), produk}
+- `tabel` {kicker?, judul?, baris[[gambar,nama,harga]] (5–8), jeda?} — untuk Senin pricelist.
+- `cta` {atas?, bawah?} — logo, "Sewa laptop <kota>", harga berputar ke Rp79.000, tombol WA ditekan.
+Ganti `seed` (1–16) tiap video supaya musiknya bervariasi.
+Contoh lengkap gaya v2: `contoh/v2_sales.json` (hook→chat→harga→list→cta), `contoh/v2_seo.json` (cari→banding→tabel→cta), `contoh/vid_pricelist.json`.
 
 Langkah: tulis `out/<tgl>/vid_<akun>.json` → `node render_video.js out/<tgl>/vid_<akun>.json` (±1 menit) → BUKA `vid_<akun>_cek.jpg` (1 frame per adegan) dan cek teks tidak terpotong/tumpang tindih, harga & WA benar → caption `out/<tgl>/tt_<akun>.txt` (200–450 karakter, kalimat pertama memuat kata kunci, harga dari daftar fakta, "Chat WA 0821-7798-4041", 4–5 hashtag huruf kecil termasuk #sewalaptop<kota> + #fyp) → `python3 tiktok.py --akun <akun> --video out/<tgl>/vid_<akun>.mp4 --caption out/<tgl>/tt_<akun>.txt --tanggal <besok> --tag <pilar>:<topik-singkat> --go` (tag dipakai riwayat.py untuk rotasi pilar).
 Jika render video gagal total, cadangannya foto: `--png out/<tgl>/<akunIG>.png` (laporkan ke pemilik).
