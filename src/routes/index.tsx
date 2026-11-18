@@ -89,7 +89,7 @@ const reviews = [
 
 const faqData = [
   { q: "Minimal sewa berapa hari?", a: "Bisa harian, mingguan, hingga bulanan. Cocok untuk kebutuhan singkat 1 hari hingga proyek jangka panjang." },
-  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman ke seluruh area Jakarta (Selatan, Timur, Barat, Utara, Pusat) serta Tangerang, Bekasi, dan Depok." },
+  { q: "Apakah bisa dikirim?", a: "Ya, tersedia layanan pengiriman ke seluruh area Jakarta (Selatan, Timur, Barat, Utara, Pusat) serta Tangerang, Bekasi, dan Depok. Kami juga punya unit di Bandung dan Jogja." },
   { q: "Apakah unit sudah siap pakai?", a: "Ya, semua laptop, printer, dan proyektor dicek, dibersihkan, dan siap digunakan tanpa instalasi tambahan." },
   { q: "Bisa untuk Zoom, meeting, dan event?", a: "Ya, cocok untuk Zoom, Google Meet, presentasi, registrasi event, dan kebutuhan kantor." },
   { q: "Apakah tersedia sewa proyektor dan printer?", a: "Ya, kami menyediakan proyektor ViewSonic & Epson serta printer Epson L3210 dan HP Smart Tank 215." },
@@ -194,7 +194,7 @@ export const Route = createFileRoute("/")({
           },
           areaServed: [
             "Jakarta Selatan","Jakarta Timur","Jakarta Barat","Jakarta Utara","Jakarta Pusat",
-            "Tangerang","Bekasi","Depok",
+            "Tangerang","Bekasi","Depok","Bandung","Yogyakarta",
           ],
           openingHoursSpecification: [{
             "@type": "OpeningHoursSpecification",

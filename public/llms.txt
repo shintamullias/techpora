@@ -1,12 +1,12 @@
 # Techpora.id — Sewa Laptop Jakarta
 
 > Layanan sewa laptop, MacBook, printer, dan proyektor untuk kebutuhan
-> harian, mingguan, dan bulanan di Jakarta, Bekasi, Depok, dan Tangerang.
+> harian, mingguan, dan bulanan di Jakarta, Bekasi, Depok, Tangerang, Bandung, dan Jogja.
 > Unit ready pakai, antar-jemput cepat, dan konsultasi via WhatsApp.
 
 Techpora adalah penyedia rental laptop yang melayani mahasiswa, freelancer,
 profesional, dan event organizer di kawasan Jabodetabek. Katalog mencakup
-Lenovo ThinkPad, ASUS VivoBook, Acer Aspire, RedmiBook, dan MacBook Air M1.
+Lenovo ThinkPad, ASUS VivoBook, Acer Aspire, RedmiBook, dan MacBook Air M1, dan MacBook Pro M1.
 
 ## Pages
 
@@ -24,6 +24,8 @@ Lenovo ThinkPad, ASUS VivoBook, Acer Aspire, RedmiBook, dan MacBook Air M1.
 - [Sewa Laptop Tangerang](/sewa-laptop-tangerang): BSD, Alam Sutera, Gading Serpong.
 - [Sewa Laptop Bekasi](/sewa-laptop-bekasi): Bekasi Barat, Bekasi Timur, Summarecon.
 - [Sewa Laptop Depok](/sewa-laptop-depok): Margonda, kawasan UI, Cinere.
+- [Sewa Laptop Bandung](/sewa-laptop-bandung): Stasiun Bandung, Dago, Dipatiukur, kampus ITB/Unpad/Telkom.
+- [Sewa Laptop Jogja](/sewa-laptop-jogja): Malioboro, Tugu, kampus UGM/UNY, Sleman.
 
 ## Artikel Pilihan
 

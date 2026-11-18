@@ -20,7 +20,7 @@ export type JakartaHubVariant = "sewa" | "rental";
 
 const jakartaAreas = areas.filter((a) => a.area.toLowerCase().startsWith("jakarta"));
 const satelliteAreas = areas.filter((a) =>
-  ["sewa-laptop-tangerang", "sewa-laptop-bekasi", "sewa-laptop-depok", "sewa-laptop-bogor", "sewa-laptop-jogja"].includes(a.slug),
+  ["sewa-laptop-tangerang", "sewa-laptop-bekasi", "sewa-laptop-depok", "sewa-laptop-bogor", "sewa-laptop-bandung", "sewa-laptop-jogja"].includes(a.slug),
 );
 
 // Semua unit (dari areas data, dedup by name)
