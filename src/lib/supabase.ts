@@ -285,6 +285,12 @@ export const sudahDibayar = (p: Pesanan, bayarPerPesanan: Record<string, number>
 export const sisaTagihan = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
   p.status === "batal" ? 0 : Math.max(0, (p.total || 0) - sudahDibayar(p, bayarPerPesanan));
 
+/** Tagihan dianggap piutang setelah sewa dimulai; pesanan mendatang yang belum dibayar dipisah. */
+export const sudahJatuhTempo = (p: { mulai: string }) => {
+  const d = new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10); // tanggal WIB
+  return p.mulai <= d;
+};
+
 export const kelompokkanBayar = (pembayaran: { pesanan_id: string; jumlah: number }[]) => {
   const m: Record<string, number> = {};
   pembayaran.forEach((b) => { m[b.pesanan_id] = (m[b.pesanan_id] || 0) + (b.jumlah || 0); });

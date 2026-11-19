@@ -2,7 +2,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
   supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
-  kelompokkanBayar, sisaTagihan,
+  kelompokkanBayar, sisaTagihan, sudahJatuhTempo,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
   type Pic, type Tugas, type Voucher, type Pembayaran,
@@ -398,7 +398,7 @@ function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
   const agendaBesok = buatAgenda(besok);
 
   const dibayar = kelompokkanBayar(pembayaran);
-  const piutang = pesanan.reduce((s, p) => s + sisaTagihan(p, dibayar), 0);
+  const piutang = pesanan.filter((p) => sudahJatuhTempo(p)).reduce((s, p) => s + sisaTagihan(p, dibayar), 0);
 
   const Baris = ({ a }: { a: Acara }) => (
     <li className="flex gap-3">
@@ -530,7 +530,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
 }) {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
-  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[] };
+  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "" };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
@@ -562,6 +562,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
       mulai: o.mulai, jam: (o.jam || "08:00").slice(0, 5), antar: o.antar || "tidak",
       alamat: o.alamat || "", jarak: String(o.jarak_km || ""), catatan: o.catatan || "",
       item: Array.isArray(o.item) ? o.item.map((i) => ({ ...i })) : [],
+      status_bayar: o.status_bayar || "belum", dp: "",
     });
     setBuka(true);
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
@@ -600,11 +601,17 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
       pelanggan_id: f.pelanggan_id, unit_id: f.unit_id, durasi_tipe: f.durasi_tipe, durasi_jumlah: n,
       mulai: f.mulai, jam: f.jam, selesai, total_hari: totalHari, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
-      item: itemBersih, total, catatan: f.catatan.trim(),
+      item: itemBersih, total, catatan: f.catatan.trim(), status_bayar: f.status_bayar,
     };
-    const { error } = edit
-      ? await supabase.from("pesanan").update(isi).eq("id", edit)
-      : await supabase.from("pesanan").insert(isi);
+    const dp = Number(String(f.dp || "").replace(/\D/g, ""));
+    if (!edit && f.status_bayar === "sebagian" && !dp) { setSibuk(false); return setGalat("Isi jumlah DP yang sudah dibayar."); }
+    const { data: hasil, error } = edit
+      ? await supabase.from("pesanan").update(isi).eq("id", edit).select("id").single()
+      : await supabase.from("pesanan").insert(isi).select("id").single();
+    if (!error && !edit && f.status_bayar === "sebagian" && dp && hasil?.id) {
+      const { error: e2 } = await supabase.from("pembayaran").insert({ pesanan_id: hasil.id, jumlah: dp, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: "DP saat pemesanan" });
+      if (e2) { setSibuk(false); return setGalat(e2.message); }
+    }
     setSibuk(false);
     if (error) return setGalat(error.message);
     tutup(); muat();
@@ -681,6 +688,22 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                 <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
 
                 <div className="space-y-2">
+                  <p className="text-xs font-semibold text-muted-foreground">Pembayaran</p>
+                  <div className="flex gap-2">
+                    {([["belum","Belum bayar"],["sebagian","DP / sebagian"],["lunas","Lunas"]] as const).map(([k,t]) => (
+                      <button key={k} type="button" onClick={() => s("status_bayar", k)}
+                        className={"flex-1 rounded-lg border px-2 py-2 text-xs font-semibold " + (f.status_bayar===k?"border-primary bg-primary/5 text-primary":"border-border text-muted-foreground")}>{t}</button>
+                    ))}
+                  </div>
+                  {f.status_bayar === "sebagian" && !edit && (
+                    <Kol label="Jumlah DP yang sudah masuk (Rp)"><input inputMode="numeric" value={f.dp} onChange={(e) => s("dp", e.target.value)} placeholder="mis. 100000" className={inp} /></Kol>
+                  )}
+                  {f.status_bayar === "sebagian" && edit && (
+                    <p className="text-xs text-muted-foreground">Catat cicilan berikutnya lewat menu Piutang → Catat bayar.</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <p className="text-xs font-semibold text-muted-foreground">Tambahan &amp; diskon</p>
                     <button onClick={tambahItem} className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">+ Baris</button>
@@ -752,6 +775,11 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                         </p>
                       )}
                       <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
+                      {p.status !== "batal" && (
+                        <span className={"ml-1 mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + (p.status_bayar === "lunas" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : p.status_bayar === "sebagian" ? "border-amber-200 bg-amber-50 text-amber-700" : "border-rose-200 bg-rose-50 text-rose-700")}>
+                          {p.status_bayar === "lunas" ? "Lunas" : p.status_bayar === "sebagian" ? "DP" : "Belum bayar"}
+                        </span>
+                      )}
                     </div>
                   </div>
 

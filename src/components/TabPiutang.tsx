@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan, type Pesanan, type Pembayaran } from "@/lib/supabase";
+import { supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan, sudahJatuhTempo, type Pesanan, type Pembayaran } from "@/lib/supabase";
 
 const inp =
   "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
@@ -22,7 +22,10 @@ export default function TabPiutang({
       .sort((a, b) => (b.p.mulai || "").localeCompare(a.p.mulai || "")),
     [pesanan, dibayar],
   );
-  const totalPiutang = daftar.reduce((s, x) => s + x.sisa, 0);
+  const jatuhTempo = daftar.filter((x) => sudahJatuhTempo(x.p));
+  const mendatang = daftar.filter((x) => !sudahJatuhTempo(x.p)).sort((a, b) => a.p.mulai.localeCompare(b.p.mulai));
+  const totalPiutang = jatuhTempo.reduce((s, x) => s + x.sisa, 0);
+  const totalMendatang = mendatang.reduce((s, x) => s + x.sisa, 0);
 
   const catat = async (pesananId: string, sisa: number) => {
     const jumlah = Number(f.jumlah.replace(/\D/g, ""));
@@ -52,12 +55,15 @@ export default function TabPiutang({
         <h2 className="text-base font-semibold text-slate-900">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
-      <p className="mb-3 text-xs text-muted-foreground">Pesanan berstatus belum bayar atau bayar sebagian, dikurangi pembayaran yang sudah dicatat.</p>
+      <p className="mb-3 text-xs text-muted-foreground">Sewa yang sudah dimulai tapi belum lunas, dikurangi pembayaran yang sudah dicatat.</p>
 
       {daftar.length === 0 && <p className="py-6 text-center text-sm text-muted-foreground">Semua pesanan sudah lunas. 🎉</p>}
 
+      {[{ judul: "", isi: jatuhTempo }, { judul: `Pesanan mendatang belum dibayar · ${rp(totalMendatang)}`, isi: mendatang }].map((grup) => grup.isi.length > 0 && (
+      <div key={grup.judul} className={grup.judul ? "mt-5" : ""}>
+      {grup.judul && <p className="mb-2 text-xs font-semibold text-muted-foreground">{grup.judul} <span className="font-normal">(belum dihitung piutang)</span></p>}
       <ul className="space-y-2.5">
-        {daftar.map(({ p, bayar, sisa }) => (
+        {grup.isi.map(({ p, bayar, sisa }) => (
           <li key={p.id} className="rounded-lg border border-border bg-white p-3">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
@@ -93,6 +99,8 @@ export default function TabPiutang({
           </li>
         ))}
       </ul>
+      </div>
+      ))}
     </section>
   );
 }

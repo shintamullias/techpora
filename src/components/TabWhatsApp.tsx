@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import {
-  supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan,
+  supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan, sudahJatuhTempo,
   type Pesanan, type Pembayaran, type Tugas, type Pic,
 } from "@/lib/supabase";
 
@@ -50,7 +50,7 @@ export default function TabWhatsApp({
 
   const tagihan = useMemo(() => pesanan
     .map((p) => ({ p, sisa: sisaTagihan(p, bayar) }))
-    .filter((x) => x.sisa > 0), [pesanan, bayar]);
+    .filter((x) => x.sisa > 0 && sudahJatuhTempo(x.p)), [pesanan, bayar]);
 
   // Tandai "terkirim" setelah tombol WA ke PIC ditekan, seperti di aplikasi lama.
   const tandaiTerkirim = async (t: Tugas) => {
