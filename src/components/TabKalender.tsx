@@ -5,6 +5,7 @@ import { rp, tglIndo, waLink, type Pesanan, type Unit, type Tugas, type Pic } fr
    satu baris per unit, satu kolom per tanggal, sebulan penuh. */
 
 const LEBAR_HARI = 42;
+const TINGGI_LAJUR = 44;
 const LEBAR_UNIT = 150;
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
 
@@ -160,7 +161,16 @@ export default function TabKalender({
               </div>
 
               {barisUnit.map((u) => {
-                const milik = dalamBulan.filter((p) => p.unit_id === u.id);
+                // Pesanan yang tanggalnya beririsan ditaruh di lajur berbeda supaya tidak saling menimpa.
+                const milik = dalamBulan.filter((p) => p.unit_id === u.id).sort((a, b) => a.mulai.localeCompare(b.mulai) || a.selesai.localeCompare(b.selesai));
+                const ujungLajur: string[] = [];
+                const lajurDari = new Map<string, number>();
+                for (const p of milik) {
+                  let l = ujungLajur.findIndex((akhirL) => akhirL < p.mulai);
+                  if (l === -1) { l = ujungLajur.length; ujungLajur.push(p.selesai); } else ujungLajur[l] = p.selesai;
+                  lajurDari.set(p.id, l);
+                }
+                const tinggiBaris = Math.max(1, ujungLajur.length) * TINGGI_LAJUR + 8;
                 const st = statusHariIni(u.id);
                 return (
                   <div key={u.id} className="flex border-b border-border/60 last:border-0 hover:bg-slate-50/50">
@@ -171,14 +181,14 @@ export default function TabKalender({
                       </div>
                       <span title={st} className={"h-2 w-2 shrink-0 rounded-full " + (st === "tersedia" ? "bg-emerald-500" : st === "dipesan" ? "bg-amber-500" : "bg-sky-500")} />
                     </div>
-                    <div className="relative" style={{ width: hari.length * LEBAR_HARI, height: 52 }}>
+                    <div className="relative" style={{ width: hari.length * LEBAR_HARI, height: tinggiBaris }}>
                       {hari.map((d, i) => {
                         const dow = new Date(d + "T00:00:00Z").getUTCDay();
                         return (
                           <button key={d} onClick={() => onBaru({ unit_id: u.id, mulai: d })}
                             title={`Tambah pemesanan ${u.nama} ${tglIndo(d)}`}
                             className={"absolute top-0 border-r border-border/40 hover:bg-primary/10 " + (dow === 0 || dow === 6 ? "bg-slate-50 " : "") + (d === hariIni ? "bg-primary/5" : "")}
-                            style={{ left: i * LEBAR_HARI, width: LEBAR_HARI, height: 52 }} />
+                            style={{ left: i * LEBAR_HARI, width: LEBAR_HARI, height: tinggiBaris }} />
                         );
                       })}
                       {milik.map((p) => {
@@ -190,8 +200,8 @@ export default function TabKalender({
                         return (
                           <button key={p.id} onClick={() => setDetail(p)}
                             title={`${p.pelanggan?.nama || "Pelanggan"} · ${tglIndo(p.mulai)} – ${tglIndo(p.selesai)}`}
-                            className={"absolute top-1.5 overflow-hidden rounded-md px-2 py-1 text-left text-[11px] font-medium shadow-sm " + (BLOK[p.status] || "bg-slate-400 text-white")}
-                            style={{ left: geser * LEBAR_HARI + 2, width: Math.max(rentang * LEBAR_HARI - 4, 24), height: 40 }}>
+                            className={"absolute overflow-hidden rounded-md px-2 py-1 text-left text-[11px] font-medium shadow-sm " + (BLOK[p.status] || "bg-slate-400 text-white")}
+                            style={{ top: 6 + (lajurDari.get(p.id) || 0) * TINGGI_LAJUR, left: geser * LEBAR_HARI + 2, width: Math.max(rentang * LEBAR_HARI - 4, 24), height: TINGGI_LAJUR - 4 }}>
                             <span className="block truncate">{p.pelanggan?.nama || "Pelanggan"}</span>
                             <span className="block truncate opacity-90">{lama} hari</span>
                           </button>
