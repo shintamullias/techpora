@@ -98,6 +98,11 @@ export type Pesanan = {
   mulai: string;
   jam: string;
   selesai: string;
+  /** jam kembali; kosong = sama dengan jam ambil */
+  jam_selesai?: string | null;
+  voucher_id?: string | null;
+  voucher_kode?: string | null;
+  diskon?: number;
   total_hari: number;
   antar: "tidak" | "antar" | "pp";
   alamat: string;
@@ -176,6 +181,27 @@ export const waLink = (wa: string, teks = "") =>
 
 /** Dua rentang tanggal beririsan? (akhir bersifat eksklusif) */
 export const beririsan = (a1: string, a2: string, b1: string, b2: string) => a1 < b2 && b1 < a2;
+
+/** Waktu ambil & kembali sebuah pesanan sebagai "YYYY-MM-DDTHH:MM" (bisa dibandingkan sebagai teks). */
+export const waktuPesanan = (p: { mulai: string; selesai: string; jam?: string | null; jam_selesai?: string | null }) => {
+  const j1 = (p.jam || "08:00").slice(0, 5);
+  const j2 = (p.jam_selesai || p.jam || "08:00").slice(0, 5);
+  return { dari: `${p.mulai}T${j1}`, sampai: `${p.selesai}T${j2}` };
+};
+
+/** Potongan voucher untuk harga sewa (tidak termasuk ongkir & tambahan). */
+export const hitungDiskon = (v: { tipe: string; nilai: number } | null | undefined, hargaSewa: number) => {
+  if (!v || hargaSewa <= 0) return 0;
+  return v.tipe === "persen" ? Math.round((hargaSewa * Math.min(100, v.nilai)) / 100) : Math.min(v.nilai, hargaSewa);
+};
+
+/** Voucher yang boleh dipakai untuk pesanan dengan tipe durasi & tanggal mulai ini. */
+export const voucherBerlaku = (v: Voucher, durasi: string, mulai: string) =>
+  v.aktif &&
+  (v.periode === "semua" || v.periode === durasi) &&
+  (!v.mulai || !mulai || v.mulai <= mulai) &&
+  (!v.selesai || !mulai || v.selesai >= mulai) &&
+  (!v.maks_pakai || v.terpakai < v.maks_pakai);
 
 export type Dokumen = {
   id: string;

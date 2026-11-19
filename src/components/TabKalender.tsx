@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from "react";
-import { rp, tglIndo, waLink, type Pesanan, type Unit, type Tugas, type Pic } from "@/lib/supabase";
+import { rp, tglIndo, waLink, waktuPesanan, type Pesanan, type Unit, type Tugas, type Pic } from "@/lib/supabase";
 
 /* Kalender sewa bergaya aplikasi operasional (Base44):
    satu baris per unit, satu kolom per tanggal, sebulan penuh. */
@@ -162,12 +162,15 @@ export default function TabKalender({
 
               {barisUnit.map((u) => {
                 // Pesanan yang tanggalnya beririsan ditaruh di lajur berbeda supaya tidak saling menimpa.
-                const milik = dalamBulan.filter((p) => p.unit_id === u.id).sort((a, b) => a.mulai.localeCompare(b.mulai) || a.selesai.localeCompare(b.selesai));
+                // Dihitung sampai jam: kembali 10.00 lalu disewa lagi 13.00 di hari yang sama tetap satu lajur.
+                const milik = dalamBulan.filter((p) => p.unit_id === u.id)
+                  .map((p) => ({ p, w: waktuPesanan(p) }))
+                  .sort((a, b) => a.w.dari.localeCompare(b.w.dari) || a.w.sampai.localeCompare(b.w.sampai));
                 const ujungLajur: string[] = [];
                 const lajurDari = new Map<string, number>();
-                for (const p of milik) {
-                  let l = ujungLajur.findIndex((akhirL) => akhirL < p.mulai);
-                  if (l === -1) { l = ujungLajur.length; ujungLajur.push(p.selesai); } else ujungLajur[l] = p.selesai;
+                for (const { p, w } of milik) {
+                  let l = ujungLajur.findIndex((akhirL) => akhirL <= w.dari);
+                  if (l === -1) { l = ujungLajur.length; ujungLajur.push(w.sampai); } else ujungLajur[l] = w.sampai;
                   lajurDari.set(p.id, l);
                 }
                 const tinggiBaris = Math.max(1, ujungLajur.length) * TINGGI_LAJUR + 8;
@@ -191,17 +194,17 @@ export default function TabKalender({
                             style={{ left: i * LEBAR_HARI, width: LEBAR_HARI, height: tinggiBaris }} />
                         );
                       })}
-                      {milik.map((p) => {
-                        const mulai = p.mulai < bulan ? bulan : p.mulai;
-                        const selesai = p.selesai > akhir ? akhir : p.selesai;
-                        const geser = selisih(bulan, mulai);
-                        const rentang = selisih(mulai, selesai) + 1;
-                        const lama = selisih(p.mulai, p.selesai) + 1;
+                      {milik.map(({ p, w }) => {
+                        // posisi dalam satuan hari, termasuk pecahan jam
+                        const posisi = (t: string) => selisih(bulan, t.slice(0, 10)) + (Number(t.slice(11, 13)) * 60 + Number(t.slice(14, 16))) / 1440;
+                        const kiri = Math.max(0, posisi(w.dari));
+                        const kanan = Math.min(hari.length, posisi(w.sampai));
+                        const lama = p.total_hari || selisih(p.mulai, p.selesai) || 1;
                         return (
                           <button key={p.id} onClick={() => setDetail(p)}
-                            title={`${p.pelanggan?.nama || "Pelanggan"} · ${tglIndo(p.mulai)} – ${tglIndo(p.selesai)}`}
+                            title={`${p.pelanggan?.nama || "Pelanggan"} · ${tglIndo(p.mulai)} ${w.dari.slice(11)} – ${tglIndo(p.selesai)} ${w.sampai.slice(11)}`}
                             className={"absolute overflow-hidden rounded-md px-2 py-1 text-left text-[11px] font-medium shadow-sm " + (BLOK[p.status] || "bg-slate-400 text-white")}
-                            style={{ top: 6 + (lajurDari.get(p.id) || 0) * TINGGI_LAJUR, left: geser * LEBAR_HARI + 2, width: Math.max(rentang * LEBAR_HARI - 4, 24), height: TINGGI_LAJUR - 4 }}>
+                            style={{ top: 6 + (lajurDari.get(p.id) || 0) * TINGGI_LAJUR, left: kiri * LEBAR_HARI + 1, width: Math.max((kanan - kiri) * LEBAR_HARI - 2, 24), height: TINGGI_LAJUR - 4 }}>
                             <span className="block truncate">{p.pelanggan?.nama || "Pelanggan"}</span>
                             <span className="block truncate opacity-90">{lama} hari</span>
                           </button>
@@ -250,14 +253,15 @@ function DetailPesanan({ p, unit, tugas, pic, onTutup }: {
           <Baris label="Pelanggan" isi={nama} />
           <Baris label="Telepon" isi={p.pelanggan?.wa || "-"} />
           <div className="grid grid-cols-2 gap-3">
-            <Baris label="Mulai" isi={tglIndo(p.mulai)} />
-            <Baris label="Kembali" isi={tglIndo(p.selesai)} />
+            <Baris label="Mulai" isi={`${tglIndo(p.mulai)} · ${waktuPesanan(p).dari.slice(11)}`} />
+            <Baris label="Kembali" isi={`${tglIndo(p.selesai)} · ${waktuPesanan(p).sampai.slice(11)}`} />
           </div>
           <Baris label="Durasi" isi={`${lama} hari`} />
           <div className="flex flex-wrap gap-2">
             <Lencana teks={LABEL_STATUS[p.status]} gaya={GAYA_STATUS[p.status]} />
             {p.status_bayar && <Lencana teks={LABEL_BAYAR[p.status_bayar]} gaya={GAYA_BAYAR[p.status_bayar]} />}
           </div>
+          {!!p.diskon && <Baris label={`Voucher ${p.voucher_kode || ""}`} isi={`− ${rp(p.diskon)}`} />}
           <Baris label="Total Tagihan" isi={rp(p.total)} />
           <div className="rounded-lg border border-border p-3">
             <p className="text-xs font-medium text-muted-foreground">PIC Serah Terima</p>

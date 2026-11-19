@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, JENIS_DOKUMEN, KATEGORI, totalItem,
+  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, waktuPesanan, hitungDiskon, voucherBerlaku, JENIS_DOKUMEN, KATEGORI, totalItem,
   kelompokkanBayar, sisaTagihan, sudahJatuhTempo,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
@@ -57,7 +57,7 @@ function Dashboard() {
     const [p, u, o, s, b, tg, pc, vc, by] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
+      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
       supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
@@ -310,7 +310,7 @@ function Dashboard() {
           </div>
         )}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
-        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
+        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
@@ -524,13 +524,13 @@ const labelStatus: Record<StatusPesanan, string> = {
 
 /* ============ TAB 1: KALENDER ============ */
 /* ============ TAB 2: PESANAN ============ */
-function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, habisPakai }: {
-  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, isiBaru, habisPakai }: {
+  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; voucher: Voucher[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
   isiBaru?: { unit_id?: string; mulai?: string } | null; habisPakai?: () => void;
 }) {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
-  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "" };
+  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "" };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
@@ -559,7 +559,8 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
     setF({
       pelanggan_id: o.pelanggan_id, unit_id: o.unit_id,
       durasi_tipe: o.durasi_tipe, durasi_jumlah: o.durasi_jumlah || 1,
-      mulai: o.mulai, jam: (o.jam || "08:00").slice(0, 5), antar: o.antar || "tidak",
+      mulai: o.mulai, jam: (o.jam || "08:00").slice(0, 5), jam_selesai: (o.jam_selesai || "").slice(0, 5), voucher_id: o.voucher_id || "",
+      antar: o.antar || "tidak",
       alamat: o.alamat || "", jarak: String(o.jarak_km || ""), catatan: o.catatan || "",
       item: Array.isArray(o.item) ? o.item.map((i) => ({ ...i })) : [],
       status_bayar: o.status_bayar || "belum", dp: "",
@@ -582,24 +583,39 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
     .filter((i: ItemPesanan) => i.nama.trim() !== "" || Number(i.jumlah))
     .map((i: ItemPesanan) => ({ nama: i.nama.trim(), jumlah: Number(i.jumlah) || 0 }));
   const jumlahItem = totalItem(f.item);
-  const total = hargaSewa + hargaAntar + jumlahItem;
+  const jamKembali = f.jam_selesai || f.jam;
+  const pilihanVoucher = voucher.filter((v) => v.id === f.voucher_id || voucherBerlaku(v, f.durasi_tipe, f.mulai));
+  const vDipilih = voucher.find((v) => v.id === f.voucher_id) || null;
+  const diskon = hitungDiskon(vDipilih, hargaSewa);
+  const total = hargaSewa - diskon + hargaAntar + jumlahItem;
 
   const setItem = (idx: number, patch: Partial<ItemPesanan>) =>
     setF((p: any) => ({ ...p, item: p.item.map((it: ItemPesanan, i: number) => (i === idx ? { ...it, ...patch } : it)) }));
   const tambahItem = () => setF((p: any) => ({ ...p, item: [...(p.item || []), { nama: "", jumlah: 0 }] }));
   const hapusItem = (idx: number) => setF((p: any) => ({ ...p, item: p.item.filter((_: ItemPesanan, i: number) => i !== idx) }));
 
+  // Bentrok dihitung sampai jam: kembali 10.00 lalu disewa lagi 13.00 di hari yang sama tidak dianggap bentrok.
   const bentrok = useMemo(() => {
     if (!f.unit_id || !f.mulai) return null;
-    return pesanan.find((p) => p.id !== edit && p.unit_id === f.unit_id && p.status !== "batal" && p.status !== "selesai" && beririsan(f.mulai, selesai, p.mulai, p.selesai));
-  }, [f.unit_id, f.mulai, selesai, pesanan, edit]);
+    const ini = waktuPesanan({ mulai: f.mulai, selesai, jam: f.jam, jam_selesai: jamKembali });
+    return pesanan.find((p) => {
+      if (p.id === edit || p.unit_id !== f.unit_id || p.status === "batal" || p.status === "selesai") return false;
+      const w = waktuPesanan(p);
+      return beririsan(ini.dari, ini.sampai, w.dari, w.sampai);
+    });
+  }, [f.unit_id, f.mulai, f.jam, jamKembali, selesai, pesanan, edit]);
 
   const simpan = async () => {
     if (!f.pelanggan_id || !f.unit_id || !f.mulai) return setGalat("Pelanggan, unit, dan tanggal mulai wajib diisi.");
+    if (bentrok) {
+      const w = waktuPesanan(bentrok);
+      if (!confirm(`Bentrok dengan ${bentrok.pelanggan?.nama || "pesanan lain"} (${tglIndo(bentrok.mulai)} ${w.dari.slice(11)} – ${tglIndo(bentrok.selesai)} ${w.sampai.slice(11)}).\n\nTetap simpan?`)) return;
+    }
     setSibuk(true); setGalat("");
     const isi = {
       pelanggan_id: f.pelanggan_id, unit_id: f.unit_id, durasi_tipe: f.durasi_tipe, durasi_jumlah: n,
-      mulai: f.mulai, jam: f.jam, selesai, total_hari: totalHari, antar: f.antar,
+      mulai: f.mulai, jam: f.jam, jam_selesai: f.jam_selesai || null, selesai, total_hari: totalHari,
+      voucher_id: vDipilih?.id || null, voucher_kode: vDipilih?.kode || null, diskon, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
       item: itemBersih, total, catatan: f.catatan.trim(), status_bayar: f.status_bayar,
     };
@@ -665,13 +681,17 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                   <Kol label={`Jumlah ${f.durasi_tipe === "harian" ? "hari" : f.durasi_tipe === "mingguan" ? "minggu" : "bulan"}`}>
                     <input type="number" min={1} value={f.durasi_jumlah} onChange={(e) => s("durasi_jumlah", e.target.value)} className={inp} />
                   </Kol>
-                  <Kol label="Jam ambil"><input type="time" value={f.jam} onChange={(e) => s("jam", e.target.value)} className={inp} /></Kol>
+                  <Kol label="Tanggal mulai"><input type="date" value={f.mulai} onChange={(e) => s("mulai", e.target.value)} className={inp} /></Kol>
                 </div>
-                <Kol label="Tanggal mulai"><input type="date" value={f.mulai} onChange={(e) => s("mulai", e.target.value)} className={inp} /></Kol>
-                {f.mulai && <p className="text-xs text-muted-foreground">Kembali <b className="text-foreground">{tglIndo(selesai)}</b> pukul {f.jam} · {totalHari} × 24 jam</p>}
-                {bentrok && <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">
-                  Bentrok: {bentrok.unit_id} sudah dipakai {bentrok.pelanggan?.nama} ({tglIndo(bentrok.mulai)}–{tglIndo(bentrok.selesai)}).
-                </p>}
+                <div className="grid grid-cols-2 gap-3">
+                  <Kol label="Jam ambil"><input type="time" value={f.jam} onChange={(e) => s("jam", e.target.value)} className={inp} /></Kol>
+                  <Kol label="Jam kembali"><input type="time" value={jamKembali} onChange={(e) => s("jam_selesai", e.target.value === f.jam ? "" : e.target.value)} className={inp} /></Kol>
+                </div>
+                {f.mulai && <p className="text-xs text-muted-foreground">Ambil <b className="text-foreground">{tglIndo(f.mulai)} {f.jam}</b> · kembali <b className="text-foreground">{tglIndo(selesai)} {jamKembali}</b></p>}
+                {bentrok && (() => { const w = waktuPesanan(bentrok); return (
+                  <p className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-xs text-red-800">
+                    Bentrok: {bentrok.unit_id} dipakai {bentrok.pelanggan?.nama} {tglIndo(bentrok.mulai)} {w.dari.slice(11)} – {tglIndo(bentrok.selesai)} {w.sampai.slice(11)}. Geser jam atau tanggal, atau pilih unit lain.
+                  </p>); })()}
                 <div className="flex gap-2">
                   {([["tidak","Ambil sendiri"],["antar","Antar saja"],["pp","Antar + jemput"]] as const).map(([k,t]) => (
                     <button key={k} onClick={() => s("antar", k)}
@@ -686,6 +706,18 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                   </>
                 )}
                 <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
+
+                <Kol label="Voucher">
+                  <select value={f.voucher_id} onChange={(e) => s("voucher_id", e.target.value)} className={inp}>
+                    <option value="">Tanpa voucher</option>
+                    {pilihanVoucher.map((v) => (
+                      <option key={v.id} value={v.id}>{v.kode} · {v.tipe === "persen" ? `${v.nilai}%` : rp(v.nilai)}{v.periode !== "semua" ? ` · ${v.periode}` : ""}</option>
+                    ))}
+                  </select>
+                </Kol>
+                {voucher.some((v) => v.aktif) && pilihanVoucher.length === 0 && (
+                  <p className="-mt-1 text-xs text-muted-foreground">Tidak ada voucher yang berlaku untuk sewa {f.durasi_tipe}{f.mulai ? ` mulai ${tglIndo(f.mulai)}` : ""}.</p>
+                )}
 
                 <div className="space-y-2">
                   <p className="text-xs font-semibold text-muted-foreground">Pembayaran</p>
@@ -714,20 +746,24 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                   {(f.item || []).map((it: ItemPesanan, i: number) => {
                     const potongan = Number(it.jumlah) < 0;
                     return (
-                      <div key={i} className="flex items-center gap-2">
-                        <input value={it.nama} onChange={(e) => setItem(i, { nama: e.target.value })}
-                          placeholder={potongan ? "Diskon langganan" : "Sewa mouse"} className={inp + " flex-1"} />
-                        <select value={potongan ? "kurang" : "tambah"}
-                          onChange={(e) => setItem(i, { jumlah: Math.abs(Number(it.jumlah) || 0) * (e.target.value === "kurang" ? -1 : 1) })}
-                          className={inp + " w-24 shrink-0"}>
-                          <option value="tambah">Tambah</option>
-                          <option value="kurang">Diskon</option>
-                        </select>
-                        <input type="number" min={0} value={Math.abs(Number(it.jumlah) || 0) || ""}
-                          onChange={(e) => setItem(i, { jumlah: (Number(e.target.value) || 0) * (potongan ? -1 : 1) })}
-                          placeholder="0" className={inp + " w-28 shrink-0"} />
-                        <button onClick={() => hapusItem(i)} aria-label="Hapus baris"
-                          className="shrink-0 rounded-lg border border-border px-2.5 py-2 text-xs font-semibold text-muted-foreground">×</button>
+                      <div key={i} className="space-y-2 rounded-lg border border-border bg-white p-2">
+                        <div className="flex min-w-0 gap-2">
+                          <input value={it.nama} onChange={(e) => setItem(i, { nama: e.target.value })}
+                            placeholder={potongan ? "Diskon langganan" : "Sewa mouse"} className={inp + " min-w-0 flex-1"} />
+                          <button onClick={() => hapusItem(i)} aria-label="Hapus baris"
+                            className="shrink-0 rounded-lg border border-border px-3 text-sm font-semibold text-muted-foreground">×</button>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2">
+                          <select value={potongan ? "kurang" : "tambah"}
+                            onChange={(e) => setItem(i, { jumlah: Math.abs(Number(it.jumlah) || 0) * (e.target.value === "kurang" ? -1 : 1) })}
+                            className={inp + " min-w-0"}>
+                            <option value="tambah">Tambah</option>
+                            <option value="kurang">Diskon</option>
+                          </select>
+                          <input type="number" inputMode="numeric" min={0} value={Math.abs(Number(it.jumlah) || 0) || ""}
+                            onChange={(e) => setItem(i, { jumlah: (Number(e.target.value) || 0) * (potongan ? -1 : 1) })}
+                            placeholder="Rp" className={inp + " min-w-0"} />
+                        </div>
                       </div>
                     );
                   })}
@@ -735,6 +771,7 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
 
                 <div className="rounded-xl border-2 border-dashed border-border p-3 text-sm">
                   <Baris k={`${u.nama} · ${n} ${f.durasi_tipe}`} v={hargaSewa} />
+                  {diskon > 0 && <Baris k={`Voucher ${vDipilih?.kode}`} v={-diskon} />}
                   {f.antar !== "tidak" && <Baris k={`Antar${f.antar === "pp" ? " + jemput" : ""} ${km} km`} v={hargaAntar} />}
                   {itemBersih.map((it, i) => <Baris key={i} k={it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} v={it.jumlah} />)}
                   <div className="mt-2 flex items-baseline justify-between border-t border-border pt-2">
@@ -762,13 +799,14 @@ function TabPesanan({ pesanan, pelanggan, unit, set, muat, setGalat, isiBaru, ha
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
                       <p className="truncate font-bold text-slate-900">{p.pelanggan?.nama}</p>
-                      <p className="mt-0.5 truncate text-xs text-slate-500">
-                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglHariIndo(p.mulai)} → {tglHariIndo(p.selesai)}
+                      <p className="mt-0.5 text-xs text-slate-500">
+                        <span className="font-mono font-semibold text-slate-600">{p.unit_id}</span> · {tglHariIndo(p.mulai)} {waktuPesanan(p).dari.slice(11)} → {tglHariIndo(p.selesai)} {waktuPesanan(p).sampai.slice(11)}
                       </p>
                       <p className="text-xs text-slate-400">{p.durasi_jumlah} {p.durasi_tipe}{p.antar !== "tidak" ? ` · antar ${p.jarak_km} km` : ""}</p>
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="text-lg font-bold text-slate-900">{rp(p.total)}</p>
+                      {!!p.diskon && <p className="text-[11px] text-emerald-700">Voucher {p.voucher_kode} −{rp(p.diskon)}</p>}
                       {(p.item || []).length > 0 && (
                         <p className="text-[11px] text-slate-400">
                           {(p.item || []).map((it) => `${it.nama || (it.jumlah < 0 ? "Diskon" : "Tambahan")} ${it.jumlah < 0 ? "−" : "+"}${rp(Math.abs(it.jumlah))}`).join(" · ")}

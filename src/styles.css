@@ -202,3 +202,10 @@
   --primary: oklch(0.66 0.117 215.2); /* ~hsl(187 92% 43%) */
   --ring: oklch(0.66 0.117 215.2);
 }
+
+/* HP: input minimal 16px supaya browser tidak memperbesar halaman saat mengetik,
+   dan halaman admin tidak bisa melebar ke samping. */
+@media (max-width: 767px) {
+  .adm input, .adm select, .adm textarea { font-size: 16px; }
+  .adm main { overflow-x: clip; }
+}
