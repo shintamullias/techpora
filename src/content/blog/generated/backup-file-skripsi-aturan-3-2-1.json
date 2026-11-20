@@ -1,0 +1,72 @@
+{
+  "slug": "backup-file-skripsi-aturan-3-2-1",
+  "title": "File Skripsi Hilang? Atur Backup Sebelum Terlambat",
+  "description": "Panduan backup file skripsi dengan aturan 3-2-1: penamaan versi, autosave Word, cloud sync vs backup, dan persiapan file sidang yang aman dibuka di mana saja.",
+  "category": "Mahasiswa",
+  "readMinutes": 6,
+  "intro": "Cara paling aman menjaga file skripsi adalah menyimpan tiga salinan di dua jenis media dengan satu salinan di luar rumah, memberi nama versi yang urut, dan menguji cadangan setiap pekan. Artikel ini menjelaskan sistem sederhana itu langkah demi langkah, mulai dari pengaturan autosave sampai persiapan file untuk hari sidang, supaya revisi berbulan-bulan tidak hilang karena satu kejadian sepele.",
+  "sections": [
+    {
+      "h": "Kenapa File Skripsi Paling Sering Hilang di Minggu Terakhir",
+      "p": "Kehilangan file skripsi jarang terjadi karena kejadian dramatis. Biasanya penyebabnya sepele dan menumpuk menjelang akhir: laptop dipakai terus-menerus tanpa istirahat, flashdisk dicabut tanpa eject, file dibuka dari lampiran email lalu disimpan di folder sementara, atau revisi dari dosen ditimpa karena nama file sama. Di minggu terakhir sebelum sidang, kamu mengedit lebih sering, begadang lebih banyak, dan risikonya naik sejalan dengan itu. Selain itu, skripsi bukan satu file saja. Ada naskah Word, data mentah, hasil olah SPSS atau Excel, gambar dan grafik, daftar pustaka dari aplikasi referensi, serta slide presentasi. Satu yang hilang bisa memaksa kamu mengulang berhari-hari. Karena itu tujuan artikel ini sederhana: membuat sistem cadangan yang tidak bergantung pada ingatan atau keberuntungan, dan bisa kamu siapkan dalam satu sore."
+    },
+    {
+      "h": "Aturan 3-2-1 dalam Bahasa Mahasiswa",
+      "p": "Praktisi keamanan data punya pegangan lama yang disebut aturan 3-2-1: simpan tiga salinan data, di dua jenis media yang berbeda, dengan satu salinan berada di tempat lain. Untuk skripsi, terjemahannya begini. Salinan pertama adalah file kerja di laptop. Salinan kedua di penyimpanan eksternal seperti flashdisk atau SSD eksternal. Salinan ketiga di layanan cloud seperti Google Drive atau OneDrive. Dua media berbeda artinya laptop dan flashdisk tidak dihitung sebagai satu jenis kegagalan, dan cloud menjadi salinan di luar rumah, jadi tetap aman kalau tas hilang atau kos kebanjiran. Intinya bukan memiliki peralatan mahal, melainkan memastikan satu kejadian buruk, apa pun itu, tidak bisa menghabiskan semua salinan sekaligus. Kalau hanya punya laptop dan satu flashdisk di tas yang sama, kamu sebenarnya belum punya cadangan sungguhan."
+    },
+    {
+      "h": "Cloud Sync Bukan Backup: Perbedaan yang Sering Terlewat",
+      "p": "Banyak mahasiswa merasa aman karena folder skripsinya tersinkron ke cloud. Padahal sinkronisasi dan cadangan itu berbeda. Sinkronisasi menjaga dua tempat tetap sama, artinya kalau kamu menghapus atau merusak file di laptop, kerusakan itu ikut menular ke cloud. Cadangan sejati menyimpan versi masa lalu yang bisa dikembalikan. Kabar baiknya, layanan populer biasanya punya riwayat versi. Google Docs menyediakan riwayat versi lewat menu File, sedangkan Word dengan file di OneDrive menyimpan versi sebelumnya yang bisa dibuka lagi. Tempat sampah di Drive juga menyimpan file terhapus untuk jangka waktu terbatas. Biasakan cek sekali bahwa fitur itu benar-benar aktif untuk file skripsimu: buka riwayat versi, lihat apakah ada versi kemarin, dan pastikan kamu tahu cara memulihkannya sebelum kamu benar-benar membutuhkannya di saat panik."
+    },
+    {
+      "h": "Penamaan Versi: Cara Murah Menghindari Revisi yang Tertimpa",
+      "p": "Sistem penamaan file adalah pertahanan termurah yang bisa kamu bangun. Pakai pola yang urut dan bisa diurutkan otomatis oleh komputer, misalnya tanggal di depan: 2026-11-20_Skripsi_Bab3_v04_revisi-dosen1.docx. Format tahun-bulan-tanggal membuat daftar file selalu tersusun kronologis, sehingga versi terbaru mudah ditemukan. Hindari nama seperti skripsi_final_fix_beneran_2.docx karena tidak ada yang bisa memastikan mana yang terbaru setelah seminggu. Aturan praktisnya: simpan salinan baru setiap kali selesai satu sesi kerja besar atau setiap kali dosen mengirim koreksi, jangan menimpa file lama. Pindahkan versi lama ke subfolder Arsip agar folder kerja tetap bersih. Dengan cara ini, kalau dosen ternyata lebih suka paragraf versi dua minggu lalu, kamu tinggal mengambilnya, tanpa mengetik ulang dari ingatan."
+    },
+    {
+      "h": "Pengaturan Autosave dan Pemulihan Otomatis di Word",
+      "p": "Microsoft Word punya dua pengaman yang sering disalahpahami. AutoSave, saklar di pojok kiri atas, hanya bekerja untuk file yang tersimpan di OneDrive atau SharePoint, sehingga file di folder biasa tidak otomatis ikut. Pemulihan otomatis (AutoRecover) menyimpan salinan sementara secara berkala, dan secara bawaan interval-nya sekitar sepuluh menit. Kamu bisa menurunkannya lewat File, Options, Save, lalu mempersingkat menit simpan otomatis dan mencentang opsi menyimpan versi terakhir yang tidak sengaja ditutup. Tetap saja, pemulihan otomatis bukan pengganti menyimpan manual. Biasakan menekan Ctrl+S setiap selesai satu paragraf penting. Untuk dokumen panjang dengan banyak gambar dan tabel, pertimbangkan memecah bab menjadi file terpisah, lalu menggabungkannya di tahap akhir, karena file raksasa lebih rentan korup dan lebih lambat dibuka."
+    },
+    {
+      "h": "Jangan Lupa Data Mentah, Referensi, dan Slide",
+      "p": "Naskah Word hanyalah sebagian dari skripsi. Data mentah penelitianmu, entah hasil kuesioner, file SPSS, spreadsheet, atau kode program, adalah bagian yang paling sulit diulang. Simpan salinan data mentah yang tidak pernah kamu edit, dan kerjakan analisis pada salinan lain. Kalau kamu memakai aplikasi referensi seperti Zotero atau Mendeley, pastikan pustaka dan berkas PDF jurnalnya ikut tercadangkan, atau ekspor pustaka ke format yang bisa dibuka ulang. Gambar dan grafik sebaiknya disimpan dalam file asli, bukan hanya tertanam di dalam naskah. Terakhir, slide presentasi sidang diperlakukan sama seperti naskah, dengan versi bernomor dan satu salinan di cloud. Daftar tiga hingga lima jenis file ini cukup kamu tempel di catatan ponsel sebagai pengingat apa saja yang harus ikut dicadangkan setiap kali."
+    },
+    {
+      "h": "Jadwal Cadangan Ringan: 5 Menit per Hari, 15 Menit per Pekan",
+      "p": "Sistem yang bagus adalah yang benar-benar dijalankan, jadi buat ringan. Setiap akhir sesi kerja, luangkan lima menit: simpan versi bernomor, pastikan sinkron ke cloud selesai, lalu salin folder skripsi ke penyimpanan eksternal. Setiap akhir pekan, luangkan lima belas menit untuk membuka cadangan dan membuktikan bahwa file bisa dibuka. Cadangan yang tidak pernah diuji sering ternyata rusak tanpa ketahuan. Kirim juga naskah terbaru ke email sendiri setiap kali ada pencapaian besar, misalnya selesai satu bab, sebagai lapisan tambahan yang tidak membutuhkan aplikasi apa pun. Pasang pengingat berulang di kalender ponsel supaya tidak bergantung pada kemauan. Kebiasaan kecil dan konsisten jauh lebih efektif daripada rencana besar yang hanya dijalankan satu kali lalu dilupakan."
+    },
+    {
+      "h": "Menjelang Sidang: Siapkan Format yang Aman Dibuka di Mana Saja",
+      "p": "Seminggu sebelum sidang, ubah cara pikirmu dari menyimpan menjadi menyiapkan cadangan untuk presentasi. Ekspor naskah dan slide ke PDF lewat menu Save As atau Export, karena PDF mempertahankan tata letak dan menyematkan font sehingga tidak berantakan di komputer lain. Simpan juga slide dalam format aslinya. Salin ke minimal dua tempat: flashdisk yang diberi label dan cloud yang bisa diakses dari ponsel. Kirim tautan ke dirimu sendiri supaya bisa dibuka dari perangkat lain. Cek apakah video atau animasi tertanam dalam slide, karena file media tertaut kadang tidak ikut terbawa saat dipindah. Lakukan satu kali gladi resik dengan membuka file dari flashdisk di komputer yang bukan milikmu, supaya masalah font, versi aplikasi, atau resolusi layar ketahuan sebelum hari H."
+    },
+    {
+      "h": "Rencana B untuk Perangkat: Kalau Laptop Sendiri yang Bermasalah",
+      "p": "Cadangan file menyelamatkan datamu, tetapi kamu tetap butuh perangkat untuk mengerjakannya. Kalau laptop rusak atau harus diservis menjelang sidang, file aman di cloud belum berarti kamu bisa bekerja. Siapkan rencana B sejak awal: ketahui perangkat pengganti yang bisa kamu pakai, entah laptop teman, laptop kampus, atau laptop sewaan jangka pendek. Kalau memakai laptop yang bukan milikmu, masuk ke akun cloud seperlunya, jangan menyimpan kata sandi di peramban, jangan tinggalkan file skripsi di folder laptop itu, lalu keluar dari semua akun dan hapus unduhan saat selesai. Untuk kebutuhan seperti ini, Techpora menyewakan laptop harian maupun bulanan di Jakarta, dan detail syarat dikonfirmasi lewat WhatsApp. Yang lebih penting, rencana B ditentukan sebelum darurat, bukan sambil panik di malam sebelum bimbingan."
+    }
+  ],
+  "cta": {
+    "heading": "Butuh Laptop Cadangan Selama Skripsi?",
+    "body": "Kalau laptopmu bermasalah atau kamu butuh unit untuk masa sidang, tanyakan ketersediaan lewat WhatsApp. Detail syarat dikonfirmasi lewat WhatsApp.",
+    "waMessage": "Halo Techpora, saya mahasiswa yang sedang mengerjakan skripsi dan butuh laptop cadangan. Durasi dan kebutuhan saya:",
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Sewa laptop mahasiswa Jakarta"
+  },
+  "related": [
+    "keamanan-data-laptop-sewaan",
+    "sewa-laptop-sidang-skripsi-jakarta",
+    "sewa-laptop-tugas-akhir-skripsi-jakarta"
+  ],
+  "keywords": "backup file skripsi, cara menyimpan file skripsi, aturan backup 3-2-1, file skripsi hilang, persiapan file sidang",
+  "date": "2026-11-20",
+  "contextLinks": [
+    {
+      "section": 8,
+      "anchor": "laptop harian maupun bulanan di Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 8,
+      "anchor": "laptop sewaan jangka pendek",
+      "to": "/sewa-laptop-mahasiswa-jakarta"
+    }
+  ]
+}
