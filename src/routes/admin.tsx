@@ -71,7 +71,9 @@ function Dashboard() {
     setPembayaran((by.data as Pembayaran[]) || []);
     setBiaya((b.data as Pengeluaran[]) || []);
     setPelanggan((p.data as Pelanggan[]) || []);
-    setUnit((u.data as Unit[]) || []);
+    // Urut per kategori (laptop dulu, sepatu terakhir), lalu kode unit — dipakai di semua tampilan.
+    const bobot = (k?: string) => (k === "laptop" ? 0 : k === "sepatu" ? 2 : 1);
+    setUnit(((u.data as Unit[]) || []).sort((a, b) => bobot(a.kategori) - bobot(b.kategori) || a.id.localeCompare(b.id, "id", { numeric: true })));
     // Kolom dipilih eksplisit, jadi bentuk relasi harus dilepas dulu ke unknown.
     setPesanan((o.data as unknown as Pesanan[]) || []);
     if (s.data) setSet(s.data as Pengaturan);

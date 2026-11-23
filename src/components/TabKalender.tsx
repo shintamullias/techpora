@@ -206,6 +206,7 @@ export default function TabKalender({
                     <div className="sticky left-0 z-10 flex items-center gap-2 border-r border-border/60 bg-white px-3 py-2" style={{ width: lebarUnit }}>
                       <div className="min-w-0 flex-1">
                         <p className="line-clamp-2 break-words text-sm font-medium leading-tight text-slate-900" title={u.nama}>{u.nama}</p>
+                        {u.spek && <p className="line-clamp-2 break-words text-[11px] leading-tight text-slate-600" title={u.spek}>{u.spek}</p>}
                         <p className="truncate text-[11px] text-muted-foreground">{u.id} · {ringkas(u.harian)}/hr</p>
                       </div>
                       <span title={st} className={"h-2 w-2 shrink-0 rounded-full " + (st === "tersedia" ? "bg-emerald-500" : st === "dipesan" ? "bg-amber-500" : "bg-sky-500")} />
