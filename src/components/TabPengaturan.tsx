@@ -1,3 +1,4 @@
+import RiwayatCadangan from "./RiwayatCadangan";
 import { useEffect, useState } from "react";
 import { supabase, rp, KATEGORI_BIAYA, type Pengaturan } from "@/lib/supabase";
 
@@ -9,6 +10,7 @@ const BAGIAN = [
   { key: "ongkir", label: "Ongkir antar-jemput" },
   { key: "biaya", label: "Kategori pengeluaran" },
   { key: "akun", label: "Akun saya" },
+  { key: "riwayat", label: "Riwayat & cadangan" },
 ] as const;
 type Bagian = (typeof BAGIAN)[number]["key"];
 
@@ -127,6 +129,7 @@ export default function TabPengaturan({
             </div>
           </Kartu>
         )}
+        {aktif === "riwayat" && <RiwayatCadangan setGalat={setGalat} muat={muat} />}
       </div>
     </div>
   );

@@ -306,7 +306,7 @@ export const gcalLinkTugas = (t: Tugas) => {
 /** Jumlah yang sudah dibayar untuk sebuah pesanan.
  *  Pesanan berstatus lunas dianggap terbayar penuh walau pembayarannya tidak dicatat satu per satu. */
 export const sudahDibayar = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
-  p.status_bayar === "lunas" ? p.total || 0 : bayarPerPesanan[p.id] || 0;
+  Math.min(p.total || 0, bayarPerPesanan[p.id] || 0);
 
 export const sisaTagihan = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
   p.status === "batal" ? 0 : Math.max(0, (p.total || 0) - sudahDibayar(p, bayarPerPesanan));

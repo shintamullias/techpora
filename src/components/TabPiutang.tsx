@@ -36,15 +36,16 @@ export default function TabPiutang({
       pesanan_id: pesananId, jumlah, tanggal: f.tanggal, metode: f.metode,
     });
     if (error) return setGalat(error.message);
-    // Status bayar ikut berubah: lunas bila sisa habis, selain itu sebagian.
-    await supabase.from("pesanan").update({ status_bayar: jumlah >= sisa ? "lunas" : "sebagian" }).eq("id", pesananId);
+    // Status bayar dihitung otomatis oleh database dari catatan pembayaran.
     setBukaId(""); setF({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
     muat();
   };
 
-  const tandaiLunas = async (pesananId: string) => {
-    if (!confirm("Tandai pesanan ini sudah lunas?")) return;
-    const { error } = await supabase.from("pesanan").update({ status_bayar: "lunas" }).eq("id", pesananId);
+  const tandaiLunas = async (pesananId: string, sisa: number) => {
+    if (!confirm(`Catat pelunasan ${rp(sisa)} hari ini?`)) return;
+    const { error } = await supabase.from("pembayaran").insert({
+      pesanan_id: pesananId, jumlah: sisa, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: "Pelunasan",
+    });
     if (error) return setGalat(error.message);
     muat();
   };
@@ -82,7 +83,7 @@ export default function TabPiutang({
                   target="_blank" rel="noreferrer"
                   className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-emerald-700">Ingatkan via WA</a>
               )}
-              <button onClick={() => tandaiLunas(p.id)}
+              <button onClick={() => tandaiLunas(p.id, sisa)}
                 className="rounded-lg border border-border px-2.5 py-1.5 text-xs font-semibold text-slate-600">Tandai lunas</button>
             </div>
             {bukaId === p.id && (

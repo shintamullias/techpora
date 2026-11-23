@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import {
   supabase, rp, tglIndo, bulanDari, namaBulan, KATEGORI_BIAYA,
-  type Unit, type Pesanan, type Pengeluaran,
+  type Unit, type Pesanan, type Pengeluaran, type Pembayaran,
 } from "@/lib/supabase";
 
 const inp =
@@ -16,13 +16,14 @@ function Kol({ label, children }: { label: string; children: React.ReactNode }) 
   );
 }
 
-/** Pemasukan diakui saat unit sudah diantar (status berjalan/selesai). */
+/** Pemasukan = uang yang benar-benar diterima (tabel pembayaran) dari pesanan yang tidak batal.
+ *  Pesanan belum dibayar tidak dihitung; pesanan batal tidak pernah dihitung. */
 const DIAKUI = ["berjalan", "selesai"];
 
 export default function TabKeuangan({
-  pesanan, unit, biaya, muat, setGalat,
+  pesanan, pembayaran, unit, biaya, muat, setGalat,
 }: {
-  pesanan: Pesanan[]; unit: Unit[]; biaya: Pengeluaran[]; muat: () => void; setGalat: (s: string) => void;
+  pesanan: Pesanan[]; pembayaran: Pembayaran[]; unit: Unit[]; biaya: Pengeluaran[]; muat: () => void; setGalat: (s: string) => void;
 }) {
   const kini = new Date().toISOString().slice(0, 7);
   const [bulan, setBulan] = useState(kini);
@@ -34,22 +35,24 @@ export default function TabKeuangan({
   /* ---------- daftar bulan yang punya data ---------- */
   const bulanTersedia = useMemo(() => {
     const set = new Set<string>([kini]);
-    pesanan.filter((p) => DIAKUI.includes(p.status)).forEach((p) => set.add(bulanDari(p.mulai)));
+    pembayaran.forEach((b) => set.add(bulanDari(b.tanggal)));
     biaya.forEach((b) => set.add(bulanDari(b.tanggal)));
     return [...set].sort().reverse();
   }, [pesanan, biaya]);
 
-  /* ---------- hitungan bulan terpilih ---------- */
-  const masukBln = pesanan.filter((p) => DIAKUI.includes(p.status) && bulanDari(p.mulai) === bulan);
+  /* ---------- hitungan bulan terpilih (uang masuk aktual) ---------- */
+  const pesananDari = useMemo(() => new Map(pesanan.map((p) => [p.id, p])), [pesanan]);
+  const bayarSah = useMemo(() => pembayaran.filter((b) => { const p = pesananDari.get(b.pesanan_id); return p && p.status !== "batal"; }), [pembayaran, pesananDari]);
+  const masukBln = bayarSah.filter((b) => bulanDari(b.tanggal) === bulan)
+    .map((b) => ({ ...pesananDari.get(b.pesanan_id)!, total: b.jumlah }));
   const keluarBln = biaya.filter((b) => bulanDari(b.tanggal) === bulan);
   const totalMasuk = masukBln.reduce((a, p) => a + p.total, 0);
+  const tagihanBln = pesanan.filter((p) => DIAKUI.includes(p.status) && bulanDari(p.mulai) === bulan).reduce((a, p) => a + p.total, 0);
   const totalKeluar = keluarBln.reduce((a, b) => a + b.jumlah, 0);
   const laba = totalMasuk - totalKeluar;
 
   /* ---------- saldo AKTUAL kumulatif (semua bulan) — untuk samakan dgn rekening ---------- */
-  const masukSemua = pesanan
-    .filter((p) => DIAKUI.includes(p.status))
-    .reduce((a, p) => a + p.total, 0);
+  const masukSemua = bayarSah.reduce((a, b) => a + b.jumlah, 0);
   const keluarSemua = biaya.reduce((a, b) => a + b.jumlah, 0);
   const saldoAktual = masukSemua - keluarSemua;
 
@@ -143,6 +146,7 @@ export default function TabKeuangan({
           <Kotak label="Pemasukan" nilai={totalMasuk} nada="text-emerald-700" />
           <Kotak label="Pengeluaran" nilai={totalKeluar} nada="text-red-700" />
         </div>
+        <p className="mt-1.5 text-[11px] text-muted-foreground">Pemasukan = uang yang benar-benar diterima bulan ini. Nilai sewa yang mulai bulan ini: {rp(tagihanBln)}.</p>
 
         <div className="mt-2 rounded-xl border border-border bg-secondary/40 p-3">
           <div className="flex items-baseline justify-between">

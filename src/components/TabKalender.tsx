@@ -6,7 +6,6 @@ import { rp, tglIndo, waLink, waktuPesanan, type Pesanan, type Unit, type Tugas,
 
 const LEBAR_HARI = 42;
 const TINGGI_LAJUR = 44;
-const LEBAR_UNIT = 150;
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
 
 const BLOK: Record<string, string> = {
@@ -75,6 +74,26 @@ export default function TabKalender({
   const [bulan, setBulan] = useState(() => awalBulan(hariIni));
   const [detail, setDetail] = useState<Pesanan | null>(null);
   const geserX = useRef<number | null>(null);
+  // Lebar kolom nama unit bisa digeser supaya nama tidak terpotong; diingat di perangkat ini.
+  const [lebarUnit, setLebarUnit] = useState(() => {
+    try { return Number(localStorage.getItem("kalender-lebar-unit")) || 150; } catch { return 150; }
+  });
+  const tarik = useRef<{ x: number; w: number } | null>(null);
+  const mulaiTarik = (e: React.PointerEvent) => {
+    e.stopPropagation(); e.preventDefault();
+    tarik.current = { x: e.clientX, w: lebarUnit };
+    (e.target as HTMLElement).setPointerCapture(e.pointerId);
+  };
+  const saatTarik = (e: React.PointerEvent) => {
+    if (!tarik.current) return;
+    e.stopPropagation();
+    setLebarUnit(Math.min(360, Math.max(110, tarik.current.w + e.clientX - tarik.current.x)));
+  };
+  const selesaiTarik = (e: React.PointerEvent) => {
+    e.stopPropagation();
+    tarik.current = null;
+    try { localStorage.setItem("kalender-lebar-unit", String(lebarUnit)); } catch { /* abaikan */ }
+  };
 
   const hari = useMemo(() => daftarHari(bulan), [bulan]);
   const akhir = hari[hari.length - 1];
@@ -147,7 +166,14 @@ export default function TabKalender({
           <div className="overflow-x-auto">
             <div className="min-w-max">
               <div className="flex border-b border-border bg-slate-50">
-                <div className="sticky left-0 z-10 flex items-center bg-slate-50 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground" style={{ width: LEBAR_UNIT }}>Unit</div>
+                <div className="sticky left-0 z-10 flex items-center bg-slate-50 px-3 py-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground" style={{ width: lebarUnit }}>
+                  Unit
+                  <span role="separator" aria-label="Geser untuk ubah lebar kolom unit" title="Geser untuk ubah lebar"
+                    onPointerDown={mulaiTarik} onPointerMove={saatTarik} onPointerUp={selesaiTarik} onPointerCancel={selesaiTarik}
+                    className="absolute right-0 top-0 flex h-full w-4 cursor-col-resize touch-none items-center justify-center">
+                    <span className="h-5 w-1 rounded-full bg-slate-300" />
+                  </span>
+                </div>
                 {hari.map((d) => {
                   const dow = new Date(d + "T00:00:00Z").getUTCDay();
                   const ini = d === hariIni;
@@ -177,9 +203,9 @@ export default function TabKalender({
                 const st = statusHariIni(u.id);
                 return (
                   <div key={u.id} className="flex border-b border-border/60 last:border-0 hover:bg-slate-50/50">
-                    <div className="sticky left-0 z-10 flex items-center gap-2 bg-white px-3 py-2" style={{ width: LEBAR_UNIT }}>
+                    <div className="sticky left-0 z-10 flex items-center gap-2 border-r border-border/60 bg-white px-3 py-2" style={{ width: lebarUnit }}>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-slate-900">{u.nama}</p>
+                        <p className="line-clamp-2 break-words text-sm font-medium leading-tight text-slate-900" title={u.nama}>{u.nama}</p>
                         <p className="truncate text-[11px] text-muted-foreground">{u.id} · {ringkas(u.harian)}/hr</p>
                       </div>
                       <span title={st} className={"h-2 w-2 shrink-0 rounded-full " + (st === "tersedia" ? "bg-emerald-500" : st === "dipesan" ? "bg-amber-500" : "bg-sky-500")} />

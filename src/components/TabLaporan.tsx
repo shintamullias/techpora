@@ -6,8 +6,10 @@ import {
   rp, tglIndo, kelompokkanBayar, sudahDibayar, sisaTagihan, bulanDari, namaBulan,
   type Pesanan, type Pembayaran, type Pengeluaran, type Unit, type Pelanggan,
 } from "@/lib/supabase";
+import LaporanAnalisis from "./LaporanAnalisis";
 
 const LAPORAN = [
+  { key: "analisis", label: "Analisis Bebas", warna: "bg-cyan-50 text-cyan-700" },
   { key: "pendapatan", label: "Laporan Pendapatan", warna: "bg-emerald-50 text-emerald-600" },
   { key: "laba", label: "Laba & Pengeluaran", warna: "bg-primary/10 text-primary" },
   { key: "utilisasi", label: "Utilisasi Inventaris", warna: "bg-sky-50 text-sky-600" },
@@ -64,7 +66,7 @@ export default function TabLaporan({
 }: {
   pesanan: Pesanan[]; pembayaran: Pembayaran[]; biaya: Pengeluaran[]; unit: Unit[]; pelanggan: Pelanggan[];
 }) {
-  const [aktif, setAktif] = useState<Kunci>("pendapatan");
+  const [aktif, setAktif] = useState<Kunci>("analisis");
   const bayar = useMemo(() => kelompokkanBayar(pembayaran), [pembayaran]);
   const hariIni = new Date().toISOString().slice(0, 10);
 
@@ -150,7 +152,7 @@ export default function TabLaporan({
         </button>
       </div>
 
-      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-7">
+      <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4 xl:grid-cols-8">
         {LAPORAN.map((l) => (
           <button key={l.key} onClick={() => setAktif(l.key)}
             className={"rounded-xl border p-3 text-left transition-colors " + (aktif === l.key ? "border-primary bg-primary/5" : "border-border bg-white hover:bg-slate-50")}>
@@ -159,6 +161,8 @@ export default function TabLaporan({
           </button>
         ))}
       </div>
+
+      {aktif === "analisis" && <LaporanAnalisis pesanan={pesanan} pembayaran={pembayaran} unit={unit} pelanggan={pelanggan} />}
 
       {aktif === "pendapatan" && (
         <Kartu judul="Laporan Pendapatan" ket={`${pendapatan.length} pesanan · total diterima ${rp(laba.masuk)}`}>

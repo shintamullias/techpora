@@ -314,7 +314,7 @@ function Dashboard() {
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
-        {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
         {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
         {tab === "voucher" && <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />}
         {tab === "laporan" && <TabLaporan pesanan={pesananTampil} pembayaran={pembayaran} biaya={biayaTampil} unit={unitTampil} pelanggan={pelanggan} />}
@@ -617,15 +617,17 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
       mulai: f.mulai, jam: f.jam, jam_selesai: f.jam_selesai || null, selesai, total_hari: totalHari,
       voucher_id: vDipilih?.id || null, voucher_kode: vDipilih?.kode || null, diskon, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
-      item: itemBersih, total, catatan: f.catatan.trim(), status_bayar: f.status_bayar,
+      item: itemBersih, total, catatan: f.catatan.trim(),
     };
     const dp = Number(String(f.dp || "").replace(/\D/g, ""));
     if (!edit && f.status_bayar === "sebagian" && !dp) { setSibuk(false); return setGalat("Isi jumlah DP yang sudah dibayar."); }
     const { data: hasil, error } = edit
       ? await supabase.from("pesanan").update(isi).eq("id", edit).select("id").single()
       : await supabase.from("pesanan").insert(isi).select("id").single();
-    if (!error && !edit && f.status_bayar === "sebagian" && dp && hasil?.id) {
-      const { error: e2 } = await supabase.from("pembayaran").insert({ pesanan_id: hasil.id, jumlah: dp, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: "DP saat pemesanan" });
+    // Pembayaran selalu dicatat di tabel pembayaran; status bayar dihitung otomatis dari situ.
+    const awal = f.status_bayar === "lunas" ? total : f.status_bayar === "sebagian" ? dp : 0;
+    if (!error && !edit && awal > 0 && hasil?.id) {
+      const { error: e2 } = await supabase.from("pembayaran").insert({ pesanan_id: hasil.id, jumlah: awal, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: f.status_bayar === "lunas" ? "Lunas saat pemesanan" : "DP saat pemesanan" });
       if (e2) { setSibuk(false); return setGalat(e2.message); }
     }
     setSibuk(false);
@@ -719,6 +721,11 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
                   <p className="-mt-1 text-xs text-muted-foreground">Tidak ada voucher yang berlaku untuk sewa {f.durasi_tipe}{f.mulai ? ` mulai ${tglIndo(f.mulai)}` : ""}.</p>
                 )}
 
+                {edit ? (
+                  <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-muted-foreground">
+                    Status bayar: <b className="text-foreground">{f.status_bayar === "lunas" ? "Lunas" : f.status_bayar === "sebagian" ? "DP / sebagian" : "Belum bayar"}</b> — dihitung otomatis dari catatan pembayaran. Tambah pembayaran lewat menu Piutang.
+                  </p>
+                ) : (
                 <div className="space-y-2">
                   <p className="text-xs font-semibold text-muted-foreground">Pembayaran</p>
                   <div className="flex gap-2">
@@ -730,10 +737,8 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
                   {f.status_bayar === "sebagian" && !edit && (
                     <Kol label="Jumlah DP yang sudah masuk (Rp)"><input inputMode="numeric" value={f.dp} onChange={(e) => s("dp", e.target.value)} placeholder="mis. 100000" className={inp} /></Kol>
                   )}
-                  {f.status_bayar === "sebagian" && edit && (
-                    <p className="text-xs text-muted-foreground">Catat cicilan berikutnya lewat menu Piutang → Catat bayar.</p>
-                  )}
                 </div>
+                )}
 
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
