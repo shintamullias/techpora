@@ -11,6 +11,7 @@ import TabKeuangan from "@/components/TabKeuangan";
 import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
+import BuktiBayar, { unggahBukti, perluBukti } from "@/components/BuktiBayar";
 import TabLaporan from "@/components/TabLaporan";
 import TabWhatsApp from "@/components/TabWhatsApp";
 import TabAdmin from "@/components/TabAdmin";
@@ -312,7 +313,7 @@ function Dashboard() {
           </div>
         )}
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
-        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
+        {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pembayaran={pembayaran} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
@@ -526,8 +527,8 @@ const labelStatus: Record<StatusPesanan, string> = {
 
 /* ============ TAB 1: KALENDER ============ */
 /* ============ TAB 2: PESANAN ============ */
-function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, isiBaru, habisPakai }: {
-  pesanan: Pesanan[]; pelanggan: Pelanggan[]; unit: Unit[]; voucher: Voucher[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, setGalat, isiBaru, habisPakai }: {
+  pesanan: Pesanan[]; pembayaran: Pembayaran[]; pelanggan: Pelanggan[]; unit: Unit[]; voucher: Voucher[]; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
   isiBaru?: { unit_id?: string; mulai?: string } | null; habisPakai?: () => void;
 }) {
   const [buka, setBuka] = useState(false);
@@ -535,6 +536,8 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
   const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "" };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
+  const [bayarUntuk, setBayarUntuk] = useState<Pesanan | null>(null);
+  const [fileBukti, setFileBukti] = useState<File | null>(null);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
 
   const tutup = () => { setBuka(false); setEdit(null); setF(kosong); };
@@ -629,7 +632,10 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
     // Pembayaran selalu dicatat di tabel pembayaran; status bayar dihitung otomatis dari situ.
     const awal = f.status_bayar === "lunas" ? total : f.status_bayar === "sebagian" ? dp : 0;
     if (!error && !edit && awal > 0 && hasil?.id) {
-      const { error: e2 } = await supabase.from("pembayaran").insert({ pesanan_id: hasil.id, jumlah: awal, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: f.status_bayar === "lunas" ? "Lunas saat pemesanan" : "DP saat pemesanan" });
+      let bukti: string | null = null;
+      try { if (fileBukti) bukti = await unggahBukti(hasil.id, fileBukti); } catch (e) { setGalat("Pesanan tersimpan, tapi bukti gagal diunggah: " + (e as Error).message); }
+      setFileBukti(null);
+      const { error: e2 } = await supabase.from("pembayaran").insert({ pesanan_id: hasil.id, jumlah: awal, bukti, tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: f.status_bayar === "lunas" ? "Lunas saat pemesanan" : "DP saat pemesanan" });
       if (e2) { setSibuk(false); return setGalat(e2.message); }
     }
     setSibuk(false);
@@ -653,6 +659,7 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
 
   return (
     <>
+      {bayarUntuk && <BuktiBayar pesanan={bayarUntuk} onTutup={() => setBayarUntuk(null)} onUbah={muat} />}
       <Kartu judul="Pesanan" aksi={
         <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
           {buka && !edit ? "Tutup" : "+ Tambah"}
@@ -736,6 +743,12 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
                         className={"flex-1 rounded-lg border px-2 py-2 text-xs font-semibold " + (f.status_bayar===k?"border-primary bg-primary/5 text-primary":"border-border text-muted-foreground")}>{t}</button>
                     ))}
                   </div>
+                  {f.status_bayar !== "belum" && (
+                    <label className={inp + " block cursor-pointer truncate text-sm text-slate-600"}>
+                      {fileBukti ? `📎 ${fileBukti.name}` : "📎 Foto bukti transfer (disarankan)"}
+                      <input type="file" accept="image/*,application/pdf" className="hidden" onChange={(e) => setFileBukti(e.target.files?.[0] || null)} />
+                    </label>
+                  )}
                   {f.status_bayar === "sebagian" && !edit && (
                     <Kol label="Jumlah DP yang sudah masuk (Rp)"><input inputMode="numeric" value={f.dp} onChange={(e) => s("dp", e.target.value)} placeholder="mis. 100000" className={inp} /></Kol>
                   )}
@@ -853,6 +866,16 @@ function TabPesanan({ pesanan, pelanggan, unit, voucher, set, muat, setGalat, is
                     )}
                     <a href={`/ttd/${p.token}`} target="_blank" rel="noreferrer"
                       className="rounded-lg border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600">Perjanjian</a>
+                    {(() => {
+                      const milik = pembayaran.filter((b) => b.pesanan_id === p.id);
+                      const kurang = milik.filter(perluBukti).length;
+                      return (
+                        <button onClick={() => setBayarUntuk(p)}
+                          className={"rounded-lg border px-3 py-1.5 text-xs font-semibold " + (kurang ? "border-amber-300 bg-amber-50 text-amber-800" : "border-slate-200 text-slate-600")}>
+                          Pembayaran{milik.length ? ` (${milik.length})` : ""}{kurang ? ` · ${kurang} tanpa bukti` : ""}
+                        </button>
+                      );
+                    })()}
                     <button onClick={() => hapusPesanan(p)}
                       className="ml-auto rounded-lg px-2 py-1.5 text-xs font-semibold text-red-400 hover:text-red-600">Hapus</button>
                   </div>

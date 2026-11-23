@@ -283,6 +283,8 @@ export type Pembayaran = {
   jumlah: number;
   metode: string | null;
   catatan: string | null;
+  /** path foto/PDF bukti transfer di bucket dokumen */
+  bukti?: string | null;
   dibuat_pada?: string;
 };
 

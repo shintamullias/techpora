@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import BuktiBayar, { perluBukti } from "./BuktiBayar";
 import { supabase, rp, tglIndo, waLink, kelompokkanBayar, sisaTagihan, sudahJatuhTempo, type Pesanan, type Pembayaran } from "@/lib/supabase";
 
 const inp =
@@ -11,6 +12,11 @@ export default function TabPiutang({
   pesanan: Pesanan[]; pembayaran: Pembayaran[]; muat: () => void; setGalat: (s: string) => void;
 }) {
   const [bukaId, setBukaId] = useState("");
+  const [modal, setModal] = useState<Pesanan | null>(null);
+  const tanpaBukti = useMemo(() => {
+    const ids = new Set(pembayaran.filter(perluBukti).map((b) => b.pesanan_id));
+    return pesanan.filter((p) => ids.has(p.id) && p.status !== "batal");
+  }, [pesanan, pembayaran]);
   const [f, setF] = useState({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer" });
 
   const dibayar = useMemo(() => kelompokkanBayar(pembayaran), [pembayaran]);
@@ -56,6 +62,19 @@ export default function TabPiutang({
         <h2 className="text-base font-semibold text-slate-900">Piutang</h2>
         <p className="text-sm font-bold text-red-600">{rp(totalPiutang)}</p>
       </div>
+      {modal && <BuktiBayar pesanan={modal} onTutup={() => setModal(null)} onUbah={muat} />}
+      {tanpaBukti.length > 0 && (
+        <div className="mb-3 rounded-lg border border-amber-200 bg-amber-50 p-3">
+          <p className="text-xs font-semibold text-amber-900">{tanpaBukti.length} pesanan punya pembayaran tanpa bukti</p>
+          <div className="mt-2 flex flex-wrap gap-1.5">
+            {tanpaBukti.slice(0, 20).map((p) => (
+              <button key={p.id} onClick={() => setModal(p)} className="rounded-md border border-amber-300 bg-white px-2 py-1 text-[11px] text-amber-900">
+                {p.pelanggan?.nama} · {p.unit_id}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
       <p className="mb-3 text-xs text-muted-foreground">Sewa yang sudah dimulai tapi belum lunas, dikurangi pembayaran yang sudah dicatat.</p>
 
       {daftar.length === 0 && <p className="py-6 text-center text-sm text-muted-foreground">Semua pesanan sudah lunas. 🎉</p>}
@@ -76,8 +95,8 @@ export default function TabPiutang({
               <p className="shrink-0 text-sm font-bold text-red-600">{rp(sisa)}</p>
             </div>
             <div className="mt-2.5 flex flex-wrap gap-1.5">
-              <button onClick={() => setBukaId(bukaId === p.id ? "" : p.id)}
-                className="rounded-lg bg-primary px-2.5 py-1.5 text-xs font-semibold text-white">Catat bayar</button>
+              <button onClick={() => setModal(p)}
+                className="rounded-lg bg-primary px-2.5 py-1.5 text-xs font-semibold text-white">Catat bayar + bukti</button>
               {p.pelanggan?.wa && (
                 <a href={waLink(p.pelanggan.wa, `Halo kak ${p.pelanggan?.nama || ""}, mengingatkan sisa pembayaran sewa ${p.unit?.nama || ""} sebesar ${rp(sisa)} ya. Terima kasih 🙏`)}
                   target="_blank" rel="noreferrer"
