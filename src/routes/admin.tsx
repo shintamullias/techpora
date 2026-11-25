@@ -1,7 +1,7 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import {
-  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, waktuPesanan, hitungDiskon, voucherBerlaku, JENIS_DOKUMEN, KATEGORI, totalItem,
+  supabase, rp, hariDari, tambahHari, tglIndo, tglHariIndo, hitungOngkir, waLink, beririsan, pesanGalat, waktuPesanan, hitungDiskon, voucherBerlaku, JENIS_DOKUMEN, KATEGORI, totalItem,
   kelompokkanBayar, sisaTagihan, sudahJatuhTempo,
   type Pelanggan, type Unit, type Pesanan, type Pengaturan, type StatusPesanan, type Dokumen, type Pengeluaran,
   type Kategori, type Saring, type ItemPesanan,
@@ -508,6 +508,7 @@ function Kartu({ children, judul, aksi }: { children: React.ReactNode; judul: st
 }
 
 const warnaBar: Record<StatusPesanan, string> = {
+  menunggu: "#94A3B8",
   dipesan: "#F59E0B",
   berjalan: "#3B82F6",
   selesai: "#10B981",
@@ -515,6 +516,7 @@ const warnaBar: Record<StatusPesanan, string> = {
 };
 
 const warnaStatus: Record<StatusPesanan, string> = {
+  menunggu: "bg-white text-slate-600 border-slate-300 border-dashed",
   dipesan: "bg-amber-50 text-amber-800 border-amber-200",
   berjalan: "bg-blue-50 text-blue-800 border-blue-200",
   selesai: "bg-emerald-50 text-emerald-800 border-emerald-200",
@@ -522,7 +524,7 @@ const warnaStatus: Record<StatusPesanan, string> = {
 };
 
 const labelStatus: Record<StatusPesanan, string> = {
-  dipesan: "Dipesan", berjalan: "Keluar", selesai: "Selesai", batal: "Batal",
+  menunggu: "Menunggu konfirmasi", dipesan: "Dikonfirmasi", berjalan: "Berjalan", selesai: "Selesai", batal: "Dibatalkan",
 };
 
 /* ============ TAB 1: KALENDER ============ */
@@ -533,7 +535,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
 }) {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
-  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "" };
+  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "", konfirmasi: true };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const [bayarUntuk, setBayarUntuk] = useState<Pesanan | null>(null);
@@ -612,9 +614,12 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
 
   const simpan = async () => {
     if (!f.pelanggan_id || !f.unit_id || !f.mulai) return setGalat("Pelanggan, unit, dan tanggal mulai wajib diisi.");
-    if (bentrok) {
+    // Booking terkonfirmasi tidak boleh bentrok (dijaga juga oleh database); Pending boleh disimpan dulu.
+    const statusBaru = edit ? undefined : (f.konfirmasi ? "dipesan" : "menunggu");
+    const aktifLagi = edit ? pesanan.find((p) => p.id === edit)?.status : statusBaru;
+    if (bentrok && aktifLagi !== "menunggu") {
       const w = waktuPesanan(bentrok);
-      if (!confirm(`Bentrok dengan ${bentrok.pelanggan?.nama || "pesanan lain"} (${tglIndo(bentrok.mulai)} ${w.dari.slice(11)} – ${tglIndo(bentrok.selesai)} ${w.sampai.slice(11)}).\n\nTetap simpan?`)) return;
+      return setGalat(`Bentrok dengan ${bentrok.pelanggan?.nama || "pesanan lain"} (${tglIndo(bentrok.mulai)} ${w.dari.slice(11)} – ${tglIndo(bentrok.selesai)} ${w.sampai.slice(11)}). Ubah jam/tanggal/unit, atau simpan sebagai Menunggu konfirmasi.`);
     }
     setSibuk(true); setGalat("");
     const isi = {
@@ -623,6 +628,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
       voucher_id: vDipilih?.id || null, voucher_kode: vDipilih?.kode || null, diskon, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
       item: itemBersih, total, catatan: f.catatan.trim(),
+      ...(statusBaru ? { status: statusBaru } : {}),
     };
     const dp = Number(String(f.dp || "").replace(/\D/g, ""));
     if (!edit && f.status_bayar === "sebagian" && !dp) { setSibuk(false); return setGalat("Isi jumlah DP yang sudah dibayar."); }
@@ -639,7 +645,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
       if (e2) { setSibuk(false); return setGalat(e2.message); }
     }
     setSibuk(false);
-    if (error) return setGalat(error.message);
+    if (error) return setGalat(pesanGalat(error.message));
     tutup(); muat();
   };
 
@@ -653,8 +659,19 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
   };
 
   const ubahStatus = async (id: string, status: StatusPesanan) => {
-    const { error } = await supabase.from("pesanan").update({ status }).eq("id", id);
-    if (error) setGalat(error.message); else muat();
+    let ekstra: Record<string, unknown> = {};
+    if (status === "batal") {
+      const alasan = prompt("Alasan pembatalan?");
+      if (alasan === null) return;
+      ekstra = { batal_alasan: alasan.trim() || null };
+    }
+    const { error } = await supabase.from("pesanan").update({ status, ...ekstra }).eq("id", id);
+    if (error) return setGalat(pesanGalat(error.message));
+    if (status === "batal") {
+      const net = pembayaran.filter((b) => b.pesanan_id === id).reduce((s, b) => s + (b.jenis === "refund" ? -1 : 1) * b.jumlah, 0);
+      if (net > 0) alert(`Pesanan dibatalkan. Ada uang masuk ${rp(net)} — kalau dikembalikan, catat refund lewat tombol Pembayaran.`);
+    }
+    muat();
   };
 
   return (
@@ -730,9 +747,15 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                   <p className="-mt-1 text-xs text-muted-foreground">Tidak ada voucher yang berlaku untuk sewa {f.durasi_tipe}{f.mulai ? ` mulai ${tglIndo(f.mulai)}` : ""}.</p>
                 )}
 
+                {!edit && (
+                  <label className="flex items-start gap-2 rounded-lg border border-border px-3 py-2.5 text-sm">
+                    <input type="checkbox" className="mt-0.5" checked={f.konfirmasi} onChange={(e) => s("konfirmasi", e.target.checked)} />
+                    <span><b>Langsung konfirmasi</b><br /><span className="text-xs text-muted-foreground">Unit dikunci untuk jadwal ini. Matikan untuk menyimpan sebagai “Menunggu konfirmasi” (unit belum dikunci).</span></span>
+                  </label>
+                )}
                 {edit ? (
                   <p className="rounded-lg bg-slate-50 px-3 py-2 text-xs text-muted-foreground">
-                    Status bayar: <b className="text-foreground">{f.status_bayar === "lunas" ? "Lunas" : f.status_bayar === "sebagian" ? "DP / sebagian" : "Belum bayar"}</b> — dihitung otomatis dari catatan pembayaran. Tambah pembayaran lewat menu Piutang.
+                    Status bayar: <b className="text-foreground">{f.status_bayar === "lunas" ? "Lunas" : f.status_bayar === "sebagian" ? "DP / sebagian" : f.status_bayar === "refund" ? "Refund" : "Belum bayar"}</b> — dihitung otomatis dari riwayat pembayaran. Tambah pembayaran atau refund lewat tombol Pembayaran.
                   </p>
                 ) : (
                 <div className="space-y-2">
@@ -826,6 +849,9 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                     </div>
                     <div className="shrink-0 text-right">
                       <p className="text-lg font-bold text-slate-900">{rp(p.total)}</p>
+                      {p.status === "batal" && p.batal_pada && (
+                        <p className="text-[11px] text-slate-500">Dibatalkan {new Date(p.batal_pada).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}{p.batal_oleh ? ` oleh ${p.batal_oleh}` : ""}{p.batal_alasan ? ` · ${p.batal_alasan}` : ""}</p>
+                      )}
                       {!!p.diskon && <p className="text-[11px] text-emerald-700">Voucher {p.voucher_kode} −{rp(p.diskon)}</p>}
                       {(p.item || []).length > 0 && (
                         <p className="text-[11px] text-slate-400">
@@ -833,9 +859,9 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                         </p>
                       )}
                       <span className={"mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + warnaStatus[p.status]}>{labelStatus[p.status]}</span>
-                      {p.status !== "batal" && (
-                        <span className={"ml-1 mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + (p.status_bayar === "lunas" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : p.status_bayar === "sebagian" ? "border-amber-200 bg-amber-50 text-amber-700" : "border-rose-200 bg-rose-50 text-rose-700")}>
-                          {p.status_bayar === "lunas" ? "Lunas" : p.status_bayar === "sebagian" ? "DP" : "Belum bayar"}
+                      {(p.status !== "batal" || p.status_bayar === "refund") && (
+                        <span className={"ml-1 mt-0.5 inline-block rounded-full border px-2 py-0.5 text-[11px] font-semibold " + (p.status_bayar === "lunas" ? "border-emerald-200 bg-emerald-50 text-emerald-700" : p.status_bayar === "refund" ? "border-violet-200 bg-violet-50 text-violet-700" : p.status_bayar === "sebagian" ? "border-amber-200 bg-amber-50 text-amber-700" : "border-rose-200 bg-rose-50 text-rose-700")}>
+                          {p.status_bayar === "lunas" ? "Lunas" : p.status_bayar === "sebagian" ? "DP" : p.status_bayar === "refund" ? "Refund" : "Belum bayar"}
                         </span>
                       )}
                     </div>
@@ -856,6 +882,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                         target="_blank" rel="noreferrer"
                         className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90">Kirim link TTD</a>
                     )}
+                    {p.status === "menunggu" && <Aksi onClick={() => ubahStatus(p.id, "dipesan")}>Konfirmasi</Aksi>}
                     {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
                     {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
                     {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}

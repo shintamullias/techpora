@@ -9,12 +9,14 @@ const TINGGI_LAJUR = 44;
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
 
 const BLOK: Record<string, string> = {
+  menunggu: "border-2 border-dashed border-slate-400 bg-slate-100 text-slate-700",
   dipesan: "bg-indigo-500 text-white",
   berjalan: "bg-sky-500 text-white",
   selesai: "bg-emerald-500 text-white",
 };
-const LABEL_STATUS: Record<string, string> = { dipesan: "Akan Datang", berjalan: "Aktif", selesai: "Selesai", batal: "Dibatalkan" };
+const LABEL_STATUS: Record<string, string> = { menunggu: "Menunggu Konfirmasi", dipesan: "Dikonfirmasi", berjalan: "Aktif", selesai: "Selesai", batal: "Dibatalkan" };
 const GAYA_STATUS: Record<string, string> = {
+  menunggu: "bg-slate-100 text-slate-700 ring-slate-500/20",
   dipesan: "bg-indigo-50 text-indigo-700 ring-indigo-600/20",
   berjalan: "bg-sky-50 text-sky-700 ring-sky-600/20",
   selesai: "bg-emerald-50 text-emerald-700 ring-emerald-600/20",

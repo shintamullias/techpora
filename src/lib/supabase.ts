@@ -80,7 +80,15 @@ export const namaBulan = (ym: string) => {
   return new Date(y, m - 1, 1).toLocaleDateString("id-ID", { month: "long", year: "numeric" });
 };
 
-export type StatusPesanan = "dipesan" | "berjalan" | "selesai" | "batal";
+/** menunggu = Pending, dipesan = Confirmed, berjalan = Active, selesai = Completed, batal = Cancelled */
+export type StatusPesanan = "menunggu" | "dipesan" | "berjalan" | "selesai" | "batal";
+
+/** Ubah pesan error database jadi kalimat yang jelas. */
+export const pesanGalat = (m: string) =>
+  /pesanan_tidak_bentrok/.test(m) ? "Unit sudah dipakai booking lain yang sudah dikonfirmasi di jam tersebut. Simpan sebagai Menunggu, ubah jam/tanggal, atau pilih unit lain."
+  : /pesanan_total_cocok/.test(m) ? "Total tidak cocok dengan harga sewa − voucher + ongkir + tambahan."
+  : /pesanan_durasi_cocok/.test(m) ? "Jumlah hari tidak cocok dengan tanggal mulai dan selesai."
+  : m;
 
 /** Baris tambahan pada sebuah pesanan.
  *  jumlah positif menambah tagihan, negatif berarti potongan/diskon. */
@@ -113,7 +121,10 @@ export type Pesanan = {
   total: number;
   status: StatusPesanan;
   /** lunas / sebagian / belum — mengikuti status pembayaran di aplikasi operasional */
-  status_bayar?: "lunas" | "sebagian" | "belum";
+  status_bayar?: "lunas" | "sebagian" | "belum" | "refund";
+  batal_pada?: string | null;
+  batal_alasan?: string | null;
+  batal_oleh?: string | null;
   catatan: string;
   dibuat_pada: string;
   token: string;
@@ -285,6 +296,8 @@ export type Pembayaran = {
   catatan: string | null;
   /** path foto/PDF bukti transfer di bucket dokumen */
   bukti?: string | null;
+  /** "bayar" atau "refund" (nominal selalu positif) */
+  jenis?: "bayar" | "refund";
   dibuat_pada?: string;
 };
 
@@ -311,7 +324,7 @@ export const sudahDibayar = (p: Pesanan, bayarPerPesanan: Record<string, number>
   Math.min(p.total || 0, bayarPerPesanan[p.id] || 0);
 
 export const sisaTagihan = (p: Pesanan, bayarPerPesanan: Record<string, number>) =>
-  p.status === "batal" ? 0 : Math.max(0, (p.total || 0) - sudahDibayar(p, bayarPerPesanan));
+  p.status === "batal" || p.status === "menunggu" ? 0 : Math.max(0, (p.total || 0) - sudahDibayar(p, bayarPerPesanan));
 
 /** Tagihan dianggap piutang setelah sewa dimulai; pesanan mendatang yang belum dibayar dipisah. */
 export const sudahJatuhTempo = (p: { mulai: string }) => {
@@ -319,8 +332,9 @@ export const sudahJatuhTempo = (p: { mulai: string }) => {
   return p.mulai <= d;
 };
 
-export const kelompokkanBayar = (pembayaran: { pesanan_id: string; jumlah: number }[]) => {
+export const kelompokkanBayar = (pembayaran: { pesanan_id: string; jumlah: number; jenis?: string }[]) => {
   const m: Record<string, number> = {};
-  pembayaran.forEach((b) => { m[b.pesanan_id] = (m[b.pesanan_id] || 0) + (b.jumlah || 0); });
+  // uang bersih per pesanan: pembayaran dikurangi refund
+  pembayaran.forEach((b) => { m[b.pesanan_id] = (m[b.pesanan_id] || 0) + (b.jenis === "refund" ? -1 : 1) * (b.jumlah || 0); });
   return m;
 };

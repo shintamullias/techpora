@@ -42,9 +42,9 @@ export default function TabKeuangan({
 
   /* ---------- hitungan bulan terpilih (uang masuk aktual) ---------- */
   const pesananDari = useMemo(() => new Map(pesanan.map((p) => [p.id, p])), [pesanan]);
-  const bayarSah = useMemo(() => pembayaran.filter((b) => { const p = pesananDari.get(b.pesanan_id); return p && p.status !== "batal"; }), [pembayaran, pesananDari]);
+  const bayarSah = useMemo(() => pembayaran.filter((b) => { const p = pesananDari.get(b.pesanan_id); return !!p; }), [pembayaran, pesananDari]);
   const masukBln = bayarSah.filter((b) => bulanDari(b.tanggal) === bulan)
-    .map((b) => ({ ...pesananDari.get(b.pesanan_id)!, total: b.jumlah }));
+    .map((b) => ({ ...pesananDari.get(b.pesanan_id)!, total: (b.jenis === "refund" ? -1 : 1) * b.jumlah }));
   const keluarBln = biaya.filter((b) => bulanDari(b.tanggal) === bulan);
   const totalMasuk = masukBln.reduce((a, p) => a + p.total, 0);
   const tagihanBln = pesanan.filter((p) => DIAKUI.includes(p.status) && bulanDari(p.mulai) === bulan).reduce((a, p) => a + p.total, 0);
@@ -52,7 +52,7 @@ export default function TabKeuangan({
   const laba = totalMasuk - totalKeluar;
 
   /* ---------- saldo AKTUAL kumulatif (semua bulan) — untuk samakan dgn rekening ---------- */
-  const masukSemua = bayarSah.reduce((a, b) => a + b.jumlah, 0);
+  const masukSemua = bayarSah.reduce((a, b) => a + (b.jenis === "refund" ? -1 : 1) * b.jumlah, 0);
   const keluarSemua = biaya.reduce((a, b) => a + b.jumlah, 0);
   const saldoAktual = masukSemua - keluarSemua;
 

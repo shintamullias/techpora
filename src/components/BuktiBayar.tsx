@@ -19,7 +19,8 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
   const [daftar, setDaftar] = useState<Pembayaran[]>([]);
   const [galat, setGalat] = useState("");
   const [sibuk, setSibuk] = useState("");
-  const [f, setF] = useState({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", file: null as File | null });
+  const kosong = { jenis: "bayar" as "bayar" | "refund", jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", catatan: "", file: null as File | null };
+  const [f, setF] = useState(kosong);
 
   const muat = async () => {
     const { data, error } = await supabase.from("pembayaran").select("*").eq("pesanan_id", pesanan.id).order("tanggal");
@@ -28,7 +29,7 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
   };
   useEffect(() => { muat(); }, [pesanan.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const dibayar = daftar.reduce((s, b) => s + b.jumlah, 0);
+  const dibayar = daftar.reduce((s, b) => s + (b.jenis === "refund" ? -1 : 1) * b.jumlah, 0);
   const sisa = Math.max(0, pesanan.total - dibayar);
 
   const lihat = async (b: Pembayaran) => {
@@ -51,14 +52,16 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
 
   const tambah = async () => {
     const jumlah = Number(f.jumlah.replace(/\D/g, ""));
-    if (!jumlah) return setGalat("Isi jumlah pembayaran.");
+    if (!jumlah) return setGalat("Isi jumlah.");
+    if (f.jenis === "bayar" && jumlah > sisa) return setGalat(`Nominal melebihi sisa tagihan (${rp(sisa)}).`);
+    if (f.jenis === "refund" && jumlah > dibayar) return setGalat(`Refund melebihi uang yang sudah diterima (${rp(dibayar)}).`);
     if (!f.file && !confirm("Belum ada foto bukti. Tetap simpan tanpa bukti?")) return;
     setSibuk("baru"); setGalat("");
     try {
       const bukti = f.file ? await unggahBukti(pesanan.id, f.file) : null;
-      const { error } = await supabase.from("pembayaran").insert({ pesanan_id: pesanan.id, jumlah, tanggal: f.tanggal, metode: f.metode, bukti });
+      const { error } = await supabase.from("pembayaran").insert({ pesanan_id: pesanan.id, jumlah, tanggal: f.tanggal, metode: f.metode, bukti, jenis: f.jenis, catatan: f.catatan.trim() || null });
       if (error) throw error;
-      setF({ jumlah: "", tanggal: new Date().toISOString().slice(0, 10), metode: "transfer", file: null });
+      setF(kosong);
       await muat(); onUbah();
     } catch (e) { setGalat((e as Error).message); }
     setSibuk("");
@@ -68,8 +71,8 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 sm:items-center" onClick={onTutup}>
       <div className="max-h-[90vh] w-full max-w-md overflow-y-auto rounded-t-2xl bg-white shadow-xl sm:rounded-2xl" onClick={(e) => e.stopPropagation()}>
         <div className="border-b border-border px-5 py-4">
-          <p className="font-semibold text-slate-900">Pembayaran · {pesanan.pelanggan?.nama}</p>
-          <p className="text-xs text-muted-foreground">{pesanan.unit_id} · {tglIndo(pesanan.mulai)} · total {rp(pesanan.total)} · sisa <b className={sisa ? "text-rose-600" : "text-emerald-600"}>{rp(sisa)}</b></p>
+          <p className="font-semibold text-slate-900">Riwayat pembayaran · {pesanan.pelanggan?.nama}</p>
+          <p className="text-xs text-muted-foreground">{pesanan.unit_id} · {tglIndo(pesanan.mulai)} · tagihan {rp(pesanan.total)} · diterima {rp(dibayar)} · sisa <b className={sisa ? "text-rose-600" : "text-emerald-600"}>{rp(sisa)}</b></p>
         </div>
         <div className="space-y-3 px-5 py-4">
           {galat && <p className="rounded-lg bg-rose-50 px-3 py-2 text-xs text-rose-700">{galat}</p>}
@@ -79,7 +82,7 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
               <li key={b.id} className="rounded-lg border border-border p-3">
                 <div className="flex items-center justify-between gap-2">
                   <div className="min-w-0">
-                    <p className="text-sm font-semibold text-slate-900">{rp(b.jumlah)}</p>
+                    <p className={"text-sm font-semibold " + (b.jenis === "refund" ? "text-violet-700" : "text-slate-900")}>{b.jenis === "refund" ? `Refund −${rp(b.jumlah)}` : rp(b.jumlah)}</p>
                     <p className="text-[11px] text-muted-foreground">{tglIndo(b.tanggal)} · {b.metode || "-"}{b.catatan ? ` · ${b.catatan}` : ""}</p>
                   </div>
                   {b.bukti ? (
@@ -99,20 +102,28 @@ export default function BuktiBayar({ pesanan, onTutup, onUbah }: { pesanan: Pesa
           </ul>
 
           <div className="space-y-2 rounded-lg border border-dashed border-border p-3">
-            <p className="text-xs font-semibold text-muted-foreground">Catat pembayaran baru</p>
+            <div className="flex gap-2">
+              {(["bayar", "refund"] as const).map((j) => (
+                <button key={j} type="button" onClick={() => setF({ ...f, jenis: j })}
+                  className={"flex-1 rounded-lg border px-2 py-1.5 text-xs font-semibold " + (f.jenis === j ? "border-primary bg-primary/5 text-primary" : "border-border text-muted-foreground")}>
+                  {j === "bayar" ? "Terima pembayaran" : "Catat refund"}
+                </button>
+              ))}
+            </div>
             <div className="grid grid-cols-2 gap-2">
-              <input className={inp} inputMode="numeric" placeholder={sisa ? `Sisa ${rp(sisa)}` : "Jumlah"} value={f.jumlah} onChange={(e) => setF({ ...f, jumlah: e.target.value })} />
+              <input className={inp} inputMode="numeric" placeholder={f.jenis === "refund" ? `Maks ${rp(dibayar)}` : sisa ? `Sisa ${rp(sisa)}` : "Lunas"} value={f.jumlah} onChange={(e) => setF({ ...f, jumlah: e.target.value })} />
               <input type="date" className={inp} value={f.tanggal} onChange={(e) => setF({ ...f, tanggal: e.target.value })} />
               <select className={inp} value={f.metode} onChange={(e) => setF({ ...f, metode: e.target.value })}>
                 <option value="transfer">Transfer</option><option value="qris">QRIS</option><option value="tunai">Tunai</option>
               </select>
               <label className={inp + " cursor-pointer truncate text-sm text-slate-600"}>
-                {f.file ? f.file.name : "📎 Foto bukti"}
+                {f.file ? f.file.name : f.jenis === "refund" ? "📎 Bukti refund" : "📎 Foto bukti"}
                 <input type="file" accept="image/*,application/pdf" className="hidden" onChange={(e) => setF({ ...f, file: e.target.files?.[0] || null })} />
               </label>
             </div>
+            {f.jenis === "refund" && <input className={inp} placeholder="Alasan refund" value={f.catatan} onChange={(e) => setF({ ...f, catatan: e.target.value })} />}
             <button onClick={tambah} disabled={!!sibuk} className="w-full rounded-lg bg-primary py-2.5 text-sm font-semibold text-white disabled:opacity-60">
-              {sibuk === "baru" ? "Menyimpan…" : "Simpan pembayaran"}
+              {sibuk === "baru" ? "Menyimpan…" : f.jenis === "refund" ? "Simpan refund" : "Simpan pembayaran"}
             </button>
           </div>
         </div>
