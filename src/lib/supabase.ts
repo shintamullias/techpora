@@ -45,6 +45,8 @@ export type Unit = {
   mingguan: number;
   bulanan: number;
   aktif: boolean;
+  /** kondisi fisik unit */
+  kondisi?: "baik" | "maintenance" | "rusak";
   urutan: number;
   modal: number;
   pemilik: string;

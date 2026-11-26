@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   supabase, tglHariIndo, waLink, gcalLinkTugas, JENIS_TUGAS,
   type Tugas, type Pic, type Pesanan, type StatusTugas, type JenisTugas,
@@ -27,12 +27,14 @@ const LABEL_STATUS: Record<string, string> = {
 };
 
 export default function TabTugas({
-  tugas, pic, pesanan, muat, setGalat,
+  tugas, pic, pesanan, muat, setGalat, bukaAwal, habisBuka,
 }: {
   tugas: Tugas[]; pic: Pic[]; pesanan: Pesanan[]; muat: () => void; setGalat: (s: string) => void;
+  bukaAwal?: boolean; habisBuka?: () => void;
 }) {
   const [saring, setSaring] = useState<"aktif" | StatusTugas>("aktif");
-  const [buka, setBuka] = useState(false);
+  const [buka, setBuka] = useState(!!bukaAwal);
+  useEffect(() => { if (bukaAwal) { setBuka(true); habisBuka?.(); } }, [bukaAwal]); // eslint-disable-line react-hooks/exhaustive-deps
   const kosong = {
     judul: "", jenis: "serah_terima" as JenisTugas, pic_id: "", pesanan_id: "",
     jatuh_tempo: new Date().toISOString().slice(0, 10), jam: "09:00", deskripsi: "",

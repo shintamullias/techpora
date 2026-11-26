@@ -11,6 +11,7 @@ import TabKeuangan from "@/components/TabKeuangan";
 import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
+import Overview from "@/components/Overview";
 import BuktiBayar, { unggahBukti, perluBukti } from "@/components/BuktiBayar";
 import TabLaporan from "@/components/TabLaporan";
 import TabWhatsApp from "@/components/TabWhatsApp";
@@ -35,6 +36,7 @@ function Dashboard() {
   const [namaku, setNamaku] = useState("");
   const [menuBuka, setMenuBuka] = useState(false);
   // Isian awal formulir pesanan saat sel kalender diketuk.
+  const [tugasBaru, setTugasBaru] = useState(false);
   const [isiBaru, setIsiBaru] = useState<{ unit_id?: string; mulai?: string } | null>(null);
   const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
@@ -288,7 +290,8 @@ function Dashboard() {
         <main className="space-y-4 px-4 py-4 lg:px-6">
         {galat && <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2.5 text-sm text-red-700">{galat}</p>}
         {tab === "beranda" && (
-          <TabBeranda tugas={tugas} pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} voucher={voucher} keTab={setTab} />
+          <Overview pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} tugas={tugas} biaya={biaya} keTab={setTab}
+            bookingBaru={() => { setIsiBaru({}); setTab("pesanan"); }} tugasBaru={() => { setTugasBaru(true); setTab("tugas"); }} />
         )}
         {grupData && (
           <div className="flex rounded-full border border-border bg-white p-1 shadow-sm lg:hidden">
@@ -316,7 +319,7 @@ function Dashboard() {
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pembayaran={pembayaran} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
-        {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} />}
+        {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} bukaAwal={tugasBaru} habisBuka={() => setTugasBaru(false)} />}
         {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
         {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
         {tab === "voucher" && <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />}
@@ -355,134 +358,6 @@ const Pusat = ({ children }: { children: React.ReactNode }) => (
 );
 
 /* ============ TAB 0: BERANDA (hari ini) ============ */
-function TabBeranda({ tugas, pesanan, pembayaran, unit, voucher, keTab }: {
-  tugas: Tugas[]; pesanan: Pesanan[]; pembayaran: Pembayaran[]; unit: Unit[]; voucher: Voucher[]; keTab: (t: Tab) => void;
-}) {
-  const hariIni = new Date().toISOString().slice(0, 10);
-  const besok = tambahHari(hariIni, 1);
-
-  type Acara = { kunci: string; jam: string; judul: string; ket: string; warna: string; telat?: boolean };
-  const buatAgenda = (tgl: string): Acara[] => {
-    const a: Acara[] = [];
-    const tugasAktif = tugas.filter((t) => t.status === "menunggu" || t.status === "dikerjakan");
-    tugasAktif
-      .filter((t) => (tgl === hariIni ? t.jatuh_tempo <= tgl : t.jatuh_tempo === tgl))
-      .forEach((t) => a.push({
-        kunci: "t" + t.id,
-        jam: (t.jam || "09:00").slice(0, 5),
-        judul: t.judul,
-        ket: t.pic?.nama ? "PIC " + t.pic.nama : "Tugas",
-        warna: "#1e6feb",
-        telat: t.jatuh_tempo < hariIni,
-      }));
-    const adaTugas = new Set(tugasAktif.map((t) => t.pesanan_id).filter(Boolean));
-    pesanan
-      .filter((p) => p.status === "dipesan" && p.mulai === tgl && !adaTugas.has(p.id))
-      .forEach((p) => a.push({
-        kunci: "m" + p.id,
-        jam: (p.jam || "08:00").slice(0, 5),
-        judul: `Antar ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
-        ket: p.antar === "tidak" ? "Diambil di tempat" : "Diantar",
-        warna: "#F59E0B",
-      }));
-    pesanan
-      .filter((p) => p.status === "berjalan" && p.selesai === tgl)
-      .forEach((p) => a.push({
-        kunci: "k" + p.id,
-        jam: "17:00",
-        judul: `Kembali ${p.unit?.nama || p.unit_id} — ${p.pelanggan?.nama || "pelanggan"}`,
-        ket: "Unit harus balik",
-        warna: "#10B981",
-      }));
-    return a.sort((x, y) => (Number(x.telat ? 0 : 1) - Number(y.telat ? 0 : 1)) || x.jam.localeCompare(y.jam));
-  };
-
-  const agendaIni = buatAgenda(hariIni);
-  const agendaBesok = buatAgenda(besok);
-
-  const dibayar = kelompokkanBayar(pembayaran);
-  const piutang = pesanan.filter((p) => sudahJatuhTempo(p)).reduce((s, p) => s + sisaTagihan(p, dibayar), 0);
-
-  const Baris = ({ a }: { a: Acara }) => (
-    <li className="flex gap-3">
-      <div className="w-12 shrink-0 pt-0.5 text-right">
-        <p className={"text-sm font-bold tabular-nums " + (a.telat ? "text-red-600" : "text-slate-900")}>{a.jam}</p>
-        {a.telat && <p className="text-[10px] font-bold text-red-600">TELAT</p>}
-      </div>
-      <div className="relative flex flex-col items-center">
-        <span className="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full" style={{ background: a.telat ? "#DC2626" : a.warna }} />
-        <span className="w-px flex-1 bg-slate-200" />
-      </div>
-      <div className="min-w-0 pb-4">
-        <p className="text-[15px] font-semibold leading-snug text-slate-900">{a.judul}</p>
-        <p className="mt-0.5 text-xs text-slate-500">{a.ket}</p>
-      </div>
-    </li>
-  );
-
-  return (
-    <div className="grid gap-4 md:grid-cols-[1.55fr_1fr] md:items-start">
-      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
-        <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-slate-900">Hari ini</h2>
-          <button onClick={() => keTab("tugas")} className="text-xs font-bold text-primary underline-offset-4 hover:underline">Semua tugas →</button>
-        </div>
-        {agendaIni.length === 0 ? (
-          <p className="rounded-xl bg-emerald-50 px-4 py-6 text-center text-sm text-emerald-800">
-            Tidak ada jadwal hari ini. Santai dulu ✨
-          </p>
-        ) : (
-          <ul>{agendaIni.map((a) => <Baris key={a.kunci} a={a} />)}</ul>
-        )}
-
-        {agendaBesok.length > 0 && (
-          <div className="mt-2 border-t border-slate-100 pt-4">
-            <p className="mb-3 text-sm font-semibold text-slate-400">Besok</p>
-            <ul className="opacity-70">{agendaBesok.slice(0, 4).map((a) => <Baris key={a.kunci} a={a} />)}</ul>
-          </div>
-        )}
-      </section>
-
-      <div className="grid gap-4">
-      {piutang > 0 && (
-        <button onClick={() => keTab("piutang")}
-          className="flex w-full items-center justify-between rounded-xl border border-rose-200 bg-rose-50 px-4 py-3.5 text-left transition hover:bg-rose-100/70">
-          <div>
-            <p className="text-sm font-semibold text-rose-800">Belum dibayar {rp(piutang)}</p>
-            <p className="mt-0.5 text-xs text-rose-600/80">Ketuk untuk lihat siapa saja dan kirim pengingat</p>
-          </div>
-          <span className="text-rose-400">→</span>
-        </button>
-      )}
-
-      <div className="grid grid-cols-2 gap-3">
-        <button onClick={() => keTab("pesanan")}
-          className="rounded-xl bg-primary px-4 py-3.5 text-sm font-semibold text-white transition hover:opacity-90">+ Pesanan baru</button>
-        <button onClick={() => keTab("tugas")}
-          className="rounded-xl border border-border bg-white px-4 py-3.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:bg-slate-50">+ Tugas baru</button>
-      </div>
-
-      {/* Angka ringkas — mengisi kolom kanan di layar lebar */}
-      <section className="rounded-xl border border-border bg-white p-5 shadow-sm">
-        <h2 className="mb-3 text-base font-semibold text-slate-900">Sekilas</h2>
-        <div className="grid grid-cols-2 gap-2.5 text-center">
-          {([
-            [pesanan.filter((p) => p.status === "berjalan").length, "unit di luar", "#E8F3FB"],
-            [pesanan.filter((p) => p.status === "dipesan").length, "akan datang", "#FEF6E0"],
-            [unit.filter((u) => u.aktif).length, "unit siap sewa", "#E8F9F0"],
-            [voucher.filter((v) => v.aktif).length, "voucher aktif", "#FCEEF5"],
-          ] as [number, string, string][]).map(([n, label, warna]) => (
-            <div key={label} className="rounded-lg border border-border p-3" style={{ background: warna }}>
-              <p className="text-2xl font-bold tabular-nums">{n}</p>
-              <p className="mt-0.5 text-[11px] font-medium text-slate-500">{label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      </div>
-    </div>
-  );
-}
 
 const inp = "w-full rounded-lg border border-border bg-white px-3 py-2.5 text-foreground outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
@@ -694,7 +569,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
             <Kol label="Unit">
               <select value={f.unit_id} onChange={(e) => s("unit_id", e.target.value)} className={inp}>
                 <option value="">— pilih —</option>
-                {unit.filter((x) => x.aktif || x.id === f.unit_id).map((x) => <option key={x.id} value={x.id}>{x.id} · {x.nama} · {rp(x.harian)}/hari</option>)}
+                {unit.filter((x) => (x.aktif && (x.kondisi || "baik") === "baik") || x.id === f.unit_id).map((x) => <option key={x.id} value={x.id}>{x.id} · {x.nama} · {rp(x.harian)}/hari</option>)}
               </select>
             </Kol>
             {u && (
@@ -1272,6 +1147,10 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
                     className="rounded-lg bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
                     {edit === u.id ? "Tutup" : "Edit"}
                   </button>
+                  <select value={u.kondisi || "baik"} onChange={(e) => ubah(u.id, { kondisi: e.target.value as Unit["kondisi"] })}
+                    className={"rounded-lg border px-1.5 py-1 text-xs font-semibold " + (u.kondisi === "rusak" ? "border-rose-300 text-rose-700" : u.kondisi === "maintenance" ? "border-amber-300 text-amber-700" : "border-border text-foreground")}>
+                    <option value="baik">Baik</option><option value="maintenance">Maintenance</option><option value="rusak">Rusak</option>
+                  </select>
                   <button onClick={() => ubah(u.id, { aktif: !u.aktif })}
                     className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">
                     {u.aktif ? "Nonaktifkan" : "Aktifkan"}
