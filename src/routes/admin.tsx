@@ -17,7 +17,7 @@ import TabLaporan from "@/components/TabLaporan";
 import TabWhatsApp from "@/components/TabWhatsApp";
 import TabAdmin from "@/components/TabAdmin";
 import TabPengaturan from "@/components/TabPengaturan";
-import TabKalender from "@/components/TabKalender";
+import TabKalender, { type Maintenance } from "@/components/TabKalender";
 
 export const Route = createFileRoute("/admin")({
   head: () => ({
@@ -37,6 +37,8 @@ function Dashboard() {
   const [menuBuka, setMenuBuka] = useState(false);
   // Isian awal formulir pesanan saat sel kalender diketuk.
   const [tugasBaru, setTugasBaru] = useState(false);
+  const [maintenance, setMaintenance] = useState<Maintenance[]>([]);
+  const [icsToken, setIcsToken] = useState("");
   const [isiBaru, setIsiBaru] = useState<{ unit_id?: string; mulai?: string } | null>(null);
   const [kat, setKat] = useState<Saring>("semua");
   const [pelanggan, setPelanggan] = useState<Pelanggan[]>([]);
@@ -57,17 +59,20 @@ function Dashboard() {
     if (!me?.is_admin) { setBoleh(false); setSiap(true); return; }
     setNamaku((me.nama || "").split(" ")[0]);
     setBoleh(true);
-    const [p, u, o, s, b, tg, pc, vc, by] = await Promise.all([
+    const [p, u, o, s, b, tg, pc, vc, by, mt] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
-      supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum").maybeSingle(),
+      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, batal_pada, batal_alasan, batal_oleh, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
+      supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum, ics_token").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
       supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
       supabase.from("pic").select("*").order("nama"),
       supabase.from("voucher").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("pembayaran").select("*").order("tanggal", { ascending: false }),
+      supabase.from("maintenance").select("*").order("mulai"),
     ]);
+    setMaintenance((mt.data as Maintenance[]) || []);
+    setIcsToken((s.data as { ics_token?: string } | null)?.ics_token || "");
     setTugas((tg.data as unknown as Tugas[]) || []);
     setPic((pc.data as Pic[]) || []);
     setVoucher((vc.data as Voucher[]) || []);
@@ -315,7 +320,8 @@ function Dashboard() {
             ))}
           </div>
         )}
-        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
+        {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} maintenance={maintenance}
+          icsUrl={icsToken ? `${import.meta.env.VITE_SUPABASE_URL ?? "https://deegpogdpdhyzprjjksc.supabase.co"}/functions/v1/kalender-ics?t=${icsToken}` : ""} muat={muat} setGalat={setGalat} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pembayaran={pembayaran} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
         {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
