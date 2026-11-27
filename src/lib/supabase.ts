@@ -21,6 +21,8 @@ export type Pelanggan = {
   no_darurat: string;
   catatan: string;
   dibuat_pada: string;
+  terverifikasi?: boolean;
+  verifikasi_pada?: string | null;
 };
 
 /** Kategori aset sewa. Satu unit selalu milik tepat satu kategori. */
@@ -124,6 +126,11 @@ export type Pesanan = {
   status: StatusPesanan;
   /** lunas / sebagian / belum — mengikuti status pembayaran di aplikasi operasional */
   status_bayar?: "lunas" | "sebagian" | "belum" | "refund";
+  deposit?: number;
+  deposit_status?: "tidak" | "belum" | "diterima" | "dikembalikan" | "dipotong";
+  deposit_potong?: number;
+  kembali_pada?: string | null;
+  kembali_catatan?: string | null;
   batal_pada?: string | null;
   batal_alasan?: string | null;
   batal_oleh?: string | null;

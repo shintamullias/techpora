@@ -12,6 +12,7 @@ import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
 import Overview from "@/components/Overview";
+import { ModalSerahTerima, ModalPengembalian, ModalPerpanjang, cetakDokumen } from "@/components/AksiPesanan";
 import BuktiBayar, { unggahBukti, perluBukti } from "@/components/BuktiBayar";
 import TabLaporan from "@/components/TabLaporan";
 import TabWhatsApp from "@/components/TabWhatsApp";
@@ -62,7 +63,7 @@ function Dashboard() {
     const [p, u, o, s, b, tg, pc, vc, by, mt] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, batal_pada, batal_alasan, batal_oleh, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
+      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, deposit, deposit_status, deposit_potong, kembali_pada, kembali_catatan, batal_pada, batal_alasan, batal_oleh, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum, ics_token").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
       supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
@@ -416,10 +417,11 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
 }) {
   const [buka, setBuka] = useState(false);
   const [edit, setEdit] = useState<string | null>(null);
-  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "", konfirmasi: true };
+  const kosong = { pelanggan_id: "", unit_id: "", durasi_tipe: "harian" as const, durasi_jumlah: 1, mulai: "", jam: "08:00", jam_selesai: "", voucher_id: "", antar: "tidak" as const, alamat: "", jarak: "", catatan: "", item: [] as ItemPesanan[], status_bayar: "belum" as "belum" | "sebagian" | "lunas", dp: "", konfirmasi: true, deposit: "" };
   const [f, setF] = useState<any>(kosong);
   const [sibuk, setSibuk] = useState(false);
   const [bayarUntuk, setBayarUntuk] = useState<Pesanan | null>(null);
+  const [modal, setModal] = useState<{ jenis: "serah" | "kembali" | "perpanjang"; p: Pesanan } | null>(null);
   const [fileBukti, setFileBukti] = useState<File | null>(null);
   const s = (k: string, v: any) => setF((p: any) => ({ ...p, [k]: v }));
 
@@ -451,7 +453,7 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
       antar: o.antar || "tidak",
       alamat: o.alamat || "", jarak: String(o.jarak_km || ""), catatan: o.catatan || "",
       item: Array.isArray(o.item) ? o.item.map((i) => ({ ...i })) : [],
-      status_bayar: o.status_bayar || "belum", dp: "",
+      status_bayar: o.status_bayar || "belum", dp: "", deposit: o.deposit ? String(o.deposit) : "",
     });
     setBuka(true);
     if (typeof window !== "undefined") window.scrollTo({ top: 0, behavior: "smooth" });
@@ -508,6 +510,9 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
       mulai: f.mulai, jam: f.jam, jam_selesai: f.jam_selesai || null, selesai, total_hari: totalHari,
       voucher_id: vDipilih?.id || null, voucher_kode: vDipilih?.kode || null, diskon, antar: f.antar,
       alamat: f.alamat.trim(), jarak_km: km, harga_sewa: hargaSewa, harga_antar: hargaAntar,
+      deposit: Number(String(f.deposit || "").replace(/\D/g, "")) || 0,
+      ...(!edit || !pesanan.find((x) => x.id === edit)?.deposit_status || pesanan.find((x) => x.id === edit)?.deposit_status === "tidak" || pesanan.find((x) => x.id === edit)?.deposit_status === "belum"
+        ? { deposit_status: Number(String(f.deposit || "").replace(/\D/g, "")) ? "belum" : "tidak" } : {}),
       item: itemBersih, total, catatan: f.catatan.trim(),
       ...(statusBaru ? { status: statusBaru } : {}),
     };
@@ -558,6 +563,9 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
   return (
     <>
       {bayarUntuk && <BuktiBayar pesanan={bayarUntuk} onTutup={() => setBayarUntuk(null)} onUbah={muat} />}
+      {modal?.jenis === "serah" && <ModalSerahTerima p={modal.p} setGalat={setGalat} onTutup={() => setModal(null)} onSelesai={() => { setModal(null); muat(); }} />}
+      {modal?.jenis === "kembali" && <ModalPengembalian p={modal.p} unit={unit} setGalat={setGalat} onTutup={() => setModal(null)} onSelesai={() => { setModal(null); muat(); }} />}
+      {modal?.jenis === "perpanjang" && <ModalPerpanjang p={modal.p} unit={unit} setGalat={setGalat} onTutup={() => setModal(null)} onSelesai={() => { setModal(null); muat(); }} />}
       <Kartu judul="Pesanan" aksi={
         <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
           {buka && !edit ? "Tutup" : "+ Tambah"}
@@ -614,7 +622,12 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                     <p className="text-xs text-muted-foreground">{rp(set.ongkir_per_km)}/km, minimum {rp(set.ongkir_minimum)}.</p>
                   </>
                 )}
-                <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
+                <div className="grid grid-cols-2 gap-3">
+                  <Kol label="Deposit / jaminan (Rp)"><input inputMode="numeric" value={f.deposit} onChange={(e) => s("deposit", e.target.value)} placeholder="0 = tanpa deposit" className={inp} /></Kol>
+                  <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
+                </div>
+                {(() => { const c = pelanggan.find((x) => x.id === f.pelanggan_id); return c && !c.terverifikasi ? (
+                  <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">Pelanggan ini <b>belum diverifikasi</b>. Cek identitas & dokumen di menu Pelanggan sebelum unit diserahkan.</p>) : null; })()}
 
                 <Kol label="Voucher">
                   <select value={f.voucher_id} onChange={(e) => s("voucher_id", e.target.value)} className={inp}>
@@ -733,6 +746,8 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                       {p.status === "batal" && p.batal_pada && (
                         <p className="text-[11px] text-slate-500">Dibatalkan {new Date(p.batal_pada).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" })}{p.batal_oleh ? ` oleh ${p.batal_oleh}` : ""}{p.batal_alasan ? ` · ${p.batal_alasan}` : ""}</p>
                       )}
+                      {!!p.deposit && <p className="text-[11px] text-slate-600">Deposit {rp(p.deposit)} · {({ belum: "belum diterima", diterima: "dipegang", dikembalikan: "sudah dikembalikan", dipotong: `dipotong ${rp(p.deposit_potong || 0)}`, tidak: "" } as Record<string, string>)[p.deposit_status || "belum"]}</p>}
+                      {p.kembali_catatan && <p className="text-[11px] text-slate-600">Kondisi kembali: {p.kembali_catatan}</p>}
                       {!!p.diskon && <p className="text-[11px] text-emerald-700">Voucher {p.voucher_kode} −{rp(p.diskon)}</p>}
                       {(p.item || []).length > 0 && (
                         <p className="text-[11px] text-slate-400">
@@ -764,8 +779,11 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                         className="rounded-lg bg-primary px-3 py-1.5 text-xs font-semibold text-white transition hover:opacity-90">Kirim link TTD</a>
                     )}
                     {p.status === "menunggu" && <Aksi onClick={() => ubahStatus(p.id, "dipesan")}>Konfirmasi</Aksi>}
-                    {p.status === "dipesan" && <Aksi onClick={() => ubahStatus(p.id, "berjalan")}>Unit diantar</Aksi>}
-                    {p.status === "berjalan" && <Aksi onClick={() => ubahStatus(p.id, "selesai")}>Unit kembali</Aksi>}
+                    {p.status === "dipesan" && <Aksi onClick={() => setModal({ jenis: "serah", p })}>Serah terima</Aksi>}
+                    {p.status === "berjalan" && <Aksi onClick={() => setModal({ jenis: "kembali", p })}>Unit kembali</Aksi>}
+                    {(p.status === "berjalan" || p.status === "dipesan") && <Aksi onClick={() => setModal({ jenis: "perpanjang", p })}>Perpanjang</Aksi>}
+                    {p.status !== "batal" && <Aksi onClick={() => cetakDokumen("invoice", p, unit, pembayaran)}>Invoice</Aksi>}
+                    {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => cetakDokumen("konfirmasi", p, unit, pembayaran)}>Konfirmasi booking</Aksi>}
                     {p.status !== "batal" && p.status !== "selesai" && <Aksi onClick={() => ubahStatus(p.id, "batal")}>Batal</Aksi>}
                     <Aksi onClick={() => bukaEdit(p)}>{edit === p.id ? "Tutup edit" : "Edit"}</Aksi>
                     {p.pelanggan?.wa && (
@@ -891,7 +909,7 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
       {daftar.length === 0 ? <p className="text-sm text-muted-foreground">Belum ada pelanggan.</p> : (
         <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-3 md:space-y-0">
           {daftar.map((p) => (
-            <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length}
+            <KartuPelanggan key={p.id} p={p} jml={pesanan.filter((o) => o.pelanggan_id === p.id).length} riwayat={pesanan.filter((o) => o.pelanggan_id === p.id)} muat={muat}
               hapus={hapus} setGalat={setGalat} bukaEdit={bukaEdit} sedangEdit={edit === p.id} />
           ))}
         </ul>
@@ -900,8 +918,8 @@ function TabPelanggan({ pelanggan, pesanan, muat, setGalat }: { pelanggan: Pelan
   );
 }
 
-function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
-  p: Pelanggan; jml: number; hapus: (id: string) => void; setGalat: (s: string) => void;
+function KartuPelanggan({ p, jml, riwayat, muat, hapus, setGalat, bukaEdit, sedangEdit }: {
+  p: Pelanggan; jml: number; riwayat: Pesanan[]; muat: () => void; hapus: (id: string) => void; setGalat: (s: string) => void;
   bukaEdit: (p: Pelanggan) => void; sedangEdit: boolean;
 }) {
   const [buka, setBuka] = useState(false);
@@ -947,7 +965,15 @@ function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
     <li className="rounded-xl border border-border">
       <button onClick={() => { setBuka(!buka); if (!buka && !dok.length) muatDok(); }} className="flex w-full items-start justify-between gap-3 p-3 text-left">
         <div className="min-w-0">
-          <p className="truncate font-semibold text-foreground">{p.nama}</p>
+          <p className="truncate font-semibold text-foreground">{p.nama}
+            <button onClick={async () => {
+              if (!p.terverifikasi && !confirm(`Tandai ${p.nama} sudah diverifikasi (identitas & dokumen dicek)?`)) return;
+              const { error } = await supabase.from("pelanggan").update({ terverifikasi: !p.terverifikasi, verifikasi_pada: p.terverifikasi ? null : new Date().toISOString() }).eq("id", p.id);
+              if (error) setGalat(error.message); else muat();
+            }} className={"ml-1.5 rounded-full px-2 py-0.5 align-middle text-[10px] font-semibold " + (p.terverifikasi ? "bg-emerald-50 text-emerald-700" : "bg-amber-50 text-amber-700")}>
+              {p.terverifikasi ? "✓ Terverifikasi" : "Belum diverifikasi"}
+            </button>
+          </p>
           <p className="truncate text-xs text-muted-foreground">{p.wa}{p.instagram && ` · ${p.instagram}`}</p>
           {p.catatan && <p className="mt-1 text-xs text-muted-foreground">{p.catatan}</p>}
         </div>
@@ -961,6 +987,21 @@ function KartuPelanggan({ p, jml, hapus, setGalat, bukaEdit, sedangEdit }: {
         <div className="space-y-3 border-t border-border p-3">
           {p.alamat && <p className="text-xs text-muted-foreground"><b className="text-foreground">Alamat:</b> {p.alamat}</p>}
           {p.no_darurat && <p className="text-xs text-muted-foreground"><b className="text-foreground">Darurat:</b> {p.no_darurat}</p>}
+          {riwayat.length > 0 && (
+            <div className="rounded-lg border border-border">
+              <p className="border-b border-border px-2.5 py-1.5 text-[11px] font-semibold text-muted-foreground">
+                Riwayat transaksi · {riwayat.filter((o) => o.status !== "batal").length} sewa · {rp(riwayat.filter((o) => o.status !== "batal").reduce((a, o) => a + o.total, 0))}
+              </p>
+              <ul className="divide-y divide-border/60">
+                {riwayat.slice(0, 15).map((o) => (
+                  <li key={o.id} className="flex justify-between gap-2 px-2.5 py-1.5 text-[11px]">
+                    <span className="truncate">{tglIndo(o.mulai)} · {o.unit_id} {o.unit?.nama}</span>
+                    <span className={"shrink-0 " + (o.status === "batal" ? "text-slate-400 line-through" : o.status_bayar === "lunas" ? "text-emerald-700" : "text-rose-600")}>{rp(o.total)}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           <div>
             <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
