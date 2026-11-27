@@ -1,0 +1,72 @@
+{
+  "slug": "format-skripsi-word-daftar-isi-nomor-halaman",
+  "title": "Format Skripsi di Word: Daftar Isi & Nomor Halaman Rapi",
+  "description": "Panduan format skripsi di Word: Styles, daftar isi otomatis, nomor halaman Romawi dan Arab, caption gambar, daftar pustaka, sampai ekspor PDF yang aman.",
+  "category": "Mahasiswa",
+  "date": "2026-11-27",
+  "readMinutes": 7,
+  "intro": "Format skripsi yang rapi di Word dicapai dengan urutan tetap: atur Styles untuk judul dan teks isi, buat daftar isi dari Heading, pisahkan nomor halaman dengan Section Break, pakai Caption untuk gambar dan tabel, lalu ekspor PDF dan periksa ulang. Artikel ini menjelaskan tiap langkahnya supaya revisi dosen tidak lagi menyangkut hal teknis seperti nomor halaman yang loncat atau daftar isi yang tidak cocok.",
+  "sections": [
+    {
+      "h": "Kenapa Format Rapi Sering Jadi Revisi Terbanyak",
+      "p": "Banyak mahasiswa mengira revisi skripsi terbesar ada di isi, padahal tidak sedikit coretan dosen menyangkut hal teknis: nomor halaman yang loncat, daftar isi yang tidak sesuai halaman sebenarnya, judul bab yang gayanya beda-beda, atau gambar yang bergeser setelah satu kalimat ditambah. Penyebabnya hampir selalu sama, yaitu format dikerjakan manual. Judul bab dibuat dengan menebalkan huruf, daftar isi diketik sendiri, dan jarak antarbagian diatur dengan menekan Enter berkali-kali. Selama naskahnya pendek, cara itu terasa cukup. Begitu naskah mencapai puluhan halaman dan direvisi berulang, semuanya mudah kacau. Kabar baiknya, Word sudah punya fitur untuk mengotomatiskan hampir semua hal tersebut. Kamu hanya perlu mengatur sekali di awal, lalu perubahan isi ikut merapikan format. Artikel ini membahas urutan kerjanya supaya tidak ada langkah yang saling menimpa."
+    },
+    {
+      "h": "Mulai dari Panduan Kampus, Bukan dari Tampilan Template",
+      "p": "Sebelum mengubah apa pun di Word, buka dulu buku panduan penulisan skripsi dari fakultas atau program studimu. Setiap kampus punya aturan sendiri soal jenis dan ukuran huruf, spasi, margin, penomoran halaman, dan urutan bagian awal seperti halaman judul, lembar pengesahan, abstrak, dan daftar isi. Jangan menyalin format dari skripsi kakak tingkat begitu saja, karena panduan bisa berubah antarangkatan. Catat aturan itu dalam satu daftar pendek yang bisa kamu centang, lalu terapkan lewat fitur Styles, bukan lewat pengaturan manual di tiap paragraf. Kalau panduan kampus tidak menjelaskan suatu hal, tanyakan ke dosen pembimbing atau bagian akademik dan simpan jawabannya tertulis. Langkah ini terdengar membosankan, tetapi menghemat waktu paling banyak, sebab mengubah satu gaya di Styles langsung memperbarui semua paragraf yang memakainya, sedangkan mengubah manual harus diulang di setiap halaman."
+    },
+    {
+      "h": "Styles: Satu Pengaturan untuk Seluruh Naskah",
+      "p": "Styles adalah fondasi dari semua fitur otomatis berikutnya. Untuk teks isi, atur gaya Normal sesuai panduan kampus, misalnya jenis huruf, ukuran, spasi baris, dan rata kiri-kanan. Untuk judul bab, pakai Heading 1; untuk subbab, Heading 2; untuk sub-subbab, Heading 3. Ubah tampilan tiap Heading lewat klik kanan pada nama gaya lalu Modify, sesuaikan dengan aturan kampus, kemudian terapkan ke judul yang sudah ada. Hindari menebalkan huruf secara manual untuk membuat judul, sebab Word tidak mengenalinya sebagai judul sehingga tidak masuk daftar isi. Gunakan juga gaya Caption untuk keterangan gambar dan tabel. Setelah Styles dipakai konsisten, buka Navigation Pane lewat tab View. Di sana kamu bisa melihat kerangka seluruh skripsi dalam satu panel dan memindahkan bab dengan seret-lepas, yang sangat membantu saat dosen meminta urutan subbab diubah."
+    },
+    {
+      "h": "Daftar Isi Otomatis: Cara Membuat dan Memperbaruinya",
+      "p": "Setelah judul memakai Heading, daftar isi tinggal dibuat. Letakkan kursor di halaman daftar isi, buka tab References, pilih Table of Contents, lalu pilih salah satu bentuk otomatis. Word akan mengambil semua Heading beserta nomor halamannya. Jika panduan kampus meminta tingkat tertentu saja, misalnya sampai subbab tingkat dua, gunakan Custom Table of Contents dan atur jumlah levelnya. Hal yang paling sering terlupa: daftar isi tidak otomatis ikut berubah setiap kali naskah direvisi. Klik kanan pada daftar isi, pilih Update Field, lalu pilih Update entire table. Biasakan melakukannya sebelum mencetak, sebelum mengirim PDF ke dosen, dan sekali lagi pada hari terakhir. Cara yang sama berlaku untuk daftar gambar dan daftar tabel, selama keterangan memakai fitur Insert Caption. Dengan begitu, tidak ada lagi daftar isi yang menunjuk halaman lama."
+    },
+    {
+      "h": "Nomor Halaman: Romawi di Depan, Angka di Isi",
+      "p": "Format yang umum dipakai di banyak kampus adalah angka Romawi kecil untuk bagian awal dan angka Arab untuk mulai bab pertama, tetapi pastikan dulu sesuai panduanmu. Rahasianya ada pada Section Break. Letakkan kursor di akhir halaman terakhir bagian awal, buka tab Layout, pilih Breaks, lalu Next Page di bawah Section Breaks. Sekarang naskah terbagi dua bagian yang bisa diatur terpisah. Klik dua kali di footer bagian baru, matikan opsi Link to Previous, lalu buka Page Number dan Format Page Numbers untuk memilih jenis angka dan memulai ulang dari satu. Kalau halaman judul tidak boleh bernomor, aktifkan Different First Page pada bagian pertama. Letak nomor, apakah di bawah tengah atau kanan atas pada halaman awal bab, juga biasanya diatur kampus. Periksa hasilnya dengan menggulir seluruh naskah, bukan hanya halaman yang kamu ubah."
+    },
+    {
+      "h": "Gambar, Tabel, dan Persamaan yang Tidak Bergeser",
+      "p": "Gambar dan tabel adalah sumber kekacauan terbesar saat naskah diedit. Agar tidak melompat, atur gambar dengan opsi In Line with Text, letakkan dalam paragraf tersendiri, dan rata tengah. Untuk tabel, aktifkan Repeat Header Rows supaya judul kolom muncul lagi ketika tabel terpotong ke halaman berikutnya, dan atur agar baris tidak terbelah di antara dua halaman lewat Row Properties. Gunakan Insert Caption untuk nomor gambar dan tabel, lalu rujuk dari teks dengan Cross-reference. Dengan cara itu, jika urutan gambar berubah, rujukan di paragraf ikut menyesuaikan setelah kamu menekan F9 pada seluruh naskah. Beri nama file gambar yang jelas, simpan versi aslinya di folder terpisah, dan jangan hanya mengandalkan gambar yang sudah tertanam di Word. Kalau kamu butuh resolusi lebih baik, kamu tinggal menyisipkan ulang dari file aslinya tanpa mengulang pekerjaan dari nol."
+    },
+    {
+      "h": "Daftar Pustaka: Pakai Aplikasi Referensi, Tetap Periksa Manual",
+      "p": "Aplikasi pengelola referensi seperti Zotero atau Mendeley bisa menyisipkan sitasi dan menyusun daftar pustaka otomatis lewat plugin Word. Keuntungannya, urutan, tanda baca, dan nama penulis konsisten, dan perubahan gaya sitasi dari APA ke gaya lain bisa dilakukan dengan sekali ganti. Meski begitu, hasil otomatis tidak boleh diterima mentah. Data yang dimasukkan sering tidak lengkap, misalnya tahun kosong, nama penulis terbalik, atau judul memakai huruf kapital semua, dan aplikasi hanya menyusun apa yang kamu berikan. Periksa setiap entri terhadap panduan kampus, terutama untuk sumber berbahasa Indonesia, laporan, dan situs web. Pastikan juga setiap sitasi di naskah punya padanan di daftar pustaka dan sebaliknya. Terakhir, simpan salinan naskah sebelum menjalankan perintah yang mengubah semua sitasi sekaligus, sebab beberapa operasi sulit dibatalkan kalau sudah menyimpan."
+    },
+    {
+      "h": "Ekspor PDF dan Cek Akhir Sebelum Dikirim ke Dosen",
+      "p": "Sebelum mengirim, ekspor naskah ke PDF lewat File, Save As, lalu pilih PDF. Buka tab Options dan centang opsi untuk membuat bookmark dari Headings supaya dosen bisa melompat antarbab. Pastikan huruf tertanam dengan memilih ISO 19005-1 compliant (PDF/A) bila kampus tidak melarang, atau gunakan opsi standar lalu periksa tampilannya di perangkat lain. Setelah itu, buka PDF-nya dari awal sampai akhir, jangan hanya memeriksa Word. Lihat apakah nomor halaman, daftar isi, gambar, dan tabel sama dengan yang kamu harapkan. Kalau ada tanda tangan atau lembar pengesahan yang harus dipindai, lihat panduan cara scan dokumen supaya hasilnya jelas, lalu gabungkan ke PDF terpisah sesuai ketentuan kampus. Simpan PDF dengan nama versi yang urut, dan simpan juga berkas Word-nya di dua tempat berbeda. Pengecekan terakhir ini biasanya hanya butuh sepuluh menit dan sering menyelamatkan satu putaran revisi."
+    },
+    {
+      "h": "Kalau Laptop Bermasalah di Tengah Penyusunan",
+      "p": "Format otomatis butuh Word yang berjalan stabil, dan laptop yang sering macet bisa merusak berkas besar berisi banyak gambar. Kalau laptopmu mulai lambat, sering membeku saat naskah dibuka, atau sedang diservis menjelang tenggat, pindahkan dulu semua berkas ke penyimpanan lain dan pastikan versi terbaru aman. Setelah itu kamu punya beberapa pilihan: memakai komputer kampus, meminjam laptop teman, atau memakai laptop sewaan jangka pendek bila waktunya mepet. Untuk kebutuhan seperti itu, Techpora menyediakan opsi sewa laptop harian maupun bulanan di Jakarta yang bisa dikonfirmasi lewat WhatsApp. Apa pun pilihanmu, buka naskah di perangkat pengganti lebih awal dan periksa apakah tampilan, huruf, dan nomor halaman masih sama. Perbedaan versi Word atau huruf yang belum terpasang kadang membuat tata letak bergeser, dan lebih baik kamu menemukannya sekarang daripada saat jam sidang."
+    }
+  ],
+  "cta": {
+    "heading": "Laptop Bermasalah Saat Menyusun Skripsi?",
+    "body": "Kalau perlu laptop pengganti sementara selama penyusunan atau sidang, tanyakan ketersediaan lewat WhatsApp. Detail syarat dikonfirmasi lewat WhatsApp.",
+    "waMessage": "Halo Techpora, saya mahasiswa yang sedang menyusun skripsi dan butuh laptop pengganti sementara. Durasi dan kebutuhan saya:",
+    "internalPath": "/sewa-laptop-mahasiswa-jakarta",
+    "internalLabel": "Sewa laptop mahasiswa Jakarta"
+  },
+  "related": [
+    "backup-file-skripsi-aturan-3-2-1",
+    "sewa-laptop-sidang-skripsi-jakarta",
+    "cara-scan-dokumen-printer-ke-laptop"
+  ],
+  "keywords": "format skripsi word, cara membuat daftar isi otomatis di word, nomor halaman skripsi romawi dan angka, daftar pustaka zotero mendeley, ekspor pdf skripsi",
+  "contextLinks": [
+    {
+      "section": 8,
+      "anchor": "laptop harian maupun bulanan di Jakarta",
+      "to": "/sewa-laptop-harian-jakarta"
+    },
+    {
+      "section": 8,
+      "anchor": "laptop sewaan jangka pendek",
+      "to": "/sewa-laptop-mahasiswa-jakarta"
+    }
+  ]
+}
