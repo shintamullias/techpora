@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, LineChart, Line } from "recharts";
+import { tugasTelat } from "./TabTugas";
 import { supabase, rp, tglIndo, waktuPesanan, kelompokkanBayar, sisaTagihan, sudahJatuhTempo, bulanDari, namaBulan,
   type Pesanan, type Pembayaran, type Unit, type Tugas, type Pengeluaran } from "@/lib/supabase";
 
@@ -137,6 +138,7 @@ export default function Overview({ pesanan, pembayaran, unit, tugas, biaya, keTa
         <button onClick={bookingBaru} className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white shadow-sm">+ Booking baru</button>
         <button onClick={tugasBaru} className="rounded-lg border border-border bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 shadow-sm">+ Tambah tugas</button>
         {d.tugasHari > 0 && <button onClick={() => keTab("tugas")} className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2.5 text-xs font-semibold text-amber-800">{d.tugasHari} tugas hari ini</button>}
+        {tugas.filter(tugasTelat).length > 0 && <button onClick={() => keTab("tugas")} className="rounded-lg border border-rose-200 bg-rose-50 px-3 py-2.5 text-xs font-semibold text-rose-800">⚠ {tugas.filter(tugasTelat).length} tugas telat</button>}
       </div>
 
       {d.telat.length > 0 && (

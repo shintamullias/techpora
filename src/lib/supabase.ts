@@ -249,14 +249,21 @@ export type Pic = {
   wa: string | null;
   aktif: boolean;
   dibuat_pada?: string;
+  /** laptop / sepatu / semua — penentu pembagian tugas otomatis */
+  kategori?: string;
+  ics_token?: string;
 };
 
-export type JenisTugas = "serah_terima" | "pengembalian" | "pengingat_bayar" | "lainnya";
-export type StatusTugas = "menunggu" | "dikerjakan" | "selesai" | "batal";
+export type JenisTugas = "serah_terima" | "pengembalian" | "pengecekan" | "maintenance" | "penagihan" | "pengingat_bayar" | "lainnya";
+/** menunggu = Pending, dikerjakan = In Progress, tertunda = Waiting, selesai = Completed */
+export type StatusTugas = "menunggu" | "dikerjakan" | "tertunda" | "selesai" | "batal";
 
 export const JENIS_TUGAS: { key: JenisTugas; label: string }[] = [
   { key: "serah_terima", label: "Serah terima" },
   { key: "pengembalian", label: "Pengembalian" },
+  { key: "pengecekan", label: "Cek unit" },
+  { key: "maintenance", label: "Maintenance" },
+  { key: "penagihan", label: "Penagihan" },
   { key: "pengingat_bayar", label: "Pengingat bayar" },
   { key: "lainnya", label: "Lainnya" },
 ];
@@ -276,6 +283,9 @@ export type Tugas = {
   prioritas: "tinggi" | "normal" | "rendah";
   gcal_event_id: string | null;
   dibuat_pada?: string;
+  mulai_pada?: string | null;
+  selesai_pada?: string | null;
+  bukti?: string[];
   pic?: { nama: string; email: string | null } | null;
   pelanggan?: { nama: string; wa: string } | null;
   unit?: { nama: string } | null;
