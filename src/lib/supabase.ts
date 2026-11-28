@@ -53,6 +53,12 @@ export type Unit = {
   aktif: boolean;
   /** kondisi fisik unit */
   kondisi?: "baik" | "maintenance" | "rusak";
+  kode_aset?: string | null; serial_number?: string | null; imei?: string | null;
+  tgl_beli?: string | null; harga_beli?: number | null; lokasi?: string | null;
+  status_kepemilikan?: string; status_aset?: "aktif" | "pensiun" | "dijual" | "hilang";
+  pensiun_pada?: string | null; pensiun_alasan?: string | null;
+  umur_ekonomis_bulan?: number; nilai_sisa?: number; interval_maintenance_hari?: number;
+  pemilik_id?: string | null;
   urutan: number;
   modal: number;
   pemilik: string;
@@ -134,6 +140,7 @@ export type Pesanan = {
   deposit_status?: "tidak" | "belum" | "diterima" | "dikembalikan" | "dipotong";
   deposit_potong?: number;
   kembali_pada?: string | null;
+  jatuh_tempo_bayar?: string | null;
   kembali_catatan?: string | null;
   batal_pada?: string | null;
   batal_alasan?: string | null;
@@ -214,18 +221,32 @@ export const waktuPesanan = (p: { mulai: string; selesai: string; jam?: string |
 };
 
 /** Potongan voucher untuk harga sewa (tidak termasuk ongkir & tambahan). */
-export const hitungDiskon = (v: { tipe: string; nilai: number } | null | undefined, hargaSewa: number) => {
+export const hitungDiskon = (v: { tipe: string; nilai: number; maks_diskon?: number } | null | undefined, hargaSewa: number) => {
   if (!v || hargaSewa <= 0) return 0;
-  return v.tipe === "persen" ? Math.round((hargaSewa * Math.min(100, v.nilai)) / 100) : Math.min(v.nilai, hargaSewa);
+  const d = v.tipe === "persen" ? Math.round((hargaSewa * Math.min(100, v.nilai)) / 100) : Math.min(v.nilai, hargaSewa);
+  return v.maks_diskon ? Math.min(d, v.maks_diskon) : d;
 };
 
 /** Voucher yang boleh dipakai untuk pesanan dengan tipe durasi & tanggal mulai ini. */
-export const voucherBerlaku = (v: Voucher, durasi: string, mulai: string) =>
-  v.aktif &&
-  (v.periode === "semua" || v.periode === durasi) &&
-  (!v.mulai || !mulai || v.mulai <= mulai) &&
-  (!v.selesai || !mulai || v.selesai >= mulai) &&
-  (!v.maks_pakai || v.terpakai < v.maks_pakai);
+/** Konteks pemakai untuk aturan voucher. */
+export type KonteksVoucher = { kategori?: string; pelangganId?: string; jumlahSewa?: number; pakaiPelanggan?: number; hargaSewa?: number };
+
+/** Alasan voucher tidak berlaku (kosong = berlaku). */
+export const alasanVoucher = (v: Voucher, durasi: string, mulai: string, k: KonteksVoucher = {}): string => {
+  if (!v.aktif) return "nonaktif";
+  if (v.periode !== "semua" && v.periode !== durasi) return `khusus sewa ${v.periode}`;
+  if (v.mulai && mulai && v.mulai > mulai) return `berlaku mulai ${v.mulai}`;
+  if (v.selesai && mulai && v.selesai < mulai) return "kedaluwarsa";
+  if (v.maks_pakai && v.terpakai >= v.maks_pakai) return "kuota habis";
+  if (v.kategori && v.kategori !== "semua" && k.kategori && v.kategori !== k.kategori) return `khusus ${v.kategori}`;
+  if (v.pelanggan_id && k.pelangganId && v.pelanggan_id !== k.pelangganId) return "khusus pelanggan tertentu";
+  if ((v.segmen === "baru" || v.segmen === "referral") && (k.jumlahSewa || 0) > 0) return "khusus pelanggan baru";
+  if (v.segmen === "loyal" && (k.jumlahSewa || 0) < 2) return "khusus pelanggan loyal (≥2× sewa)";
+  if (v.maks_per_pelanggan && (k.pakaiPelanggan || 0) >= v.maks_per_pelanggan) return "batas pemakaian pelanggan tercapai";
+  if (v.min_transaksi && (k.hargaSewa || 0) < v.min_transaksi) return `minimal transaksi Rp${v.min_transaksi.toLocaleString("id-ID")}`;
+  return "";
+};
+export const voucherBerlaku = (v: Voucher, durasi: string, mulai: string, k: KonteksVoucher = {}) => !alasanVoucher(v, durasi, mulai, k);
 
 export type Dokumen = {
   id: string;
@@ -308,6 +329,13 @@ export type Voucher = {
   terpakai: number;
   aktif: boolean;
   dibuat_pada?: string;
+  kategori?: string;
+  segmen?: "semua" | "baru" | "loyal" | "reseller" | "referral";
+  pelanggan_id?: string | null;
+  min_transaksi?: number;
+  maks_diskon?: number;
+  maks_per_pelanggan?: number;
+  bisa_digabung?: boolean;
 };
 
 export type Pembayaran = {

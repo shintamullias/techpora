@@ -64,7 +64,7 @@ function Dashboard() {
     const [p, u, o, s, b, tg, pc, vc, by, mt] = await Promise.all([
       supabase.from("pelanggan").select("*").order("dibuat_pada", { ascending: false }),
       supabase.from("unit").select("*").order("urutan"),
-      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, deposit, deposit_status, deposit_potong, kembali_pada, kembali_catatan, batal_pada, batal_alasan, batal_oleh, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
+      supabase.from("pesanan").select("id, pelanggan_id, unit_id, durasi_tipe, durasi_jumlah, mulai, jam, jam_selesai, voucher_id, voucher_kode, diskon, selesai, total_hari, antar, alamat, jarak_km, harga_sewa, harga_antar, item, total, status, status_bayar, deposit, deposit_status, deposit_potong, kembali_pada, kembali_catatan, jatuh_tempo_bayar, batal_pada, batal_alasan, batal_oleh, catatan, dibuat_pada, token, ttd_nama, ttd_pada, ttd_setuju, pelanggan(nama, wa), unit(nama, kategori)").order("mulai", { ascending: false }),
       supabase.from("pengaturan").select("ongkir_per_km, ongkir_minimum, ics_token").maybeSingle(),
       supabase.from("pengeluaran").select("*").order("tanggal", { ascending: false }),
       supabase.from("tugas").select("*, pic(nama, email), pelanggan(nama, wa)").order("jatuh_tempo", { ascending: false }),
@@ -334,7 +334,7 @@ function Dashboard() {
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} bukaAwal={tugasBaru} habisBuka={() => setTugasBaru(false)} />}
         {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
         {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
-        {tab === "voucher" && <TabVoucher voucher={voucher} muat={muat} setGalat={setGalat} />}
+        {tab === "voucher" && <TabVoucher voucher={voucher} pesanan={pesanan} pelanggan={pelanggan} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
         {tab === "laporan" && <TabLaporan pesanan={pesananTampil} pembayaran={pembayaran} biaya={biayaTampil} unit={unitTampil} pelanggan={pelanggan} />}
         {tab === "whatsapp" && <TabWhatsApp pesanan={pesananTampil} pembayaran={pembayaran} tugas={tugas} pic={pic} muat={muat} />}
         {tab === "admin" && <TabAdmin setGalat={setGalat} />}
@@ -479,7 +479,11 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
     .map((i: ItemPesanan) => ({ nama: i.nama.trim(), jumlah: Number(i.jumlah) || 0 }));
   const jumlahItem = totalItem(f.item);
   const jamKembali = f.jam_selesai || f.jam;
-  const pilihanVoucher = voucher.filter((v) => v.id === f.voucher_id || voucherBerlaku(v, f.durasi_tipe, f.mulai));
+  // aturan voucher: kategori unit, pelanggan, segmen (baru/loyal), minimal transaksi, batas per pelanggan
+  const riwayatPel = pesanan.filter((p) => p.pelanggan_id === f.pelanggan_id && p.id !== edit && p.status !== "batal");
+  const konteksV = (v: Voucher) => ({ kategori: u?.kategori, pelangganId: f.pelanggan_id, jumlahSewa: riwayatPel.length,
+    pakaiPelanggan: riwayatPel.filter((p) => p.voucher_id === v.id).length, hargaSewa });
+  const pilihanVoucher = voucher.filter((v) => v.id === f.voucher_id || voucherBerlaku(v, f.durasi_tipe, f.mulai, konteksV(v)));
   const vDipilih = voucher.find((v) => v.id === f.voucher_id) || null;
   const diskon = hitungDiskon(vDipilih, hargaSewa);
   const total = hargaSewa - diskon + hargaAntar + jumlahItem;
@@ -502,6 +506,8 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
 
   const simpan = async () => {
     if (!f.pelanggan_id || !f.unit_id || !f.mulai) return setGalat("Pelanggan, unit, dan tanggal mulai wajib diisi.");
+    if (vDipilih && vDipilih.bisa_digabung === false && (f.item || []).some((i: ItemPesanan) => Number(i.jumlah) < 0))
+      return setGalat(`Voucher ${vDipilih.kode} tidak bisa digabung dengan diskon lain. Hapus baris diskon atau pilih voucher lain.`);
     // Booking terkonfirmasi tidak boleh bentrok (dijaga juga oleh database); Pending boleh disimpan dulu.
     const statusBaru = edit ? undefined : (f.konfirmasi ? "dipesan" : "menunggu");
     const aktifLagi = edit ? pesanan.find((p) => p.id === edit)?.status : statusBaru;
