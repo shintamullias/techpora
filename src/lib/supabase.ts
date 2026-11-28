@@ -23,6 +23,10 @@ export type Pelanggan = {
   dibuat_pada: string;
   terverifikasi?: boolean;
   verifikasi_pada?: string | null;
+  blacklist?: boolean;
+  blacklist_alasan?: string | null;
+  catatan_internal?: string | null;
+  dihubungi_pada?: string | null;
 };
 
 /** Kategori aset sewa. Satu unit selalu milik tepat satu kategori. */

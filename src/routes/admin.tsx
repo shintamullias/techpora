@@ -12,6 +12,7 @@ import TabTugas from "@/components/TabTugas";
 import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
 import Overview from "@/components/Overview";
+import CrmPelanggan from "@/components/CrmPelanggan";
 import { ModalSerahTerima, ModalPengembalian, ModalPerpanjang, cetakDokumen } from "@/components/AksiPesanan";
 import BuktiBayar, { unggahBukti, perluBukti } from "@/components/BuktiBayar";
 import TabLaporan from "@/components/TabLaporan";
@@ -324,7 +325,11 @@ function Dashboard() {
         {tab === "kalender" && <TabKalender pesanan={pesananTampil} unit={unitTampil} tugas={tugas} pic={pic} maintenance={maintenance}
           icsUrl={icsToken ? `${import.meta.env.VITE_SUPABASE_URL ?? "https://deegpogdpdhyzprjjksc.supabase.co"}/functions/v1/kalender-ics?t=${icsToken}` : ""} muat={muat} setGalat={setGalat} onBaru={(isi) => { setIsiBaru(isi || {}); setTab("pesanan"); }} />}
         {tab === "pesanan" && <TabPesanan pesanan={pesananTampil} pembayaran={pembayaran} pelanggan={pelanggan} unit={unitTampil} voucher={voucher} set={set} muat={muat} setGalat={setGalat} isiBaru={isiBaru} habisPakai={() => setIsiBaru(null)} />}
-        {tab === "pelanggan" && <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "pelanggan" && (<>
+          <CrmPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />
+          <div className="h-4" />
+          <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />
+        </>)}
         {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} bukaAwal={tugasBaru} habisBuka={() => setTugasBaru(false)} />}
         {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
@@ -626,7 +631,8 @@ function TabPesanan({ pesanan, pembayaran, pelanggan, unit, voucher, set, muat, 
                   <Kol label="Deposit / jaminan (Rp)"><input inputMode="numeric" value={f.deposit} onChange={(e) => s("deposit", e.target.value)} placeholder="0 = tanpa deposit" className={inp} /></Kol>
                   <Kol label="Catatan"><input value={f.catatan} onChange={(e) => s("catatan", e.target.value)} className={inp} /></Kol>
                 </div>
-                {(() => { const c = pelanggan.find((x) => x.id === f.pelanggan_id); return c && !c.terverifikasi ? (
+                {(() => { const c = pelanggan.find((x) => x.id === f.pelanggan_id); return c?.blacklist ? (
+                  <p className="rounded-lg border border-rose-300 bg-rose-50 px-3 py-2 text-xs text-rose-800"><b>Pelanggan ini di-blacklist</b>{c.blacklist_alasan ? `: ${c.blacklist_alasan}` : ""}. Booking baru akan ditolak.</p>) : c && !c.terverifikasi ? (
                   <p className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-900">Pelanggan ini <b>belum diverifikasi</b>. Cek identitas & dokumen di menu Pelanggan sebelum unit diserahkan.</p>) : null; })()}
 
                 <Kol label="Voucher">
