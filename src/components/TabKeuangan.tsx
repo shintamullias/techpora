@@ -157,27 +157,7 @@ export default function TabKeuangan({
           <p className="mt-1 text-[11px] text-muted-foreground">Saat difilter Laptop/Sepatu, biaya "Umum" (mis. bunga, pemasaran) dibagi rata 50:50 ke kedua kategori, jadi Laptop + Sepatu tetap sama dengan total Semua.</p>
         </div>
 
-        {laba > 0 && (
-          <div className="mt-3 space-y-2">
-            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Pembagian hasil</p>
-            <Bagi label="Bagian pemilik unit (70%)" nilai={bagi.pemilik} kuat />
-            <Bagi label="Kas sistem Techpora (30%)" nilai={bagi.sistem} />
-            {Object.keys(bagi.perPemilik).length > 1 && (
-              <div className="mt-2 rounded-lg border border-border p-2">
-                <p className="mb-1 text-xs font-semibold text-muted-foreground">Rincian per pemilik</p>
-                {Object.entries(bagi.perPemilik).map(([n, v]) => (
-                  <div key={n} className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">{n}</span>
-                    <span className="text-foreground">{rp(Math.round(v))}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-            <p className="text-xs text-muted-foreground">
-              Kas sistem dipisahkan untuk beli unit baru, perawatan, dan dana darurat — bukan untuk dipakai harian.
-            </p>
-          </div>
-        )}
+        <p className="mt-3 text-xs text-muted-foreground">Pembagian hasil ke pemilik unit ada di bagian “Bagi hasil pemilik” di bawah.</p>
       </section>
 
       {/* Buku kas */}

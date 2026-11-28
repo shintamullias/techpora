@@ -13,6 +13,9 @@ import TabPiutang from "@/components/TabPiutang";
 import TabVoucher from "@/components/TabVoucher";
 import Overview from "@/components/Overview";
 import CrmPelanggan from "@/components/CrmPelanggan";
+import PemilikBagiHasil from "@/components/PemilikBagiHasil";
+import LaporanKeuangan from "@/components/LaporanKeuangan";
+import AsetUnit from "@/components/AsetUnit";
 import { ModalSerahTerima, ModalPengembalian, ModalPerpanjang, cetakDokumen } from "@/components/AksiPesanan";
 import BuktiBayar, { unggahBukti, perluBukti } from "@/components/BuktiBayar";
 import TabLaporan from "@/components/TabLaporan";
@@ -330,11 +333,16 @@ function Dashboard() {
           <div className="h-4" />
           <TabPelanggan pelanggan={pelangganTampil} pesanan={pesananTampil} muat={muat} setGalat={setGalat} />
         </>)}
-        {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} />}
+        {tab === "unit" && <TabUnit unit={unitTampil} unitSemua={unit} kat={kat} set={set} muat={muat} setGalat={setGalat} pesanan={pesanan} pembayaran={pembayaran} biaya={biaya} />}
         {tab === "tugas" && <TabTugas tugas={tugas} pic={pic} pesanan={pesanan} muat={muat} setGalat={setGalat} bukaAwal={tugasBaru} habisBuka={() => setTugasBaru(false)} />}
-        {tab === "keuangan" && <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />}
+        {tab === "keuangan" && (<>
+          <TabKeuangan pesanan={pesananTampil} pembayaran={pembayaran} unit={unitTampil} biaya={biayaTampil} muat={muat} setGalat={setGalat} />
+          <PemilikBagiHasil pesanan={pesanan} pembayaran={pembayaran} biaya={biaya} unit={unit} muatInduk={muat} setGalat={setGalat} />
+        </>)}
         {tab === "piutang" && <TabPiutang pesanan={pesananTampil} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
         {tab === "voucher" && <TabVoucher voucher={voucher} pesanan={pesanan} pelanggan={pelanggan} pembayaran={pembayaran} muat={muat} setGalat={setGalat} />}
+        {tab === "laporan" && <LaporanKeuangan pesanan={pesanan} pembayaran={pembayaran} biaya={biaya} unit={unit} pelanggan={pelanggan} />}
+        {tab === "laporan" && <div className="h-4" />}
         {tab === "laporan" && <TabLaporan pesanan={pesananTampil} pembayaran={pembayaran} biaya={biayaTampil} unit={unitTampil} pelanggan={pelanggan} />}
         {tab === "whatsapp" && <TabWhatsApp pesanan={pesananTampil} pembayaran={pembayaran} tugas={tugas} pic={pic} muat={muat} />}
         {tab === "admin" && <TabAdmin setGalat={setGalat} />}
@@ -1063,9 +1071,11 @@ function KartuPelanggan({ p, jml, riwayat, muat, hapus, setGalat, bukaEdit, seda
 }
 
 /* ============ TAB 4: UNIT ============ */
-function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
+function TabUnit({ unit, unitSemua, kat, set, muat, setGalat, pesanan, pembayaran, biaya }: {
   unit: Unit[]; unitSemua: Unit[]; kat: Saring; set: Pengaturan; muat: () => void; setGalat: (s: string) => void;
+  pesanan: Pesanan[]; pembayaran: Pembayaran[]; biaya: Pengeluaran[];
 }) {
+  const [aset, setAset] = useState<string>("");
   /* Nilai awal ikut kategori yang sedang dipilih: sepatu memakai bagi hasil
      investor 40%, laptop memakai porsi Techpora 70%. */
   const bawaan = (k: Saring) => {
@@ -1132,6 +1142,7 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
 
   return (
     <>
+      {aset && unitSemua.find((x) => x.id === aset) && <AsetUnit u={unitSemua.find((x) => x.id === aset)!} pesanan={pesanan} pembayaran={pembayaran} biaya={biaya} onTutup={() => setAset("")} muat={muat} setGalat={setGalat} />}
       <Kartu judul="Unit" aksi={
         <button onClick={bukaTambah} className="rounded-lg bg-primary px-3 py-1.5 text-sm font-semibold text-primary-foreground">
           {buka && !edit ? "Tutup" : "+ Tambah"}
@@ -1202,6 +1213,7 @@ function TabUnit({ unit, unitSemua, kat, set, muat, setGalat }: {
                   <p className="text-xs text-muted-foreground">Modal {rp(u.modal)} · {u.pemilik} ({u.porsi_pemilik}%)</p>
                 </div>
                 <div className="flex shrink-0 flex-col gap-1.5">
+                  <button onClick={() => setAset(u.id)} className="rounded-lg border border-border px-2.5 py-1 text-xs font-semibold text-foreground">Aset</button>
                   <button onClick={() => bukaEdit(u)}
                     className="rounded-lg bg-secondary px-2.5 py-1 text-xs font-semibold text-foreground">
                     {edit === u.id ? "Tutup" : "Edit"}
